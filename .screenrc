@@ -1,0 +1,26 @@
+sessionname pfitmap
+screen -t pfitmap
+screen -t server
+screen -t autotest
+chdir db
+screen -t sqlite3 
+chdir ..
+chdir test
+screen -t test0
+chdir ..
+chdir app
+chdir models
+screen -t models
+chdir ../controllers
+screen -t controllers
+chdir ../views
+screen -t views
+chdir ../..
+chdir config
+screen -t config
+chdir ../log
+screen -t log
+chdir ..
+screen -t man
+screen -t console
+screen -t root
