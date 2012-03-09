@@ -1,4 +1,6 @@
 Pfitmap::Application.routes.draw do
+  resources :profiles
+
   get "home/index"
 
   # The priority is based upon order of creation:
