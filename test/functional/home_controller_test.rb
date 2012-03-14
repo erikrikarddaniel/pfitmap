@@ -10,4 +10,8 @@ class HomeControllerTest < ActionController::TestCase
     get :index
     assert_select "h1", "Welcome to RNRdb"
   end
+  test "should not capitalize title" do
+    get :index
+    assert_select "logo", "RNRdb"
+  end
 end
