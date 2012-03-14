@@ -5,5 +5,9 @@ class HomeControllerTest < ActionController::TestCase
     get :index
     assert_response :success
   end
-
+  
+  test "should have content hello" do
+    get :index
+    assert_select "h1", "Hello, pfitmap!"
+  end
 end
