@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe "Profile pages" do
+
   subject { page }
   
   describe "profile header should contain profiles" do
