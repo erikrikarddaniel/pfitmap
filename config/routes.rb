@@ -1,13 +1,13 @@
 Pfitmap::Application.routes.draw do
   root to: "static_pages#home"
-
+  
   match '/help', to: 'static_pages#help'
   match '/contact', to: 'static_pages#contact'
 
   resources :profiles do
     resources :results
   end
-  get "home/index"
+  #  get "home/index"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
