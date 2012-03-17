@@ -11,4 +11,5 @@
 
 class Result < ActiveRecord::Base
   belongs_to :profile
+  attr_accessible :date, :profile_id
 end
