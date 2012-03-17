@@ -5,7 +5,7 @@ describe "When Capy clicks the header link" do
   before{ visit root_path }
   it "Home" do
     click_link "Home"
-    page.should have_selector 'title', text: full_title(''))
+    page.should have_selector 'title', text: full_title('')
   end
 #  describe "check header in root_page" do
 #    before { visit root_path }
