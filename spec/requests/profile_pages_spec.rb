@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "Profile pages" do
-
+ 
   subject { page }
   
   describe "profile header should contain profiles" do
@@ -36,7 +36,18 @@ describe "Profile pages" do
         expect do 
           click_button "Create Profile"
         end.to change(Profile, :count).by(1)
+
       end
+
     end
   end
+
+end
+
+describe Profile do
+before do
+  @profile = Profile.new(name: "Example Profile")
+end
+  subject { @profile }
+  it { should respond_to(:results)}
 end

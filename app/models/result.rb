@@ -11,5 +11,6 @@
 
 class Result < ActiveRecord::Base
   belongs_to :profile
-  attr_accessible :date, :profile_id
+  attr_accessible :date
+  validates :profile_id, presence: true
 end
