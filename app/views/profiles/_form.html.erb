@@ -11,15 +11,12 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :name %><br />
+    <%= f.label :name %>
     <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :parent_profile_id %><br />
+
+    <%= f.label :parent_profile_id, "Parent Profile Id (leave blank for no parent)" %>
     <%= f.number_field :parent_profile_id %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+
+    <%= f.submit "Create Profile", :class => "btn btn-large btn-primary"%>
+
 <% end %>

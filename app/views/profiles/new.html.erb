@@ -1,5 +1,10 @@
+<%= provide(:title, 'Add a Profile') %>
 <h1>New profile</h1>
 
-<%= render 'form' %>
+<div class="row">
+  <div class="span6 offset3">
+    <%= render 'form' %>
+  </div>
+</div>
 
 <%= link_to 'Back', profiles_path %>

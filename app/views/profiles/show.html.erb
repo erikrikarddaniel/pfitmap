@@ -1,4 +1,13 @@
-<p id="notice"><%= notice %></p>
+<% provide(:title, @profile.name) %>
+<div class="row">
+  <aside class="span4">
+    <section>
+      <h1>
+	<%= @profile.name %>
+      </h1>
+    </section>
+  </aside>
+</div>
 
 <p>
   <b>Name:</b>
