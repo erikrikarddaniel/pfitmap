@@ -1,6 +1,11 @@
 FactoryGirl.define do
   factory :profile do
-    name               "Class 1"
+    sequence(:name) { |n| "#{n}"}
     parent_profile_id  ""
+  end
+  
+  factory :result do
+    sequence(:date) { |n| "#{n}"}
+    profile
   end
 end
