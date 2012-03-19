@@ -13,4 +13,5 @@ class Result < ActiveRecord::Base
   belongs_to :profile
   attr_accessible :date
   validates :profile_id, presence: true
+  default_scope order: 'results.date DESC'
 end
