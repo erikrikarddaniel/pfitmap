@@ -1,26 +1,12 @@
 <% provide(:title, 'Profiles') %>
 <h1>Listing profiles</h1>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Parent profile</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
 
-<% @profiles.each do |profile| %>
-  <tr>
-    <td><%= profile.name %></td>
-    <td><%= profile.parent_profile_id %></td>
-    <td><%= link_to 'Show', profile %></td>
-    <td><%= link_to 'Edit', edit_profile_path(profile) %></td>
-    <td><%= link_to 'Destroy', profile, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Profile', new_profile_path %>
+<ul class="profiles">
+  <% @profiles.each do |profile| %>
+  <li>
+    <%= link_to profile.name, profile %>
+    <%= profile.parent_profile_id %>
+  </li>
+  <% end %>
+</ul>

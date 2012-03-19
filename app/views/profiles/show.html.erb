@@ -7,16 +7,13 @@
       </h1>
     </section>
   </aside>
+  <div class="span8">
+    <% if @profile.results.any? %>
+    <h3>Results (<%= @profile.results.count %>)</h3>
+    <ol class="results">
+      <%= render @results %>
+    </ol>
+    <%= will_paginate @results %>
+    <% end %>
+  </div>
 </div>
-
-<p>
-  <b>Name:</b>
-  <%= @profile.name %>
-
-  <b>Parent profile:</b>
-  <%= @profile.parent_profile_id %>
-</p>
-
-
-<%= link_to 'Edit', edit_profile_path(@profile) %> |
-<%= link_to 'Back', profiles_path %>
