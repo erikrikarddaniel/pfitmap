@@ -8,4 +8,8 @@ FactoryGirl.define do
     sequence(:date) { |n| "#{n}"}
     profile
   end
+
+  factory :sequence do
+    sequence(:seq) { |n| "#{n}" }
+  end
 end

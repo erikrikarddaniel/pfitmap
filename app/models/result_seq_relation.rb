@@ -10,6 +10,9 @@
 #
 
 class ResultSeqRelation < ActiveRecord::Base
+  attr_accessible :sequence_id, :result_id
   belongs_to :sequence
   belongs_to :result
+  validates :sequence_id, presence: :true
+  validates :result_id, presence: :true
 end

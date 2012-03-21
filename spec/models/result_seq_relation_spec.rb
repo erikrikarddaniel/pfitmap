@@ -12,14 +12,34 @@
 require 'spec_helper'
 
 describe ResultSeqRelation do
+  let(:profile) { FactoryGirl.create(:profile) }
+  let(:result) { FactoryGirl.create(:result, profile: profile) }
+  let(:sequence) { FactoryGirl.create(:sequence) }
 
-  let(:result1) { FactoryGirl.create(:result) }
-  let(:sequence1) { FactoryGirl.create(:sequence) }
-  let(:result_seq_relation) do
-    result1.result_seq_relations.build(sequence_id: sequence1.id)
+  describe "create valid relation" do
+    before do
+      @relation = ResultSeqRelation.new(sequence_id: sequence.id, result_id: result.id)
+    end
+    
+    subject { @relation }
+    it { should respond_to(:sequence_id) }
+    it { should respond_to(:result_id) }
+    its(:sequence) { should == sequence }
+    its(:result) { should == result }
+    it { should be_valid }
+    
+    describe "invalid without sequence_id" do
+      before {@relation.sequence_id = nil }
+      
+      subject { @relation }
+      it { should_not be_valid}
+    end
+    describe "invalid without result_id" do
+      before do
+        @relation.sequence_id = sequence.id
+        @relation.result_id = nil
+      end
+      it { should_not be_valid }
+    end
   end
-
-  subject { result_seq_relation }
-
-  it { should be_valid }
 end
