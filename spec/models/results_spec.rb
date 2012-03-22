@@ -10,7 +10,8 @@ describe Result do
   it { should respond_to(:date) }
   it { should respond_to(:profile_id) }
   it { should respond_to(:profile) }
-  it { should respond_to(:result_seq_relations) }
+  it { should respond_to(:result_seq_relation) }
+  it { should respond_to(:result_rows) }
   its(:profile) { should == profile }
   
   it { should be_valid }

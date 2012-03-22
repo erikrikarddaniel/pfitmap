@@ -9,6 +9,10 @@ FactoryGirl.define do
     profile
   end
 
+  factory :resultRow do
+    result
+  end
+  
   factory :sequence do
     sequence(:seq) { |n| "#{n}" }
   end

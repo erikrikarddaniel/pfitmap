@@ -10,7 +10,6 @@
 #
 
 class Sequence < ActiveRecord::Base
-  has_many :results, through: :result_seq_relations
-  belongs_to :result_seq_relations
+  has_and_belongs_to_many :result_rows
   validates :seq, presence: true
 end
