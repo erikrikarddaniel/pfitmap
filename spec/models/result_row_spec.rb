@@ -18,4 +18,15 @@ describe ResultRow do
     before { @resultrow.result_id = nil }
     it {should_not be_valid }
   end
+  describe "created from result" do
+    before do
+      @result_row_2 = result.result_rows.create!()
+    end
+    subject { @result_row_2}
+    
+    it { should be_valid }
+    it { should respond_to(:result_id) }
+    its(:result){ should_not be_nil }
+    its(:result){ should == result }
+  end
 end
