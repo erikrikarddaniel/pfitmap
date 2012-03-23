@@ -16,4 +16,9 @@ FactoryGirl.define do
   factory :sequence do
     sequence(:seq) { |n| "#{n}" }
   end
+  
+  factory :resultRowsSequence do
+    resultRow
+    #    sequence
+  end
 end
