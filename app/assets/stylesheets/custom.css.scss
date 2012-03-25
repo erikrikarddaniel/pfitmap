@@ -135,6 +135,12 @@ aside {
       letter-spacing: -1px;
       margin-bottom: 3px;
     }
+    h2 {
+      font-size: 1.6em;
+      text-align: left;
+      letter-spacing: 0px;
+      margin-bottom: 3px;
+    }
   }
 }
 
@@ -183,8 +189,7 @@ input, textarea, select, .uneditable-input {
   margin: 10px 0 0 0;
 
   li {
-    padding: 10px 0;
-    border-top: 1px solid #e8e8e8;
+    padding: 2px 0;
   }
 }
 .date {
@@ -194,5 +199,6 @@ aside {
   textarea {
     height: 100px;
     margin-bottom: 5px;
+    
   }
 }
