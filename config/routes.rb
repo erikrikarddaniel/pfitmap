@@ -5,10 +5,10 @@ Pfitmap::Application.routes.draw do
   match '/contact', to: 'static_pages#contact'
 
   resources :profiles, only: [:show, :index]
-  
   resources :results, only: [:show]
-
   resources :result_rows, only: [:show]
+  resources :result_rows_sequences, only: [:show]
+  resources :sequences, only: [:show, :index]
   #  get "home/index"
 
   # The priority is based upon order of creation:
