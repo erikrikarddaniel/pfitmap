@@ -11,12 +11,12 @@
     </section>
   </aside>
   <div class="span8">
-    <% if @result_row_sequences.any? %>
-    <h3> Listing sequences for result-row (<%= @result_row.id %>)</h3>
+    <% if @sequences.any? %>
+    <h3> Listing sequences for result-row id: <%= @result_row.id %></h3>
     <ol class="result-rows">
-      <%= render @result_row_sequences %>
+      <%= render @sequences %>
     </ol>
-    <%= will_paginate @result_row_sequences%>
+    <%= will_paginate @sequences%>
     <% else %>
     <h3> No sequences related </h3>
     <% end %> 
