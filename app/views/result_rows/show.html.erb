@@ -1,0 +1,24 @@
+<%provide(:title, @profile.name) %>
+<div class="row">
+  <aside class="span4">
+    <section>
+      <h1>
+	<%= @profile.name %>
+      </h1>
+      <h2 class="date">
+	<%= @result.date %>
+      </h2>
+    </section>
+  </aside>
+  <div class="span8">
+    <% if @result_row_sequences.any? %>
+    <h3> Listing sequences for result-row (<%= @result_row.id %>)</h3>
+    <ol class="result-rows">
+      <%= render @result_row_sequences %>
+    </ol>
+    <%= will_paginate @result_row_sequences%>
+    <% else %>
+    <h3> No sequences related </h3>
+    <% end %> 
+  </div>
+</div>

@@ -1,0 +1,22 @@
+<% provide(:title, 'Sequences') %>
+<div class="row">
+  <aside class="span4">
+    <section>
+      <h1>
+	Listing sequences
+      </h1>
+    </section>
+  </aside>
+  <div class="span8">
+    <h2>
+      There are <%= Sequence.count() %> sequences in total
+    </h2>
+    <%= will_paginate %>
+
+    <ul class="sequences">
+      <%= render @sequences %>
+    </ul>
+    
+    <%= will_paginate %>
+  </div>
+</div>
