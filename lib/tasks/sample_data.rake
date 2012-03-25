@@ -28,7 +28,7 @@ end
 def make_sequences
     counts = {'R'=>5,'L'=>7,'E'=>3,'A'=>4}
     50.times do |n|
-      sequence = (0...50).map{ ['A','L', 'R', 'E'].to_a[rand(26)] }.join
+      sequence = (0...50).map{ ['A','L', 'R', 'E'].to_a[rand(50)] }.join
       Sequence.create!(seq: sequence)
     end
 end
