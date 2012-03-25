@@ -5,22 +5,22 @@ namespace :db do
     make_results
     make_result_rows
     make_sequences
+    make_result_rows_sequences
   end
 
 
 def make_profiles
     Profile.create!(name: "Example Profile")
-    99.times do |n|
+    9.times do |n|
       name = "Example Profile #{n+1}"
       Profile.create!(name: name)
     end
 end
 
 def make_results
-    profiles = Profile.all(limit: 6)
-    25.times do |n|
+    profiles = Profile.all
+    5.times do |n|
       date  = n.day.ago
-      profiles.each { |profile| profile.results.create!(date: date) }
       profiles.each { |profile| profile.results.create!(date: date) }
     end
 end
@@ -32,6 +32,7 @@ def make_sequences
       Sequence.create!(seq: sequence)
     end
 end
+
 
 def make_result_rows
     results = Result.all()
