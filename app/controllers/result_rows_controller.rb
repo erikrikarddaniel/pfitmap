@@ -1,0 +1,2 @@
+class ResultRowsController < ApplicationController
+end

@@ -1,0 +1,22 @@
+<%provide(:title, @profile.name) %>
+<div class="row">
+  <aside class="span4">
+    <section>
+      <h1>
+	<%= @profile.name %>
+      </h1>
+      <h2 class="date">
+	<%= @result.date %>
+      </h2>
+    </section>
+  </aside>
+  <div class="span8">
+    <% if @result.result_rows.any? %>
+    <h3> Listing result-row ids (<%= @result.result_rows.count %>)</h3>
+    <ol class="result-rows">
+      <%= render @result_rows %>
+    </ol>
+    <%= will_paginate @result_rows%>
+    <% end %> 
+  </div>
+</div>
