@@ -19,6 +19,6 @@ FactoryGirl.define do
   
   factory :resultRowsSequence do
     resultRow
-    #    sequence
+#    sequence
   end
 end
