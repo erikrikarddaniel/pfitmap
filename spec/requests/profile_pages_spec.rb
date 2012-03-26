@@ -37,36 +37,10 @@ describe "Profile pages" do
     describe "Results" do
       it { should have_content(profile.results.count) }
       it "should have the dates" do
-        pending "Dont know how to find the date"
-        should have_content(m1.date.class)
+        should have_content(m1.date.year)
       end
     end
   end
-  
-  describe "Creating new profile" do
-    before { visit new_profile_path }
-    
-    describe "with invalid information" do
-      it "should not create a profile" do
-        expect { click_button "Create Profile" }.not_to change(Profile, :count)
-      end
-    end
-
-    describe "with valid information" do
-        before do
-          fill_in "Name", with: "Example Profile"
-        end
-
-        it "should create a profile" do
-        expect do 
-          click_button "Create Profile"
-        end.to change(Profile, :count).by(1)
-
-      end
-
-    end
-  end
-
 end
 
 describe Profile do
