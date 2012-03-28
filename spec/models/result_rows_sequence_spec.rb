@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: result_rows_sequences
+#
+#  id            :integer         not null, primary key
+#  result_row_id :integer         not null
+#  sequence_id   :integer         not null
+#  created_at    :datetime        not null
+#  updated_at    :datetime        not null
+#
+
 require 'spec_helper'
 
 describe ResultRowsSequence do

@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: result_rows
+#
+#  id         :integer         not null, primary key
+#  result_id  :integer
+#  created_at :datetime        not null
+#  updated_at :datetime        not null
+#
+
 require 'spec_helper'
 
 describe ResultRow do
