@@ -1,4 +1,8 @@
 Pfitmap::Application.routes.draw do
+  resources :sequence_dbs
+
+  resources :hmm_profiles
+
   root to: "static_pages#home"
   
   match '/help', to: 'static_pages#help'

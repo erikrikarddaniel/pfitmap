@@ -3,10 +3,13 @@ screen -t pfitmap
 screen -t server
 screen -t autotest
 chdir db
-screen -t sqlite3 
+screen -t psql 
 chdir ..
 chdir test
 screen -t test0
+chdir ..
+chdir spec
+screen -t spec
 chdir ..
 chdir app
 chdir models
