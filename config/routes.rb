@@ -4,9 +4,11 @@ Pfitmap::Application.routes.draw do
   match '/help', to: 'static_pages#help'
   match '/contact', to: 'static_pages#contact'
 
-  resources :profiles do
-    resources :results
-  end
+  resources :profiles, only: [:show, :index]
+  resources :results, only: [:show]
+  resources :result_rows, only: [:show]
+  resources :result_rows_sequences, only: [:show]
+  resources :sequences, only: [:show, :index]
   #  get "home/index"
 
   # The priority is based upon order of creation:
@@ -58,7 +60,7 @@ Pfitmap::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-   root :to => 'home#index'
+  # root :to => 'home#index'
 
   # See how all your routes lay out with "rake routes"
 

@@ -11,6 +11,11 @@
 
 class Result < ActiveRecord::Base
   belongs_to :profile
+  belongs_to :result_seq_relation
+  has_many :result_rows
+  has_many :sequences, through: :result_seq_relations
+
   attr_accessible :date
   validates :profile_id, presence: true
+  default_scope order: 'results.date DESC'
 end
