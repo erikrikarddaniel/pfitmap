@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @hmm_profile.name %>
+</p>
+
+<p>
+  <b>Version:</b>
+  <%= @hmm_profile.version %>
+</p>
+
+<p>
+  <b>Hierarchy:</b>
+  <%= @hmm_profile.hierarchy %>
+</p>
+
+<p>
+  <b>Parent hmm profile:</b>
+  <%= @hmm_profile.parent_hmm_profile_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_hmm_profile_path(@hmm_profile) %> |
+<%= link_to 'Back', hmm_profiles_path %>
