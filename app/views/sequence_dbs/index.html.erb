@@ -1,0 +1,27 @@
+<h1>Listing sequence_dbs</h1>
+
+<table>
+  <tr>
+    <th>Source</th>
+    <th>Name</th>
+    <th>Version</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @sequence_dbs.each do |sequence_db| %>
+  <tr>
+    <td><%= sequence_db.source %></td>
+    <td><%= sequence_db.name %></td>
+    <td><%= sequence_db.version %></td>
+    <td><%= link_to 'Show', sequence_db %></td>
+    <td><%= link_to 'Edit', edit_sequence_db_path(sequence_db) %></td>
+    <td><%= link_to 'Destroy', sequence_db, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Sequence db', new_sequence_db_path %>

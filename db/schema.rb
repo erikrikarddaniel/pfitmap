@@ -11,13 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120322141541) do
+ActiveRecord::Schema.define(:version => 20120328132746) do
 
-  create_table "profiles", :force => true do |t|
+  create_table "hmm_profiles", :force => true do |t|
     t.string   "name"
-    t.integer  "parent_profile_id"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.string   "version"
+    t.string   "hierarchy"
+    t.integer  "parent_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "result_rows", :force => true do |t|
@@ -42,13 +44,19 @@ ActiveRecord::Schema.define(:version => 20120322141541) do
   create_table "results", :force => true do |t|
     t.date     "date"
     t.integer  "profile_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-    t.integer  "sequence_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   add_index "results", ["profile_id"], :name => "index_results_on_profile_id"
-  add_index "results", ["sequence_id"], :name => "index_results_on_sequence_id"
+
+  create_table "sequence_dbs", :force => true do |t|
+    t.string   "source"
+    t.string   "name"
+    t.string   "version"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "sequences", :force => true do |t|
     t.string   "seq"
