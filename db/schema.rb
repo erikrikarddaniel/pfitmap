@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120328132746) do
+ActiveRecord::Schema.define(:version => 20120328150515) do
 
   create_table "hmm_profiles", :force => true do |t|
     t.string   "name"
@@ -21,6 +21,17 @@ ActiveRecord::Schema.define(:version => 20120328132746) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "hmm_results", :force => true do |t|
+    t.datetime "executed"
+    t.integer  "sequence_db_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.integer  "hmm_profile_id"
+  end
+
+  add_index "hmm_results", ["hmm_profile_id"], :name => "index_hmm_results_on_hmm_profile_id"
+  add_index "hmm_results", ["sequence_db_id"], :name => "index_hmm_results_on_sequence_db_id"
 
   create_table "result_rows", :force => true do |t|
     t.integer  "result_id"

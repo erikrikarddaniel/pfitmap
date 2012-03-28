@@ -42,7 +42,7 @@ class ResultsController < ApplicationController
                                                        :bestdom_score => fields[8].to_f,
                                                        :bestdom_bias => fields[9].to_f,
                                                        :domnumest_exp => fields[10].to_f,
-                                                       :domnumest_reg => fields[11].to_i
+                                                       :domnumest_reg => fields[11].to_i,
                                                        :domnumest_clu => fields[12].to_i,
                                                        :domnumest_ov => fields[13].to_i,
                                                        :domnumest_env => fields[14].to_i,

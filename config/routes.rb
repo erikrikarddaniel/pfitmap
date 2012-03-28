@@ -1,4 +1,6 @@
 Pfitmap::Application.routes.draw do
+  resources :hmm_results
+
   resources :sequence_dbs
 
   resources :hmm_profiles

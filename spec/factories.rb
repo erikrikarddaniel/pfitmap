@@ -1,8 +1,16 @@
 FactoryGirl.define do
-  factory :profile do
+  factory :hmm_profile do
     sequence(:name) { |n| "#{n}"}
-    parent_profile_id  ""
+    sequence(:hierarchy) { |n| "00#{n}" }
+    sequence(:version) { |n| "version #{n}" }
   end
+  
+  factory :sequence_db do
+    source "NCBI"
+    name "ref"
+    version "20120328"
+  end
+    
   
   factory :result do
     sequence(:date) { |n| "#{n}"}

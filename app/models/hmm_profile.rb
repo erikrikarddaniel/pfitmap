@@ -13,6 +13,7 @@
 
 class HmmProfile < ActiveRecord::Base
   has_many :children, :class_name => "HmmProfile", :foreign_key => "parent_id", :dependent => :destroy
+  has_many :hmm_results
   validates :name, presence: true
   validates :version, presence: true
   validates :hierarchy, presence: true
