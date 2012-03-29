@@ -1,4 +1,6 @@
 Pfitmap::Application.routes.draw do
+  resources :hmm_db_hits
+
   resources :hmm_result_rows
 
   resources :hmm_results

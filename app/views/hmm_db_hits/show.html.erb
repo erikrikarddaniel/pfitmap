@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Gi:</b>
+  <%= @hmm_db_hit.gi %>
+</p>
+
+<p>
+  <b>Db:</b>
+  <%= @hmm_db_hit.db %>
+</p>
+
+<p>
+  <b>Acc:</b>
+  <%= @hmm_db_hit.acc %>
+</p>
+
+<p>
+  <b>Desc:</b>
+  <%= @hmm_db_hit.desc %>
+</p>
+
+
+<%= link_to 'Edit', edit_hmm_db_hit_path(@hmm_db_hit) %> |
+<%= link_to 'Back', hmm_db_hits_path %>
