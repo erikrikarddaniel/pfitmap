@@ -17,7 +17,19 @@ FactoryGirl.define do
     hmm_profile
     sequence_db
   end
-
+  
+  factory :hmm_db_hit do
+    sequence(:gi){|n| n}
+    db "ref"
+    sequence(:acc) { |n| "aaaa#{n}" }
+    desc "This is an example hit"
+  end
+  
+  factory :hmm_result_row do
+    hmm_result
+    fullseq_evalue 3e-300
+  end
+  
   factory :resultRow do
     result
   end
@@ -31,10 +43,4 @@ FactoryGirl.define do
 #    sequence
   end
   
-  factory :hmm_db_hit do
-    sequence(:gi){|n| n}
-    db "ref"
-    sequence(:acc) { |n| "aaaa#{n}" }
-    desc "This is an example hit"
-  end
 end
