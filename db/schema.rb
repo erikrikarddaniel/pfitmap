@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120329164413) do
+ActiveRecord::Schema.define(:version => 20120329133602) do
 
   create_table "hmm_db_hits", :force => true do |t|
     t.integer  "gi"
@@ -56,16 +56,6 @@ ActiveRecord::Schema.define(:version => 20120329164413) do
     t.datetime "updated_at",     :null => false
     t.integer  "hmm_result_id"
   end
-
-  create_table "hmm_result_rows_hmm_db_hits", :force => true do |t|
-    t.integer  "hmmResultRow_id"
-    t.integer  "hmmDbHit_id"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
-  end
-
-  add_index "hmm_result_rows_hmm_db_hits", ["hmmDbHit_id"], :name => "index_hmm_result_rows_hmm_db_hits_on_hmmDbHit_id"
-  add_index "hmm_result_rows_hmm_db_hits", ["hmmResultRow_id"], :name => "index_hmm_result_rows_hmm_db_hits_on_hmmResultRow_id"
 
   create_table "hmm_results", :force => true do |t|
     t.datetime "executed"
