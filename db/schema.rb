@@ -11,7 +11,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120329060021) do
+ActiveRecord::Schema.define(:version => 20120329133602) do
+
+  create_table "hmm_db_hits", :force => true do |t|
+    t.integer  "gi"
+    t.string   "db"
+    t.string   "acc"
+    t.string   "desc"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "hmm_db_hits", ["db", "acc"], :name => "index_hmm_db_hits_on_db_and_acc", :unique => true
+  add_index "hmm_db_hits", ["gi"], :name => "index_hmm_db_hits_on_gi"
 
   create_table "hmm_profiles", :force => true do |t|
     t.string   "name"

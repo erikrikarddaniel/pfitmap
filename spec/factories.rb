@@ -30,4 +30,11 @@ FactoryGirl.define do
     resultRow
 #    sequence
   end
+  
+  factory :hmm_db_hit do
+    sequence(:gi){|n| n}
+    db "ref"
+    sequence(:acc) { |n| "aaaa#{n}" }
+    desc "This is an example hit"
+  end
 end

@@ -8,5 +8,7 @@ class CreateHmmDbHits < ActiveRecord::Migration
 
       t.timestamps
     end
+    add_index :hmm_db_hits, :gi
+    add_index :hmm_db_hits, [:db, :acc], unique: true
   end
 end
