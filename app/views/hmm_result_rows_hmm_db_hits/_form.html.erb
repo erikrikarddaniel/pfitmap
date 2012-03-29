@@ -1,0 +1,25 @@
+<%= form_for(@hmm_result_rows_hmm_db_hit) do |f| %>
+  <% if @hmm_result_rows_hmm_db_hit.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@hmm_result_rows_hmm_db_hit.errors.count, "error") %> prohibited this hmm_result_rows_hmm_db_hit from being saved:</h2>
+
+      <ul>
+      <% @hmm_result_rows_hmm_db_hit.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :hmm_result_row %><br />
+    <%= f.text_field :hmm_result_row %>
+  </div>
+  <div class="field">
+    <%= f.label :hmm_db_hit %><br />
+    <%= f.text_field :hmm_db_hit %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
