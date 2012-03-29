@@ -1,0 +1,55 @@
+<h1>Listing hmm_result_rows</h1>
+
+<table>
+  <tr>
+    <th>Target name</th>
+    <th>Target acc</th>
+    <th>Query name</th>
+    <th>Query acc</th>
+    <th>Fullseq evalue</th>
+    <th>Fullseq score</th>
+    <th>Fullseq bias</th>
+    <th>Bestdom evalue</th>
+    <th>Bestdom score</th>
+    <th>Bestdom bias</th>
+    <th>Domnumest exp</th>
+    <th>Domnumest reg</th>
+    <th>Domnumest clu</th>
+    <th>Domnumest ov</th>
+    <th>Domnumest env</th>
+    <th>Domnumest rep</th>
+    <th>Domnumest inc</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @hmm_result_rows.each do |hmm_result_row| %>
+  <tr>
+    <td><%= hmm_result_row.target_name %></td>
+    <td><%= hmm_result_row.target_acc %></td>
+    <td><%= hmm_result_row.query_name %></td>
+    <td><%= hmm_result_row.query_acc %></td>
+    <td><%= hmm_result_row.fullseq_evalue %></td>
+    <td><%= hmm_result_row.fullseq_score %></td>
+    <td><%= hmm_result_row.fullseq_bias %></td>
+    <td><%= hmm_result_row.bestdom_evalue %></td>
+    <td><%= hmm_result_row.bestdom_score %></td>
+    <td><%= hmm_result_row.bestdom_bias %></td>
+    <td><%= hmm_result_row.domnumest_exp %></td>
+    <td><%= hmm_result_row.domnumest_reg %></td>
+    <td><%= hmm_result_row.domnumest_clu %></td>
+    <td><%= hmm_result_row.domnumest_ov %></td>
+    <td><%= hmm_result_row.domnumest_env %></td>
+    <td><%= hmm_result_row.domnumest_rep %></td>
+    <td><%= hmm_result_row.domnumest_inc %></td>
+    <td><%= link_to 'Show', hmm_result_row %></td>
+    <td><%= link_to 'Edit', edit_hmm_result_row_path(hmm_result_row) %></td>
+    <td><%= link_to 'Destroy', hmm_result_row, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Hmm result row', new_hmm_result_row_path %>

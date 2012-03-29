@@ -12,9 +12,10 @@ FactoryGirl.define do
   end
     
   
-  factory :result do
-    sequence(:date) { |n| "#{n}"}
-    profile
+  factory :hmm_result do
+    sequence(:executed) { |n| "#{n}"}
+    hmm_profile
+    sequence_db
   end
 
   factory :resultRow do

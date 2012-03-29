@@ -1,0 +1,85 @@
+<%= form_for(@hmm_result_row) do |f| %>
+  <% if @hmm_result_row.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@hmm_result_row.errors.count, "error") %> prohibited this hmm_result_row from being saved:</h2>
+
+      <ul>
+      <% @hmm_result_row.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :target_name %><br />
+    <%= f.text_field :target_name %>
+  </div>
+  <div class="field">
+    <%= f.label :target_acc %><br />
+    <%= f.text_field :target_acc %>
+  </div>
+  <div class="field">
+    <%= f.label :query_name %><br />
+    <%= f.text_field :query_name %>
+  </div>
+  <div class="field">
+    <%= f.label :query_acc %><br />
+    <%= f.text_field :query_acc %>
+  </div>
+  <div class="field">
+    <%= f.label :fullseq_evalue %><br />
+    <%= f.text_field :fullseq_evalue %>
+  </div>
+  <div class="field">
+    <%= f.label :fullseq_score %><br />
+    <%= f.text_field :fullseq_score %>
+  </div>
+  <div class="field">
+    <%= f.label :fullseq_bias %><br />
+    <%= f.text_field :fullseq_bias %>
+  </div>
+  <div class="field">
+    <%= f.label :bestdom_evalue %><br />
+    <%= f.text_field :bestdom_evalue %>
+  </div>
+  <div class="field">
+    <%= f.label :bestdom_score %><br />
+    <%= f.text_field :bestdom_score %>
+  </div>
+  <div class="field">
+    <%= f.label :bestdom_bias %><br />
+    <%= f.text_field :bestdom_bias %>
+  </div>
+  <div class="field">
+    <%= f.label :domnumest_exp %><br />
+    <%= f.text_field :domnumest_exp %>
+  </div>
+  <div class="field">
+    <%= f.label :domnumest_reg %><br />
+    <%= f.number_field :domnumest_reg %>
+  </div>
+  <div class="field">
+    <%= f.label :domnumest_clu %><br />
+    <%= f.number_field :domnumest_clu %>
+  </div>
+  <div class="field">
+    <%= f.label :domnumest_ov %><br />
+    <%= f.number_field :domnumest_ov %>
+  </div>
+  <div class="field">
+    <%= f.label :domnumest_env %><br />
+    <%= f.number_field :domnumest_env %>
+  </div>
+  <div class="field">
+    <%= f.label :domnumest_rep %><br />
+    <%= f.number_field :domnumest_rep %>
+  </div>
+  <div class="field">
+    <%= f.label :domnumest_inc %><br />
+    <%= f.number_field :domnumest_inc %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

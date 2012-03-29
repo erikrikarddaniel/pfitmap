@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120328150515) do
+ActiveRecord::Schema.define(:version => 20120329060021) do
 
   create_table "hmm_profiles", :force => true do |t|
     t.string   "name"
@@ -20,6 +20,29 @@ ActiveRecord::Schema.define(:version => 20120328150515) do
     t.integer  "parent_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "hmm_result_rows", :force => true do |t|
+    t.string   "target_name"
+    t.string   "target_acc"
+    t.string   "query_name"
+    t.string   "query_acc"
+    t.float    "fullseq_evalue"
+    t.float    "fullseq_score"
+    t.float    "fullseq_bias"
+    t.float    "bestdom_evalue"
+    t.float    "bestdom_score"
+    t.float    "bestdom_bias"
+    t.float    "domnumest_exp"
+    t.integer  "domnumest_reg"
+    t.integer  "domnumest_clu"
+    t.integer  "domnumest_ov"
+    t.integer  "domnumest_env"
+    t.integer  "domnumest_rep"
+    t.integer  "domnumest_inc"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.integer  "hmm_result_id"
   end
 
   create_table "hmm_results", :force => true do |t|
@@ -55,11 +78,13 @@ ActiveRecord::Schema.define(:version => 20120328150515) do
   create_table "results", :force => true do |t|
     t.date     "date"
     t.integer  "profile_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.integer  "sequence_id"
   end
 
   add_index "results", ["profile_id"], :name => "index_results_on_profile_id"
+  add_index "results", ["sequence_id"], :name => "index_results_on_sequence_id"
 
   create_table "sequence_dbs", :force => true do |t|
     t.string   "source"
