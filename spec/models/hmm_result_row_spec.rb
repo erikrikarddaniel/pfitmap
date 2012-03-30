@@ -31,8 +31,8 @@ describe HmmResultRow do
   let(:profile) { FactoryGirl.create(:hmm_profile) }
   let(:sequence_db) { FactoryGirl.create(:sequence_db) }
   let(:result) { FactoryGirl.create(:hmm_result, hmm_profile: profile) }
-  # let(:sequence) { FactoryGirl.create(:sequence) }
-  #let(:result_row) { FactoryGirl.create(:hmm_result_row, result: result) }
+  let(:db_hit) { FactoryGirl.create(:hmm_db_hit) }
+  let(:result_row) { FactoryGirl.create(:hmm_result_row, hmm_result: result) }
   before do 
       @resultrow = HmmResultRow.new(hmm_result_id: result.id)
   end
@@ -63,15 +63,14 @@ describe HmmResultRow do
   end
 
   describe "with a sequence association" do
-    pending "should be fixed when the sequence table is up"
-#    before do
-#      @relation = ResultRowsSequence.new(sequence_id: sequence.id, result_row_id: result_row.id)
-#      @relation.save
-#    end
-#    subject{ result_row }
-#    its( :result_rows_sequences ) { should_not be_empty }
-#    its( :result_rows_sequences ) { should include(@relation) }
-#    its( :sequences) { should_not be_empty }
-#    its( :sequences) { should include(sequence) }
+    before do
+      @relation = HmmResultRowsHmmDbHit.new(hmm_db_hit_id: db_hit.id, hmm_result_row_id: result_row.id)
+      @relation.save
+    end
+    subject{ result_row }
+    its( :hmm_result_rows_hmm_db_hits ) { should_not be_empty }
+    its( :hmm_result_rows_hmm_db_hits ) { should include(@relation) }
+    its( :hmm_db_hits) { should_not be_empty }
+    its( :hmm_db_hits) { should include(db_hit) }
   end
 end
