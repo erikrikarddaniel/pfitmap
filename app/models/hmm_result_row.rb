@@ -27,5 +27,7 @@
 
 class HmmResultRow < ActiveRecord::Base
   belongs_to :hmm_result
+  has_many :hmm_db_hits, :through => :hmm_result_rows_hmm_db_hits
+  has_many :hmm_result_rows_hmm_db_hits
   validates :hmm_result_id, presence: true
 end

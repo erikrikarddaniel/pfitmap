@@ -12,6 +12,7 @@
 #
 
 class HmmDbHit < ActiveRecord::Base
-  has_and_belongs_to_many :hmm_result_rows
+  has_many :hmm_result_rows, :through => :hmm_result_rows_hmm_db_hits
+  has_many :hmm_result_rows_hmm_db_hits
   validates :gi, presence: true
 end
