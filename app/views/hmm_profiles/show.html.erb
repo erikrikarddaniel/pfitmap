@@ -1,25 +1,42 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <b>Name:</b>
-  <%= @hmm_profile.name %>
-</p>
-
-<p>
-  <b>Version:</b>
-  <%= @hmm_profile.version %>
-</p>
-
-<p>
-  <b>Hierarchy:</b>
-  <%= @hmm_profile.hierarchy %>
-</p>
-
-<p>
-  <b>Parent hmm profile:</b>
-  <%= @hmm_profile.parent_hmm_profile_id %>
-</p>
-
-
-<%= link_to 'Edit', edit_hmm_profile_path(@hmm_profile) %> |
-<%= link_to 'Back', hmm_profiles_path %>
+<% provide(:title, @hmm_profile.name) %>
+<div class="row">
+  <aside class="span4">
+    <section>
+      <h1>
+	<%= @hmm_profile.name %>
+      </h1>
+      
+      <p>
+	<b>Version:</b>
+	<%= @hmm_profile.version %>
+      </p>
+      
+      <p>
+	<b>Hierarchy:</b>
+	<%= @hmm_profile.hierarchy %>
+      </p>
+      
+      <p>
+	<b>Parent hmm profile:</b>
+	<%= @hmm_profile.parent_id %>
+      </p>
+      
+      
+      <%= link_to 'Edit', edit_hmm_profile_path(@hmm_profile) %> |
+      <%= link_to 'Back', hmm_profiles_path %>
+      
+    </section>
+  </aside>
+  <div class="span8">
+    <% if @hmm_profile.hmm_results.any? %>
+    <h3>Results (<%= @hmm_profile.hmm_results.count %>)</h3>
+    <ol class="results">
+      <%= render @results %>
+    </ol>
+    <%= will_paginate @results %>
+    <% end %>
+    <% else %>
+    <h3>No results registered</h3>
+    <%= link_to 'Register new result', new_hmm_result_path %>
+  </div>
+</div>

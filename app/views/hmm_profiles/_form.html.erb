@@ -1,33 +1,24 @@
 <%= form_for(@hmm_profile) do |f| %>
-  <% if @hmm_profile.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@hmm_profile.errors.count, "error") %> prohibited this hmm_profile from being saved:</h2>
+<%= render 'shared/error_messages_profile' %>
 
-      <ul>
-      <% @hmm_profile.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
 
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :version %><br />
-    <%= f.text_field :version %>
-  </div>
-  <div class="field">
-    <%= f.label :hierarchy %><br />
-    <%= f.text_field :hierarchy %>
-  </div>
-  <div class="field">
-    <%= f.label :parent_hmm_profile_id %><br />
-    <%= f.number_field :parent_hmm_profile_id %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+<div class="field">
+  <%= f.label :name %><br />
+  <%= f.text_field :name %>
+</div>
+<div class="field">
+  <%= f.label :version %><br />
+  <%= f.text_field :version %>
+</div>
+<div class="field">
+  <%= f.label :hierarchy %><br />
+  <%= f.text_field :hierarchy %>
+</div>
+<div class="field">
+  <%= f.label :parent_id %><br />
+  <%= f.number_field :parent_id %>
+</div>
+
+<%= f.submit "Create Profile", :class => "btn btn-large btn-primary"%>
+
 <% end %>

@@ -1,28 +1,16 @@
+<% provide(:title, 'HMM Profiles') %>
 <h1>Listing hmm_profiles</h1>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Version</th>
-    <th>Hierarchy</th>
-    <th>Parent hmm profile</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
+<ul class="profiles">
 <% @hmm_profiles.each do |hmm_profile| %>
-  <tr>
-    <td><%= hmm_profile.name %></td>
-    <td><%= hmm_profile.version %></td>
-    <td><%= hmm_profile.hierarchy %></td>
-    <td><%= hmm_profile.parent_hmm_profile_id %></td>
-    <td><%= link_to 'Show', hmm_profile %></td>
-    <td><%= link_to 'Edit', edit_hmm_profile_path(hmm_profile) %></td>
-    <td><%= link_to 'Destroy', hmm_profile, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
+  <li>
+    <%= link_to hmm_profile.name, hmm_profile%>
+    <%= hmm_profile.hierarchy %>
+    <%= hmm_profile.parent_id %>
+    <%= link_to 'Edit', edit_hmm_profile_path(hmm_profile) %>
+    <%= link_to 'Destroy', hmm_profile, confirm: 'Are you sure?', method: :delete %>
+  </ul>
 <% end %>
-</table>
 
 <br />
 

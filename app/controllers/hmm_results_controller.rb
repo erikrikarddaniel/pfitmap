@@ -3,7 +3,6 @@ class HmmResultsController < ApplicationController
   # GET /hmm_results.json
   def index
     @hmm_results = HmmResult.all
-
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @hmm_results }
@@ -25,7 +24,9 @@ class HmmResultsController < ApplicationController
   # GET /hmm_results/new.json
   def new
     @hmm_result = HmmResult.new
-
+    @profiles = HmmProfile.all
+    @sequence_dbs = SequenceDb.all
+    
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @hmm_result }
