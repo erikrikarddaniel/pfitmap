@@ -1,5 +1,10 @@
+<%= provide(:title, 'Add a Result') %>
 <h1>New hmm_result</h1>
 
-<%= render 'form' %>
+<div class="row">
+  <div class="span6 offset3">
+    <%= render 'form' %>
+  </div>
+</div>
 
 <%= link_to 'Back', hmm_results_path %>

@@ -1,25 +1,21 @@
 <%= form_for(@hmm_result) do |f| %>
-  <% if @hmm_result.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@hmm_result.errors.count, "error") %> prohibited this hmm_result from being saved:</h2>
+<%= render 'shared/error_messages_result' %>
 
-      <ul>
-      <% @hmm_result.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+<div class="field">
+  <%= f.label :sequence_db, "Sequence database"%><br />
+  <%= f.collection_select(:sequence_db, @sequence_dbs, :id, :name) %>
+</div>
 
-  <div class="field">
-    <%= f.label :executed %><br />
-    <%= f.datetime_select :executed %>
-  </div>
-  <div class="field">
-    <%= f.label :result_db %><br />
-    <%= f.text_field :result_db %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+<div>
+<%= f.label :profile_id, "HMM Profile" %>
+<%= f.collection_select(:hmm_profile, @profiles, :id, :name) %>
+</div>
+
+<div class="field">
+  <%= f.label :file, "Choose a file containing your hmm-results" %>
+  <%= f.file_field :file %>
+</div>
+<div class="actions">
+  <%= f.submit "Create Sequence", :class => "btn btn-large btn-primary"%>
+</div>
 <% end %>
