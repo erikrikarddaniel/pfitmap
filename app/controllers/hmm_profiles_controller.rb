@@ -14,7 +14,8 @@ class HmmProfilesController < ApplicationController
   # GET /hmm_profiles/1.json
   def show
     @hmm_profile = HmmProfile.find(params[:id])
-
+    @hmm_results = @hmm_profile.hmm_results.paginate(page: params[:page])
+    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @hmm_profile }
