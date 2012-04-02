@@ -21,6 +21,7 @@ describe HmmResult do
   
   it { should respond_to(:executed) }
   it { should respond_to(:sequence_db_id) }
+  it { should respond_to(:hmm_result_rows) }
   it { should respond_to(:hmm_profile_id) }
   it { should respond_to(:hmm_profile) }
   its(:hmm_profile) { should == profile }

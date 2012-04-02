@@ -19,12 +19,20 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe HmmResultsController do
-
+  before(:each) do
+    @hmm_profile = FactoryGirl.create(:hmm_profile) 
+    @sequence_db = FactoryGirl.create(:sequence_db)
+    @bulk_tblout = fixture_file_upload('/sample.tblout')
+  end
   # This should return the minimal set of attributes required to create a valid
   # HmmResult. As you add validations to HmmResult, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {}
+    {
+      :executed => 1.day.ago,
+      :hmm_profile => @hmm_profile,
+      :sequence_db => @sequence_db
+    }
   end
   
   # This should return the minimal set of values that should be in the session
@@ -79,6 +87,15 @@ describe HmmResultsController do
         assigns(:hmm_result).should be_persisted
       end
 
+      it "creates new HmmResult object from a tblout-line from a hmmer run" do
+        expect {
+          post :create, {:hmm_result => valid_attributes.merge(
+                                                               :file => @bulk_tblout
+                                                               )
+          }
+        }.to change(HmmResult, :count).by(1)
+      end
+      
       it "redirects to the created hmm_result" do
         post :create, {:hmm_result => valid_attributes}, valid_session
         response.should redirect_to(HmmResult.last)
