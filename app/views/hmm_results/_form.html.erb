@@ -3,12 +3,12 @@
 
 <div class="field">
   <%= f.label :sequence_db, "Sequence database"%><br />
-  <%= f.collection_select(:sequence_db, @sequence_dbs, :id, :name) %>
+  <%= f.collection_select(:sequence_db_id, @sequence_dbs, :id, :name) %>
 </div>
 
 <div>
 <%= f.label :profile_id, "HMM Profile" %>
-<%= f.collection_select(:hmm_profile, @profiles, :id, :name) %>
+<%= f.collection_select(:hmm_profile_id, @profiles, :id, :name) %>
 </div>
 
 <div class="field">
