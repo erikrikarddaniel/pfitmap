@@ -13,7 +13,8 @@ class HmmResultsController < ApplicationController
   # GET /hmm_results/1.json
   def show
     @hmm_result = HmmResult.find(params[:id])
-
+    @hmm_result_rows = @hmm_result.hmm_result_rows.paginate(page: params[:page])
+    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @hmm_result }
@@ -41,14 +42,20 @@ class HmmResultsController < ApplicationController
   # POST /hmm_results
   # POST /hmm_results.json
   def create
+    @profiles = HmmProfile.all
     # Squirrel away the file parameter to avoid problems when creating the result object
     file = params[:hmm_result].delete(:file)
-    
-    @hmm_result = HmmResult.new(params[:hmm_result], :executed => File.mtime(file.path))
-
+    if file
+      @hmm_result = HmmResult.new(params[:hmm_result].merge(:executed => File.mtime(file.path)))
+      logger.debug "Logging hmm_results attributes #{@hmm_result.attributes.inspect}"
+      logger.debug "Logging hmm_results params #{params[:hmm_result]}"
+      logger.debug "Logging File mtime  #{File.mtime(file.path)}"
+    else
+      @hmm_result = HmmResult.new(params[:hmm_result].merge(:executed => 100.years.ago))
+    end
     respond_to do |format|
       if @hmm_result.save
-        parse_results(@result,file) if file
+        parse_results(@hmm_result,file) if file
         format.html { redirect_to @hmm_result, notice: 'Hmm result was successfully created.' }
         format.json { render json: @hmm_result, status: :created, location: @hmm_result }
       else
@@ -59,10 +66,15 @@ class HmmResultsController < ApplicationController
   end
 
   def parse_results(result, io)
-    Result.transaction do
-      io.read.each do |line|
+    logger.debug "Logging Entering parsing"
+    HmmResult.transaction do
+      logger.debug "Logging Inside transaction"
+      io.each_line do |line|
+        logger.debug "Logging one line before chomp"
         line.chomp!
+        logger.debug "Logging one line before fields"
         fields = line.split(/\s+/)
+        logger.debug "Logging the fields #{fields}"
         hmm_result_row = result.hmm_result_rows.create(
                                                        :target_name => fields[0],
                                                        :target_acc => ( fields[1] == '-' ? fields[0].split('|')[2..3].join(':') : fields[1] ),
