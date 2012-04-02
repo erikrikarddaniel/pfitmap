@@ -28,15 +28,16 @@
     </section>
   </aside>
   <div class="span8">
-    <% if @hmm_profile.hmm_results.any? %>
-    <h3>Results (<%= @hmm_profile.hmm_results.count %>)</h3>
+    <% if @hmm_results.any? %>
+    <h3>Results (<%= @hmm_results.count %>)</h3>
     <ol class="results">
-      <%= render @results %>
+      <%= render @hmm_results %>
     </ol>
-    <%= will_paginate @results %>
-    <% end %>
+    <%= will_paginate @hmm_results %>
     <% else %>
     <h3>No results registered</h3>
+    <%= @hmm_profile.hmm_results.count %>
     <%= link_to 'Register new result', new_hmm_result_path %>
+    <% end %>
   </div>
 </div>
