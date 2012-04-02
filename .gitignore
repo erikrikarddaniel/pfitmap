@@ -20,3 +20,5 @@
 
 # Ignore database settings file
 /config/database.yml
+
+Gemfile.lock
