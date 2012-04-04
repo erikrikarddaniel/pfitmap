@@ -1,15 +1,40 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <b>Executed:</b>
-  <%= @hmm_result.executed %>
-</p>
-
-<p>
-  <b>Result db:</b>
-  <%= @hmm_result.result_db %>
-</p>
-
-
+<% provide(:title, @hmm_result.hmm_profile.name) %>
+<div class="row">
+  <aside class="span4">
+    <section>
+      <h1>
+	<%= @hmm_result.hmm_profile.name %>
+      </h1>
+      <h2>
+	HMM-Result
+      </h2>
+      <p>
+	<b>Executed:</b>
+	<%= @hmm_result.executed.year.to_s %>
+      </p>
+      
+      <p>
+	<b>Result db:</b>
+	<%= @hmm_result.sequence_db.name %>
+      </p>
+      
+      <p>
+	<b>Hmm Profile:</b>
+	<%= @hmm_result.hmm_profile.name %>
+      </p>
+    </section>
+  </aside>
+  <div class="span8">
+    <% if @hmm_result.hmm_result_rows.any? %>
+    <h3> Listing HMM result-rows (<%= @hmm_result.hmm_result_rows.count %>)</h3>
+    <ol class="result-rows">
+      <%= render @hmm_result_rows%>
+    </ol>
+    <%= will_paginate @hmm_result_rows%>
+    <% end %> 
+  </div>
+ 
 <%= link_to 'Edit', edit_hmm_result_path(@hmm_result) %> |
 <%= link_to 'Back', hmm_results_path %>
+
+</div>

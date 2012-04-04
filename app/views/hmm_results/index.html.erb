@@ -1,5 +1,11 @@
-<h1>Listing hmm_results</h1>
-
+<% provide(:title, "Hmm Results") %>
+<div class="row">
+  <aside class="span4">
+    <section>
+      <h1>Listing hmm_results</h1>
+    </section>
+  </aside>
+  <div class="span8">
 <table>
   <tr>
     <th>Executed</th>
@@ -11,8 +17,13 @@
 
 <% @hmm_results.each do |hmm_result| %>
   <tr>
-    <td><%= hmm_result.executed %></td>
-    <td><%= hmm_result.result_db %></td>
+    <td>
+      <% if not hmm_result.executed.nil? %>
+      <%= hmm_result.executed.to_formatted_s(:long) %>
+      <% end %>
+    </td>
+    <td><%= hmm_result.sequence_db.source.to_s %>:
+      <%= hmm_result.sequence_db.name.to_s %></td>
     <td><%= link_to 'Show', hmm_result %></td>
     <td><%= link_to 'Edit', edit_hmm_result_path(hmm_result) %></td>
     <td><%= link_to 'Destroy', hmm_result, confirm: 'Are you sure?', method: :delete %></td>
@@ -23,3 +34,4 @@
 <br />
 
 <%= link_to 'New Hmm result', new_hmm_result_path %>
+</div>
