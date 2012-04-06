@@ -28,7 +28,7 @@
     </section>
   </aside>
   <div class="span8">
-    <% if @hmm_results.any? %>
+    <% if @hmm_profile.hmm_results.any? %>
     <h3>Results (<%= @hmm_results.count %>)</h3>
     <ol class="results">
       <%= render @hmm_results %>
