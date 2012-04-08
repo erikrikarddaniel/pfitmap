@@ -69,46 +69,54 @@ class HmmResultsController < ApplicationController
     logger.debug "Logging Entering parsing"
     HmmResult.transaction do
       logger.debug "Logging Inside transaction"
-      io.each_line do |line|
-        logger.debug "Logging one line before chomp"
-        line.chomp!
-        logger.debug "Logging one line before fields"
-        fields = line.split(/\s+/)
-        logger.debug "Logging the fields #{fields}"
-        hmm_result_row = result.hmm_result_rows.create(
-                                                       :target_name => fields[0],
-                                                       :target_acc => ( fields[1] == '-' ? fields[0].split('|')[2..3].join(':') : fields[1] ),
-                                                       :query_name => fields[2],
-                                                       :query_acc => fields[3],
-                                                       :fullseq_evalue => fields[4].to_f,
-                                                       :fullseq_score => fields[5].to_f,
-                                                       :fullseq_bias => fields[6].to_f,
-                                                       :bestdom_evalue => fields[7].to_f,
-                                                       :bestdom_score => fields[8].to_f,
-                                                       :bestdom_bias => fields[9].to_f,
-                                                       :domnumest_exp => fields[10].to_f,
-                                                       :domnumest_reg => fields[11].to_i,
-                                                       :domnumest_clu => fields[12].to_i,
-                                                       :domnumest_ov => fields[13].to_i,
-                                                       :domnumest_env => fields[14].to_i,
-                                                       :domnumest_dom => fields[15].to_i,
-                                                       :domnumest_rep => fields[16].to_i,
-                                                       :domnumest_inc => fields[17].to_i
-                                                       )
-        all_names = "#{fields[0]} #{fields[17..-1].join(" ")}"
-        separate_entries=all_names.split(/\001/)
-        separate_entries.each do |f|
-          entry_fields=f.split("|")
-          if present_db_hit = HmmDbHit.find(:gi => entry_fields[1].to_i)
-            HmmDbHitsHmmResult.create(:db_hit_id => present_db_hit.id, :result_row_id => hmm_result_row.id )
-          else            
-            hmmdbhit = HMMDBHit.create!(
-                                        :gi => entry_fields[1].to_i,
-                                        :db => entry_fields[2],
-                                        :acc => entry_fields[3],
-                                        :desc => entry_fields[4]
-                                        )
-            HMMDBHitsHMMResult.create!(:db_hit_id => hmmdbhit.id, :result_row_id => hmm_result_row.id )
+      logger.debug "Logging length of io.read #{io.read.length}"
+      logger.debug "Logging number of newlines #{io.read.count("\n")}"
+      logger.debug "Logging class of io.read.each_line #{io.read.each_line.class}"
+      logger.debug "Logging first 100 chars: pending}"
+      File.open("#{io.path}", "r").each_with_index do |line, index|
+        # skip header
+        if index > 2
+          logger.debug "Logging one line before chomp"
+          line.chomp!
+          logger.debug "Logging one line before fields"
+          fields = line.split(/\s+/)
+          logger.debug "Logging the fields #{fields}"
+          hmm_result_row = result.hmm_result_rows.create(
+                                                         :target_name => fields[0],
+                                                         :target_acc => ( fields[1] == '-' ? fields[0].split('|')[2..3].join(':') : fields[1] ),
+                                                         :query_name => fields[2],
+                                                         :query_acc => fields[3],
+                                                         :fullseq_evalue => fields[4].to_f,
+                                                         :fullseq_score => fields[5].to_f,
+                                                         :fullseq_bias => fields[6].to_f,
+                                                         :bestdom_evalue => fields[7].to_f,
+                                                         :bestdom_score => fields[8].to_f,
+                                                         :bestdom_bias => fields[9].to_f,
+                                                         :domnumest_exp => fields[10].to_f,
+                                                         :domnumest_reg => fields[11].to_i,
+                                                         :domnumest_clu => fields[12].to_i,
+                                                         :domnumest_ov => fields[13].to_i,
+                                                         :domnumest_env => fields[14].to_i,
+                                                         #:domnumest_env => fields[15].to_i,
+                                                         :domnumest_rep => fields[16].to_i,
+                                                         :domnumest_inc => fields[17].to_i
+                                                         )
+          all_names = "#{fields[0]} #{fields[17..-1].join(" ")}"
+          separate_entries=all_names.split(/\001/)
+          separate_entries.each do |f|
+            entry_fields=f.split("|")
+            present_db_hit = HmmDbHit.find_by_gi(entry_fields[1].to_i)
+            if present_db_hit
+              HmmResultRowsHmmDbHit.create(:hmm_db_hit_id => present_db_hit.id, :hmm_result_row_id => hmm_result_row.id )
+            else            
+              hmmdbhit = HmmDbHit.create!(
+                                          :gi => entry_fields[1].to_i,
+                                          :db => entry_fields[2],
+                                          :acc => entry_fields[3],
+                                          :desc => entry_fields[4]
+                                          )
+              HmmResultRowsHmmDbHit.create!(:hmm_db_hit_id => hmmdbhit.id, :hmm_result_row_id => hmm_result_row.id )
+            end
           end
         end
       end
