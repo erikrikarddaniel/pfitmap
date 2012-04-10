@@ -14,7 +14,8 @@ class HmmResultRowsController < ApplicationController
   # GET /hmm_result_rows/1.json
   def show
     @hmm_result_row = HmmResultRow.find(params[:id])
-
+    @hmm_db_hits = @hmm_result_row.hmm_db_hits.paginate(page: params[:page])
+    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @hmm_result_row }

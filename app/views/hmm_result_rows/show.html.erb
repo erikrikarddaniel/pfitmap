@@ -8,100 +8,106 @@
       <h2>
 	HMM-Result
       </h2>
-<div class="span8">
-  <h3> Result Row Info</h3>
-  
-  <p>
-      <b>Target name:</b>
-      <%= @hmm_result_row.target_name %>
-  </p>
-  
-  <p>
-    <b>Target acc:</b>
-    <%= @hmm_result_row.target_acc %>
-  </p>
-  
-  <p>
-    <b>Query name:</b>
-    <%= @hmm_result_row.query_name %>
-  </p>
-  
-  <p>
-    <b>Query acc:</b>
-    <%= @hmm_result_row.query_acc %>
-  </p>
-  
-  <p>
-    <b>Fullseq evalue:</b>
-    <%= @hmm_result_row.fullseq_evalue %>
-  </p>
-  
-  <p>
-    <b>Fullseq score:</b>
-    <%= @hmm_result_row.fullseq_score %>
-  </p>
-  
-  <p>
-    <b>Fullseq bias:</b>
-    <%= @hmm_result_row.fullseq_bias %>
-  </p>
-  
-  <p>
-    <b>Bestdom evalue:</b>
-    <%= @hmm_result_row.bestdom_evalue %>
-  </p>
-  
-  <p>
-    <b>Bestdom score:</b>
-    <%= @hmm_result_row.bestdom_score %>
-  </p>
-  
-  <p>
-    <b>Bestdom bias:</b>
-    <%= @hmm_result_row.bestdom_bias %>
-  </p>
-  
-  <p>
-    <b>Domnumest exp:</b>
-    <%= @hmm_result_row.domnumest_exp %>
-  </p>
-  
-  <p>
-    <b>Domnumest reg:</b>
-    <%= @hmm_result_row.domnumest_reg %>
-  </p>
-  
-  <p>
-    <b>Domnumest clu:</b>
-    <%= @hmm_result_row.domnumest_clu %>
-  </p>
-  
-  <p>
-    <b>Domnumest ov:</b>
-    <%= @hmm_result_row.domnumest_ov %>
-  </p>
-  
-  <p>
-    <b>Domnumest env:</b>
-    <%= @hmm_result_row.domnumest_env %>
-  </p>
-  
-  <p>
-    <b>Domnumest rep:</b>
-    <%= @hmm_result_row.domnumest_rep %>
-  </p>
-  
-  <p>
-    <b>Domnumest inc:</b>
-    <%= @hmm_result_row.domnumest_inc %>
-  </p>
-   
-  <%= link_to 'Edit', edit_hmm_result_row_path(@hmm_result_row) %> |
-  <%= link_to 'Back', hmm_result_rows_path %> 
+      
+      <h3> Result Row Info</h3>
+      
+      <p>
+	<b>Target name:</b>
+	<%= @hmm_result_row.target_name %>
+      </p>
+      
+      <p>
+	<b>Target acc:</b>
+	<%= @hmm_result_row.target_acc %>
+      </p>
+      
+      <p>
+	<b>Query name:</b>
+	<%= @hmm_result_row.query_name %>
+      </p>
+      
+      <p>
+	<b>Query acc:</b>
+	<%= @hmm_result_row.query_acc %>
+      </p>
+      
+      <p>
+	<b>Fullseq evalue:</b>
+	<%= @hmm_result_row.fullseq_evalue %>
+      </p>
+      
+      <p>
+	<b>Fullseq score:</b>
+	<%= @hmm_result_row.fullseq_score %>
+      </p>
+      
+      <p>
+	<b>Fullseq bias:</b>
+	<%= @hmm_result_row.fullseq_bias %>
+      </p>
+      
+      <p>
+	<b>Bestdom evalue:</b>
+	<%= @hmm_result_row.bestdom_evalue %>
+      </p>
+      
+      <p>
+	<b>Bestdom score:</b>
+	<%= @hmm_result_row.bestdom_score %>
+      </p>
+      
+      <p>
+	<b>Bestdom bias:</b>
+	<%= @hmm_result_row.bestdom_bias %>
+      </p>
+      
+      <p>
+	<b>Domnumest exp:</b>
+	<%= @hmm_result_row.domnumest_exp %>
+      </p>
+      
+      <p>
+	<b>Domnumest reg:</b>
+	<%= @hmm_result_row.domnumest_reg %>
+      </p>
+      
+      <p>
+	<b>Domnumest clu:</b>
+	<%= @hmm_result_row.domnumest_clu %>
+      </p>
+      
+      <p>
+	<b>Domnumest ov:</b>
+	<%= @hmm_result_row.domnumest_ov %>
+      </p>
+      
+      <p>
+	<b>Domnumest env:</b>
+	<%= @hmm_result_row.domnumest_env %>
+      </p>
+      
+      <p>
+	<b>Domnumest rep:</b>
+	<%= @hmm_result_row.domnumest_rep %>
+      </p>
+      
+      <p>
+	<b>Domnumest inc:</b>
+	<%= @hmm_result_row.domnumest_inc %>
+      </p>
+      
+      <%= link_to 'Edit', edit_hmm_result_row_path(@hmm_result_row) %> |
+      <%= link_to 'Back', hmm_result_rows_path %> 
     </section>
-   </aside>
-</div>
-<div class="span8"> 
-  <h3> Listing HMM database hits </h3>
+  </aside>
   
+  <div class="span8"> 
+    <%  if @hmm_result_row.hmm_db_hits.any? %>
+    <h3> Listing HMM database hits </h3>
+    <ol class="hmm_db_hits" >
+      <%= render @hmm_db_hits %>
+    </ol>
+    <%= will_paginate @hmm_db_hits%>
+    <% end %>
+  </div>
 </div>
