@@ -73,4 +73,10 @@ describe HmmResultRow do
     its( :hmm_db_hits) { should_not be_empty }
     its( :hmm_db_hits) { should include(db_hit) }
   end
+
+  describe "calculation of best hit" do
+    before do
+      @hmmp001 = FactoryGirl.create(:hmm_profile001)
+      @hmmp00100 = FactoryGirl.create(:hmm_profile00100, parent: @hmmp001)
+    end
 end
