@@ -30,8 +30,8 @@ describe HmmResultsController do
   def valid_attributes
     {
       :executed => 1.day.ago,
-      :hmm_profile => @hmm_profile,
-      :sequence_db => @sequence_db
+      :hmm_profile_id => @hmm_profile,
+      :sequence_db_id => @sequence_db
     }
   end
   
@@ -75,92 +75,39 @@ describe HmmResultsController do
 
   describe "POST create" do
     describe "with valid params" do
-      it "creates a new HmmResult" do
+      it "creates new HmmResult object from a tblout-line from a hmmer run" do
         expect {
-          post :create, {:hmm_result => valid_attributes}, valid_session
+          post :create, {:hmm_result => valid_attributes.merge( :file => @bulk_tblout) }
         }.to change(HmmResult, :count).by(1)
       end
-
+      
       it "assigns a newly created hmm_result as @hmm_result" do
-        post :create, {:hmm_result => valid_attributes}, valid_session
+        post :create, {:hmm_result => valid_attributes.merge(:file => @bulk_tblout)}, valid_session
         assigns(:hmm_result).should be_a(HmmResult)
         assigns(:hmm_result).should be_persisted
       end
 
-      it "creates new HmmResult object from a tblout-line from a hmmer run" do
-        expect {
-          post :create, {:hmm_result => valid_attributes.merge(
-                                                               :file => @bulk_tblout
-                                                               )
-          }
-        }.to change(HmmResult, :count).by(1)
-      end
-      
       it "redirects to the created hmm_result" do
-        post :create, {:hmm_result => valid_attributes}, valid_session
+        post :create, {:hmm_result => valid_attributes.merge(:file => @bulk_tblout)}, valid_session
         response.should redirect_to(HmmResult.last)
       end
     end
 
-    describe "with invalid params" do
-      it "assigns a newly created but unsaved hmm_result as @hmm_result" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        HmmResult.any_instance.stub(:save).and_return(false)
-        post :create, {:hmm_result => {}}, valid_session
-        assigns(:hmm_result).should be_a_new(HmmResult)
-      end
-
-      it "re-renders the 'new' template" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        HmmResult.any_instance.stub(:save).and_return(false)
-        post :create, {:hmm_result => {}}, valid_session
-        response.should render_template("new")
-      end
-    end
-  end
-
-  describe "PUT update" do
-    describe "with valid params" do
-      it "updates the requested hmm_result" do
-        hmm_result = HmmResult.create! valid_attributes
-        # Assuming there are no other hmm_results in the database, this
-        # specifies that the HmmResult created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
-        HmmResult.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, {:id => hmm_result.to_param, :hmm_result => {'these' => 'params'}}, valid_session
-      end
-
-      it "assigns the requested hmm_result as @hmm_result" do
-        hmm_result = HmmResult.create! valid_attributes
-        put :update, {:id => hmm_result.to_param, :hmm_result => valid_attributes}, valid_session
-        assigns(:hmm_result).should eq(hmm_result)
-      end
-
-      it "redirects to the hmm_result" do
-        hmm_result = HmmResult.create! valid_attributes
-        put :update, {:id => hmm_result.to_param, :hmm_result => valid_attributes}, valid_session
-        response.should redirect_to(hmm_result)
-      end
-    end
-
-    describe "with invalid params" do
-      it "assigns the hmm_result as @hmm_result" do
-        hmm_result = HmmResult.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        HmmResult.any_instance.stub(:save).and_return(false)
-        put :update, {:id => hmm_result.to_param, :hmm_result => {}}, valid_session
-        assigns(:hmm_result).should eq(hmm_result)
-      end
-
-      it "re-renders the 'edit' template" do
-        hmm_result = HmmResult.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        HmmResult.any_instance.stub(:save).and_return(false)
-        put :update, {:id => hmm_result.to_param, :hmm_result => {}}, valid_session
-        response.should render_template("edit")
-      end
-    end
+#    describe "with invalid params" do
+#      it "assigns a newly created but unsaved hmm_result as @hmm_result" do
+#        # Trigger the behavior that occurs when invalid params are submitted
+#        HmmResult.any_instance.stub(:save).and_return(false)
+#        post :create, {:hmm_result => {}}, valid_session
+#        assigns(:hmm_result).should be_a_new(HmmResult)
+#      end
+#
+#      it "re-renders the 'new' template" do
+#        # Trigger the behavior that occurs when invalid params are submitted
+#        HmmResult.any_instance.stub(:save).and_return(false)
+#        post :create, {:hmm_result => {}}, valid_session
+#        response.should render_template("new")
+#      end
+#    end
   end
 
   describe "DELETE destroy" do
