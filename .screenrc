@@ -5,9 +5,6 @@ screen -t autotest
 chdir db
 screen -t psql 
 chdir ..
-chdir test
-screen -t test0
-chdir ..
 chdir spec
 screen -t spec
 chdir ..
