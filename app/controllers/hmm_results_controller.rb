@@ -42,16 +42,18 @@ class HmmResultsController < ApplicationController
   # POST /hmm_results
   # POST /hmm_results.json
   def create
-    @profiles = HmmProfile.all
+    warn "******************************************************************"
+    warn "#{__FILE__}:#{__LINE__}: params: #{params.inspect}"
     # Squirrel away the file parameter to avoid problems when creating the result object
     file = params[:hmm_result].delete(:file)
+    hmm_profile = HmmProfile.find(params[:hmm_result].delete(:hmm_profile_id))
     if file
-      @hmm_result = HmmResult.new(params[:hmm_result].merge(:executed => File.mtime(file.path)))
+      @hmm_result = hmm_profile.hmm_results.new(params[:hmm_result].merge(:executed => File.mtime(file.path)))
       logger.debug "Logging hmm_results attributes #{@hmm_result.attributes.inspect}"
       logger.debug "Logging hmm_results params #{params[:hmm_result]}"
       logger.debug "Logging File mtime  #{File.mtime(file.path)}"
     else
-      @hmm_result = HmmResult.new(params[:hmm_result].merge(:executed => 100.years.ago))
+      @hmm_result = hmm_profile.hmm_results.new(params[:hmm_result].merge(:executed => 101.years.ago))
     end
     respond_to do |format|
       if @hmm_result.save
@@ -119,22 +121,6 @@ class HmmResultsController < ApplicationController
             end
           end
         end
-      end
-    end
-  end
-  
-  # PUT /hmm_results/1
-  # PUT /hmm_results/1.json
-  def update
-    @hmm_result = HmmResult.find(params[:id])
-
-    respond_to do |format|
-      if @hmm_result.update_attributes(params[:hmm_result])
-        format.html { redirect_to @hmm_result, notice: 'Hmm result was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @hmm_result.errors, status: :unprocessable_entity }
       end
     end
   end
