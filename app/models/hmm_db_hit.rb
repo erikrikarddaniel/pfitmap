@@ -12,7 +12,7 @@
 #
 
 class HmmDbHit < ActiveRecord::Base
-  has_many :hmm_result_rows, :through => :hmm_result_rows_hmm_db_hits
-  has_many :hmm_result_rows_hmm_db_hits
+  has_many :hmm_result_rows, :through => :db_sequences
+  has_many :db_sequences
   validates :gi, presence: true
 end
