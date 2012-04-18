@@ -14,9 +14,10 @@
 require 'spec_helper'
 
 describe HmmProfile do
-
+  let(:profile) { FactoryGirl.create(:hmm_profile) }
+  let(:hmm_profile_00101) { FactoryGirl.create(:hmm_profile_00101) }
   before do
-    @profile = HmmProfile.create!(name: "Root HMM Profile", version: "20120328", hierarchy: "000") 
+    @profile = HmmProfile.create!(name: "Root HMM Profile", version: "20120328", hierarchy: "000")
   end
 
   subject { @profile }
@@ -52,5 +53,33 @@ describe HmmProfile do
       )
     end
     it { should be_valid }
+    it {  should respond_to(:name) }
+  end
+  describe "Factories should be able to define profile relationship" do
+    before{@profile_00101 = HmmProfile.find(hmm_profile_00101.id)}
+    subject{@profile_00101}
+    it { should respond_to(:children) }
+    it { should respond_to(:last_parent_id) }
+    it { should_not respond_to(:something_bogus) }
+  end
+end
+
+
+describe "Profiles produced in the factory" do
+  let(:hmm_profile_001) { FactoryGirl.create(:hmm_profile_001) }
+  let(:hmm_profile_00100) { FactoryGirl.create(:hmm_profile_00100, parent: hmm_profile_001) }
+  let(:hmm_profile_00101) { FactoryGirl.create(:hmm_profile_00101, parent: hmm_profile_001) }
+  let(:hmm_profile_0010101){ FactoryGirl.create(:hmm_profile, parent: hmm_profile_00101) }
+  
+  it "should be able to find its last parent" do
+    hmm_profile_0010101.last_parent_id.should == hmm_profile_001.id
+  end
+
+  it "should be able to list their closest children" do
+    hmm_profile_001.children.should include(hmm_profile_00100)
+  end
+
+  it "should be able to list all children" do
+    hmm_profile_001.all_children.should include(hmm_profile_0010101)
   end
 end
