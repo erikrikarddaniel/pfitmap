@@ -9,7 +9,7 @@ describe "HmmResults" do
   let!(:result_row) { FactoryGirl.create(:hmm_result_row, hmm_result: r1) }
   let!(:sequence) { FactoryGirl.create(:hmm_db_hit) }
   before do
-    @relation = HmmResultRowsHmmDbHit.new(hmm_result_row_id: result_row.id, hmm_db_hit_id: sequence.id)
+    @relation = DbSequence.new(hmm_result_row_id: result_row.id, hmm_db_hit_id: sequence.id)
     @relation.save
   end
 

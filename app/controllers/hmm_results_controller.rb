@@ -109,7 +109,7 @@ class HmmResultsController < ApplicationController
             entry_fields=f.split("|")
             present_db_hit = HmmDbHit.find_by_gi(entry_fields[1].to_i)
             if present_db_hit
-              HmmResultRowsHmmDbHit.create(:hmm_db_hit_id => present_db_hit.id, :hmm_result_row_id => hmm_result_row.id )
+              DbSequence.create(:hmm_db_hit_id => present_db_hit.id, :hmm_result_row_id => hmm_result_row.id )
             else            
               hmmdbhit = HmmDbHit.create!(
                                           :gi => entry_fields[1].to_i,
@@ -117,7 +117,7 @@ class HmmResultsController < ApplicationController
                                           :acc => entry_fields[3],
                                           :desc => entry_fields[4]
                                           )
-              HmmResultRowsHmmDbHit.create!(:hmm_db_hit_id => hmmdbhit.id, :hmm_result_row_id => hmm_result_row.id )
+              DbSequence.create!(:hmm_db_hit_id => hmmdbhit.id, :hmm_result_row_id => hmm_result_row.id )
             end
           end
         end

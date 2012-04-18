@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Hmm result row:</b>
+  <%= @db_sequence.hmm_result_row %>
+</p>
+
+<p>
+  <b>Hmm db hit:</b>
+  <%= @db_sequence.hmm_db_hit %>
+</p>
+
+
+<%= link_to 'Edit', edit_db_sequence_path(@db_sequence) %> |
+<%= link_to 'Back', db_sequences_path %>
