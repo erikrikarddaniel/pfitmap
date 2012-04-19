@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe "hmm_result_rows_hmm_db_hits/show" do
+describe "db_sequences/show" do
   before(:each) do
-    @hmm_result_rows_hmm_db_hit = assign(:hmm_result_rows_hmm_db_hit, stub_model(HmmResultRowsHmmDbHit,
+    @db_sequence = assign(:db_sequence, stub_model(DbSequence,
       :hmm_result_row => nil,
       :hmm_db_hit => nil
     ))

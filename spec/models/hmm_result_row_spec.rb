@@ -64,13 +64,20 @@ describe HmmResultRow do
 
   describe "with a sequence association" do
     before do
-      @relation = HmmResultRowsHmmDbHit.new(hmm_db_hit_id: db_hit.id, hmm_result_row_id: result_row.id)
+      @relation = DbSequence.new(hmm_db_hit_id: db_hit.id, hmm_result_row_id: result_row.id)
       @relation.save
     end
     subject{ result_row }
-    its( :hmm_result_rows_hmm_db_hits ) { should_not be_empty }
-    its( :hmm_result_rows_hmm_db_hits ) { should include(@relation) }
+    its( :db_sequences ) { should_not be_empty }
+    its( :db_sequences ) { should include(@relation) }
     its( :hmm_db_hits) { should_not be_empty }
     its( :hmm_db_hits) { should include(db_hit) }
+  end
+
+  describe "calculation of best hit" do
+    before do
+      @hmmp001 = FactoryGirl.create(:hmm_profile001)
+      @hmmp00100 = FactoryGirl.create(:hmm_profile00100, parent: @hmmp001)
+    end
   end
 end

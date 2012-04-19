@@ -29,7 +29,7 @@ describe HmmDbHit do
   it { should respond_to(:acc ) }
   it { should respond_to(:desc) }
   it { should respond_to(:hmm_result_rows) }
-  it { should respond_to(:hmm_result_rows_hmm_db_hits) }
+  it { should respond_to(:db_sequences) }
   it { should be_valid }
 
   describe "should not be valid when gi is not present" do
@@ -43,13 +43,13 @@ describe HmmDbHit do
   
   describe "with an added relation" do
     before do   
-      @relation = HmmResultRowsHmmDbHit.new(hmm_db_hit_id: db_hit.id, hmm_result_row_id: result_row.id)
+      @relation = DbSequence.new(hmm_db_hit_id: db_hit.id, hmm_result_row_id: result_row.id)
       @relation.save
     end
 
     subject { db_hit }
-    its(:hmm_result_rows_hmm_db_hits) { should_not be_empty }
-    its(:hmm_result_rows_hmm_db_hits) { should include(@relation) }
+    its(:db_sequences) { should_not be_empty }
+    its(:db_sequences) { should include(@relation) }
     its(:hmm_result_rows) { should_not be_empty }
     its(:hmm_result_rows) { should include(result_row) }
   end

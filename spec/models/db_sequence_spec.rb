@@ -11,6 +11,6 @@
 
 require 'spec_helper'
 
-describe HmmResultRowsHmmDbHit do
+describe DbSequence do
   pending "add some examples to (or delete) #{__FILE__}"
 end

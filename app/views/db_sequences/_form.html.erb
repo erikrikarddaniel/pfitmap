@@ -1,10 +1,10 @@
-<%= form_for(@hmm_result_rows_hmm_db_hit) do |f| %>
-  <% if @hmm_result_rows_hmm_db_hit.errors.any? %>
+<%= form_for(@db_sequence) do |f| %>
+  <% if @db_sequence.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@hmm_result_rows_hmm_db_hit.errors.count, "error") %> prohibited this hmm_result_rows_hmm_db_hit from being saved:</h2>
+      <h2><%= pluralize(@db_sequence.errors.count, "error") %> prohibited this db_sequence from being saved:</h2>
 
       <ul>
-      <% @hmm_result_rows_hmm_db_hit.errors.full_messages.each do |msg| %>
+      <% @db_sequence.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>
