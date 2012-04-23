@@ -18,13 +18,17 @@ class HmmProfile < ActiveRecord::Base
   validates :name, presence: true
   validates :version, presence: true
   validates :hierarchy, presence: true
+  # An instance method to find the root node for a specific hmm profile.
+  # Calls the recursive function with the id of the current profile.
   def last_parent_id()
     last_parent_recursion(self.id)
   end
-  def all_children()
-    
-  end
   
+  # A class method to pick up all root nodes directly from the database.
+  def self.last_parents()
+    HmmProfile.where("parent_id IS NULL")
+  end
+
   private
   def last_parent_recursion(id)
     parent = HmmProfile.find(id)

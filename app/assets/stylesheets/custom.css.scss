@@ -171,14 +171,14 @@ input, textarea, select, .uneditable-input {
 /* profile index */
 
 .profiles {
-  list-style: none;
+  list-styles: unordered;
   margin: 0;
   li {
     overflow: auto;
-    padding: 10px 0;
-    border-top: 1px solid $grayLighter;
-    &:last-child {
-      border-bottom: 1px solid $grayLighter
+    #padding: 10px 0;
+      &:last-child {
+      padding: 10px 0;
+      #border-bottom: 1px solid $grayLighter
     }
   }
 }

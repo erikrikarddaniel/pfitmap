@@ -79,7 +79,7 @@ describe "Profiles produced in the factory" do
     hmm_profile_001.children.should include(hmm_profile_00100)
   end
 
-  it "should be able to list all children" do
-    hmm_profile_001.all_children.should include(hmm_profile_0010101)
+  it "should be able to list all last parents (root nodes)" do
+    HmmProfile.last_parents().should include(hmm_profile_001)
   end
 end

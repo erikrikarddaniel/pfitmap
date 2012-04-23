@@ -1,7 +1,11 @@
 require 'spec_helper'
 
 describe "Hmm Profile Pages" do
-  
+  # before(:each) do
+  #   @hmm_profile_001 = FactoryGirl.create(:hmm_profile_001)
+  #   @hmm_profile_00100 = FactoryGirl.create(:hmm_profile_00100)
+  # end
+    
   subject { page }
   
   describe "index" do
@@ -18,6 +22,9 @@ describe "Hmm Profile Pages" do
         page.should have_selector('li', text: profile.name)
       end
     end
+    #it "should correctly nest each profile" do
+    #  HmmProfile.all_parents.each do |profile|
+    #    page.should have_selector('
   end
 
   describe "Showing a profile" do

@@ -3,7 +3,8 @@ class HmmProfilesController < ApplicationController
   # GET /hmm_profiles.json
   def index
     @hmm_profiles = HmmProfile.all
-
+    @hmm_profiles_last_parents = HmmProfile.last_parents
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @hmm_profiles }
