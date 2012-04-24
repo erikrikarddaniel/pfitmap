@@ -1,7 +1,7 @@
 namespace :db do
   desc "Fill database with sample data"
   task populate: :environment do
-    #make_hmm_profiles
+    make_hmm_profiles
     make_sequence_db
     # make_hmm_results
     # make_hmm_result_rows
@@ -15,7 +15,7 @@ def make_hmm_profiles
     @hmm_profile_001 = HmmProfile.find_by_hierarchy("001")
     HmmProfile.create!(name: "RNR R2", version: "20120402", hierarchy: "001.00", parent_id: @hmm_profile_001.id)
     HmmProfile.create!(name: "R2lox", version: "20120402", hierarchy: "001.01", parent_id: @hmm_profile_001.id)
-    HmmProfile.create!(name: "RNR R1 and PFL", version: "20120402", hiearchy: "000")
+    HmmProfile.create!(name: "RNR R1 and PFL", version: "20120402", hierarchy: "000")
     
 end
 

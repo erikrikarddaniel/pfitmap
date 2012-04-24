@@ -3,13 +3,17 @@
   <ul>
     <% @hmm_profiles_last_parents.each do |hmm_profile| %>
     <li>
+      <strong>
       <%= link_to hmm_profile.name, hmm_profile%>
-      <%= hmm_profile.hierarchy %>    
+      <%= hmm_profile.hierarchy %>  
+      </strong>
     <ul>
       <% hmm_profile.children.each do |child_profile| %>
       <li>
+	<strong>
       <%= link_to child_profile.name, child_profile%>
       <%= child_profile.hierarchy %>
+	</strong>
       </li>
       <% end %>
     </ul>

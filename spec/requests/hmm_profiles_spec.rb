@@ -48,4 +48,14 @@ describe "Hmm Profile Pages" do
       end
     end
   end
+  describe "Creating new result" do
+    let!(:hmm_profile) { FactoryGirl.create(:hmm_profile) }
+    before do
+      visit hmm_profile_path(hmm_profile)
+      click_button 'Register new result'
+    end
+    it "should lead to the new result page" do
+      page.should have_selector('h1', text: hmm_profile.name) 
+    end
+  end
 end

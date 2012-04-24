@@ -25,7 +25,8 @@ class HmmResultsController < ApplicationController
   # GET /hmm_results/new.json
   def new
     @hmm_result = HmmResult.new
-    @profiles = HmmProfile.all
+    warn "#{__FILE__}#{__LINE__} params: #{params.inspect}"
+    @profile = HmmProfile.find(params[:hmm_profile_id])
     @sequence_dbs = SequenceDb.all
     
     respond_to do |format|

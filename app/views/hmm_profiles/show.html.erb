@@ -36,8 +36,9 @@
     <%= will_paginate @hmm_results %>
     <% else %>
     <h3>No results registered</h3>
-    <%= @hmm_profile.hmm_results.count %>
-    <%= link_to 'Register new result', new_hmm_result_path %>
     <% end %>
+    <div class="span8"
+	 <%= render :partial => 'new_result' %>
+    </div>
   </div>
 </div>

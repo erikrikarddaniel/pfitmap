@@ -1,0 +1,13 @@
+<%= form_for(@hmm_result) do |f| %>
+<div class="span4">
+  <%= f.label :sequence_db, "Sequence database"%><br />
+  <%= f.collection_select(:sequence_db_id, @sequence_dbs, :id, :name) %>
+</div>
+<div class="span4">
+  <%= f.label :file, "Choose a file containing your hmm-results (tblout format)" %>
+  <%= f.file_field :file %>
+</div>
+<div class="action">
+  <%= f.submit "Register new result", class: "btn btn-large" %>
+</div>
+<% end %>

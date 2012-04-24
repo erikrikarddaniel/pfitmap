@@ -11,6 +11,7 @@
 #
 
 class HmmResult < ActiveRecord::Base
+  attr_accessible :sequence_db_id, :executed
   belongs_to :sequence_db
   belongs_to :hmm_profile
   has_many :hmm_result_rows
