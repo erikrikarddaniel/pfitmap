@@ -43,11 +43,11 @@ class HmmResultsController < ApplicationController
   # POST /hmm_results
   # POST /hmm_results.json
   def create
-    warn "******************************************************************"
-    warn "#{__FILE__}:#{__LINE__}: params: #{params.inspect}"
     # Squirrel away the file parameter to avoid problems when creating the result object
     file = params[:hmm_result].delete(:file)
-    hmm_profile = HmmProfile.find(params[:hmm_result].delete(:hmm_profile_id))
+    hmm_profile = params[:hmm_profile_id]
+    warn "********************************************"
+    warn "#{__FILE__} #{__LINE__} params: #{params.inspect}"
     if file
       @hmm_result = hmm_profile.hmm_results.new(params[:hmm_result].merge(:executed => File.mtime(file.path)))
       logger.debug "Logging hmm_results attributes #{@hmm_result.attributes.inspect}"

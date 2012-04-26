@@ -37,8 +37,9 @@
     <% else %>
     <h3>No results registered</h3>
     <% end %>
-    <div class="span8"
-	 <%= render :partial => 'new_result' %>
+    <div class="span8" >
+      <h3>Create a new HMM Result: </h3>
+	 <%= render "hmm_results/form" %>
     </div>
   </div>
 </div>

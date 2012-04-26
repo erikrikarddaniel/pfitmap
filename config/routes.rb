@@ -5,11 +5,14 @@ Pfitmap::Application.routes.draw do
 
   resources :hmm_result_rows
 
-  resources :hmm_results
+  #resources :hmm_results
 
   resources :sequence_dbs
 
-  resources :hmm_profiles
+  resources :hmm_profiles do
+    resources :hmm_results
+  end
+  
 
   root to: "static_pages#home"
   
