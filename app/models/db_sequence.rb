@@ -11,6 +11,7 @@
 #
 
 class DbSequence < ActiveRecord::Base
+  attr_accessible :hmm_result_row_id, :hmm_db_hit_id, :sequence
   belongs_to :hmm_result_row
   belongs_to :hmm_db_hit
 end
