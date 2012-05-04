@@ -48,17 +48,17 @@ describe "Hmm Profile Pages" do
       end
     end
   end
-  describe "Creating new result" do
+  describe "Show Page" do
     let!(:hmm_profile) { FactoryGirl.create(:hmm_profile) }
+    let!(:sequence_db) { FactoryGirl.create(:sequence_db) }
     before do
       #@bulk_tblout = fixture_file_upload('/sample.tblout')
       visit hmm_profile_path(hmm_profile)
-      page.select 'ref', :from => 'Sequence database' 
-      click_button 'Create Result'
+      select('ref', :from => 'hmm_result[sequence_db_id]')
+      click_on 'Create Result'
     end
-    describe "Failure" do
-      subject { page }
-      it { should have_content('error') }
+    it "should be able to create a new HmmResult " do
+      page.should have_content('successfully')
     end
   end
 end

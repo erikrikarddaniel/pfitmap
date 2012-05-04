@@ -5,7 +5,7 @@ Pfitmap::Application.routes.draw do
 
   resources :hmm_result_rows
 
-  resources :hmm_results, only: [:index, :show]
+  resources :hmm_results
 
   resources :sequence_dbs
 

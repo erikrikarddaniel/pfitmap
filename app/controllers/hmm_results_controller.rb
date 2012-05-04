@@ -32,9 +32,6 @@ class HmmResultsController < ApplicationController
     @hmm_profile = HmmProfile.find(params[:hmm_profile_id])
     # Squirrel away the file parameter to avoid problems when creating the result object
     file = params[:hmm_result].delete(:file)
-    #hmm_profile = params[:hmm_profile_id]
-    warn "********************************************"
-    warn "#{__FILE__} #{__LINE__} params: #{params.inspect}"
     if file
       @hmm_result = @hmm_profile.hmm_results.new(params[:hmm_result].merge(:executed => File.mtime(file.path)))
     else
@@ -55,11 +52,6 @@ class HmmResultsController < ApplicationController
   def parse_results(result, io)
     logger.debug "Logging Entering parsing"
     HmmResult.transaction do
-      logger.debug "Logging Inside transaction"
-      logger.debug "Logging length of io.read #{io.read.length}"
-      logger.debug "Logging number of newlines #{io.read.count("\n")}"
-      logger.debug "Logging class of io.read.each_line #{io.read.each_line.class}"
-      logger.debug "Logging first 100 chars: pending}"
       File.open("#{io.path}", "r").each_with_index do |line, index|
         # skip header
         if index > 2
