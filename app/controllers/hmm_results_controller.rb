@@ -21,20 +21,6 @@ class HmmResultsController < ApplicationController
     end
   end
 
-  # GET /hmm_results/new
-  # GET /hmm_results/new.json
-  def new
-    @hmm_result = HmmResult.new
-    warn "#{__FILE__}#{__LINE__} params: #{params.inspect}"
-    @hmm_profile = HmmProfile.find(params[:hmm_profile_id])
-    @sequence_dbs = SequenceDb.all
-    
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @hmm_result }
-    end
-  end
-
   # GET /hmm_results/1/edit
   def edit
     @hmm_result = HmmResult.find(params[:id])
@@ -43,19 +29,16 @@ class HmmResultsController < ApplicationController
   # POST /hmm_results
   # POST /hmm_results.json
   def create
-    
+    @hmm_profile = HmmProfile.find(params[:hmm_profile_id])
     # Squirrel away the file parameter to avoid problems when creating the result object
     file = params[:hmm_result].delete(:file)
-    hmm_profile = params[:hmm_profile_id]
+    #hmm_profile = params[:hmm_profile_id]
     warn "********************************************"
     warn "#{__FILE__} #{__LINE__} params: #{params.inspect}"
     if file
-      @hmm_result = hmm_profile.hmm_results.new(params[:hmm_result].merge(:executed => File.mtime(file.path)))
-      logger.debug "Logging hmm_results attributes #{@hmm_result.attributes.inspect}"
-      logger.debug "Logging hmm_results params #{params[:hmm_result]}"
-      logger.debug "Logging File mtime  #{File.mtime(file.path)}"
+      @hmm_result = @hmm_profile.hmm_results.new(params[:hmm_result].merge(:executed => File.mtime(file.path)))
     else
-      @hmm_result = hmm_profile.hmm_results.new(params[:hmm_result].merge(:executed => 101.years.ago))
+      @hmm_result = @hmm_profile.hmm_results.new(params[:hmm_result].merge(:executed => 101.years.ago))
     end
     respond_to do |format|
       if @hmm_result.save
