@@ -30,7 +30,6 @@ describe HmmResultsController do
   def valid_attributes
     {
       :executed => 1.day.ago,
-      :hmm_profile_id => @hmm_profile,
       :sequence_db_id => @sequence_db
     }
   end
@@ -44,7 +43,7 @@ describe HmmResultsController do
 
   describe "GET index" do
     it "assigns all hmm_results as @hmm_results" do
-      hmm_result = HmmResult.create! valid_attributes
+      hmm_result = @hmm_profile.hmm_results.create! valid_attributes
       get :index, {}, valid_session
       assigns(:hmm_results).should eq([hmm_result])
     end
@@ -52,23 +51,8 @@ describe HmmResultsController do
 
   describe "GET show" do
     it "assigns the requested hmm_result as @hmm_result" do
-      hmm_result = HmmResult.create! valid_attributes
+      hmm_result = @hmm_profile.hmm_results.create! valid_attributes
       get :show, {:id => hmm_result.to_param}, valid_session
-      assigns(:hmm_result).should eq(hmm_result)
-    end
-  end
-
-  describe "GET new" do
-    it "assigns a new hmm_result as @hmm_result" do
-      get :new, {}, valid_session
-      assigns(:hmm_result).should be_a_new(HmmResult)
-    end
-  end
-
-  describe "GET edit" do
-    it "assigns the requested hmm_result as @hmm_result" do
-      hmm_result = HmmResult.create! valid_attributes
-      get :edit, {:id => hmm_result.to_param}, valid_session
       assigns(:hmm_result).should eq(hmm_result)
     end
   end
@@ -112,14 +96,14 @@ describe HmmResultsController do
 
   describe "DELETE destroy" do
     it "destroys the requested hmm_result" do
-      hmm_result = HmmResult.create! valid_attributes
+      hmm_result = @hmm_profile.hmm_results.create! valid_attributes
       expect {
         delete :destroy, {:id => hmm_result.to_param}, valid_session
       }.to change(HmmResult, :count).by(-1)
     end
 
     it "redirects to the hmm_results list" do
-      hmm_result = HmmResult.create! valid_attributes
+      hmm_result = @hmm_profile.hmm_results.create! valid_attributes
       delete :destroy, {:id => hmm_result.to_param}, valid_session
       response.should redirect_to(hmm_results_url)
     end
