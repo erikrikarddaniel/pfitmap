@@ -60,38 +60,43 @@ describe HmmResultsController do
   describe "POST create" do
     describe "with valid params" do
       it "creates new HmmResult object from a tblout-line from a hmmer run" do
+        pending "test create but build from a hmm_profile."
         expect {
           post :create, {:hmm_result => valid_attributes.merge( :file => @bulk_tblout) }
         }.to change(HmmResult, :count).by(1)
       end
       
       it "assigns a newly created hmm_result as @hmm_result" do
+        pending "test create but build from a hmm_profile."
         post :create, {:hmm_result => valid_attributes.merge(:file => @bulk_tblout)}, valid_session
         assigns(:hmm_result).should be_a(HmmResult)
         assigns(:hmm_result).should be_persisted
       end
 
       it "redirects to the created hmm_result" do
+        pending "test create but build from a hmm_profile."
         post :create, {:hmm_result => valid_attributes.merge(:file => @bulk_tblout)}, valid_session
         response.should redirect_to(HmmResult.last)
       end
     end
 
-#    describe "with invalid params" do
-#      it "assigns a newly created but unsaved hmm_result as @hmm_result" do
-#        # Trigger the behavior that occurs when invalid params are submitted
-#        HmmResult.any_instance.stub(:save).and_return(false)
-#        post :create, {:hmm_result => {}}, valid_session
-#        assigns(:hmm_result).should be_a_new(HmmResult)
-#      end
-#
-#      it "re-renders the 'new' template" do
-#        # Trigger the behavior that occurs when invalid params are submitted
-#        HmmResult.any_instance.stub(:save).and_return(false)
-#        post :create, {:hmm_result => {}}, valid_session
-#        response.should render_template("new")
-#      end
-#    end
+    describe "with invalid params" do
+      it "assigns a newly created but unsaved hmm_result as @hmm_result" do
+        pending "test create but build from a hmm_profile."
+        # Trigger the behavior that occurs when invalid params are submitted
+        HmmResult.any_instance.stub(:save).and_return(false)
+        post :create, {:hmm_result => {}}, valid_session
+        assigns(:hmm_result).should be_a_new(HmmResult)
+      end
+
+      it "re-renders the 'new' template" do
+        pending "test create but build from a hmm_profile."
+        # Trigger the behavior that occurs when invalid params are submitted
+        HmmResult.any_instance.stub(:save).and_return(false)
+        post :create, {:hmm_result => {}}, valid_session
+        response.should render_template("new")
+      end
+    end
   end
 
   describe "DELETE destroy" do

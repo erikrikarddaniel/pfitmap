@@ -7,16 +7,17 @@ describe HmmResultsController do
       get("/hmm_results").should route_to("hmm_results#index")
     end
 
-    it "routes to #new" do
-      get("/hmm_results/new").should route_to("hmm_results#new")
+    it "does not route to #new" do
+      get("/hmm_results/new").should_not route_to("hmm_results#new")
     end
 
     it "routes to #show" do
       get("/hmm_results/1").should route_to("hmm_results#show", :id => "1")
     end
 
-    it "routes to #edit" do
-      get("/hmm_results/1/edit").should route_to("hmm_results#edit", :id => "1")
+    it "does not route to #edit" do
+      pending "should not route to edit"
+      get("/hmm_results/1/edit").response.should_not be(200)
     end
 
     it "routes to #create" do

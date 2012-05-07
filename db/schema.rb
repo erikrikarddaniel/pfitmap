@@ -101,11 +101,13 @@ ActiveRecord::Schema.define(:version => 20120418072846) do
   create_table "results", :force => true do |t|
     t.date     "date"
     t.integer  "profile_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.integer  "sequence_id"
   end
 
   add_index "results", ["profile_id"], :name => "index_results_on_profile_id"
+  add_index "results", ["sequence_id"], :name => "index_results_on_sequence_id"
 
   create_table "sequence_dbs", :force => true do |t|
     t.string   "source"

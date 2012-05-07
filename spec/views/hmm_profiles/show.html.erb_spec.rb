@@ -11,7 +11,7 @@ describe "hmm_profiles/show" do
   end
 
   it "renders attributes in <p>" do
-    render
+    render 'hmm_profiles/form'
     # Run the generator again with the --webrat flag if you want to use webrat matchers
     rendered.should match(/Name/)
     # Run the generator again with the --webrat flag if you want to use webrat matchers
