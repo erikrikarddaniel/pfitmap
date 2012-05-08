@@ -56,6 +56,9 @@ describe HmmResultRow do
   it {should respond_to(:domnumest_rep) }
   it {should respond_to(:domnumest_inc) }
 
+  it {should respond_to(:best_hit_evalue?) }
+  it {should respond_to(:best_hit_score?) }
+
   its(:hmm_result) {should == result }
   it { should be_valid }
   
