@@ -23,6 +23,7 @@
 #  created_at     :datetime        not null
 #  updated_at     :datetime        not null
 #  hmm_result_id  :integer
+#  domnumest_dom  :integer
 #
 
 class HmmResultRow < ActiveRecord::Base

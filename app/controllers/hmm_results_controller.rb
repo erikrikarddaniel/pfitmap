@@ -76,7 +76,7 @@ class HmmResultsController < ApplicationController
                                                          :domnumest_clu => fields[12].to_i,
                                                          :domnumest_ov => fields[13].to_i,
                                                          :domnumest_env => fields[14].to_i,
-                                                         #:domnumest_env => fields[15].to_i,
+                                                         :domnumest_dom => fields[15].to_i,
                                                          :domnumest_rep => fields[16].to_i,
                                                          :domnumest_inc => fields[17].to_i
                                                          )
