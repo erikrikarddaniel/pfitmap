@@ -48,14 +48,17 @@ describe "Hmm Profile Pages" do
       end
     end
   end
-  describe "Creating new result" do
+  describe "Show Page" do
     let!(:hmm_profile) { FactoryGirl.create(:hmm_profile) }
+    let!(:sequence_db) { FactoryGirl.create(:sequence_db) }
     before do
+      #@bulk_tblout = fixture_file_upload('/sample.tblout')
       visit hmm_profile_path(hmm_profile)
-      click_button 'Register new result'
+      select('ref', :from => 'hmm_result[sequence_db_id]')
+      click_on 'Create Result'
     end
-    it "should lead to the new result page" do
-      page.should have_selector('h1', text: hmm_profile.name) 
+    it "should be able to create a new HmmResult " do
+      page.should have_content('successfully')
     end
   end
 end

@@ -22,6 +22,7 @@ group :test do
   gem 'autotest-standalone', :require => 'autotest'
   gem 'autotest-rails-pure'
   gem 'term-ansicolor'
+  gem 'launchy'
 end
 
 # Gems used only for assets and not required

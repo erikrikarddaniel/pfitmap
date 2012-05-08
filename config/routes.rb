@@ -5,22 +5,20 @@ Pfitmap::Application.routes.draw do
 
   resources :hmm_result_rows
 
-  resources :hmm_results
+  resources :hmm_results, :except => [:new, :edit]
 
   resources :sequence_dbs
 
-  resources :hmm_profiles
+  resources :hmm_profiles do
+    resources :hmm_results
+  end
+  
 
   root to: "static_pages#home"
   
   match '/help', to: 'static_pages#help'
   match '/contact', to: 'static_pages#contact'
 
-  resources :profiles
-  resources :results
-  resources :result_rows, only: [:show]
-  resources :result_rows_sequences, only: [:show]
-  resources :sequences, only: [:show, :index]
   #  get "home/index"
 
   # The priority is based upon order of creation:

@@ -12,6 +12,7 @@
 #
 
 class HmmDbHit < ActiveRecord::Base
+  attr_accessible :gi, :db, :acc, :desc
   has_many :hmm_result_rows, :through => :db_sequences
   has_many :db_sequences
   validates :gi, presence: true

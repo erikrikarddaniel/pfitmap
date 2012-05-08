@@ -12,6 +12,8 @@
 #
 
 class HmmProfile < ActiveRecord::Base
+  # Could be a reason to remove parent_id from accessible attributes
+  attr_accessible :name, :version, :hierarchy, :parent_id
   has_many :children, :class_name => "HmmProfile", :foreign_key => "parent_id", :dependent => :destroy
   belongs_to :parent, :class_name => "HmmProfile", :foreign_key => "parent_id"
   has_many :hmm_results
