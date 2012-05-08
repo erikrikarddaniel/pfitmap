@@ -62,13 +62,13 @@ FactoryGirl.define do
     desc "This is an example hit"
   end
   
-  factory :hmm_result_row do
+  factory :hmm_result_row, class: HmmResultRow do
     hmm_result
     target_name "gi|160942848|ref|ZP_02090088.1|"
     fullseq_evalue 3e-300
   end
   
-  factory :hmm_result_row2 do
+  factory :hmm_result_row2, class: HmmResultRow do
     hmm_result
     target_name "gi|167748341|ref|ZP_02420468.1|"
     fullseq_evalue 4e-100
