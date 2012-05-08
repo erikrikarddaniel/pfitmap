@@ -64,20 +64,13 @@ FactoryGirl.define do
   
   factory :hmm_result_row do
     hmm_result
+    target_name "gi|160942848|ref|ZP_02090088.1|"
     fullseq_evalue 3e-300
   end
   
-  factory :resultRow do
-    result
+  factory :hmm_result_row2 do
+    hmm_result
+    target_name "gi|167748341|ref|ZP_02420468.1|"
+    fullseq_evalue 4e-100
   end
-  
-  factory :sequence do
-    sequence(:seq) { |n| "#{n}" }
-  end
-  
-  factory :resultRowsSequence do
-    resultRow
-#    sequence
-  end
-  
 end
