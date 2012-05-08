@@ -19,19 +19,26 @@ describe "HmmResults" do
     it {should have_content(profile1.name ) }
     it {should have_content(r1.executed.year.to_s) }
     it {should have_content('Listing HMM result-rows') }
+
+    it "should have the correct result information" do
+      page.should have_content(profile1.name)
+      page.should have_content(r1.sequence_db.version)
+    end
     
-    it "should list each result row id" do
+    it "should have the correct result row information" do
       r1.hmm_result_rows.each do |row|
-        page.should have_content(row.id.to_s )
+        page.should have_content(row.fullseq_evalue.to_s )
+        page.should have_content(result_row.fullseq_score.to_s)
       end
     end
   end
+
   
   describe "show result-rows" do
     before do
       visit hmm_result_row_path(result_row)
     end
-    it "should have the correct content" do
+    it "should have the correct result information" do
       page.should have_content(profile1.name)
       page.should have_content(r1.sequence_db.version)
     end

@@ -6,30 +6,33 @@
 	<%= @hmm_result.hmm_profile.name %>
       </h1>
       <h2>
-	HMM-Result
+	<%= @hmm_result.sequence_db.source %>:
+	<%= @hmm_result.sequence_db.name %>
+      </h2>
+      <h2>
+	<%= @hmm_result.sequence_db.version %>
       </h2>
       <p>
 	<b>Executed:</b>
-	<%= @hmm_result.executed.year.to_s %>
-      </p>
-      
-      <p>
-	<b>Result db:</b>
-	<%= @hmm_result.sequence_db.name %>
-      </p>
-      
-      <p>
-	<b>Hmm Profile:</b>
-	<%= @hmm_result.hmm_profile.name %>
-      </p>
+	<%= @hmm_result.executed.to_formatted_s(:long)%>
+      </p>      
     </section>
   </aside>
   <div class="span8">
     <% if @hmm_result.hmm_result_rows.any? %>
     <h3> Listing HMM result-rows (<%= @hmm_result.hmm_result_rows.count %>)</h3>
-    <ol class="result-rows">
-      <%= render @hmm_result_rows%>
-    </ol>
+    <table class="table table-striped">
+      <thead>
+	<tr>
+	  <th>Target Accession</th>
+	  <th>e-value</th>
+	  <th>score</th>
+	</tr>
+      </thead>
+      <tbody class>
+	<%= render @hmm_result_rows%>
+      </tbody>
+    </table>
     <%= will_paginate @hmm_result_rows%>
     <% end %> 
   </div>
