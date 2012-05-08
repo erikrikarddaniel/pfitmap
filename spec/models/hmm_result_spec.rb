@@ -24,7 +24,6 @@ describe HmmResult do
   it { should respond_to(:hmm_result_rows) }
   it { should respond_to(:hmm_profile_id) }
   it { should respond_to(:hmm_profile) }
-  its(:hmm_profile) { should == profile }
   
   it { should be_valid }
   
@@ -40,5 +39,9 @@ describe HmmResult do
   describe "should not be valid when sequence_db is not present" do
     before { @result.sequence_db_id = nil }
     it { should_not be_valid }
+  end
+
+  describe "should find its owner profile" do
+    its(:hmm_profile) { should == profile }
   end
 end

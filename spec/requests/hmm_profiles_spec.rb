@@ -48,16 +48,32 @@ describe "Hmm Profile Pages" do
       end
     end
   end
-  describe "Show Page" do
+  describe "Register new result without file" do
     let!(:hmm_profile) { FactoryGirl.create(:hmm_profile) }
     let!(:sequence_db) { FactoryGirl.create(:sequence_db) }
     before do
-      #@bulk_tblout = fixture_file_upload('/sample.tblout')
       visit hmm_profile_path(hmm_profile)
       select('ref', :from => 'hmm_result[sequence_db_id]')
       click_on 'Create Result'
     end
-    it "should be able to create a new HmmResult " do
+    it "should see oops message when trying to register new HmmResult " do
+      page.should have_content('successfully')
+      pending "Change this to 'Ooops... no file' or something"
+    end
+  end
+
+  describe "Register new result" do
+    let!(:hmm_profile) { FactoryGirl.create(:hmm_profile) }
+    let!(:sequence_db) { FactoryGirl.create(:sequence_db) }
+    before do
+      @bulk_tblout = fixture_file_upload('/sample.tblout')
+      visit hmm_profile_path(hmm_profile)
+      select('ref', :from => 'hmm_result[sequence_db_id]')
+      click_on 'Create Result'
+    end
+    it "should be able to create a new HmmResult" do
+      pending "Test form with actual file upload"
+      post :file, :upload => @bulk_tblout
       page.should have_content('successfully')
     end
   end
