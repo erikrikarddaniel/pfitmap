@@ -5,7 +5,8 @@ describe "HmmResults" do
   
   let!(:profile1) { FactoryGirl.create(:hmm_profile, name: "class 1" ) }
   let!(:profile2) { FactoryGirl.create(:hmm_profile, name: "class 2" ) }
-  let!(:r1) { FactoryGirl.create(:hmm_result, hmm_profile: profile1, executed: 100.years.ago) }
+  let!(:sequence_db) { FactoryGirl.create(:sequence_db) }
+  let!(:r1) { FactoryGirl.create(:hmm_result, hmm_profile: profile1, sequence_db: sequence_db, executed: 100.years.ago) }
   let!(:result_row) { FactoryGirl.create(:hmm_result_row, hmm_result: r1) }
   let!(:sequence) { FactoryGirl.create(:hmm_db_hit) }
   before do
