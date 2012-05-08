@@ -2,7 +2,7 @@ namespace :db do
   desc "Fill database with sample data"
   task populate: :environment do
     make_hmm_profiles
-    make_sequence_db
+    make_sequence_dbs
     # make_hmm_results
     # make_hmm_result_rows
     # make_hmm_db_hits
@@ -19,8 +19,9 @@ def make_hmm_profiles
     
 end
 
-def make_sequence_db
+def make_sequence_dbs
     SequenceDb.create!(name: "ref", source: "NCBI", version: "1899-12-24")
+    SequenceDb.create!(name: "pdb", source: "NCBI", version: "1899-04-01")
 end
   
 def make_results
