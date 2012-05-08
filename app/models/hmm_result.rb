@@ -17,4 +17,5 @@ class HmmResult < ActiveRecord::Base
   has_many :hmm_result_rows
   validates :hmm_profile_id, presence: true
   validates :sequence_db_id, presence: true
+  validates :hmm_profile_id, :uniqueness => { :scope => :sequence_db_id, :message => "Only one result per combination of HMM Profile and Sequence database!" }
 end

@@ -13,9 +13,9 @@
 require 'spec_helper'
 
 describe HmmResult do
-  let(:profile) { FactoryGirl.create(:hmm_profile) }
+  let(:hmm_profile) { FactoryGirl.create(:hmm_profile) }
   let(:sequence_db) { FactoryGirl.create(:sequence_db) }
-  before { @result = profile.hmm_results.build(executed: "20110318", sequence_db_id: sequence_db.id )}
+  before { @result = hmm_profile.hmm_results.build(executed: "20110318", sequence_db_id: sequence_db.id )}
   
   subject { @result }
   
@@ -42,6 +42,15 @@ describe HmmResult do
   end
 
   describe "should find its owner profile" do
-    its(:hmm_profile) { should == profile }
+    its(:hmm_profile) { should == hmm_profile }
+  end
+
+  describe "should have unique combination of profile and db" do
+    before do
+      @result.save!
+      @result_bogus = hmm_profile.hmm_results.build(executed: "20110401", sequence_db_id: sequence_db.id) 
+    end
+    subject { @result_bogus }
+    it { should_not be_valid }
   end
 end
