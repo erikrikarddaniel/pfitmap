@@ -23,6 +23,7 @@
 #  created_at     :datetime        not null
 #  updated_at     :datetime        not null
 #  hmm_result_id  :integer
+#  domnumest_dom  :integer
 #
 
 require 'spec_helper'
@@ -39,6 +40,22 @@ describe HmmResultRow do
   subject { @resultrow }
   
   it {should respond_to(:hmm_result_id) }
+  it {should respond_to(:target_name) }
+  it {should respond_to(:target_acc) }
+  it {should respond_to(:query_name) }
+  it {should respond_to(:query_acc) }
+  it {should respond_to(:fullseq_evalue) }
+  it {should respond_to(:fullseq_score) }
+  it {should respond_to(:fullseq_bias) }
+  it {should respond_to(:domnumest_exp) }
+  it {should respond_to(:domnumest_reg) }
+  it {should respond_to(:domnumest_clu) }
+  it {should respond_to(:domnumest_ov) }
+  it {should respond_to(:domnumest_env) }
+  it {should respond_to(:domnumest_dom) }
+  it {should respond_to(:domnumest_rep) }
+  it {should respond_to(:domnumest_inc) }
+
   its(:hmm_result) {should == result }
   it { should be_valid }
   
@@ -47,9 +64,6 @@ describe HmmResultRow do
     it {should_not be_valid }
   end
   
-  describe "should validate something else" do
-    pending "some other attribute that always should be present"
-  end
   describe "created from result" do
     before do
       @result_row_2 = result.hmm_result_rows.create!()
