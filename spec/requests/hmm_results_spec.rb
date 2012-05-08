@@ -32,14 +32,26 @@ describe "HmmResults" do
     end
     it "should have the correct content" do
       page.should have_content(profile1.name)
-      page.should have_content(result_row.fullseq_evalue)
-      page.should have_content('Listing HMM database hits')
-      page.should have_content(result_row.target_name)
-      result_row.hmm_db_hits.each do |h|
-        pending "List hmm db hits not finished"
-        page.should have_content(h.acc)
-        page.should have_content('Listing HMM database hits')
-      end
+      page.should have_content(r1.sequence_db.version)
+    end
+  end
+
+  describe "delete result" do
+    before do
+      visit hmm_result_path(r1)
+      click_on "Delete"
+    end
+    it "should destroy the result" do
+      page.should_not have_content(r1.executed.to_formatted_s(:long))
+    end
+  end
+
+  describe "show index page" do
+    before do
+      visit hmm_results_path
+    end
+    it "should display some content" do
+      page.should have_content(r1.executed.to_formatted_s(:long))
     end
   end
 end

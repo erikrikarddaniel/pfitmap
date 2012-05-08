@@ -25,13 +25,8 @@
     <td><%= hmm_result.sequence_db.source.to_s %>:
       <%= hmm_result.sequence_db.name.to_s %></td>
     <td><%= link_to 'Show', hmm_result %></td>
-    <td><%= link_to 'Edit', edit_hmm_result_path(hmm_result) %></td>
     <td><%= link_to 'Destroy', hmm_result, confirm: 'Are you sure?', method: :delete %></td>
   </tr>
 <% end %>
 </table>
-
-<br />
-
-<%= link_to 'New Hmm result', new_hmm_result_path %>
 </div>

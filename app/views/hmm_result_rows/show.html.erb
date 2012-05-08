@@ -6,7 +6,11 @@
 	<%= @hmm_result_row.hmm_result.hmm_profile.name %>
       </h1>
       <h2>
-	HMM-Result
+	<%= @hmm_result_row.hmm_result.sequence_db.source %>:
+	<%= @hmm_result_row.hmm_result.sequence_db.name %>
+      </h2>
+      <h2>
+	<%= @hmm_result_row.hmm_result.sequence_db.version %>
       </h2>
       
       <h3> Result Row Info</h3>
