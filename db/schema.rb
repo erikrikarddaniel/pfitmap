@@ -11,29 +11,26 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120508073113) do
+ActiveRecord::Schema.define(:version => 20120516113723) do
 
   create_table "db_sequences", :force => true do |t|
-    t.integer  "hmm_result_row_id"
-    t.integer  "hmm_db_hit_id"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
     t.text     "sequence"
   end
-
-  add_index "db_sequences", ["hmm_db_hit_id"], :name => "index_hmm_result_rows_hmm_db_hits_on_hmm_db_hit_id"
-  add_index "db_sequences", ["hmm_result_row_id"], :name => "index_hmm_result_rows_hmm_db_hits_on_hmm_result_row_id"
 
   create_table "hmm_db_hits", :force => true do |t|
     t.integer  "gi"
     t.string   "db"
     t.string   "acc"
     t.string   "desc"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.integer  "db_sequence_id"
   end
 
   add_index "hmm_db_hits", ["db", "acc"], :name => "index_hmm_db_hits_on_db_and_acc", :unique => true
+  add_index "hmm_db_hits", ["db_sequence_id"], :name => "index_hmm_db_hits_on_db_sequence_id"
   add_index "hmm_db_hits", ["gi"], :name => "index_hmm_db_hits_on_gi"
 
   create_table "hmm_profiles", :force => true do |t|
@@ -67,7 +64,10 @@ ActiveRecord::Schema.define(:version => 20120508073113) do
     t.datetime "updated_at",     :null => false
     t.integer  "hmm_result_id"
     t.integer  "domnumest_dom"
+    t.integer  "db_sequence_id"
   end
+
+  add_index "hmm_result_rows", ["db_sequence_id"], :name => "index_hmm_result_rows_on_db_sequence_id"
 
   create_table "hmm_results", :force => true do |t|
     t.datetime "executed"
@@ -80,45 +80,10 @@ ActiveRecord::Schema.define(:version => 20120508073113) do
   add_index "hmm_results", ["hmm_profile_id"], :name => "index_hmm_results_on_hmm_profile_id"
   add_index "hmm_results", ["sequence_db_id"], :name => "index_hmm_results_on_sequence_db_id"
 
-  create_table "result_rows", :force => true do |t|
-    t.integer  "result_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "result_rows", ["result_id"], :name => "index_result_rows_on_result_id"
-
-  create_table "result_rows_sequences", :force => true do |t|
-    t.integer  "result_row_id", :null => false
-    t.integer  "sequence_id",   :null => false
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
-  end
-
-  add_index "result_rows_sequences", ["result_row_id", "sequence_id"], :name => "index_result_rows_sequences_on_result_row_id_and_sequence_id", :unique => true
-  add_index "result_rows_sequences", ["result_row_id"], :name => "index_result_rows_sequences_on_result_row_id"
-  add_index "result_rows_sequences", ["sequence_id"], :name => "index_result_rows_sequences_on_sequence_id"
-
-  create_table "results", :force => true do |t|
-    t.date     "date"
-    t.integer  "profile_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "results", ["profile_id"], :name => "index_results_on_profile_id"
-
   create_table "sequence_dbs", :force => true do |t|
     t.string   "source"
     t.string   "name"
     t.string   "version"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  create_table "sequences", :force => true do |t|
-    t.string   "seq"
-    t.integer  "biosql_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
