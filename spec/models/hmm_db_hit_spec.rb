@@ -17,10 +17,11 @@ require 'spec_helper'
 describe HmmDbHit do
   let(:profile) { FactoryGirl.create(:hmm_profile) }
   let(:result) { FactoryGirl.create(:hmm_result, hmm_profile: profile) }
-  let(:result_row) { FactoryGirl.create(:hmm_result_row, hmm_result: result) }
-  let(:db_hit) { FactoryGirl.create(:hmm_db_hit) }
+  let!(:db_sequence) { FactoryGirl.create(:db_sequence) }
+  let!(:result_row) { FactoryGirl.create(:hmm_result_row, hmm_result: result, db_sequence: db_sequence) }
+  let!(:db_hit) { FactoryGirl.create(:hmm_db_hit, db_sequence: db_sequence) }
   before do
-    @db_hit2 = HmmDbHit.new(gi: "99999", db: "ref" , acc: "ex9999", desc: "Some name blabla")
+    @db_hit2 = HmmDbHit.new(gi: "99999", db: "ref" , acc: "ex9999", desc: "Some name blabla", db_sequence_id: db_sequence.id)
   end
 
   subject { @db_hit2 }
@@ -32,25 +33,25 @@ describe HmmDbHit do
   it { should respond_to(:hmm_result_rows) }
   it { should respond_to(:db_sequence) }
   it { should_not respond_to(:db_sequences) }
-  it { should be_valid }
 
-  describe "should not be valid when gi is not present" do
+  describe "with valid parameters" do
+    it { should be_valid }
+  end
+  
+  describe "when gi is not present" do
     before {@db_hit2.gi= nil }
     it { should_not be_valid }
   end
   
-  describe "should not be valid when something is not present" do
-    pending "More validations?"
+  describe "when db sequence is not present" do
+    before {@db_hit2.db_sequence = nil}
+    it { should_not be_valid }
   end
   
   describe "with an added relation" do
-    before do   
-      @relation = DbSequence.new(hmm_db_hit_id: db_hit.id, hmm_result_row_id: result_row.id)
-      @relation.save
-    end
-
     subject { db_hit }
     its(:hmm_result_rows) { should_not be_empty }
     its(:hmm_result_rows) { should include(result_row) }
+    its(:db_sequence) { should == db_sequence }
   end
 end

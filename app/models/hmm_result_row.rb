@@ -31,7 +31,7 @@ class HmmResultRow < ActiveRecord::Base
   # Could be a reason to add hmm_result_id to this list
   attr_protected :id, :created_at, :updated_at
   belongs_to :hmm_result
-  has_many :hmm_db_hits, :through => :db_sequences
+  has_many :hmm_db_hits, :through => :db_sequence
   belongs_to :db_sequence
   validates :hmm_result_id, presence: true
   validates :db_sequence_id, presence: true

@@ -6,13 +6,10 @@ describe "HmmResults" do
   let!(:profile1) { FactoryGirl.create(:hmm_profile, name: "class 1" ) }
   let!(:profile2) { FactoryGirl.create(:hmm_profile, name: "class 2" ) }
   let!(:sequence_db) { FactoryGirl.create(:sequence_db) }
+  let!(:db_sequence) { FactoryGirl.create(:db_sequence) }
   let!(:r1) { FactoryGirl.create(:hmm_result, hmm_profile: profile1, sequence_db: sequence_db, executed: 100.years.ago) }
-  let!(:result_row) { FactoryGirl.create(:hmm_result_row, hmm_result: r1) }
-  let!(:sequence) { FactoryGirl.create(:hmm_db_hit) }
-  before do
-    @relation = DbSequence.new(hmm_result_row_id: result_row.id, hmm_db_hit_id: sequence.id)
-    @relation.save
-  end
+  let!(:result_row) { FactoryGirl.create(:hmm_result_row, hmm_result: r1, db_sequence: db_sequence) }
+  let!(:hmm_db_hit) { FactoryGirl.create(:hmm_db_hit, db_sequence: db_sequence) }
 
   describe "show result" do
     before{ visit hmm_result_path(r1) }

@@ -55,11 +55,38 @@ class HmmResultsController < ApplicationController
       File.open("#{io.path}", "r").each_with_index do |line, index|
         # skip header
         if index > 2
-          logger.debug "Logging one line before chomp"
+          present_sequence = nil
           line.chomp!
-          logger.debug "Logging one line before fields"
           fields = line.split(/\s+/)
-          logger.debug "Logging the fields #{fields}"
+          all_names = "#{fields[0]} #{fields[17..-1].join(" ")}"
+          separate_entries=all_names.split(/\001/)
+          #Until real sequence attribute can be filled
+          ##############################
+          separate_entries.each do |f|
+            entry_fields=f.split("|")
+            present_db_hit = HmmDbHit.find_by_gi(entry_fields[1].to_i)
+            if present_db_hit
+              present_sequence = present_db_hit.db_sequence
+            end
+          end
+          if not present_sequence
+            present_sequence = DbSequence.new(aa_sequence: "#{separate_entries[0]}bogusbogus")
+            present_sequence.save
+          end
+          ##############################
+          separate_entries.each do |f|
+            entry_fields=f.split("|")
+            present_db_hit = HmmDbHit.find_by_gi(entry_fields[1].to_i)
+            if not present_db_hit            
+              hmm_db_hit = HmmDbHit.create!(
+                                            :gi => entry_fields[1].to_i,
+                                            :db => entry_fields[2],
+                                            :acc => entry_fields[3],
+                                            :desc => entry_fields[4],
+                                            :db_sequence_id => present_sequence.id
+                                            )
+            end
+          end
           hmm_result_row = result.hmm_result_rows.create(
                                                          :target_name => fields[0],
                                                          :target_acc => ( fields[1] == '-' ? fields[0].split('|')[2..3].join(':') : fields[1] ),
@@ -78,25 +105,9 @@ class HmmResultsController < ApplicationController
                                                          :domnumest_env => fields[14].to_i,
                                                          :domnumest_dom => fields[15].to_i,
                                                          :domnumest_rep => fields[16].to_i,
-                                                         :domnumest_inc => fields[17].to_i
+                                                         :domnumest_inc => fields[17].to_i,
+                                                         :db_sequence_id => present_sequence.id
                                                          )
-          all_names = "#{fields[0]} #{fields[17..-1].join(" ")}"
-          separate_entries=all_names.split(/\001/)
-          separate_entries.each do |f|
-            entry_fields=f.split("|")
-            present_db_hit = HmmDbHit.find_by_gi(entry_fields[1].to_i)
-            if present_db_hit
-              DbSequence.create(:hmm_db_hit_id => present_db_hit.id, :hmm_result_row_id => hmm_result_row.id )
-            else            
-              hmmdbhit = HmmDbHit.create!(
-                                          :gi => entry_fields[1].to_i,
-                                          :db => entry_fields[2],
-                                          :acc => entry_fields[3],
-                                          :desc => entry_fields[4]
-                                          )
-              DbSequence.create!(:hmm_db_hit_id => hmmdbhit.id, :hmm_result_row_id => hmm_result_row.id )
-            end
-          end
         end
       end
     end

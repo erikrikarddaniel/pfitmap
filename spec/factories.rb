@@ -48,6 +48,10 @@ FactoryGirl.define do
     name "ref"
     version "20120128"
   end
+
+  factory :db_sequence do
+    aa_sequence "LARS"
+  end
   
   factory :hmm_result do
     sequence(:executed) { |n| "#{n}"}
@@ -58,14 +62,15 @@ FactoryGirl.define do
   factory :hmm_db_hit do
     sequence(:gi){|n| n}
     db "ref"
-    sequence(:acc) { |n| "aaaa#{n}" }
     desc "This is an example hit"
+    db_sequence
   end
   
   factory :hmm_result_row, class: HmmResultRow do
     hmm_result
     target_name "gi|160942848|ref|ZP_02090088.1|"
     fullseq_evalue 3e-300
+    db_sequence
   end
   
   factory :hmm_result_row2, class: HmmResultRow do

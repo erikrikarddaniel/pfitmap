@@ -33,10 +33,10 @@ describe HmmResultRow do
   let(:profile) { FactoryGirl.create(:hmm_profile) }
   let(:sequence_db) { FactoryGirl.create(:sequence_db) }
   let!(:result) { FactoryGirl.create(:hmm_result, hmm_profile: profile) }
-  let!(:db_hit) { FactoryGirl.create(:hmm_db_hit) }
-  let(:result_row) { FactoryGirl.create(:hmm_result_row, hmm_result: result) }
+  let!(:db_sequence) { FactoryGirl.create(:db_sequence) }
+  let!(:db_hit) { FactoryGirl.create(:hmm_db_hit, db_sequence: db_sequence) }
   before do 
-      @resultrow = HmmResultRow.new(hmm_result_id: result.id)
+      @resultrow = HmmResultRow.new(hmm_result_id: result.id, db_sequence_id: db_sequence.id)
   end
   subject { @resultrow }
   
@@ -58,6 +58,8 @@ describe HmmResultRow do
   it {should respond_to(:domnumest_inc) }
   it {should respond_to(:db_sequence_id) }
 
+  it {should_not respond_to(:db_sequences) }
+  it {should respond_to(:db_sequence) }
   it {should respond_to(:hmm_db_hits) }
   it {should respond_to(:best_hit_evalue?) }
   it {should respond_to(:best_hit_score?) }
@@ -73,7 +75,7 @@ describe HmmResultRow do
   
   describe "created from result" do
     before do
-      @result_row_2 = result.hmm_result_rows.create!()
+      @result_row_2 = result.hmm_result_rows.create!(db_sequence_id: db_sequence.id)
     end
     subject { @result_row_2}
     
@@ -81,16 +83,11 @@ describe HmmResultRow do
     it { should respond_to(:hmm_result_id) }
     its(:hmm_result){ should_not be_nil }
     its(:hmm_result){ should == result }
+    its(:db_sequence) { should == db_sequence }
   end
 
-  describe "with a sequence association" do
-    before do
-      @relation = DbSequence.new(hmm_db_hit_id: db_hit.id, hmm_result_row_id: result_row.id)
-      @relation.save
-    end
-    subject{ result_row }
-    pending "should test that the link between rows and hits works"
-
+  describe "association through DbSequence" do
+    its(:hmm_db_hits) { should include(db_hit) }
   end
 
   describe "calculation of best hit" do
