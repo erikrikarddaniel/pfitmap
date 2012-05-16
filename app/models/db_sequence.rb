@@ -18,12 +18,11 @@ class DbSequence < ActiveRecord::Base
   validates :hmm_db_hit_id, presence: true
   validates :sequence, presence: true
 
+  # Given a database, it will browse through all profiles in order to
+  # find all hits 
+
+  # All result rows that share sequence_db.id
   def all_hits(sequence_db)
-    hmm_profiles = HmmProfile.all()
-    HmmProfiles.all do |profile|
-      profile.hmm_results do |result|
-        
-      end
-    end
+    hmm_results = HmmResult.where("sequence_db_id = ?", sequence_db.id)
   end
 end

@@ -51,6 +51,7 @@ describe DbSequence do
   end
   
   describe "listing all hits" do
-    @db_sequence.all_hits(sequence_db).should contain(result_row)
+    subject{@db_sequence.all_hits(sequence_db)}
+    it {should include(result_row)}
   end
 end
