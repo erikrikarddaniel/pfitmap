@@ -2,13 +2,14 @@
 #
 # Table name: hmm_db_hits
 #
-#  id         :integer         not null, primary key
-#  gi         :integer
-#  db         :string(255)
-#  acc        :string(255)
-#  desc       :string(255)
-#  created_at :datetime        not null
-#  updated_at :datetime        not null
+#  id             :integer         not null, primary key
+#  gi             :integer
+#  db             :string(255)
+#  acc            :string(255)
+#  desc           :string(255)
+#  created_at     :datetime        not null
+#  updated_at     :datetime        not null
+#  db_sequence_id :integer
 #
 
 require 'spec_helper'
@@ -29,7 +30,8 @@ describe HmmDbHit do
   it { should respond_to(:acc ) }
   it { should respond_to(:desc) }
   it { should respond_to(:hmm_result_rows) }
-  it { should respond_to(:db_sequences) }
+  it { should respond_to(:db_sequence) }
+  it { should_not respond_to(:db_sequences) }
   it { should be_valid }
 
   describe "should not be valid when gi is not present" do
@@ -48,8 +50,6 @@ describe HmmDbHit do
     end
 
     subject { db_hit }
-    its(:db_sequences) { should_not be_empty }
-    its(:db_sequences) { should include(@relation) }
     its(:hmm_result_rows) { should_not be_empty }
     its(:hmm_result_rows) { should include(result_row) }
   end

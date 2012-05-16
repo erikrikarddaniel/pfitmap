@@ -2,12 +2,10 @@
 #
 # Table name: db_sequences
 #
-#  id                :integer         not null, primary key
-#  hmm_result_row_id :integer
-#  hmm_db_hit_id     :integer
-#  created_at        :datetime        not null
-#  updated_at        :datetime        not null
-#  sequence          :text
+#  id         :integer         not null, primary key
+#  created_at :datetime        not null
+#  updated_at :datetime        not null
+#  sequence   :text
 #
 
 require 'spec_helper'
@@ -24,22 +22,14 @@ describe DbSequence do
   subject { @db_sequence }
 
   it { should respond_to(:id) }
-  it { should respond_to(:hmm_result_row_id) }
-  it { should respond_to(:hmm_db_hit_id) }
+  it { should_not respond_to(:hmm_result_row_id) }
+  it { should_not respond_to(:hmm_db_hit_id) }
   it { should respond_to(:sequence ) }
+  it { should respond_to(:hmm_result_rows)}
+  it { should respond_to(:hmm_db_hits) }
 
   it { should respond_to(:all_hits) }
   describe "with invalid parameters" do
-    describe "without hmm_result_row_id" do
-      before { @db_sequence.hmm_result_row_id = nil }
-      it {should_not be_valid }
-    end
-    
-    describe "without hmm_db_hit_id" do
-      before { @db_sequence.hmm_db_hit_id = nil }
-      it {should_not be_valid }
-    end
-
     describe "without sequence" do
       before { @db_sequence.sequence = nil }
       it {should_not be_valid }

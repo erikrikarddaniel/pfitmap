@@ -24,6 +24,7 @@
 #  updated_at     :datetime        not null
 #  hmm_result_id  :integer
 #  domnumest_dom  :integer
+#  db_sequence_id :integer
 #
 
 require 'spec_helper'
@@ -31,8 +32,8 @@ require 'spec_helper'
 describe HmmResultRow do
   let(:profile) { FactoryGirl.create(:hmm_profile) }
   let(:sequence_db) { FactoryGirl.create(:sequence_db) }
-  let(:result) { FactoryGirl.create(:hmm_result, hmm_profile: profile) }
-  let(:db_hit) { FactoryGirl.create(:hmm_db_hit) }
+  let!(:result) { FactoryGirl.create(:hmm_result, hmm_profile: profile) }
+  let!(:db_hit) { FactoryGirl.create(:hmm_db_hit) }
   let(:result_row) { FactoryGirl.create(:hmm_result_row, hmm_result: result) }
   before do 
       @resultrow = HmmResultRow.new(hmm_result_id: result.id)
@@ -55,9 +56,12 @@ describe HmmResultRow do
   it {should respond_to(:domnumest_dom) }
   it {should respond_to(:domnumest_rep) }
   it {should respond_to(:domnumest_inc) }
+  it {should respond_to(:db_sequence_id) }
 
+  it {should respond_to(:hmm_db_hits) }
   it {should respond_to(:best_hit_evalue?) }
   it {should respond_to(:best_hit_score?) }
+  it {should respond_to(:dbs_included) }
 
   its(:hmm_result) {should == result }
   it { should be_valid }
@@ -85,10 +89,8 @@ describe HmmResultRow do
       @relation.save
     end
     subject{ result_row }
-    its( :db_sequences ) { should_not be_empty }
-    its( :db_sequences ) { should include(@relation) }
-    its( :hmm_db_hits) { should_not be_empty }
-    its( :hmm_db_hits) { should include(db_hit) }
+    pending "should test that the link between rows and hits works"
+
   end
 
   describe "calculation of best hit" do
@@ -96,5 +98,12 @@ describe HmmResultRow do
       @hmmp001 = FactoryGirl.create(:hmm_profile001)
       @hmmp00100 = FactoryGirl.create(:hmm_profile00100, parent: @hmmp001)
     end
+  end
+
+  describe "finding all unique databases represented in the hit list" do
+    before do
+      @resultrow = HmmResultRow.new(hmm_result_id: result.id)
+    end
+    its( :dbs_included ) { should include("ref") }
   end
 end
