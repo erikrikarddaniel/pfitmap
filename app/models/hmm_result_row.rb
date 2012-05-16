@@ -24,6 +24,7 @@
 #  updated_at     :datetime        not null
 #  hmm_result_id  :integer
 #  domnumest_dom  :integer
+#  db_sequence_id :integer
 #
 
 class HmmResultRow < ActiveRecord::Base
