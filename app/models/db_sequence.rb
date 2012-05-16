@@ -9,11 +9,9 @@
 #
 
 class DbSequence < ActiveRecord::Base
-  attr_accessible :hmm_result_row_id, :hmm_db_hit_id, :sequence
-  belongs_to :hmm_result_row
-  belongs_to :hmm_db_hit
-  validates :hmm_result_row_id, presence: true
-  validates :hmm_db_hit_id, presence: true
+  attr_accessible :sequence
+  has_many :hmm_result_rows
+  has_many :hmm_db_hits
   validates :sequence, presence: true
 
   # Given a database, it will browse through all profiles in order to

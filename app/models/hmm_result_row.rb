@@ -32,6 +32,7 @@ class HmmResultRow < ActiveRecord::Base
   attr_protected :id, :created_at, :updated_at
   belongs_to :hmm_result
   has_many :hmm_db_hits, :through => :db_sequences
-  has_many :db_sequences
+  belongs_to :db_sequence
   validates :hmm_result_id, presence: true
+  validates :db_sequence_id, presence: true
 end
