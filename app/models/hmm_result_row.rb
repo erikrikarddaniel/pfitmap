@@ -58,4 +58,12 @@ class HmmResultRow < ActiveRecord::Base
     return (top_score == self.fullseq_score)
   end
 
+  def dbs_included
+    db_hits = DbSequence.find(self.db_sequence_id).hmm_db_hits
+    all_dbs = []
+    db_hits.each do |db_hit|
+      all_dbs.append(db_hit.db)
+    end
+    return all_dbs.uniq
+  end
 end
