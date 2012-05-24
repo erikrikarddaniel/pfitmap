@@ -3,7 +3,7 @@ Pfitmap::Application.routes.draw do
 
   resources :hmm_db_hits
 
-  resources :hmm_result_rows
+  resources :hmm_result_rows, :except => [:index, :new]
 
   resources :hmm_results, :except => [:new, :edit]
 
@@ -18,6 +18,8 @@ Pfitmap::Application.routes.draw do
   
   match '/help', to: 'static_pages#help'
   match '/contact', to: 'static_pages#contact'
+
+  match "/404", :to => "static_pages#error_404"
 
   #  get "home/index"
 
