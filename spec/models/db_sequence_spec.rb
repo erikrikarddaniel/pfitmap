@@ -50,7 +50,9 @@ describe DbSequence do
   end
 
   describe "listing all hits" do
-    subject{@db_sequence.all_hits(sequence_db)}
-    it {should include(result_row)}
+    let(:db_sequence) { FactoryGirl.create(:db_sequence) }
+    let(:hmm_result_row) { FactoryGirl.create(:hmm_result_row, hmm_result: hmm_result, db_sequence: db_sequence) }
+    subject{db_sequence.all_hits(sequence_db)}
+    it {should include(hmm_result_row)}
   end
 end

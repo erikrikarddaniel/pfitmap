@@ -20,5 +20,11 @@ class DbSequence < ActiveRecord::Base
   # All result rows that share sequence_db.id
   def all_hits(sequence_db)
     hmm_results = HmmResult.where("sequence_db_id = ?", sequence_db.id)
+    hmm_result_rows = []
+    hmm_results.each do
+      rows_temp = HmmResultRow.where("db_sequence_id = ?", self.id)
+      hmm_result_rows.concat(rows_temp)
+    end
+    return hmm_result_rows
   end
 end
