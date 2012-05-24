@@ -4,11 +4,11 @@ describe HmmResultRowsController do
   describe "routing" do
 
     it "routes to #index" do
-      get("/hmm_result_rows").should route_to("hmm_result_rows#index")
+      get("/hmm_result_rows").should_not be_routable
     end
 
     it "routes to #new" do
-      get("/hmm_result_rows/new").should route_to("hmm_result_rows#new")
+      get("/hmm_result_rows/new").should_not route_to("hmm_result_rows#new")
     end
 
     it "routes to #show" do
