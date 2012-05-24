@@ -39,13 +39,13 @@ FactoryGirl.define do
   
   factory :sequence_db do
     source "NCBI"
-    name "ref"
+    name "NR"
     version "20120328"
   end
   
   factory :sequence_db_older, class: SequenceDb do
     source "NCBI"
-    name "ref"
+    name "NR"
     version "20120128"
   end
 
@@ -63,6 +63,14 @@ FactoryGirl.define do
     sequence(:gi){|n| n}
     db "ref"
     desc "This is an example hit"
+    db_sequence
+  end
+
+  factory :hmm_db_hit_pdb, class: HmmDbHit do
+    gi '13'
+    db 'pdb'
+    acc '1mxl'
+    desc 'An example PDB hit'
     db_sequence
   end
   
