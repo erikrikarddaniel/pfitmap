@@ -35,4 +35,27 @@ class HmmResultRow < ActiveRecord::Base
   belongs_to :db_sequence
   validates :hmm_result_id, presence: true
   validates :db_sequence_id, presence: true
+
+  def best_hit_evalue?
+    db_seq = DbSequence.find(self.db_sequence_id)
+    all_result_rows = db_seq.all_hits(self.hmm_result.sequence_db)
+    all_evalues = []
+    all_result_rows.each do |row|
+      all_evalues.append(row.fullseq_evalue)
+    end
+    top_evalue = all_evalues.min
+    return (top_evalue == self.fullseq_evalue)
+  end
+
+  def best_hit_score?
+    db_seq = DbSequence.find(self.db_sequence_id)
+    all_result_rows = db_seq.all_hits(self.hmm_result.sequence_db)
+    all_scores = []
+    all_result_rows.each do |row|
+      all_scores.append(row.fullseq_score)
+    end
+    top_score = all_scores.max
+    return (top_score == self.fullseq_score)
+  end
+
 end

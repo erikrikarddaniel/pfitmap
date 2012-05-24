@@ -35,6 +35,10 @@ describe HmmResultRow do
   let!(:result) { FactoryGirl.create(:hmm_result, hmm_profile: profile) }
   let!(:db_sequence) { FactoryGirl.create(:db_sequence) }
   let!(:db_hit) { FactoryGirl.create(:hmm_db_hit, db_sequence: db_sequence) }
+  let(:hmmp001) { FactoryGirl.create(:hmm_profile_001) }
+  let(:hmmp00100) { FactoryGirl.create(:hmm_profile_00100, parent: hmmp001) }
+  let!(:result1) { FactoryGirl.create(:hmm_result, hmm_profile: hmmp001, sequence_db: sequence_db) }
+  let!(:result2) { FactoryGirl.create(:hmm_result, hmm_profile: hmmp00100, sequence_db: sequence_db) }
   before do 
       @resultrow = HmmResultRow.new(hmm_result_id: result.id, db_sequence_id: db_sequence.id)
   end
@@ -92,15 +96,30 @@ describe HmmResultRow do
 
   describe "calculation of best hit" do
     before do
-      @hmmp001 = FactoryGirl.create(:hmm_profile001)
-      @hmmp00100 = FactoryGirl.create(:hmm_profile00100, parent: @hmmp001)
+      @row1  = HmmResultRow.create(hmm_result: result1, fullseq_evalue: 1, fullseq_score: 2, db_sequence: db_sequence)
+      @row2  = HmmResultRow.create(hmm_result: result2, fullseq_evalue: 2, fullseq_score: 1, db_sequence: db_sequence)
+    end
+    it "recognizes the smallest evalue as the best hit" do
+      @row1.best_hit_evalue?.should eq(true)
+    end
+
+    it "doesn't recognizes the non-smallest evalue as the best hit" do
+      @row2.best_hit_evalue?.should eq(false)
+    end
+
+    it "recognizes the largest score as the best hit" do
+      @row1.best_hit_score?.should eq(true)
+    end
+    
+    it "does not recognizes the non-largest score as the best hit" do
+      @row2.best_hit_score?.should eq(false)
     end
   end
 
+
+  
+
   describe "finding all unique databases represented in the hit list" do
-    before do
-      @resultrow = HmmResultRow.new(hmm_result_id: result.id)
-    end
-    its( :dbs_included ) { should include("ref") }
+    its( :dbs_included ) { should eq(["ref"]) }
   end
 end
