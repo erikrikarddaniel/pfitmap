@@ -1,11 +1,17 @@
 require 'spec_helper'
 
 describe "HmmResultRows" do
-  describe "GET /hmm_result_rows" do
-    it "works! (now write some real specs)" do
-      # Run the generator again with the --webrat flag if you want to use webrat methods/matchers
-      get hmm_result_rows_path
-      response.status.should be(200)
-    end
+  subject { page }
+  let!(:profile1) { FactoryGirl.create(:hmm_profile, name: "class 1" ) }
+  let!(:profile2) { FactoryGirl.create(:hmm_profile, name: "class 2" ) }
+  let!(:sequence_db) { FactoryGirl.create(:sequence_db) }
+  let!(:db_sequence) { FactoryGirl.create(:db_sequence) }
+  let!(:r1) { FactoryGirl.create(:hmm_result, hmm_profile: profile1, sequence_db: sequence_db, executed: 100.years.ago) }
+  let!(:result_row) { FactoryGirl.create(:hmm_result_row, hmm_result: r1, db_sequence: db_sequence) }
+  let!(:hmm_db_hit) { FactoryGirl.create(:hmm_db_hit, db_sequence: db_sequence) }
+
+  describe "show result row" do 
+    before{ visit hmm_result_row_path(result_row) }
+    it {should have_content(profile1.name) }
   end
 end

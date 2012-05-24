@@ -27,6 +27,11 @@ describe "Hmm Profile Pages" do
     #    page.should have_selector('
   end
 
+  describe "creating a new profile" do
+    before{ visit new_hmm_profile_path }
+    it { should have_content('New hmm_profile') } 
+  end
+
   describe "Showing a profile" do
     subject{ page }
     
