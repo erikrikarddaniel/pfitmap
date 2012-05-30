@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Source:</b>
+  <%= @sequence_source.source %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @sequence_source.name %>
+</p>
+
+<p>
+  <b>Version:</b>
+  <%= @sequence_source.version %>
+</p>
+
+
+<%= link_to 'Edit', edit_sequence_source_path(@sequence_source) %> |
+<%= link_to 'Back', sequence_sources_path %>

@@ -7,7 +7,7 @@ Pfitmap::Application.routes.draw do
 
   resources :hmm_results, :except => [:new, :edit]
 
-  resources :sequence_dbs
+  resources :sequence_sources
 
   resources :hmm_profiles do
     resources :hmm_results

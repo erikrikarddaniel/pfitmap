@@ -1,10 +1,10 @@
-<%= form_for(@sequence_db) do |f| %>
-  <% if @sequence_db.errors.any? %>
+<%= form_for(@sequence_source) do |f| %>
+  <% if @sequence_source.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@sequence_db.errors.count, "error") %> prohibited this sequence_db from being saved:</h2>
+      <h2><%= pluralize(@sequence_source.errors.count, "error") %> prohibited this sequence_source from being saved:</h2>
 
       <ul>
-      <% @sequence_db.errors.full_messages.each do |msg| %>
+      <% @sequence_source.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>

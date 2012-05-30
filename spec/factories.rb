@@ -37,13 +37,13 @@ FactoryGirl.define do
     version "20120401"
   end
   
-  factory :sequence_db do
+  factory :sequence_source do
     source "NCBI"
     name "NR"
     version "20120328"
   end
   
-  factory :sequence_db_older, class: SequenceDb do
+  factory :sequence_source_older, class: SequenceSource do
     source "NCBI"
     name "NR"
     version "20120128"
@@ -56,7 +56,7 @@ FactoryGirl.define do
   factory :hmm_result do
     sequence(:executed) { |n| "#{n}"}
     hmm_profile
-    sequence_db
+    sequence_source
   end
   
   factory :hmm_db_hit do

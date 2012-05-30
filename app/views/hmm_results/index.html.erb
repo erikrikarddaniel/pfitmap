@@ -22,8 +22,8 @@
       <%= hmm_result.executed.to_formatted_s(:long) %>
       <% end %>
     </td>
-    <td><%= hmm_result.sequence_db.source.to_s %>:
-      <%= hmm_result.sequence_db.name.to_s %></td>
+    <td><%= hmm_result.sequence_source.source.to_s %>:
+      <%= hmm_result.sequence_source.name.to_s %></td>
     <td><%= link_to 'Show', hmm_result %></td>
     <td><%= link_to 'Destroy', hmm_result, confirm: 'Are you sure?', method: :delete %></td>
   </tr>

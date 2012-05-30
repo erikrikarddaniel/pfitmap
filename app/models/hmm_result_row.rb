@@ -38,7 +38,7 @@ class HmmResultRow < ActiveRecord::Base
 
   def best_hit_evalue?
     db_seq = DbSequence.find(self.db_sequence_id)
-    all_result_rows = db_seq.all_hits(self.hmm_result.sequence_db)
+    all_result_rows = db_seq.all_hits(self.hmm_result.sequence_source)
     all_evalues = []
     all_result_rows.each do |row|
       all_evalues.append(row.fullseq_evalue)
@@ -49,7 +49,7 @@ class HmmResultRow < ActiveRecord::Base
 
   def best_hit_score?
     db_seq = DbSequence.find(self.db_sequence_id)
-    all_result_rows = db_seq.all_hits(self.hmm_result.sequence_db)
+    all_result_rows = db_seq.all_hits(self.hmm_result.sequence_source)
     all_scores = []
     all_result_rows.each do |row|
       all_scores.append(row.fullseq_score)

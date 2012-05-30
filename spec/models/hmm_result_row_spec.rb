@@ -31,14 +31,14 @@ require 'spec_helper'
 
 describe HmmResultRow do
   let(:profile) { FactoryGirl.create(:hmm_profile) }
-  let(:sequence_db) { FactoryGirl.create(:sequence_db) }
+  let(:sequence_source) { FactoryGirl.create(:sequence_source) }
   let!(:result) { FactoryGirl.create(:hmm_result, hmm_profile: profile) }
   let!(:db_sequence) { FactoryGirl.create(:db_sequence) }
   let!(:db_hit) { FactoryGirl.create(:hmm_db_hit, db_sequence: db_sequence) }
   let(:hmmp001) { FactoryGirl.create(:hmm_profile_001) }
   let(:hmmp00100) { FactoryGirl.create(:hmm_profile_00100, parent: hmmp001) }
-  let!(:result1) { FactoryGirl.create(:hmm_result, hmm_profile: hmmp001, sequence_db: sequence_db) }
-  let!(:result2) { FactoryGirl.create(:hmm_result, hmm_profile: hmmp00100, sequence_db: sequence_db) }
+  let!(:result1) { FactoryGirl.create(:hmm_result, hmm_profile: hmmp001, sequence_source: sequence_source) }
+  let!(:result2) { FactoryGirl.create(:hmm_result, hmm_profile: hmmp00100, sequence_source: sequence_source) }
   before do 
       @resultrow = HmmResultRow.new(hmm_result_id: result.id, db_sequence_id: db_sequence.id)
   end

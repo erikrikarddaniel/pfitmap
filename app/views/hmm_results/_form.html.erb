@@ -2,8 +2,8 @@
 <%= render 'shared/error_messages_result' %>
 
 <div class="field">
-  <%= f.label :sequence_db, "Sequence database"%><br />
-  <%= collection_select(:hmm_result, :sequence_db_id, SequenceDb.all, :id, :name) %>
+  <%= f.label :sequence_source, "Sequence database"%><br />
+  <%= collection_select(:hmm_result, :sequence_source_id, SequenceSource.all, :id, :name) %>
 </div>
 
 <div class="field">

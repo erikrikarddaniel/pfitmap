@@ -21,7 +21,7 @@ require 'spec_helper'
 describe HmmResultsController do
   before(:each) do
     @hmm_profile = FactoryGirl.create(:hmm_profile) 
-    @sequence_db = FactoryGirl.create(:sequence_db)
+    @sequence_source = FactoryGirl.create(:sequence_source)
     @bulk_tblout = fixture_file_upload('/sample.tblout')
   end
   # This should return the minimal set of attributes required to create a valid
@@ -30,7 +30,7 @@ describe HmmResultsController do
   def valid_attributes
     {
       :executed => 1.day.ago,
-      :sequence_db_id => @sequence_db
+      :sequence_source_id => @sequence_source
     }
   end
   

@@ -1,0 +1,2 @@
+The dropdown for sequence_source when creating a new result, should display all three attributes and not just the name.
+

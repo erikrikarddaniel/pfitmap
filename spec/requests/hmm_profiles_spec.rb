@@ -55,10 +55,10 @@ describe "Hmm Profile Pages" do
   end
   describe "Register new result without file" do
     let!(:hmm_profile) { FactoryGirl.create(:hmm_profile) }
-    let!(:sequence_db) { FactoryGirl.create(:sequence_db) }
+    let!(:sequence_source) { FactoryGirl.create(:sequence_source) }
     before do
       visit hmm_profile_path(hmm_profile)
-      select('ref', :from => 'hmm_result[sequence_db_id]')
+      select('NR', :from => 'hmm_result[sequence_source_id]')
       click_on 'Create Result'
     end
     it "should see oops message when trying to register new HmmResult " do
@@ -69,11 +69,11 @@ describe "Hmm Profile Pages" do
 
   describe "Register new result" do
     let!(:hmm_profile) { FactoryGirl.create(:hmm_profile) }
-    let!(:sequence_db) { FactoryGirl.create(:sequence_db) }
+    let!(:sequence_source) { FactoryGirl.create(:sequence_source) }
     before do
       @bulk_tblout = fixture_file_upload('/sample.tblout')
       visit hmm_profile_path(hmm_profile)
-      select('ref', :from => 'hmm_result[sequence_db_id]')
+      select('NR', :from => 'hmm_result[sequence_source_id]')
       click_on 'Create Result'
     end
     it "should be able to create a new HmmResult" do

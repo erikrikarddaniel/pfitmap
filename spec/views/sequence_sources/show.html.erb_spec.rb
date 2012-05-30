@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe "sequence_dbs/show" do
+describe "sequence_sources/show" do
   before(:each) do
-    @sequence_db = assign(:sequence_db, stub_model(SequenceDb,
+    @sequence_source = assign(:sequence_source, stub_model(SequenceSource,
       :source => "Source",
       :name => "Name",
       :version => "Version"

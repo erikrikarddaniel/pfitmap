@@ -17,7 +17,7 @@ class HmmProfilesController < ApplicationController
     @hmm_profile = HmmProfile.find(params[:id])
     @hmm_result = @hmm_profile.hmm_results.build()
     @hmm_results = @hmm_profile.hmm_results.paginate(page: params[:page])
-    @sequence_dbs = SequenceDb.all
+    @sequence_sources = SequenceSource.all
     
     respond_to do |format|
       format.html # show.html.erb

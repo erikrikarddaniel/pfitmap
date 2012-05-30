@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120516124425) do
+ActiveRecord::Schema.define(:version => 20120530082554) do
 
   create_table "db_sequences", :force => true do |t|
     t.datetime "created_at",  :null => false
@@ -71,16 +71,16 @@ ActiveRecord::Schema.define(:version => 20120516124425) do
 
   create_table "hmm_results", :force => true do |t|
     t.datetime "executed"
-    t.integer  "sequence_db_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
     t.integer  "hmm_profile_id"
+    t.integer  "sequence_source_id", :null => false
   end
 
   add_index "hmm_results", ["hmm_profile_id"], :name => "index_hmm_results_on_hmm_profile_id"
-  add_index "hmm_results", ["sequence_db_id"], :name => "index_hmm_results_on_sequence_db_id"
+  add_index "hmm_results", ["sequence_source_id"], :name => "index_hmm_results_on_sequence_source_id"
 
-  create_table "sequence_dbs", :force => true do |t|
+  create_table "sequence_sources", :force => true do |t|
     t.string   "source"
     t.string   "name"
     t.string   "version"

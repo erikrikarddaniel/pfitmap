@@ -17,9 +17,9 @@ class DbSequence < ActiveRecord::Base
   # Given a database, it will browse through all profiles in order to
   # find all hits 
 
-  # All result rows that share sequence_db.id
-  def all_hits(sequence_db)
-    hmm_results = HmmResult.where("sequence_db_id = ?", sequence_db.id)
+  # All result rows that share sequence_source.id
+  def all_hits(sequence_source)
+    hmm_results = HmmResult.where("sequence_source_id = ?", sequence_source.id)
     hmm_result_rows = []
     hmm_results.each do
       rows_temp = HmmResultRow.where("db_sequence_id = ?", self.id)

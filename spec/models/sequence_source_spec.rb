@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: sequence_dbs
+# Table name: sequence_sources
 #
 #  id         :integer         not null, primary key
 #  source     :string(255)
@@ -12,14 +12,14 @@
 
 require 'spec_helper'
 
-describe SequenceDb do
+describe SequenceSource do
   before(:each) do
     @attr = {
       :source => "NCBI",
       :name => "ref",
       :version => "20120328"
     }
-    @seqdb = SequenceDb.new(@attr)
+    @seqdb = SequenceSource.new(@attr)
   end
 
   subject { @seqdb }

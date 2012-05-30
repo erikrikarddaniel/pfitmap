@@ -5,9 +5,9 @@ describe "HmmResults" do
   
   let!(:profile1) { FactoryGirl.create(:hmm_profile, name: "class 1" ) }
   let!(:profile2) { FactoryGirl.create(:hmm_profile, name: "class 2" ) }
-  let!(:sequence_db) { FactoryGirl.create(:sequence_db) }
+  let!(:sequence_source) { FactoryGirl.create(:sequence_source) }
   let!(:db_sequence) { FactoryGirl.create(:db_sequence) }
-  let!(:r1) { FactoryGirl.create(:hmm_result, hmm_profile: profile1, sequence_db: sequence_db, executed: 100.years.ago) }
+  let!(:r1) { FactoryGirl.create(:hmm_result, hmm_profile: profile1, sequence_source: sequence_source, executed: 100.years.ago) }
   let!(:result_row) { FactoryGirl.create(:hmm_result_row, hmm_result: r1, db_sequence: db_sequence) }
   let!(:hmm_db_hit) { FactoryGirl.create(:hmm_db_hit, db_sequence: db_sequence) }
 
@@ -19,7 +19,7 @@ describe "HmmResults" do
 
     it "should have the correct result information" do
       page.should have_content(profile1.name)
-      page.should have_content(r1.sequence_db.version)
+      page.should have_content(r1.sequence_source.version)
     end
     
     it "should have the correct result row information" do
@@ -37,7 +37,7 @@ describe "HmmResults" do
     end
     it "should have the correct result information" do
       page.should have_content(profile1.name)
-      page.should have_content(r1.sequence_db.version)
+      page.should have_content(r1.sequence_source.version)
     end
   end
 
