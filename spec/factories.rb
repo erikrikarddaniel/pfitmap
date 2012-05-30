@@ -77,6 +77,7 @@ FactoryGirl.define do
     hmm_result
     target_name "gi|160942848|ref|ZP_02090088.1|"
     fullseq_evalue 3e-300
+    fullseq_score 50.0
     db_sequence
   end
   
@@ -84,5 +85,7 @@ FactoryGirl.define do
     hmm_result
     target_name "gi|167748341|ref|ZP_02420468.1|"
     fullseq_evalue 4e-100
+    fullseq_score 10.0
+    db_sequence
   end
 end

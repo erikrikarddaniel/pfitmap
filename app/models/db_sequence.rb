@@ -2,9 +2,10 @@
 #
 # Table name: db_sequences
 #
-#  id         :integer         not null, primary key
-#  created_at :datetime        not null
-#  updated_at :datetime        not null
+#  id                  :integer         not null, primary key
+#  created_at          :datetime        not null
+#  updated_at          :datetime        not null
+#  best_hmm_profile_id :integer
 #
 
 class DbSequence < ActiveRecord::Base
@@ -23,5 +24,11 @@ class DbSequence < ActiveRecord::Base
       hmm_result_rows.concat(rows_temp)
     end
     return hmm_result_rows
+  end
+
+  # A method that returns the best hmm profile id.
+  def best_hmm_profile
+    max_score_row = self.hmm_result_rows.sort_by{ |row| row.fullseq_score }.last
+    return max_score_row.hmm_result.hmm_profile.id
   end
 end
