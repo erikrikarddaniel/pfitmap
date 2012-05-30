@@ -2,10 +2,9 @@
 #
 # Table name: db_sequences
 #
-#  id                  :integer         not null, primary key
-#  created_at          :datetime        not null
-#  updated_at          :datetime        not null
-#  best_hmm_profile_id :integer
+#  id         :integer         not null, primary key
+#  created_at :datetime        not null
+#  updated_at :datetime        not null
 #
 
 require 'spec_helper'
@@ -25,6 +24,7 @@ describe DbSequence do
   it { should_not respond_to(:hmm_db_hit_id) }
   it { should respond_to(:hmm_result_rows)}
   it { should respond_to(:hmm_db_hits) }
+  it { should respond_to(:pfitmap_sequence) }
 
   #Operations
   it { should respond_to(:all_hits) }
@@ -34,7 +34,7 @@ describe DbSequence do
     it {should be_valid}
   end
   
-  describe "should have a factory" do
+  describe "create with factory" do
     let(:db_sequence) { FactoryGirl.create(:db_sequence) }
     let(:hmm_result_row) { FactoryGirl.create(:hmm_result_row, hmm_result: hmm_result, db_sequence: db_sequence) }
     before do
@@ -60,5 +60,18 @@ describe DbSequence do
     subject { db_sequence}
     its(:best_hmm_profile) { should eq(hmm_profile.id) }
     its(:best_hmm_profile) { should_not eq(hmm_profile_00100.id) }
+  end
+
+  describe "pfitmap sequence" do
+    let!(:db_sequence) { FactoryGirl.create(:db_sequence) }
+    let!(:db_sequence2) { FactoryGirl.create(:db_sequence) }
+    subject{db_sequence}
+    describe "can be null" do
+      its(:pfitmap_sequence) { should eq(nil) }
+    end
+    describe "can be correct" do
+      let!(:pfitmap_sequence) { FactoryGirl.create(:pfitmap_sequence, db_sequence: db_sequence) }
+      its(:pfitmap_sequence) { should eq(pfitmap_sequence) }
+    end
   end
 end

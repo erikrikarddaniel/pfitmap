@@ -2,15 +2,15 @@
 #
 # Table name: db_sequences
 #
-#  id                  :integer         not null, primary key
-#  created_at          :datetime        not null
-#  updated_at          :datetime        not null
-#  best_hmm_profile_id :integer
+#  id         :integer         not null, primary key
+#  created_at :datetime        not null
+#  updated_at :datetime        not null
 #
 
 class DbSequence < ActiveRecord::Base
   has_many :hmm_result_rows
   has_many :hmm_db_hits
+  has_one :pfitmap_sequence
 
   # Given a database, it will browse through all profiles in order to
   # find all hits 

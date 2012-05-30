@@ -88,4 +88,8 @@ FactoryGirl.define do
     fullseq_score 10.0
     db_sequence
   end
+
+  factory :pfitmap_sequence do
+    db_sequence
+  end
 end
