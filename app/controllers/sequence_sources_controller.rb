@@ -2,7 +2,7 @@ class SequenceSourcesController < ApplicationController
   # GET /sequence_sources
   # GET /sequence_sources.json
   def index
-    @sequence_sources = SequenceSource.all
+    @sequence_sources = SequenceSource.all.sort_by{ |s| s.version }
 
     respond_to do |format|
       format.html # index.html.erb
