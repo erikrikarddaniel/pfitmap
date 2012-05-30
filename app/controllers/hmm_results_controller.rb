@@ -70,7 +70,7 @@ class HmmResultsController < ApplicationController
             end
           end
           if not present_sequence
-            present_sequence = DbSequence.new(aa_sequence: "#{separate_entries[0]}bogusbogus")
+            present_sequence = DbSequence.new()
             present_sequence.save
           end
           ##############################

@@ -2,10 +2,9 @@
 #
 # Table name: db_sequences
 #
-#  id          :integer         not null, primary key
-#  created_at  :datetime        not null
-#  updated_at  :datetime        not null
-#  aa_sequence :text
+#  id         :integer         not null, primary key
+#  created_at :datetime        not null
+#  updated_at :datetime        not null
 #
 
 require 'spec_helper'
@@ -15,25 +14,17 @@ describe DbSequence do
   let!(:sequence_source) { FactoryGirl.create(:sequence_source) }
   let!(:hmm_result) { FactoryGirl.create(:hmm_result, hmm_profile: hmm_profile, sequence_source: sequence_source, executed: 100.years.ago) }
   before do
-    @db_sequence = DbSequence.new(aa_sequence: "LARS")
+    @db_sequence = DbSequence.new()
   end
   subject { @db_sequence }
 
   it { should respond_to(:id) }
   it { should_not respond_to(:hmm_result_row_id) }
   it { should_not respond_to(:hmm_db_hit_id) }
-  it { should_not respond_to(:sequence ) }
-  it { should respond_to(:aa_sequence) }
   it { should respond_to(:hmm_result_rows)}
   it { should respond_to(:hmm_db_hits) }
 
   it { should respond_to(:all_hits) }
-  describe "with invalid parameters" do
-    describe "without sequence" do
-      before { @db_sequence.aa_sequence = nil }
-      it {should_not be_valid }
-    end
-  end
 
   describe "with valid parameters" do
     it {should be_valid}

@@ -50,7 +50,6 @@ FactoryGirl.define do
   end
 
   factory :db_sequence do
-    aa_sequence "LARS"
   end
   
   factory :hmm_result do

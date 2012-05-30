@@ -2,17 +2,14 @@
 #
 # Table name: db_sequences
 #
-#  id          :integer         not null, primary key
-#  created_at  :datetime        not null
-#  updated_at  :datetime        not null
-#  aa_sequence :text
+#  id         :integer         not null, primary key
+#  created_at :datetime        not null
+#  updated_at :datetime        not null
 #
 
 class DbSequence < ActiveRecord::Base
-  attr_accessible :aa_sequence
   has_many :hmm_result_rows
   has_many :hmm_db_hits
-  validates :aa_sequence, presence: true
 
   # Given a database, it will browse through all profiles in order to
   # find all hits 
