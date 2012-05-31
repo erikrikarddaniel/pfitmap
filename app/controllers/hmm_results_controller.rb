@@ -49,6 +49,19 @@ class HmmResultsController < ApplicationController
     end
   end
 
+  # DELETE /hmm_results/1
+  # DELETE /hmm_results/1.json
+  def destroy
+    @hmm_result = HmmResult.find(params[:id])
+    @hmm_result.destroy
+
+    respond_to do |format|
+      format.html { redirect_to hmm_results_url }
+      format.json { head :no_content }
+    end
+  end
+
+  private
   def parse_results(result, io)
     logger.debug "Logging Entering parsing"
     HmmResult.transaction do
@@ -110,18 +123,6 @@ class HmmResultsController < ApplicationController
                                                          )
         end
       end
-    end
-  end
-
-  # DELETE /hmm_results/1
-  # DELETE /hmm_results/1.json
-  def destroy
-    @hmm_result = HmmResult.find(params[:id])
-    @hmm_result.destroy
-
-    respond_to do |format|
-      format.html { redirect_to hmm_results_url }
-      format.json { head :no_content }
     end
   end
 end
