@@ -63,21 +63,32 @@ p {
 }
 
 
-/* header */
+/* navigation bar */
+/* Extends twitter bootstrap classes */
 
-#logo {
-  float: left;
-  margin-right: 10px;
-  font-size: 1.7em;
-  color: white;
-  letter-spacing: -1px;
-  padding-top: 9px;
-  font-weight: bold;
-  line-height: 1;
-  &:hover {
+.navigation-bar {
+  @extend .navbar;
+  @extend .navbar-inner;
+  @extend .navbar-fixed-top;
+
+  #logo {
+    float: left;
+    margin-right: 10px;
+    font-size: 1.7em;
     color: white;
-    text-decoration: none;
+    letter-spacing: -1px;
+    padding-top: 9px;
+    font-weight: bold;
+    line-height: 1;
+    &:hover {
+      color: grey;
+      text-decoration: none;
+    }
   }
+}
+
+.content {
+     @extend .container;
 }
 
 /* footer */
