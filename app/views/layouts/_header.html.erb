@@ -1,12 +1,14 @@
-<header class="navigation-bar">
-  <div class="content">
-    <%= link_to "RNRdb", root_path, id: "logo" %>
-    <nav>
-      <ul class="nav pull-right">
-	<li><%= link_to "Home", root_path, title: "Home" %></li>
-        <li><%= link_to "Contact", contact_path %></li>
-        <li><%= link_to "Help", help_path %></li>
-      </ul>
-    </nav>
+<header class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <%= link_to "RNRdb", root_path, id: "logo" %>
+      <nav>
+	<ul class="nav pull-right">
+	  <li><%= link_to "Home", root_path, title: "Home" %></li>
+          <li><%= link_to "Contact", contact_path %></li>
+          <li><%= link_to "Help", help_path %></li>
+	</ul>
+      </nav>
+    </div>
   </div>
 </header>

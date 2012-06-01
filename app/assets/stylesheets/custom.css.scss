@@ -35,6 +35,8 @@ textarea {
   }
 }
 
+/* All content should be inside the content class */
+
 /* typography */
 
 h1, h2, h3, h4, h5, h6 {
@@ -66,12 +68,8 @@ p {
 /* navigation bar */
 /* Extends twitter bootstrap classes */
 
-.navigation-bar {
-  @extend .navbar;
-  @extend .navbar-inner;
-  @extend .navbar-fixed-top;
 
-  #logo {
+#logo {
     float: left;
     margin-right: 10px;
     font-size: 1.7em;
@@ -84,16 +82,12 @@ p {
       color: grey;
       text-decoration: none;
     }
-  }
-}
-
-.content {
-     @extend .container;
 }
 
 /* footer */
 
 footer {
+  text-align: center;
   margin-top: 45px;
   padding-top: 5px;
   border-top: 1px solid $grayMediumLight;
@@ -101,7 +95,7 @@ footer {
   a {
     color: $gray;
     &:hover { 
-      color: $grayDarker;
+      color: $white;
     }
   }  
   small { 
@@ -115,6 +109,25 @@ footer {
       margin-left: 10px;
     }
   }
+}
+
+/* pageheader */
+
+.pageheader1 {
+  padding-bottom: 9px;
+  /* text-align: center */
+  h1 {
+      font-size: xx-large;
+      /* text-align: left; */
+      letter-spacing: -1px;
+      margin-bottom: 3px;
+    }
+  h2 {
+      font-size: 1.6em;
+      text-align: left;
+      letter-spacing: 0px;
+      margin-bottom: 3px;
+    }
 }
 
 /* miscellaneous */
@@ -153,6 +166,14 @@ aside {
       margin-bottom: 3px;
     }
   }
+}
+
+.main-content {
+   table {
+      @extend .table;
+      @extend .table-striped;
+}
+
 }
 
 /* forms */

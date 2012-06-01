@@ -1,14 +1,21 @@
 <% provide(:title, 'Sequence Sources') %>
+<div class="row pageheader1">
+    <div class="span6">
+      <h1>Sequence Sources</h1>
+    </div>
+    <div class="span6">
+      <%= link_to 'Add New Source', new_sequence_source_path, class: "btn"%> 
+    </div>
+</div>
 <div class="row">
-  <aside class"span4">
+  <aside class="span4">
     <section>
       <h1>Sequence Sources</h1>
-      <%= link_to 'New Sequence db', new_sequence_source_path %> 
     </section>
   </aside>
-  <div class="span8 offset4">
+  <div class="span8 main-content">
     <h3>Sequence Sources</h3>
-    <table class="table table-striped">
+    <table>
       <thead>
 	<tr>
 	  <th>Source</th>
