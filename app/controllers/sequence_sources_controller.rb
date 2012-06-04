@@ -14,6 +14,7 @@ class SequenceSourcesController < ApplicationController
   # GET /sequence_sources/1.json
   def show
     @sequence_source = SequenceSource.find(params[:id])
+    @hmm_results = @sequence_source.hmm_results.all
 
     respond_to do |format|
       format.html # show.html.erb
@@ -44,7 +45,7 @@ class SequenceSourcesController < ApplicationController
 
     respond_to do |format|
       if @sequence_source.save
-        format.html { redirect_to @sequence_source, notice: 'Sequence db was successfully created.' }
+        format.html { redirect_to @sequence_source, notice: 'Sequence source was successfully created.' }
         format.json { render json: @sequence_source, status: :created, location: @sequence_source }
       else
         format.html { render action: "new" }
