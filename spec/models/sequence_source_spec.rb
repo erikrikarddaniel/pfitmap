@@ -25,6 +25,7 @@ describe SequenceSource do
   subject { @seqdb }
 
   it { should respond_to(:source) }
+  it { should respond_to(:hmm_results) }
   it { should be_valid }
 
   describe "Should not be valid when source is not present" do
