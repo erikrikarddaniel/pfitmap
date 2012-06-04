@@ -18,7 +18,9 @@ screen -t views
 chdir ../..
 chdir config
 screen -t config
-chdir ../log
+chdir ../app/assets/stylesheets
+screen -t stylesheets
+chdir ../../../log
 screen -t log
 chdir ..
 screen -t man
