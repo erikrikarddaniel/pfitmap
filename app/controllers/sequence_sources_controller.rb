@@ -14,7 +14,7 @@ class SequenceSourcesController < ApplicationController
   # GET /sequence_sources/1.json
   def show
     @sequence_source = SequenceSource.find(params[:id])
-    @hmm_results = @sequence_source.hmm_results.all
+    @hmm_results = @sequence_source.hmm_results.paginate(page: params[:page])
 
     respond_to do |format|
       format.html # show.html.erb
