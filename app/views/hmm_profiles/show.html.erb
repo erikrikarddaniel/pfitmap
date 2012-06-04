@@ -31,7 +31,7 @@
     <% if @hmm_profile.hmm_results.any? %>
     <h3>Results (<%= @hmm_results.count %>)</h3>
     <ol class="results">
-      <%= render @hmm_results %>
+      <%= render :partial => "hmm_profiles/hmm_result", :collection => @hmm_results %>
     </ol>
     <%= will_paginate @hmm_results %>
     <% else %>
