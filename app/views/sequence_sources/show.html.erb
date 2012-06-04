@@ -1,20 +1,41 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <b>Source:</b>
-  <%= @sequence_source.source %>
-</p>
-
-<p>
-  <b>Name:</b>
-  <%= @sequence_source.name %>
-</p>
-
-<p>
-  <b>Version:</b>
-  <%= @sequence_source.version %>
-</p>
-
-
-<%= link_to 'Edit', edit_sequence_source_path(@sequence_source) %> |
-<%= link_to 'Back', sequence_sources_path %>
+<div class="row">
+  <aside class="span4">
+    <p>
+      <b>Source:</b>
+      <%= @sequence_source.source %>
+    </p>
+    
+    <p>
+      <b>Name:</b>
+      <%= @sequence_source.name %>
+    </p>
+    
+    <p>
+      <b>Version:</b>
+      <%= @sequence_source.version %>
+    </p>
+    
+    
+    <%= link_to 'Edit', edit_sequence_source_path(@sequence_source) %> |
+    <%= link_to 'Back', sequence_sources_path %>
+  </aside>
+  <div class="main-content span8">
+    <% if @sequence_source.hmm_results.any? %>
+    <h3> HMM Results for this source (<%= @hmm_results.count %>)</h3>
+    <table>
+      <thead>
+	<tr>
+	  <th>Profile Hierarchy</th>
+	  <th>Profile Name</th>
+	  <th>Profile version</th>
+	  <th>Executed</th>
+	</tr>
+      </thead>
+      <tbody>
+	<%= render :partial => "sequence_sources/hmm_result", :collection => @hmm_results %>
+      </tbody>
+    </table>
+    <%= will_paginate @hmm_results %>
+  </div>
+  <% end %>
+</div>
