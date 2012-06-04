@@ -1,4 +1,4 @@
-<%= form_for(@sequence_source) do |f| %>
+<%= form_for(@sequence_source, :html => { :class => "well"} ) do |f| %>
   <% if @sequence_source.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@sequence_source.errors.count, "error") %> prohibited this sequence_source from being saved:</h2>
@@ -10,20 +10,20 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :source %><br />
-    <%= f.text_field :source %>
+  <div class="input-large">
+    <%= f.label :source %>
+    <%= f.text_field :source, :placeholder => 'Typical value: NCBI'%>
   </div>
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
+  <div class="input-large">
+    <%= f.label :name %>
+    <%= f.text_field :name, :placeholder => 'Typical value: ref'%>
   </div>
-  <div class="field">
-    <%= f.label :version %><br />
-    <%= f.text_field :version %>
+  <div class="input-large">
+    <%= f.label :version %>
+    <%= f.text_field :version, :placeholder => 'Typical value: 2012-06-04'%>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit 'Save Sequence Source', :class => 'btn btn-primary' %> <br />
+    <%= link_to 'Cancel', sequence_sources_path, :class => 'btn' %>
   </div>
 <% end %>

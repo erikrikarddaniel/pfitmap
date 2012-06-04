@@ -47,7 +47,6 @@ h1 {
   font-size: 3em;
   letter-spacing: -2px;
   margin-bottom: 30px;
-  text-align: center;
 }
 
 h2 {
@@ -66,9 +65,6 @@ p {
 
 
 /* navigation bar */
-/* Extends twitter bootstrap classes */
-
-
 #logo {
     float: left;
     margin-right: 10px;
@@ -114,11 +110,11 @@ footer {
 /* pageheader */
 
 .pageheader1 {
+  padding-top: 6px;
   padding-bottom: 9px;
-  /* text-align: center */
   h1 {
       font-size: xx-large;
-      /* text-align: left; */
+      text-align: left;
       letter-spacing: -1px;
       margin-bottom: 3px;
     }
@@ -178,6 +174,7 @@ aside {
 
 /* forms */
 
+
 input, textarea, select, .uneditable-input {
   border: 1px solid #bbb;
   width: 100%;
@@ -186,6 +183,7 @@ input, textarea, select, .uneditable-input {
   margin-bottom: 15px;
   @include box_sizing;
 }
+
 
 #error_explanation {
   color:#f00;
