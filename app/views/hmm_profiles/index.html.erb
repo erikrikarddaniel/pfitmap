@@ -1,25 +1,43 @@
 <% provide(:title, 'HMM Profiles') %>
 <h1>Listing HMM-Profiles</h1>
-  <ul>
-    <% @hmm_profiles_last_parents.each do |hmm_profile| %>
-    <li>
-      <strong>
-      <%= link_to hmm_profile.name, hmm_profile%>
-      <%= hmm_profile.hierarchy %>  
-      </strong>
-    <ul>
-      <% hmm_profile.children.each do |child_profile| %>
-      <li>
-	<strong>
-      <%= link_to child_profile.name, child_profile%>
-      <%= child_profile.hierarchy %>
-	</strong>
-      </li>
-      <% end %>
-    </ul>
-  </li>
-<% end %>
-</ul>
-<br />
+<div class="row">
+  <div class="span2">
+    <h3>Parent Profiles</h3>
+  </div>
+</div>
+<div class="tabbable tabs-left">
+  <ul class="nav nav-tabs">
+    <% @hmm_profiles_last_parents.each do |p| %>
+    <li class <%=p.id==@first_last_parent.id ? ''.html_safe : "".html_safe %>>
+	<a href=<%="#l#{p.id}"%> data-toggle="tab"> <%= p.name%> </a>
+    </li>
+    <% end %>
+  </ul>
+  <div class="tab-content">
+    <% @hmm_profiles_last_parents.each do |p| %>
+    <div class <%=p.id==@first_last_parent.id ? '="tab-pane active"'.html_safe : '="tab-pane"'.html_safe %> id=<%="l#{p.id}"%>>
+      <div class="row-fluid">
+	<div class="span4">
+	  <% if p.children.any?%>
+	  <ul>
+	    <% p.children.each do |child| %>
+	    <li>
+	      <%= link_to child.name, child %> 
+	    </li>
+	    <% end %>
+	  </ul>
+	  <% else %>
+	  <h3>No children</h3>
+	  <% end %>
+	</div>
+	<div class="span4">
+	  <%=link_to p.name, p%>
+	  <p><%=p.hierarchy%></p>
+	</div>
+      </div>
+    </div>
+    <% end %>
+  </div>
+</div>
 
 <%= link_to 'New Hmm profile', new_hmm_profile_path %>
