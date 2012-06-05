@@ -1,4 +1,6 @@
 class HmmProfilesController < ApplicationController
+  helper HmmProfilesHelper
+
   # GET /hmm_profiles
   # GET /hmm_profiles.json
   def index

@@ -232,3 +232,22 @@ aside {
     
   }
 }
+
+
+/* From http://jasalguero.com/ledld/development/web/expandable-list/ */
+
+#expList ul, li {
+    cursor: pointer;
+}
+
+#expList p:hover {
+    background-color:#121212;
+}
+
+/* Collapsed state for list element */
+#expList .collapsed {
+}
+/* Expanded state for list element
+/* NOTE: This class must be located UNDER the collapsed one */
+#expList .expanded {
+}
