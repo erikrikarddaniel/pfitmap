@@ -1,5 +1,12 @@
 <% provide(:title, @hmm_profile.name) %>
 <div class="row">
+  <div class="pageheader1">
+    <h3>Create a new HMM Result: </h3>
+    <%= render "hmm_results/form" %>
+  </div>
+</div>
+
+<div class="row">
   <aside class="span4">
     <section>
       <h1>
@@ -22,24 +29,30 @@
       </p>
       
       
-      <%= link_to 'Edit', edit_hmm_profile_path(@hmm_profile) %> |
-      <%= link_to 'Back', hmm_profiles_path %>
+      <%= link_to 'Edit', edit_hmm_profile_path(@hmm_profile), :class => "btn" %>
+      <%= link_to 'Back', hmm_profiles_path, :class => "btn" %>
       
     </section>
   </aside>
-  <div class="span8">
+  <div class="main-content span8">
     <% if @hmm_profile.hmm_results.any? %>
     <h3>Results (<%= @hmm_results.count %>)</h3>
-    <ol class="results">
-      <%= render :partial => "hmm_profiles/hmm_result", :collection => @hmm_results %>
-    </ol>
+    <table>
+      <thead>
+	<tr>
+	  <th>Source</th>
+	  <th>Name</th>
+	  <th>Version</th>
+	  <th></th>
+	</tr>
+      </thead>
+      <tbody>
+	<%= render :partial => "hmm_profiles/hmm_result", :collection => @hmm_results %>
+      </tbody>
+    </table>
     <%= will_paginate @hmm_results %>
     <% else %>
     <h3>No results registered</h3>
     <% end %>
-    <div class="span8" >
-      <h3>Create a new HMM Result: </h3>
-	 <%= render "hmm_results/form" %>
-    </div>
   </div>
 </div>

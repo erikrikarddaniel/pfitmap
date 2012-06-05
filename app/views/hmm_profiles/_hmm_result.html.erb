@@ -1,3 +1,6 @@
-<li>
-  <span class="executed"><%= link_to hmm_result.executed, hmm_result %></span>
-</li>
+<tr>
+  <td> <%= hmm_result.sequence_source.source %> </td>
+  <td> <%= hmm_result.sequence_source.name %> </td>
+  <td> <%= hmm_result.sequence_source.version %> </td>
+  <td> <%= link_to "show", hmm_result %> </td>
+</tr>

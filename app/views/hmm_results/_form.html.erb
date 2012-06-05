@@ -1,17 +1,14 @@
-<%= form_for([@hmm_profile, @hmm_profile.hmm_results.build]) do |f| %>
+<%= form_for([@hmm_profile, @hmm_profile.hmm_results.build], :html => { :class => "well"}) do |f| %>
 <%= render 'shared/error_messages_result' %>
-
-<div class="field">
-  <%= f.label :sequence_source, "Sequence database"%><br />
-  <%= collection_select(:hmm_result, :sequence_source_id, SequenceSource.all, :id, :name) %>
+<div class ="control-group span2">
+<%= f.label :sequence_source, "Sequence database"%>
+<%= collection_select(:hmm_result, :sequence_source_id, SequenceSource.all, :id, :name) %>
 </div>
-
-<div class="field">
+<div class ="control-group span6 offset1">
   <%= f.label :file, "Choose a file containing your hmm-results (tblout format)" %>
-  <%= f.file_field :file %>
+  <%= f.file_field :file%>
 </div>
 
-<div class="actions">
-  <%= f.submit "Create Result", :class => "btn btn-large btn-primary"%>
-</div>
+<%= f.submit "Create Result", :class => "btn btn-large btn-primary"%>
+
 <% end %>
