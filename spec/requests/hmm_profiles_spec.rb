@@ -29,7 +29,7 @@ describe "Hmm Profile Pages" do
 
   describe "creating a new profile" do
     before{ visit new_hmm_profile_path }
-    it { should have_content('New hmm_profile') } 
+    it { should have_content('New HMM Profile') } 
   end
 
   describe "Showing a profile" do
