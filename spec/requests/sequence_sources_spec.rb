@@ -1,11 +1,17 @@
 require 'spec_helper'
 
 describe "SequenceSources" do
-  describe "GET /sequence_sources" do
-    it "works! (now write some real specs)" do
-      # Run the generator again with the --webrat flag if you want to use webrat methods/matchers
-      get sequence_sources_path
-      response.status.should be(200)
+  let!(:sequence_source) { FactoryGirl.create(:sequence_source) }
+  describe "index" do
+    before{visit sequence_sources_path}
+    it "displays atleast one source" do
+      page.should have_content(sequence_source.name)
+    end
+  end
+  describe "show" do
+    before{visit sequence_source_path(sequence_source) }
+    it "displays atleast the name" do
+      page.should have_content(sequence_source.name)
     end
   end
 end
