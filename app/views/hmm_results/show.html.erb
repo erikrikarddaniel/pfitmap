@@ -1,4 +1,13 @@
-<% provide(:title, @hmm_result.hmm_profile.name) %>
+<% provide(:title, "Result for " + @hmm_result.hmm_profile.name) %>
+<div class="row">
+  <div class="span4">
+    <h1>HMM Result</h1>
+  </div>
+  <div class="span4">
+    <%= link_to "Browse this profile", @hmm_result.hmm_profile, class: "btn"%>
+    <%= link_to "Browse this source", @hmm_result.sequence_source, class: "btn"%>
+  </div>
+</div>
 <div class="row">
   <aside class="span4">
     <section>
