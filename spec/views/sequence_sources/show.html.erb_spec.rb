@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe "sequence_sources/show" do
+  let!(:hmm_profile) { FactoryGirl.create(:hmm_profile) }
   before(:each) do
     @sequence_source = assign(:sequence_source, stub_model(SequenceSource,
       :source => "Source",
