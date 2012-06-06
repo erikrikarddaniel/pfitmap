@@ -26,6 +26,7 @@ describe SequenceSource do
 
   it { should respond_to(:source) }
   it { should respond_to(:hmm_results) }
+  it { should respond_to(:hmm_profiles) }
   it { should be_valid }
 
   describe "Should not be valid when source is not present" do
@@ -41,5 +42,15 @@ describe SequenceSource do
   describe "Should not be valid when version is not present" do
     before { @seqdb.version = "" }
     it { should_not be_valid }
+  end
+
+  describe "it should list all profiles available in results" do 
+    let!(:hmm_profile1) { FactoryGirl.create(:hmm_profile) }
+    let!(:hmm_profile2) { FactoryGirl.create(:hmm_profile_001) }
+    let!(:sequence_source) { FactoryGirl.create(:sequence_source) }
+    let!(:hmm_result1) { FactoryGirl.create(:hmm_result, hmm_profile: hmm_profile1, sequence_source: sequence_source) }
+    subject{sequence_source}
+    its(:hmm_profiles) { should include(hmm_profile1) }
+    its(:hmm_profiles) { should_not include(hmm_profile2) }
   end
 end
