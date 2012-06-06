@@ -14,13 +14,13 @@
 require 'spec_helper'
 
 describe HmmProfile do
-  let(:profile) { FactoryGirl.create(:hmm_profile) }
+  let(:hmm_profile) { FactoryGirl.create(:hmm_profile) }
   let(:hmm_profile_00101) { FactoryGirl.create(:hmm_profile_00101) }
   before do
-    @profile = HmmProfile.create!(name: "Root HMM Profile", version: "20120328", hierarchy: "000")
+    @hmm_profile = HmmProfile.create!(name: "Root HMM Profile", version: "20120328", hierarchy: "000")
   end
 
-  subject { @profile }
+  subject { @hmm_profile }
 
   it { should respond_to(:name) }
   it { should respond_to(:version) }
@@ -31,23 +31,23 @@ describe HmmProfile do
   it { should be_valid }
   
   describe "Should not be valid when name is not present" do
-    before { @profile.name = "" }
+    before { @hmm_profile.name = "" }
     it { should_not be_valid }
   end
 
   describe "Should not be valid when version is not present" do
-    before { @profile.version = "" }
+    before { @hmm_profile.version = "" }
     it { should_not be_valid }
   end
 
   describe "Should not be valid when hierarchy is not present" do
-    before { @profile.hierarchy = "" }
+    before { @hmm_profile.hierarchy = "" }
     it { should_not be_valid }
   end
 
   describe "One should be able to create a child profile from a profile" do
     subject do
-      @child = @profile.children.create(
+      @child = @hmm_profile.children.create(
 	name: "1st gen. child HMM profile",
 	version: "20120328",
 	hierarchy: "000.00"
@@ -74,5 +74,10 @@ describe HmmProfile do
     it "should be able to list all last parents (root nodes)" do
       HmmProfile.last_parents().should include(hmm_profile_001)
     end
+  end
+
+  describe "inclusion criterion" do
+    let!(:inclusion_criterion) { FactoryGirl.create(:inclusion_criterion, hmm_profile: @hmm_profile) }
+    its(:inclusion_criterion) { should == inclusion_criterion }
   end
 end

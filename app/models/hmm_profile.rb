@@ -17,6 +17,7 @@ class HmmProfile < ActiveRecord::Base
   has_many :children, :class_name => "HmmProfile", :foreign_key => "parent_id", :dependent => :destroy
   belongs_to :parent, :class_name => "HmmProfile", :foreign_key => "parent_id"
   has_many :hmm_results
+  has_one :inclusion_criterion, :dependent => :destroy
   validates :name, presence: true
   validates :version, presence: true
   validates :hierarchy, presence: true

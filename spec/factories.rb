@@ -92,4 +92,8 @@ FactoryGirl.define do
   factory :pfitmap_sequence do
     db_sequence
   end
+
+  factory :inclusion_criterion do
+    hmm_profile
+  end
 end
