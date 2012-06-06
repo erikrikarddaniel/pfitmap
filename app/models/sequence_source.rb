@@ -17,4 +17,7 @@ class SequenceSource < ActiveRecord::Base
   validates :source, presence: true
   validates :name, presence: true
   validates :version, presence: true
+  def list_name
+    "#{source}:#{name}:#{version}"
+  end
 end

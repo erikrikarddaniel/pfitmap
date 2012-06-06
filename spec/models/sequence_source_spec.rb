@@ -16,7 +16,7 @@ describe SequenceSource do
   before(:each) do
     @attr = {
       :source => "NCBI",
-      :name => "ref",
+      :name => "NR",
       :version => "20120328"
     }
     @seqdb = SequenceSource.new(@attr)
@@ -27,6 +27,7 @@ describe SequenceSource do
   it { should respond_to(:source) }
   it { should respond_to(:hmm_results) }
   it { should respond_to(:hmm_profiles) }
+  it { should respond_to(:list_name) }
   it { should be_valid }
 
   describe "Should not be valid when source is not present" do
@@ -52,5 +53,9 @@ describe SequenceSource do
     subject{sequence_source}
     its(:hmm_profiles) { should include(hmm_profile1) }
     its(:hmm_profiles) { should_not include(hmm_profile2) }
+  end
+
+  describe "it should have a correct list name" do
+    its(:list_name) { should ==("NCBI:NR:20120328") }
   end
 end
