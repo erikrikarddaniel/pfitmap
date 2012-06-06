@@ -1,3 +1,4 @@
 The dropdown for sequence_source when creating a new result, should display all three attributes and not just the name.
 Should the db-sequence association to pfitmap_sequence be has_many or has_one? Can the DbSequence have multiple pfitmap-sequences since there can be different versions of the pfitmap?
 Seems like abstract classes in rails is not recommended.
+fix bug with index: index_hmm_db_hits_on_db_and_acc -When adding a result, it brakes the uniqueness. Can be an error with the create method as well.
