@@ -12,7 +12,7 @@
 
 class SequenceSource < ActiveRecord::Base
   attr_protected :id, :created_at, :updated_at
-  has_many :hmm_results
+  has_many :hmm_results, :dependent => :destroy
   has_many :hmm_profiles, :through => :hmm_results
   validates :source, presence: true
   validates :name, presence: true
