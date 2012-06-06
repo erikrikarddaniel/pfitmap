@@ -15,6 +15,8 @@ class SequenceSourcesController < ApplicationController
   def show
     @sequence_source = SequenceSource.find(params[:id])
     @hmm_results = @sequence_source.hmm_results.paginate(page: params[:page])
+    @hmm_profiles_last_parents = HmmProfile.last_parents.sort_by{|p| p.hierarchy }
+    @hmm_profiles = @sequence_source.hmm_profiles
 
     respond_to do |format|
       format.html # show.html.erb
