@@ -96,4 +96,9 @@ FactoryGirl.define do
   factory :inclusion_criterion do
     hmm_profile
   end
+
+  factory :hmm_score_criterion do
+    inclusion_criterion
+    min_fullseq_score 15.0
+  end
 end
