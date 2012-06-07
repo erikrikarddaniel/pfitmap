@@ -13,4 +13,8 @@ class InclusionCriterion < ActiveRecord::Base
   belongs_to :hmm_profile
   has_one :hmm_score_criterion, :dependent => :destroy
   validates :hmm_profile_id, :presence => :true
+
+  def evaluate?(db_sequence)
+    self.hmm_score_criterion.evaluate?
+  end
 end
