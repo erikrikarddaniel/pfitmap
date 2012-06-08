@@ -29,6 +29,7 @@ describe HmmProfile do
   it { should respond_to(:children) }
   it { should respond_to(:last_parent_id) }
   it { should respond_to(:hmm_score_criterion) }
+  it { should respond_to(:inclusion_criteria) }
   it { should be_valid }
   
   describe "Should not be valid when name is not present" do
@@ -104,6 +105,10 @@ describe HmmProfile do
     let!(:hmm_result_row3) { FactoryGirl.create(:hmm_result_row2, 
                                                 hmm_result: hmm_result2, 
                                                 db_sequence: db_sequence2) }
+    it "correctly picks up the criteria array" do
+      hmm_profile.inclusion_criteria.should == [hmm_score_criterion1]
+    end
+
     it "correctly finds the score criterion" do 
       hmm_profile.hmm_score_criterion.should == hmm_score_criterion1
     end
