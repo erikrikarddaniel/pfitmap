@@ -21,6 +21,11 @@ class HmmProfile < ActiveRecord::Base
   validates :name, presence: true
   validates :version, presence: true
   validates :hierarchy, presence: true
+  # A method to pick up all criterias independent of type
+  def inclusion_criteria
+    [self.hmm_score_criterion]
+  end
+
   # An instance method to find the root node for a specific hmm profile.
   # Calls the recursive function with the id of the current profile.
   def last_parent_id()
