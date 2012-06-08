@@ -13,7 +13,6 @@ class InclusionCriterion < ActiveRecord::Base
   self.abstract_class = true
   attr_accessible :hmm_profile_id
   belongs_to :hmm_profile
-  #belongs_to :criteria, :polymorphic => :true
 
   def evaluate?(db_sequence)
     raise NotImplementedError

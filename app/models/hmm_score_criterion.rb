@@ -11,7 +11,6 @@
 
 class HmmScoreCriterion < InclusionCriterion
   attr_accessible :min_fullseq_score
-  #has_one :inclusion_criterion, :as => :criteria
   validates :hmm_profile_id, :presence => :true, :uniqueness => :true
   validates :min_fullseq_score, :presence => :true
 
