@@ -9,9 +9,9 @@
 #  updated_at        :datetime        not null
 #
 
-class HmmScoreCriterion < ActiveRecord::Base
-  attr_accessible :min_fullseq_score, :hmm_profile_id
-  belongs_to :hmm_profile
+class HmmScoreCriterion < InclusionCriterion
+  attr_accessible :min_fullseq_score
+  #has_one :inclusion_criterion, :as => :criteria
   validates :hmm_profile_id, :presence => :true, :uniqueness => :true
   validates :min_fullseq_score, :presence => :true
 
