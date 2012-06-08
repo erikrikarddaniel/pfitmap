@@ -28,6 +28,7 @@ describe HmmProfile do
   it { should respond_to(:parent_id) }
   it { should respond_to(:children) }
   it { should respond_to(:last_parent_id) }
+  it { should respond_to(:hmm_score_criterion) }
   it { should be_valid }
   
   describe "Should not be valid when name is not present" do
@@ -76,8 +77,61 @@ describe HmmProfile do
     end
   end
 
-  describe "inclusion criterion" do
-    let!(:inclusion_criterion) { FactoryGirl.create(:inclusion_criterion, hmm_profile: @hmm_profile) }
-    its(:inclusion_criterion) { should == inclusion_criterion }
+  describe "inclusion criteria" do
+    #two alternative sequences
+    let!(:db_sequence1) { FactoryGirl.create(:db_sequence) }
+    let!(:db_sequence2) { FactoryGirl.create(:db_sequence) }
+    #Common sequence source
+    let!(:sequence_source) { FactoryGirl.create(:sequence_source) }
+    #Profile with higher score
+    let!(:hmm_score_criterion1) { FactoryGirl.create(:hmm_score_criterion, hmm_profile: hmm_profile) }
+    let!(:hmm_result1) { FactoryGirl.create(:hmm_result, 
+                                            hmm_profile: hmm_profile, 
+                                            sequence_source: sequence_source) }
+    let!(:hmm_result_row1) { FactoryGirl.create(:hmm_result_row, 
+                                                hmm_result: hmm_result1, 
+                                                db_sequence: db_sequence1) }
+    #Profile with lower score
+    let!(:hmm_score_criterion2) { FactoryGirl.create(:hmm_score_criterion, hmm_profile: hmm_profile_00101) }
+    let!(:hmm_result2) { FactoryGirl.create(:hmm_result, 
+                                            hmm_profile: hmm_profile_00101, 
+                                            sequence_source: sequence_source) }
+    # A row for the first sequence, with low score to compare against profile1
+    let!(:hmm_result_row2) { FactoryGirl.create(:hmm_result_row2, 
+                                                hmm_result: hmm_result2, 
+                                                db_sequence: db_sequence1) }
+    # A row for the second sequence, to test minimum score threshold
+    let!(:hmm_result_row3) { FactoryGirl.create(:hmm_result_row2, 
+                                                hmm_result: hmm_result2, 
+                                                db_sequence: db_sequence2) }
+    it "correctly finds the score criterion" do 
+      hmm_profile.hmm_score_criterion.should == hmm_score_criterion1
+    end
+    
+    it "evaluates the best profile with high enough score" do
+      hmm_profile.hmm_score_criterion.evaluate?(db_sequence1).should be_true
+    end
+    
+    it "evaluates the best profile with score below threshold" do
+      hmm_profile_00101.hmm_score_criterion.evaluate?(db_sequence2).should be_false
+    end
+    describe "Evaluates a profile that is not the best" do
+      let!(:hmm_profile3) { FactoryGirl.create(:hmm_profile) }
+      let!(:hmm_result3) { FactoryGirl.create(:hmm_result, 
+                                              hmm_profile: hmm_profile3, 
+                                              sequence_source: sequence_source) }
+      let!(:hmm_result_row3) { FactoryGirl.create(:hmm_result_row, 
+                                                  hmm_result: hmm_result3, 
+                                                  db_sequence: db_sequence1) }
+      let!(:hmm_score_criterion3) { FactoryGirl.create(:hmm_score_criterion, hmm_profile: hmm_profile3, min_fullseq_score: 5.0) }
+      it "with score above threshold" do
+        hmm_profile3.evaluate?(db_sequence1).should be_false
+      end
+      it "with score below threshold" do
+        hmm_profile_00101.evaluate?(db_sequence1).should be_false
+      end
+    end
+
+    
   end
 end

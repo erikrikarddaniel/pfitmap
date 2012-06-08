@@ -32,6 +32,12 @@ class HmmProfile < ActiveRecord::Base
     HmmProfile.where("parent_id IS NULL")
   end
 
+  def evaluate?(db_sequence)
+    bool1 = (db_sequence.best_hmm_profile == self.id)
+    bool2 = self.hmm_score_criterion.evaluate?(db_sequence)
+    return bool1 && bool2
+  end
+
   private
   def last_parent_recursion(id)
     parent = HmmProfile.find(id)

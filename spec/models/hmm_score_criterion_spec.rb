@@ -25,12 +25,9 @@ describe HmmScoreCriterion do
   let!(:hmm_result_row1) { FactoryGirl.create(:hmm_result_row, 
                                               hmm_result: hmm_result1, 
                                               db_sequence: db_sequence1) }
-  
-  let!(:inclusion_criterion1) { FactoryGirl.create(:inclusion_criterion, 
+  let!(:hmm_score_criterion1) { FactoryGirl.create(:hmm_score_criterion,
                                                    hmm_profile: hmm_profile1) }
-
-  let!(:hmm_score_criterion1) { FactoryGirl.create(:hmm_score_criterion, 
-                                                   inclusion_criterion: inclusion_criterion1) }
+  
   #Profile with lower score
   let!(:hmm_profile2) { FactoryGirl.create(:hmm_profile_00100) }
   let!(:hmm_result2) { FactoryGirl.create(:hmm_result, 
@@ -44,33 +41,28 @@ describe HmmScoreCriterion do
   let!(:hmm_result_row3) { FactoryGirl.create(:hmm_result_row2, 
                                               hmm_result: hmm_result2, 
                                               db_sequence: db_sequence2) }
-  
-  let!(:inclusion_criterion2) { FactoryGirl.create(:inclusion_criterion, 
+  let!(:hmm_score_criterion2) { FactoryGirl.create(:hmm_score_criterion,
                                                    hmm_profile: hmm_profile2) }
   
-  let!(:hmm_score_criterion2) { FactoryGirl.create(:hmm_score_criterion, 
-                                                   inclusion_criterion: inclusion_criterion2) }
-  #Independent profile and criterion
+  #Independent profile
   let!(:hmm_profile) { FactoryGirl.create(:hmm_profile) }
-  let!(:inclusion_criterion) { FactoryGirl.create(:inclusion_criterion, 
-                                                  hmm_profile: hmm_profile) }
   before do
-    @hmm_score_criterion = HmmScoreCriterion.new(inclusion_criterion_id: 
-                                                 inclusion_criterion.id, 
+    @hmm_score_criterion = HmmScoreCriterion.new(hmm_profile_id: 
+                                                 hmm_profile.id, 
                                                  min_fullseq_score: 15.0)
   end
   subject{ @hmm_score_criterion }
   
   it{ should be_valid }
   it{ should respond_to(:min_fullseq_score) }
-  it{ should respond_to(:inclusion_criterion) }
-  it{ should respond_to(:inclusion_criterion_id) }
+  it{ should respond_to(:hmm_profile) }
+  it{ should respond_to(:hmm_profile_id) }
   it{ should respond_to(:evaluate?) }
-  its(:inclusion_criterion) { should == inclusion_criterion }
+  its(:hmm_profile) { should == hmm_profile }
   
-  describe "without inclusion criterion" do
+  describe "without profile" do
     before do
-      @hmm_score_criterion.inclusion_criterion_id = nil
+      @hmm_score_criterion.hmm_profile_id = nil
     end
     it{ should_not be_valid }
   end
@@ -82,9 +74,9 @@ describe HmmScoreCriterion do
     it{ should_not be_valid }
   end
 
-  describe "when violating one for each inclusion_criterion" do
+  describe "when violating one for each hmm_profile" do
     before do
-      @hmm_score_criterion.inclusion_criterion_id = inclusion_criterion1.id
+      @hmm_score_criterion.hmm_profile_id = hmm_profile1.id
     end
     it { should_not be_valid }
   end
