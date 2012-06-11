@@ -27,6 +27,8 @@ describe SequenceSource do
   it { should respond_to(:source) }
   it { should respond_to(:hmm_results) }
   it { should respond_to(:hmm_profiles) }
+  it { should respond_to(:hmm_result_rows) }
+  it { should respond_to(:db_sequences) }
   it { should respond_to(:list_name) }
   it { should be_valid }
 
@@ -44,18 +46,34 @@ describe SequenceSource do
     before { @seqdb.version = "" }
     it { should_not be_valid }
   end
-
-  describe "it should list all profiles available in results" do 
+  
+  describe "associations" do
     let!(:hmm_profile1) { FactoryGirl.create(:hmm_profile) }
     let!(:hmm_profile2) { FactoryGirl.create(:hmm_profile_001) }
     let!(:sequence_source) { FactoryGirl.create(:sequence_source) }
     let!(:hmm_result1) { FactoryGirl.create(:hmm_result, hmm_profile: hmm_profile1, sequence_source: sequence_source) }
+    let!(:db_sequence1) { FactoryGirl.create(:db_sequence) }
+    let!(:hmm_result_row1) { FactoryGirl.create(:hmm_result_row, hmm_result: hmm_result1, db_sequence: db_sequence1) }
     subject{sequence_source}
-    its(:hmm_profiles) { should include(hmm_profile1) }
-    its(:hmm_profiles) { should_not include(hmm_profile2) }
+    describe "all profiles available in results" do 
+      its(:hmm_profiles) { should include(hmm_profile1) }
+      its(:hmm_profiles) { should_not include(hmm_profile2) }
+    end
+    describe "all results" do
+      its(:hmm_results) { should include(hmm_result1) }
+    end
+    
+    describe "all result rows available in results" do
+      its(:hmm_result_rows) { should include(hmm_result_row1) }
+    end
+    
+    describe "all result rows available in results" do
+      its(:db_sequences) { should include(db_sequence1) }
+    end
   end
 
-  describe "it should have a correct list name" do
+  describe "a correct list name" do
     its(:list_name) { should ==("NCBI:NR:20120328") }
   end
+ 
 end

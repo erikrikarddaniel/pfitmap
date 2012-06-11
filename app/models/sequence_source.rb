@@ -14,6 +14,8 @@ class SequenceSource < ActiveRecord::Base
   attr_protected :id, :created_at, :updated_at
   has_many :hmm_results, :dependent => :destroy
   has_many :hmm_profiles, :through => :hmm_results
+  has_many :hmm_result_rows, :through => :hmm_results
+  has_many :db_sequences, :through => :hmm_result_rows
   validates :source, presence: true
   validates :name, presence: true
   validates :version, presence: true
