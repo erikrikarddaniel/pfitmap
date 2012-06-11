@@ -47,4 +47,8 @@ describe PfitmapRelease do
     its(:db_sequences) { should include(db_sequence) }
     its(:pfitmap_sequences) { should include(pfitmap_sequence) }
   end
+
+  describe "add_to_head" do
+    it { should respond_to :add_seq_to_head }
+  end
 end
