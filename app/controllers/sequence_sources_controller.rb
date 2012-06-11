@@ -83,4 +83,15 @@ class SequenceSourcesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def evaluate
+    @sequence_source = SequenceSource.find(params[:id])
+    @db_sequences =  @sequence_source.db_sequences
+    @db_sequences.each do |seq|
+      hmm_profile = seq.best_hmm_profile
+      if hmm_profile.evaluate?(seq)
+        PfitmapSequence.add_seq_to_head(seq)
+      end
+    end
+  end
 end
