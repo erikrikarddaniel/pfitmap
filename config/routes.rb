@@ -1,4 +1,6 @@
 Pfitmap::Application.routes.draw do
+  resources :pfitmap_releases
+
   resources :db_sequences
 
   resources :hmm_db_hits

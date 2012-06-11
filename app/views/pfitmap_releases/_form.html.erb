@@ -1,0 +1,17 @@
+<%= form_for(@pfitmap_release) do |f| %>
+  <% if @pfitmap_release.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@pfitmap_release.errors.count, "error") %> prohibited this pfitmap_release from being saved:</h2>
+
+      <ul>
+      <% @pfitmap_release.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

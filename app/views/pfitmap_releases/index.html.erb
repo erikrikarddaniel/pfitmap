@@ -1,0 +1,21 @@
+<h1>Listing pfitmap_releases</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @pfitmap_releases.each do |pfitmap_release| %>
+  <tr>
+    <td><%= link_to 'Show', pfitmap_release %></td>
+    <td><%= link_to 'Edit', edit_pfitmap_release_path(pfitmap_release) %></td>
+    <td><%= link_to 'Destroy', pfitmap_release, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Pfitmap release', new_pfitmap_release_path %>
