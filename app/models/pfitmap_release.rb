@@ -17,4 +17,16 @@ class PfitmapRelease < ActiveRecord::Base
   validates :release, :presence => :true
   validates :release_date, :presence => :true
   validates_inclusion_of :current, :in => [true, false]
+
+  # Should only be called when there exists a head release
+  def self.add_seq_to_head(db_seq)
+    head_release = PfitmapRelease.get_head_release
+    if not head_release.db_sequences.find(db_seq.id)
+      PfitmapSequence.create!(db_sequence: db_seq, pfitmap_release: head_release)
+    end
+  end
+    
+  def self.get_head_release
+      return find_by_current(true)
+  end
 end
