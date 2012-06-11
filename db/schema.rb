@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120611101847) do
+ActiveRecord::Schema.define(:version => 20120611113048) do
 
   create_table "db_sequences", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -100,11 +100,13 @@ ActiveRecord::Schema.define(:version => 20120611101847) do
 
   create_table "pfitmap_sequences", :force => true do |t|
     t.integer  "db_sequence_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+    t.integer  "pfitmap_release_id"
   end
 
   add_index "pfitmap_sequences", ["db_sequence_id"], :name => "index_pfitmap_sequences_on_db_sequence_id"
+  add_index "pfitmap_sequences", ["pfitmap_release_id"], :name => "index_pfitmap_sequences_on_pfitmap_release_id"
 
   create_table "sequence_sources", :force => true do |t|
     t.string   "source"
