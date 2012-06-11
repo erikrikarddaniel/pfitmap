@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120606134355) do
+ActiveRecord::Schema.define(:version => 20120611101847) do
 
   create_table "db_sequences", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -87,6 +87,16 @@ ActiveRecord::Schema.define(:version => 20120606134355) do
   end
 
   add_index "hmm_score_criterions", ["hmm_profile_id"], :name => "index_hmm_score_criterions_on_hmm_profile_id"
+
+  create_table "pfitmap_releases", :force => true do |t|
+    t.string   "release"
+    t.date     "release_date"
+    t.boolean  "current"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "pfitmap_releases", ["current"], :name => "index_pfitmap_releases_on_current"
 
   create_table "pfitmap_sequences", :force => true do |t|
     t.integer  "db_sequence_id"
