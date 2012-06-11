@@ -91,6 +91,7 @@ FactoryGirl.define do
 
   factory :pfitmap_sequence do
     db_sequence
+    pfitmap_release
   end
 
   factory :inclusion_criterion do
@@ -100,5 +101,8 @@ FactoryGirl.define do
   factory :hmm_score_criterion do
     hmm_profile
     min_fullseq_score 15.0
+  end
+
+  factory :pfitmap_release do
   end
 end
