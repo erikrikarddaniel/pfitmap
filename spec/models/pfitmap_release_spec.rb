@@ -40,4 +40,11 @@ describe PfitmapRelease do
     it { should_not be_valid }
   end
   
+  describe "associations" do
+    let!(:db_sequence) { FactoryGirl.create(:db_sequence) }
+    let!(:pfitmap_sequence) { FactoryGirl.create(:pfitmap_sequence, db_sequence: db_sequence, pfitmap_release: @pfitmap_release) }
+    
+    its(:db_sequences) { should include(db_sequence) }
+    its(:pfitmap_sequences) { should include(pfitmap_sequence) }
+  end
 end
