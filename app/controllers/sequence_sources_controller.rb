@@ -87,6 +87,7 @@ class SequenceSourcesController < ApplicationController
   def evaluate
     @sequence_source = SequenceSource.find(params[:id])
     @db_sequences =  @sequence_source.db_sequences
+    @head_release = PfitmapRelease.head
     @db_sequences.each do |seq|
       hmm_profile = seq.best_hmm_profile
       if hmm_profile.evaluate?(seq)
