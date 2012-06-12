@@ -104,5 +104,8 @@ FactoryGirl.define do
   end
 
   factory :pfitmap_release do
+    release "1.1"
+    release_date "2005-10-10"
+    current false
   end
 end
