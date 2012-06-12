@@ -24,7 +24,11 @@ describe PfitmapReleasesController do
   # PfitmapRelease. As you add validations to PfitmapRelease, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {}
+    {
+    release: "1.1",
+    release_date: "2005-10-10",
+    current: false
+    }
   end
   
   # This should return the minimal set of values that should be in the session
