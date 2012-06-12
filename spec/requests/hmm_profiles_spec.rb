@@ -22,9 +22,11 @@ describe "Hmm Profile Pages" do
         page.should have_selector('li', text: profile.name)
       end
     end
-    #it "should correctly nest each profile" do
-    #  HmmProfile.all_parents.each do |profile|
-    #    page.should have_selector('
+    it "should correctly nest each profile" do
+      HmmProfile.last_parents.each do |profile|
+        page.should have_content("#{profile.name}")
+      end
+    end
   end
 
   describe "creating a new profile" do
@@ -62,8 +64,7 @@ describe "Hmm Profile Pages" do
       click_on 'Create Result'
     end
     it "should see oops message when trying to register new HmmResult " do
-      page.should have_content('successfully')
-      pending "Change this to 'Ooops... no file' or something"
+      page.should have_content('No file given')
     end
   end
 
