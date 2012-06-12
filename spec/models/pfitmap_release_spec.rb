@@ -38,6 +38,14 @@ describe PfitmapRelease do
       end
       it { should_not be_valid }
     end
+
+    describe "get_head_release" do
+      let!(:pfitmap_release) { FactoryGirl.create(:pfitmap_release) }
+      let!(:pfitmap_release2) { FactoryGirl.create(:pfitmap_release, :current => true) }
+      it "returns the current head" do
+        PfitmapRelease.get_head_release.should == pfitmap_release2
+      end
+    end
   end
 
   describe "without release" do
@@ -61,8 +69,40 @@ describe PfitmapRelease do
   describe "add sequence to head" do
     let!(:db_sequence1) { FactoryGirl.create(:db_sequence) }
     let!(:db_sequence2) { FactoryGirl.create(:db_sequence) }
-    let!(:pfitmap_sequence) { FactoryGirl.create(:pfitmap_sequence, db_sequence: db_sequence, pfitmap_release: @pfitmap_release) }
-    let!(:pfitmap_release) { FactoryGirl.create(:pfitmap_release) }
-    it { should respond_to :add_seq_to_head }
+    let!(:pfitmap_release_not_current) { FactoryGirl.create(:pfitmap_release) }
+    let!(:pfitmap_sequence) { FactoryGirl.create(:pfitmap_sequence, 
+                                                 db_sequence: db_sequence1, 
+                                                 pfitmap_release: pfitmap_release_not_current) }
+    
+    it "method exists" do
+      PfitmapRelease.should respond_to :add_seq_to_head
+    end
+    
+    describe "adds to the correct release" do
+      before do
+        @current_release = PfitmapRelease.create!(release: "1.2",
+                                                  release_date: "2012-06-10",
+                                                  current: true)
+        PfitmapRelease.add_seq_to_head(db_sequence2)
+      end
+      subject { @current_release }
+
+      its(:db_sequences) { should include(db_sequence2) }
+      its(:db_sequences) { should_not include(db_sequence1) }
+    end
+    
+    describe "an already existing sequence" do
+      let!(:db_sequence3){ FactoryGirl.create(:db_sequence) }
+      let!(:pfitmap_release_current) { FactoryGirl.create(:pfitmap_release, current: true) }
+      let!(:pfitmap_sequence) { FactoryGirl.create(:pfitmap_sequence,
+                                                   db_sequence: db_sequence3,
+                                                   pfitmap_release: pfitmap_release_current
+                                                   ) }
+      before do
+        PfitmapRelease.add_seq_to_head(db_sequence3)
+      end
+      subject{ pfitmap_release_current }
+      its(:db_sequences) { should include(db_sequence3) }
+    end
   end
 end
