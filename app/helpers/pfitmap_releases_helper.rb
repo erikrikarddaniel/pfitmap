@@ -1,9 +1,5 @@
 module PfitmapReleasesHelper
-  def get_head_release
-    return PfitmapRelease.find_by_current(true)
-  end
-    
-
+  
   class CurrentReleaseValidator < ActiveModel::Validator
     def validate(record)
       current_release = get_head_release
