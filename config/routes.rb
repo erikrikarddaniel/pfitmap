@@ -9,7 +9,11 @@ Pfitmap::Application.routes.draw do
 
   resources :hmm_results, :except => [:new, :edit]
 
-  resources :sequence_sources
+  resources :sequence_sources do
+    post 'evaluate'
+  end
+  
+  match '/sequence_sources/:id/evaluate', :to => 'sequence_sources#evaluate', :as => 'evaluate_source'
 
   resources :hmm_profiles do
     resources :hmm_results

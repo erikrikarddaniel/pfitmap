@@ -84,15 +84,22 @@ class SequenceSourcesController < ApplicationController
     end
   end
 
+  # POST /sequence_sources/1/evaluate
+  # POST /sequence_sources1/evaluate.json ???
+
   def evaluate
     @sequence_source = SequenceSource.find(params[:id])
     @db_sequences =  @sequence_source.db_sequences
-    @head_release = PfitmapRelease.head
     @db_sequences.each do |seq|
       hmm_profile = seq.best_hmm_profile
       if hmm_profile.evaluate?(seq)
-        PfitmapSequence.add_seq_to_head(seq)
+        PfitmapRelease.add_seq_to_head(seq)
       end
+    end
+    
+    respond_to do |format|
+      format.html { redirect_to @sequence_source, notice: 'Sequence source was successfully evaluated.' }
+      format.json { head :no_content }
     end
   end
 end
