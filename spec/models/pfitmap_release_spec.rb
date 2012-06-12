@@ -25,9 +25,19 @@ describe PfitmapRelease do
   it { should respond_to(:pfitmap_sequences) }
   it { should respond_to(:db_sequences) }
 
-  describe "without current" do
-    before{ @pfitmap_release.current = nil }
-    it { should_not be_valid }
+  describe "current" do
+    describe "without current" do
+      before{ @pfitmap_release.current = nil }
+      it { should_not be_valid }
+    end
+
+    describe "only one at a time" do
+      before do
+        @pfitmap_release2 = PfitmapRelease.create!(release: "0.2", release_date: "2001-04-21", current: true)
+        @pfitmap_release.current = true
+      end
+      it { should_not be_valid }
+    end
   end
 
   describe "without release" do
@@ -48,7 +58,11 @@ describe PfitmapRelease do
     its(:pfitmap_sequences) { should include(pfitmap_sequence) }
   end
 
-  describe "add_to_head" do
+  describe "add sequence to head" do
+    let!(:db_sequence1) { FactoryGirl.create(:db_sequence) }
+    let!(:db_sequence2) { FactoryGirl.create(:db_sequence) }
+    let!(:pfitmap_sequence) { FactoryGirl.create(:pfitmap_sequence, db_sequence: db_sequence, pfitmap_release: @pfitmap_release) }
+    let!(:pfitmap_release) { FactoryGirl.create(:pfitmap_release) }
     it { should respond_to :add_seq_to_head }
   end
 end
