@@ -24,6 +24,12 @@ describe PfitmapRelease do
   it { should respond_to(:current) }
   it { should respond_to(:pfitmap_sequences) }
   it { should respond_to(:db_sequences) }
+  it { should respond_to(:add_seq) }
+
+  describe "class methods" do
+    subject{ PfitmapRelease }
+    it { should respond_to(:find_head_release) }
+  end
 
   describe "current" do
     describe "without current" do
@@ -39,11 +45,11 @@ describe PfitmapRelease do
       it { should_not be_valid }
     end
 
-    describe "get_head_release" do
+    describe "find head release" do
       let!(:pfitmap_release) { FactoryGirl.create(:pfitmap_release) }
       let!(:pfitmap_release2) { FactoryGirl.create(:pfitmap_release, :current => true) }
       it "returns the current head" do
-        PfitmapRelease.get_head_release.should == pfitmap_release2
+        PfitmapRelease.find_head_release.should == pfitmap_release2
       end
     end
   end
@@ -74,16 +80,12 @@ describe PfitmapRelease do
                                                  db_sequence: db_sequence1, 
                                                  pfitmap_release: pfitmap_release_not_current) }
     
-    it "method exists" do
-      PfitmapRelease.should respond_to :add_seq_to_head
-    end
-    
     describe "adds to the correct release" do
       before do
         @current_release = PfitmapRelease.create!(release: "1.2",
                                                   release_date: "2012-06-10",
                                                   current: true)
-        PfitmapRelease.add_seq_to_head(db_sequence2)
+        @current_release.add_seq(db_sequence2)
       end
       subject { @current_release }
 
@@ -99,7 +101,7 @@ describe PfitmapRelease do
                                                    pfitmap_release: pfitmap_release_current
                                                    ) }
       before do
-        PfitmapRelease.add_seq_to_head(db_sequence3)
+        pfitmap_release_current.add_seq(db_sequence3)
       end
       subject{ pfitmap_release_current }
       its(:db_sequences) { should include(db_sequence3) }
