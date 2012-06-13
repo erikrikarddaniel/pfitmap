@@ -91,7 +91,15 @@ class SequenceSourcesController < ApplicationController
     @sequence_source = SequenceSource.find(params[:sequence_source_id])
     @head_release = PfitmapRelease.find_head_release
 
-    if not @head_release
+    if @head_release
+      @sequence_source.evaluate(@head_release)
+      flash[:success] = 'Sequence source was successfully evaluated.'
+      respond_to do |format|
+        format.html { redirect_to @head_release }
+        format.json { head :no_content }
+      end
+      
+    else
       @hmm_results = @sequence_source.hmm_results.paginate(page: params[:page])
       @hmm_profiles_last_parents = HmmProfile.last_parents.sort_by{|p| p.hierarchy }
       @hmm_profiles = @sequence_source.hmm_profiles
@@ -99,13 +107,6 @@ class SequenceSourcesController < ApplicationController
       respond_to do |format|
         format.html { render 'show' }
         format.json { render json: @sequence_source.errors, status: :unprocessable_entity }
-      end
-    else
-      @sequence_source.evaluate
-       flash[:success] = 'Sequence source was successfully evaluated.'
-      respond_to do |format|
-        format.html { redirect_to @head_release }
-        format.json { head :no_content }
       end
     end
   end
