@@ -103,7 +103,7 @@ class SequenceSourcesController < ApplicationController
       @hmm_results = @sequence_source.hmm_results.paginate(page: params[:page])
       @hmm_profiles_last_parents = HmmProfile.last_parents.sort_by{|p| p.hierarchy }
       @hmm_profiles = @sequence_source.hmm_profiles
-      flash[:error] = 'There is no current Pfitmap Release, thus the source was not evaluated.'
+      flash.now[:error] = 'There is no current Pfitmap Release, thus the source was not evaluated.'
       respond_to do |format|
         format.html { render 'show' }
         format.json { render json: @sequence_source.errors, status: :unprocessable_entity }
