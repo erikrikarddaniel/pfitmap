@@ -10,6 +10,18 @@
       </ul>
     </div>
   <% end %>
+  <div class="input-large">
+    <%= f.label :release %>
+    <%= f.text_field :release, :placeholder => 'Typical value: 2.1' %>
+  </div>
+  <div class="input-large">
+    <%= f.label :release_date %>
+    <%= f.text_field :release_date, :placeholder => 'Typical value: 2012-06-13' %>
+  </div>
+  <div>
+    <%= f.label :current? %>
+    <%= f.check_box :current %>
+  </div>
 
   <div class="actions">
     <%= f.submit %>
