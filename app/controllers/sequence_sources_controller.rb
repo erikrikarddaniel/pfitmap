@@ -88,18 +88,26 @@ class SequenceSourcesController < ApplicationController
   # POST /sequence_sources1/evaluate.json ???
 
   def evaluate
-    @sequence_source = SequenceSource.find(params[:id])
-    @db_sequences =  @sequence_source.db_sequences
-    @db_sequences.each do |seq|
-      hmm_profile = seq.best_hmm_profile
-      if hmm_profile.evaluate?(seq)
-        PfitmapRelease.add_seq_to_head(seq)
+    @sequence_source = SequenceSource.find(params[:sequence_source_id])
+    @head_release = PfitmapRelease.find_head_release
+
+    if not @head_release
+      @hmm_results = @sequence_source.hmm_results.paginate(page: params[:page])
+      @hmm_profiles_last_parents = HmmProfile.last_parents.sort_by{|p| p.hierarchy }
+      @hmm_profiles = @sequence_source.hmm_profiles
+      flash[:error] = 'There is no current Pfitmap Release, thus the source was not evaluated.'
+      respond_to do |format|
+        format.html { render 'show' }
+        format.json { render json: @sequence_source.errors, status: :unprocessable_entity }
       end
-    end
-    
-    respond_to do |format|
-      format.html { redirect_to @sequence_source, notice: 'Sequence source was successfully evaluated.' }
-      format.json { head :no_content }
+    else
+      @sequence_source.evaluate
+       flash[:success] = 'Sequence source was successfully evaluated.'
+      respond_to do |format|
+        format.html { redirect_to @head_release }
+        format.json { head :no_content }
+      end
     end
   end
 end
+
