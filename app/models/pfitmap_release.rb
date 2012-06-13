@@ -21,20 +21,19 @@ class PfitmapRelease < ActiveRecord::Base
   validate :only_one_current
 
   # Should only be called when there exists a head release
-  def self.add_seq_to_head(db_seq)
-    head_release = PfitmapRelease.get_head_release
-    if not head_release.db_sequences.find_by_id(db_seq.id)
-      PfitmapSequence.create!(db_sequence_id: db_seq.id, pfitmap_release_id: head_release.id)
+  def add_seq(db_seq)
+    if not self.db_sequences.find_by_id(db_seq.id)
+      PfitmapSequence.create!(db_sequence_id: db_seq.id, pfitmap_release_id: self.id)
     end
   end
     
-  def self.get_head_release
+  def self.find_head_release
       return find_by_current(true)
   end
 
   private 
   def only_one_current
-    current_release = PfitmapRelease.get_head_release
+    current_release = PfitmapRelease.find_head_release
     if current_release
       if self.current
         self.errors[:base] << "There can only be one current release!"
