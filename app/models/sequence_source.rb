@@ -22,4 +22,15 @@ class SequenceSource < ActiveRecord::Base
   def list_name
     "#{source}:#{name}:#{version}"
   end
+
+  def evaluate(head_release)
+    db_sequences =  self.db_sequences
+    db_sequences.each do |seq|
+      hmm_profile_id = seq.best_hmm_profile
+      hmm_profile = HmmProfile.find(hmm_profile_id)
+      if hmm_profile.evaluate?(seq)
+        head_release.add_seq(seq)
+      end
+    end
+  end
 end
