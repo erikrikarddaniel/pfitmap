@@ -60,11 +60,27 @@ describe "Hmm Profile Pages" do
     let!(:sequence_source) { FactoryGirl.create(:sequence_source) }
     before do
       visit hmm_profile_path(hmm_profile)
-      select('NR', :from => 'hmm_result[sequence_source_id]')
-      click_on 'Create Result'
     end
-    it "should see oops message when trying to register new HmmResult " do
-      page.should have_content('No file given')
+
+    describe "for a unoccupied source" do 
+      it "cannot register new HmmResult " do
+        expect{
+          select(sequence_source.list_name, :from => 'hmm_result[sequence_source_id]')
+          click_on 'Create Result'
+        }.not_to change(HmmResult, :count)
+        page.should have_content('No file given')
+      end
+    end
+
+    describe "for a occupied source" do
+      let!(:hmm_result) { FactoryGirl.create(:hmm_result, hmm_profile: hmm_profile, sequence_source: sequence_source) }
+      it "cannot register new HmmResult" do
+        expect{
+          select(sequence_source.list_name, :from => 'hmm_result[sequence_source_id]')
+          click_on 'Create Result'
+        }.not_to change(HmmResult, :count)
+        page.should have_content('Only one result')
+      end
     end
   end
 
