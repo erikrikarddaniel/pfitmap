@@ -88,8 +88,9 @@ describe HmmResultsController do
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         HmmResult.any_instance.stub(:save).and_return(false)
-        post :create, {:hmm_result => {}, :hmm_profile_id => @hmm_profile.id }, valid_session
-        response.should render_template("new")
+        post :create, {:hmm_result => valid_attributes, :hmm_profile_id => @hmm_profile.id }, valid_session
+        flash.should_not be_empty
+        #response.should render_template("hmm_profiles/show")
       end
     end
   end

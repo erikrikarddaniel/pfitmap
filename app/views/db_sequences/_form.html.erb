@@ -1,24 +1,5 @@
 <%= form_for(@db_sequence) do |f| %>
-  <% if @db_sequence.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@db_sequence.errors.count, "error") %> prohibited this db_sequence from being saved:</h2>
-
-      <ul>
-      <% @db_sequence.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :hmm_result_row %><br />
-    <%= f.text_field :hmm_result_row %>
-  </div>
-  <div class="field">
-    <%= f.label :hmm_db_hit %><br />
-    <%= f.text_field :hmm_db_hit %>
-  </div>
+<%= render :partial => 'shared/error_messages', :locals => { :error_subject => @db_sequence} %>
   <div class="actions">
     <%= f.submit %>
   </div>

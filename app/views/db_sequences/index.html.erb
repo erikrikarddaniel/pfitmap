@@ -2,8 +2,6 @@
 
 <table>
   <tr>
-    <th>Hmm result row</th>
-    <th>Hmm db hit</th>
     <th></th>
     <th></th>
     <th></th>
@@ -11,8 +9,7 @@
 
 <% @db_sequences.each do |db_sequence| %>
   <tr>
-    <td><%= db_sequence.hmm_result_row %></td>
-    <td><%= db_sequence.hmm_db_hit %></td>
+    <td><%= db_sequence.created_at %></td>
     <td><%= link_to 'Show', db_sequence %></td>
     <td><%= link_to 'Edit', edit_db_sequence_path(db_sequence) %></td>
     <td><%= link_to 'Destroy', db_sequence, confirm: 'Are you sure?', method: :delete %></td>
