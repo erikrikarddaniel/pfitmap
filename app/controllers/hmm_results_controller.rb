@@ -38,21 +38,27 @@ class HmmResultsController < ApplicationController
       @hmm_result = @hmm_profile.hmm_results.new(params[:hmm_result].merge(:executed => 101.years.ago))
     end
     respond_to do |format|
-      if @hmm_result.save
-        if file
+      if file
+        if @hmm_result.save
           if parse_results(@hmm_result,file)
             format.html { redirect_to @hmm_result, notice: 'Hmm result was successfully created.' }
             format.json { render json: @hmm_result, status: :created, location: @hmm_result }
           else
+            ActiveRecord.delete(@hmm_result.id)
             format.html { redirect_to @hmm_profile, notice: 'Error while parsing the given file' }
-            format.json { render json: @hmm_result.errors, status: :unprocessable_entity }
+            format.json { render json: @hmm_result, status: :unprocessable_entity }
           end
         else
-          format.html { redirect_to @hmm_profile, notice: 'No file given' }
+          #Return to hmm_profile show page
+          @hmm_profile = @hmm_profile
+          @hmm_result = @hmm_result
+          @hmm_results = @hmm_profile.hmm_results.paginate(page: params[:page])
+          @sequence_sources = SequenceSource.all
+          format.html { render :template => "hmm_profiles/show"}
           format.json { render json: @hmm_result.errors, status: :unprocessable_entity }
         end
       else
-        format.html { render action: "new" }
+        format.html { redirect_to @hmm_profile, notice: 'No file given' }
         format.json { render json: @hmm_result.errors, status: :unprocessable_entity }
       end
     end
