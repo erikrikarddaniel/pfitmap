@@ -14,6 +14,7 @@ class DbSequencesController < ApplicationController
   # GET /db_sequences/1.json
   def show
     @db_sequence = DbSequence.find(params[:id])
+    @best_profile = HmmProfile.find(@db_sequence.best_hmm_profile)
 
     respond_to do |format|
       format.html # show.html.erb

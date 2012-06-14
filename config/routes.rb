@@ -1,4 +1,6 @@
 Pfitmap::Application.routes.draw do
+  resources :pfitmap_releases
+
   resources :db_sequences
 
   resources :hmm_db_hits
@@ -7,8 +9,10 @@ Pfitmap::Application.routes.draw do
 
   resources :hmm_results, :except => [:new, :edit]
 
-  resources :sequence_sources
-
+  resources :sequence_sources do
+    post 'evaluate', :as => :evaluate
+  end
+  
   resources :hmm_profiles do
     resources :hmm_results
   end

@@ -17,10 +17,15 @@ class HmmProfile < ActiveRecord::Base
   has_many :children, :class_name => "HmmProfile", :foreign_key => "parent_id", :dependent => :destroy
   belongs_to :parent, :class_name => "HmmProfile", :foreign_key => "parent_id"
   has_many :hmm_results
-  has_one :inclusion_criterion, :dependent => :destroy
+  has_one :hmm_score_criterion, :dependent => :destroy
   validates :name, presence: true
   validates :version, presence: true
   validates :hierarchy, presence: true
+  # A method to pick up all criterias independent of type
+  def inclusion_criteria
+    [self.hmm_score_criterion]
+  end
+
   # An instance method to find the root node for a specific hmm profile.
   # Calls the recursive function with the id of the current profile.
   def last_parent_id()
@@ -30,6 +35,12 @@ class HmmProfile < ActiveRecord::Base
   # A class method to pick up all root nodes directly from the database.
   def self.last_parents()
     HmmProfile.where("parent_id IS NULL")
+  end
+
+  def evaluate?(db_sequence)
+    bool1 = (db_sequence.best_hmm_profile == self.id)
+    bool2 = self.hmm_score_criterion.evaluate?(db_sequence)
+    return bool1 && bool2
   end
 
   private

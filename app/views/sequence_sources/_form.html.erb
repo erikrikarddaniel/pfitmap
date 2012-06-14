@@ -1,15 +1,5 @@
 <%= form_for(@sequence_source, :html => { :class => "well"} ) do |f| %>
-  <% if @sequence_source.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@sequence_source.errors.count, "error") %> prohibited this sequence_source from being saved:</h2>
-
-      <ul>
-      <% @sequence_source.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+<%= render :partial => 'shared/error_messages', :locals => { :error_subject => @sequence_source } %>
   <div class="input-large">
     <%= f.label :source %>
     <%= f.text_field :source, :placeholder => 'Typical value: NCBI'%>

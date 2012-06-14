@@ -22,9 +22,11 @@ describe "Hmm Profile Pages" do
         page.should have_selector('li', text: profile.name)
       end
     end
-    #it "should correctly nest each profile" do
-    #  HmmProfile.all_parents.each do |profile|
-    #    page.should have_selector('
+    it "should correctly nest each profile" do
+      HmmProfile.last_parents.each do |profile|
+        page.should have_content("#{profile.name}")
+      end
+    end
   end
 
   describe "creating a new profile" do
@@ -58,12 +60,27 @@ describe "Hmm Profile Pages" do
     let!(:sequence_source) { FactoryGirl.create(:sequence_source) }
     before do
       visit hmm_profile_path(hmm_profile)
-      select('NR', :from => 'hmm_result[sequence_source_id]')
-      click_on 'Create Result'
     end
-    it "should see oops message when trying to register new HmmResult " do
-      page.should have_content('successfully')
-      pending "Change this to 'Ooops... no file' or something"
+
+    describe "for a unoccupied source" do 
+      it "cannot register new HmmResult " do
+        expect{
+          select(sequence_source.list_name, :from => 'hmm_result[sequence_source_id]')
+          click_on 'Create Result'
+        }.not_to change(HmmResult, :count)
+        page.should have_content('No file given')
+      end
+    end
+
+    describe "for a occupied source" do
+      let!(:hmm_result) { FactoryGirl.create(:hmm_result, hmm_profile: hmm_profile, sequence_source: sequence_source) }
+      it "cannot register new HmmResult" do
+        expect{
+          select(sequence_source.list_name, :from => 'hmm_result[sequence_source_id]')
+          click_on 'Create Result'
+        }.not_to change(HmmResult, :count)
+        page.should have_content('No file given')
+      end
     end
   end
 
@@ -71,14 +88,14 @@ describe "Hmm Profile Pages" do
     let!(:hmm_profile) { FactoryGirl.create(:hmm_profile) }
     let!(:sequence_source) { FactoryGirl.create(:sequence_source) }
     before do
-      @bulk_tblout = fixture_file_upload('/sample.tblout')
+      # @bulk_tblout = fixture_file_upload('/sample.tblout')
       visit hmm_profile_path(hmm_profile)
-      select('NR', :from => 'hmm_result[sequence_source_id]')
+      select(sequence_source.list_name, :from => 'hmm_result[sequence_source_id]')
       click_on 'Create Result'
     end
     it "should be able to create a new HmmResult" do
-      pending "Test form with actual file upload"
-      post :file, :upload => @bulk_tblout
+      attach_file 'file', '/home/johannes/RNRdb/pfitmap/spec/fixtures/sample.tblout'
+      click_on 'Create Result'
       page.should have_content('successfully')
     end
   end

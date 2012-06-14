@@ -91,14 +91,17 @@ FactoryGirl.define do
 
   factory :pfitmap_sequence do
     db_sequence
-  end
-
-  factory :inclusion_criterion do
-    hmm_profile
+    pfitmap_release
   end
 
   factory :hmm_score_criterion do
-    inclusion_criterion
+    hmm_profile
     min_fullseq_score 15.0
+  end
+
+  factory :pfitmap_release do
+    release "1.1"
+    release_date "2005-10-10"
+    current false
   end
 end

@@ -110,7 +110,7 @@
     </section>
   </aside>
   
-  <div class="span8"> 
+  <div class="span8">
     <%  if @hmm_result_row.hmm_db_hits.any? %>
     <h3> Listing HMM database hits </h3>
     <table class="table table-striped" >
@@ -125,6 +125,8 @@
       </tbody>
     </table>
     <%= will_paginate @hmm_db_hits%>
+    <% else %>
+    <h3>No HMM database hits</h3>
     <% end %>
   </div>
 </div>

@@ -43,8 +43,12 @@ describe DbSequencesController do
   end
 
   describe "GET show" do
+    let!(:hmm_profile){ FactoryGirl.create(:hmm_profile) }
+    let!(:sequence_source) { FactoryGirl.create(:sequence_source) }
+    let!(:hmm_result) { FactoryGirl.create(:hmm_result, sequence_source: sequence_source, hmm_profile: hmm_profile) }
     it "assigns the requested db_sequence as @db_sequence" do
       db_sequence = DbSequence.create! valid_attributes
+      hmm_result_row = HmmResultRow.create!( hmm_result_id: hmm_result.id, db_sequence_id: db_sequence.id)
       get :show, {:id => db_sequence.to_param}, valid_session
       assigns(:db_sequence).should eq(db_sequence)
     end

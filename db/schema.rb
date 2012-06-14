@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120606134355) do
+ActiveRecord::Schema.define(:version => 20120611113048) do
 
   create_table "db_sequences", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -81,26 +81,32 @@ ActiveRecord::Schema.define(:version => 20120606134355) do
 
   create_table "hmm_score_criterions", :force => true do |t|
     t.float    "min_fullseq_score"
-    t.integer  "inclusion_criterion_id"
-    t.datetime "created_at",             :null => false
-    t.datetime "updated_at",             :null => false
-  end
-
-  create_table "inclusion_criterions", :force => true do |t|
     t.integer  "hmm_profile_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
   end
 
-  add_index "inclusion_criterions", ["hmm_profile_id"], :name => "index_inclusion_criterions_on_hmm_profile_id"
+  add_index "hmm_score_criterions", ["hmm_profile_id"], :name => "index_hmm_score_criterions_on_hmm_profile_id"
+
+  create_table "pfitmap_releases", :force => true do |t|
+    t.string   "release"
+    t.date     "release_date"
+    t.boolean  "current"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "pfitmap_releases", ["current"], :name => "index_pfitmap_releases_on_current"
 
   create_table "pfitmap_sequences", :force => true do |t|
     t.integer  "db_sequence_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+    t.integer  "pfitmap_release_id"
   end
 
   add_index "pfitmap_sequences", ["db_sequence_id"], :name => "index_pfitmap_sequences_on_db_sequence_id"
+  add_index "pfitmap_sequences", ["pfitmap_release_id"], :name => "index_pfitmap_sequences_on_pfitmap_release_id"
 
   create_table "sequence_sources", :force => true do |t|
     t.string   "source"

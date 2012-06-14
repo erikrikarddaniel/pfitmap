@@ -1,5 +1,5 @@
 <%= form_for([@hmm_profile, @hmm_profile.hmm_results.build], :html => { :class => "well"}) do |f| %>
-<%= render 'shared/error_messages_result' %>
+<%= render :partial => 'shared/error_messages', :locals => { :error_subject => @hmm_result } %>
 <div class ="control-group span3">
 <%= f.label :sequence_source, "Sequence database"%>
 <%= collection_select(:hmm_result, :sequence_source_id, SequenceSource.all, :id, :list_name) %>

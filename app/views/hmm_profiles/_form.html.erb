@@ -1,6 +1,5 @@
 <%= form_for(@hmm_profile, :html => {:class => "well"}) do |f| %>
-<%= render 'shared/error_messages_profile' %>
-
+<%= render :partial => 'shared/error_messages', :locals => { :error_subject => @hmm_profile} %>
 <div class="row">
 <div class="control-group span4">
   <%= f.label :name %>
@@ -20,5 +19,4 @@
 </div>
 </div>
 <%= f.submit "Create Profile", :class => "btn btn-large btn-primary"%>
-
 <% end %>
