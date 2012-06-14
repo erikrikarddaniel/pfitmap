@@ -79,7 +79,7 @@ describe "Hmm Profile Pages" do
           select(sequence_source.list_name, :from => 'hmm_result[sequence_source_id]')
           click_on 'Create Result'
         }.not_to change(HmmResult, :count)
-        page.should have_content('Only one result')
+        page.should have_content('No file given')
       end
     end
   end
@@ -88,14 +88,14 @@ describe "Hmm Profile Pages" do
     let!(:hmm_profile) { FactoryGirl.create(:hmm_profile) }
     let!(:sequence_source) { FactoryGirl.create(:sequence_source) }
     before do
-      @bulk_tblout = fixture_file_upload('/sample.tblout')
+      # @bulk_tblout = fixture_file_upload('/sample.tblout')
       visit hmm_profile_path(hmm_profile)
-      select('NR', :from => 'hmm_result[sequence_source_id]')
+      select(sequence_source.list_name, :from => 'hmm_result[sequence_source_id]')
       click_on 'Create Result'
     end
     it "should be able to create a new HmmResult" do
-      pending "Test form with actual file upload"
-      post :file, :upload => @bulk_tblout
+      attach_file 'file', '/home/johannes/RNRdb/pfitmap/spec/fixtures/sample.tblout'
+      click_on 'Create Result'
       page.should have_content('successfully')
     end
   end
