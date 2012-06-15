@@ -54,4 +54,13 @@ describe HmmDbHit do
     its(:hmm_result_rows) { should include(result_row) }
     its(:db_sequence) { should == db_sequence }
   end
+  
+  describe "when adding duplicate combination of db and acc" do
+    let!(:db_hit1) { FactoryGirl.create(:hmm_db_hit, db: "ref", acc: "ex9999") }
+    it { should be_valid }
+    it "should be saveable" do
+      @db_hit2.save.should be_true
+    end
+  end
+
 end
