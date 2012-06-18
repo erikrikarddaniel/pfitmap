@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120615174218) do
+ActiveRecord::Schema.define(:version => 20120618065947) do
 
   create_table "db_sequences", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -22,10 +22,10 @@ ActiveRecord::Schema.define(:version => 20120615174218) do
     t.integer  "gi"
     t.string   "db"
     t.string   "acc"
-    t.string   "desc"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
     t.integer  "db_sequence_id"
+    t.text     "desc"
   end
 
   add_index "hmm_db_hits", ["db", "acc"], :name => "index_hmm_db_hits_on_db_and_acc"
