@@ -1,4 +1,2 @@
-The db-sequence association to pfitmap_sequence should be has_many.
-Seems like abstract classes in rails is not recommended.
 fix bug with "back" link in result rows, leads to index page that is not routable, make it lead to result instead. 
 
