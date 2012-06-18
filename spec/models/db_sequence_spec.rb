@@ -24,7 +24,8 @@ describe DbSequence do
   it { should_not respond_to(:hmm_db_hit_id) }
   it { should respond_to(:hmm_result_rows)}
   it { should respond_to(:hmm_db_hits) }
-  it { should respond_to(:pfitmap_sequence) }
+  it { should_not respond_to(:pfitmap_sequence) }
+  it { should respond_to(:pfitmap_sequences) }
 
   #Operations
   it { should respond_to(:all_hits) }
@@ -67,11 +68,11 @@ describe DbSequence do
     let!(:db_sequence2) { FactoryGirl.create(:db_sequence) }
     subject{db_sequence}
     describe "can be null" do
-      its(:pfitmap_sequence) { should eq(nil) }
+      its(:pfitmap_sequences) { should == [] }
     end
     describe "can be correct" do
       let!(:pfitmap_sequence) { FactoryGirl.create(:pfitmap_sequence, db_sequence: db_sequence) }
-      its(:pfitmap_sequence) { should eq(pfitmap_sequence) }
+      its(:pfitmap_sequences) { should include(pfitmap_sequence) }
     end
   end
 end
