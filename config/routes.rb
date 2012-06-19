@@ -1,4 +1,7 @@
 Pfitmap::Application.routes.draw do
+  match "/auth/:provider/callback" => "sessions#create"
+  match "/sighout" => "sessions#destroy", :as => :signout
+
   resources :pfitmap_releases
 
   resources :db_sequences
