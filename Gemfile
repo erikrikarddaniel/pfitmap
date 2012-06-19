@@ -23,6 +23,7 @@ group :test do
   gem 'autotest-rails-pure'
   gem 'term-ansicolor'
   gem 'launchy'
+  gem 'rspec-html-matchers'
 end
 
 # Gems used only for assets and not required
