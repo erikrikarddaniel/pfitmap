@@ -35,26 +35,44 @@ describe "Hmm Profile Pages" do
   end
 
   describe "Showing a profile" do
+    let!(:source1) { FactoryGirl.create(:sequence_source) }
+    let!(:source2) { FactoryGirl.create(:sequence_source_older) }
+    let!(:hmm_profile) { FactoryGirl.create(:hmm_profile_001) }
+    let!(:hmm_profile2) { FactoryGirl.create(:hmm_profile_00100) }
+    # Results for profile 1
+    let!(:r1){ FactoryGirl.create(:hmm_result, 
+                                  hmm_profile: hmm_profile, 
+                                  sequence_source: source1) }
+    # Results for other profile, same sources
+    let!(:r3){ FactoryGirl.create(:hmm_result, 
+                                  hmm_profile: hmm_profile2, 
+                                  sequence_source: source1) }
+    let!(:r4){ FactoryGirl.create(:hmm_result, 
+                                  hmm_profile: hmm_profile2, 
+                                  sequence_source: source2) }
+    
+
+    before do
+      visit hmm_profile_path(hmm_profile)
+    end
+    
     subject{ page }
     
-    describe "With results" do
-      let!(:hmm_profile) { FactoryGirl.create(:hmm_profile) }
-      let!(:m1){ FactoryGirl.create(:hmm_result, hmm_profile: hmm_profile) }
-      let!(:m2){ FactoryGirl.create(:hmm_result, hmm_profile: hmm_profile) }
-      before {visit hmm_profile_path(hmm_profile) } 
-      
-      it { should have_selector('h1', text: hmm_profile.name) }
-      it { should have_selector('title', text: full_title(hmm_profile.name)) }
-      
-      describe "Results" do
-        subject { page }
-        it { should have_content(hmm_profile.hmm_results.count) }
-        it "should have the dates" do
-          should have_content(m1.executed)
-        end
-      end
+    it { should have_selector('h1', text: hmm_profile.name) }
+    it { should have_selector('title', text: full_title(hmm_profile.name)) }
+    
+    it { should have_content(hmm_profile.hmm_results.count) }
+    it "displays one result" do
+      # 1 + 1 = 2 rows
+      should have_tag('tr', :count => 2)
     end
+
+    it "displays the correct result" do
+      should have_content(r1.sequence_source.version)
+    end
+
   end
+
   describe "Register new result without file" do
     let!(:hmm_profile) { FactoryGirl.create(:hmm_profile) }
     let!(:sequence_source) { FactoryGirl.create(:sequence_source) }
