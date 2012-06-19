@@ -1,2 +1,0 @@
-fix bug with "back" link in result rows, leads to index page that is not routable, make it lead to result instead. 
-
