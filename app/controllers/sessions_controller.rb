@@ -1,11 +1,11 @@
 class SessionsController < ApplicationController
   def create
     reset_session # see http://guides.rubyonrails.org/security.html#session-fixation
-    info = request.env["omniauth.auth"]
-    sessions[:name] = info["user_info"]["name"] || info["user_info"]["email"] || info["user_info"]["nickname"] || "unknown friend"
+    auth = request.env["omniauth.auth"]
+    user = User.find_by_provider_and_uid(auth["provider"], auth["uid"]) || User.create_with_omniauth(auth)
+    session[:user_id] = user.id
 
-    redirect_to root, :notice => "Welcome #{session[:name]}!"
-   
+    redirect_to root_path, :notice => "Signed in!"
   end
 
   def failure
