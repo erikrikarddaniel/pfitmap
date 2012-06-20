@@ -34,4 +34,16 @@ RSpec.configure do |config|
   # automatically. This will be the default behavior in future versions of
   # rspec-rails.
   config.infer_base_class_for_anonymous_controllers = false
+  
+  # Include my custom integration spec helper, intended to help out with 
+  # omniauth authentication.
+  config.include IntegrationSpecHelper, :type => :request
 end
+
+Capybara.default_host = 'http://example.org'
+
+OmniAuth.config.test_mode = true
+OmniAuth.config.add_mock(:open_id, {
+  :uid => '12345',
+  :nickname => 'zapnap'
+})
