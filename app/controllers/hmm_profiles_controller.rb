@@ -1,4 +1,5 @@
 class HmmProfilesController < ApplicationController
+  load_and_authorize_resource
   helper HmmProfilesHelper
 
   # GET /hmm_profiles

@@ -13,6 +13,7 @@
 #
 
 class User < ActiveRecord::Base
+  attr_accessible :name, :email
   ROLES = %w[admin guest]
 
   def self.create_with_omniauth(auth)

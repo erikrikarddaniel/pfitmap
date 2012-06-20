@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+  authorize_resource :class => false
   def create
     reset_session # see http://guides.rubyonrails.org/security.html#session-fixation
     auth = request.env["omniauth.auth"]
@@ -15,7 +16,7 @@ class SessionsController < ApplicationController
   def destroy
     session[:user_id] = nil
     reset_session
-    flash[:notice] = "Logged out."
+    flash[:notice] = "You are now signed out!"
     redirect_to root_path
   end
 end

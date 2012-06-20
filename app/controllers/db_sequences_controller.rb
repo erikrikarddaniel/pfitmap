@@ -1,4 +1,5 @@
 class DbSequencesController < ApplicationController
+  load_and_authorize_resource
   # GET /db_sequences
   # GET /db_sequences.json
   def index

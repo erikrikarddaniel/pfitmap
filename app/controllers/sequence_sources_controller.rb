@@ -1,4 +1,5 @@
 class SequenceSourcesController < ApplicationController
+  load_and_authorize_resource
   # GET /sequence_sources
   # GET /sequence_sources.json
   def index

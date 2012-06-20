@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe "HmmResults" do
+  before do
+    make_mock_admin
+    login_with_oauth
+  end
   subject { page }
   
   let!(:profile1) { FactoryGirl.create(:hmm_profile, name: "class 1" ) }

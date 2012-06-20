@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe "HmmResultRows" do
+  before do
+    make_mock_admin
+    login_with_oauth
+  end
   subject { page }
   let!(:profile1) { FactoryGirl.create(:hmm_profile, name: "class 1" ) }
   let!(:profile2) { FactoryGirl.create(:hmm_profile, name: "class 2" ) }
@@ -21,12 +25,12 @@ describe "HmmResultRows" do
 
     it "navigates back" do
       click_on 'Back'
-      current_url.should == hmm_result_url(r1)
+      page.should have_content('HMM Result')
     end
 
     it "navigates to edit" do
       click_on 'Edit'
-      current_url.should == edit_hmm_result_row_url(hmm_result_row)
+      page.should have_content('Editing')
     end
   end
 end

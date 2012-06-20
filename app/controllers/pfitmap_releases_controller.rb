@@ -1,4 +1,5 @@
 class PfitmapReleasesController < ApplicationController
+  load_and_authorize_resource
   # GET /pfitmap_releases
   # GET /pfitmap_releases.json
   def index

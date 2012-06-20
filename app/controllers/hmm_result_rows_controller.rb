@@ -1,4 +1,5 @@
 class HmmResultRowsController < ApplicationController
+  load_and_authorize_resource
   # GET /hmm_result_rows
   # GET /hmm_result_rows.json
   def index

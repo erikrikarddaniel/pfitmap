@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 describe "Hmm Profile Pages" do
-  # before(:each) do
-  #   @hmm_profile_001 = FactoryGirl.create(:hmm_profile_001)
-  #   @hmm_profile_00100 = FactoryGirl.create(:hmm_profile_00100)
-  # end
+  before do
+    make_mock_admin
+    login_with_oauth
+  end
     
   subject { page }
   
@@ -30,7 +30,9 @@ describe "Hmm Profile Pages" do
   end
 
   describe "creating a new profile" do
-    before{ visit new_hmm_profile_path }
+    before do
+      visit new_hmm_profile_path
+    end
     it { should have_content('New HMM Profile') } 
   end
 

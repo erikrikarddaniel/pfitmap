@@ -1,4 +1,5 @@
 class HmmDbHitsController < ApplicationController
+  load_and_authorize_resource
   # GET /hmm_db_hits
   # GET /hmm_db_hits.json
   def index

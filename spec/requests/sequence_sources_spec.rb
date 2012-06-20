@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe "SequenceSources" do
+  before do
+    make_mock_admin
+    login_with_oauth
+  end
   let!(:sequence_source) { FactoryGirl.create(:sequence_source) }
 
   describe "index" do
