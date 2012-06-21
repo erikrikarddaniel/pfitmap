@@ -10,7 +10,7 @@
 class DbSequence < ActiveRecord::Base
   has_many :hmm_result_rows
   has_many :hmm_db_hits
-  has_one :pfitmap_sequence
+  has_many :pfitmap_sequences
 
   # Given a database, it will browse through all profiles in order to
   # find all hits 

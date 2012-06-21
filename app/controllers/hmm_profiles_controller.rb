@@ -31,6 +31,7 @@ class HmmProfilesController < ApplicationController
   # GET /hmm_profiles/new
   # GET /hmm_profiles/new.json
   def new
+    @parent_candidates = HmmProfile.all
     @hmm_profile = HmmProfile.new
 
     respond_to do |format|
@@ -41,6 +42,7 @@ class HmmProfilesController < ApplicationController
 
   # GET /hmm_profiles/1/edit
   def edit
+    @parent_candidates = HmmProfile.all
     @hmm_profile = HmmProfile.find(params[:id])
   end
 

@@ -19,6 +19,48 @@ describe "SequenceSources" do
     it "should have an evaluate button" do
       page.should have_button("Evaluate")                           
     end
+    describe "with results" do
+      let!(:source1) { FactoryGirl.create(:sequence_source) }
+      let!(:source2) { FactoryGirl.create(:sequence_source_older) }
+      let!(:hmm_profile) { FactoryGirl.create(:hmm_profile_001) }
+      let!(:hmm_profile2) { FactoryGirl.create(:hmm_profile_00100) }
+      # Results for profile 1
+      let!(:r1){ FactoryGirl.create(:hmm_result, 
+                                    hmm_profile: hmm_profile, 
+                                    sequence_source: source1) }
+      # Results for other profile, same sources
+      let!(:r3){ FactoryGirl.create(:hmm_result, 
+                                    hmm_profile: hmm_profile2, 
+                                    sequence_source: source2) }
+      describe "only one result" do
+        before { visit sequence_source_path(source1) }
+        subject { page }
+        it "displays the correct result" do
+          should have_content(r1.hmm_profile.name)
+        end
+        
+        it "does not display results for other sources" do
+          should_not have_tag('td', :text => r3.hmm_profile.name, :count => 1)
+        end
+      end
+      
+      describe "two results" do
+        let!(:r2){ FactoryGirl.create(:hmm_result, 
+                                      hmm_profile: hmm_profile2, 
+                                      sequence_source: source1) }
+        before { visit sequence_source_path(source1) }
+        subject { page }
+        it "displays the correct results" do
+          should have_tag('td', :text => r1.hmm_profile.name, :count => 1)
+          should have_tag('td', :text => r2.hmm_profile.name, :count => 1)
+        end
+        
+        it "does not display results for other sources" do
+          should_not have_tag('td', :text => r3.hmm_profile.name, :count => 2)
+        end
+        
+      end
+    end
   end
 
   describe "evaluating" do

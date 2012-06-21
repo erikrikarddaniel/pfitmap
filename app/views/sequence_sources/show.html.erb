@@ -43,7 +43,7 @@
 	</tr>
       </thead>
       <tbody>
-	<%= render :partial => "sequence_sources/hmm_result", :collection => p.hmm_results %>
+	<%= render :partial => "sequence_sources/hmm_result", :collection => p.hmm_results.find_all{|result| result.sequence_source == @sequence_source} %>
       </tbody>
     </table>
     <%= will_paginate @hmm_results %>

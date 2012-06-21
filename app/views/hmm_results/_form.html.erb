@@ -9,6 +9,6 @@
   <%= f.file_field :file%>
 </div>
 
-<%= f.submit "Create Result", :class => "btn btn-large btn-primary"%>
+<%= f.submit "Create Result", :class => "btn btn-large btn-primary", disable_with: 'Processing...' %>
 
 <% end %>
