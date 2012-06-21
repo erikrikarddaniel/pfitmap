@@ -11,8 +11,8 @@ gem 'omniauth-openid'
 gem 'cancan'
 
 # Deployment
-gem 'rvm-capistrano'
 gem 'capistrano'
+gem 'rvm-capistrano'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
