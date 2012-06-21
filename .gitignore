@@ -25,4 +25,3 @@
 # Ignore deployment settings file
 /config/deploy.rb
 
-Gemfile.lock
