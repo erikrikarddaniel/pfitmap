@@ -38,6 +38,7 @@ RSpec.configure do |config|
   # Include my custom integration spec helper, intended to help out with 
   # omniauth authentication.
   config.include IntegrationSpecHelper
+  config.include ControllerSpecHelper
 end
 
 Capybara.default_host = 'http://example.org'
