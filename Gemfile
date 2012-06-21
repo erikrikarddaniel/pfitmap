@@ -10,6 +10,10 @@ gem 'bio'
 gem 'omniauth-openid'
 gem 'cancan'
 
+# Deployment
+gem 'rvm-capistrano'
+gem 'capistrano'
+
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
