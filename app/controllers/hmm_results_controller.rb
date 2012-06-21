@@ -1,5 +1,7 @@
 class HmmResultsController < ApplicationController
-  load_and_authorize_resource
+  load_and_authorize_resource :hmm_result, :except => :create
+  skip_authorization_check :only => :create
+
   # GET /hmm_results
   # GET /hmm_results.json
   def index
@@ -42,8 +44,8 @@ class HmmResultsController < ApplicationController
       if file
         if @hmm_result.save
           if parse_results(@hmm_result,file)
-            format.html { redirect_to @hmm_result, notice: 'Hmm result was successfully created.' }
-            format.json { render json: @hmm_result, status: :created, location: @hmm_result }
+            format.html { redirect_to hmm_result_path(@hmm_result), notice: 'Hmm result was successfully created.' }
+            format.json { render json: hmm_result_path(@hmm_result), status: :created, location: @hmm_result }
           else
             ActiveRecord.delete(@hmm_result.id)
             format.html { redirect_to @hmm_profile, notice: 'Error while parsing the given file' }
@@ -59,7 +61,7 @@ class HmmResultsController < ApplicationController
           format.json { render json: @hmm_result.errors, status: :unprocessable_entity }
         end
       else
-        format.html { redirect_to @hmm_profile, notice: 'No file given' }
+        format.html { redirect_to hmm_profile_path(@hmm_profile), notice: 'No file given' }
         format.json { render json: @hmm_result.errors, status: :unprocessable_entity }
       end
     end
@@ -142,5 +144,9 @@ class HmmResultsController < ApplicationController
                                                    :domnumest_inc => fields[17].to_i,
                                                    :db_sequence_id => present_sequence.id
                                                    )
+  end
+
+  def hmm_result_params
+    params[:hmm_result].slice(:executed)
   end
 end
