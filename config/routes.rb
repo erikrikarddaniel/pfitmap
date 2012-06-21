@@ -18,16 +18,16 @@ Pfitmap::Application.routes.draw do
   end
   
   resources :hmm_profiles do
-    resources :hmm_results
+    resources :hmm_results, :only => [:new, :edit, :create]
   end
   
 
   root to: "static_pages#home"
   
-  match '/help', to: 'static_pages#help'
-  match '/contact', to: 'static_pages#contact'
+  get '/help', to: 'static_pages#help'
+  get '/contact', to: 'static_pages#contact'
 
-  match "/404", :to => "static_pages#error_404"
+  get "/404", :to => "static_pages#error_404"
 
   #  get "home/index"
 
