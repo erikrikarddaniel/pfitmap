@@ -118,5 +118,9 @@ describe "Hmm Profile Pages" do
       click_on 'Create Result'
       page.should have_content('successfully')
     end
+
+    it "is secure" do
+      pending "There is no authorization for creating hmm_results file" 
+    end
   end
 end
