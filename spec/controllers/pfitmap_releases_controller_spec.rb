@@ -19,6 +19,9 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe PfitmapReleasesController do
+  before do
+    @user = get_admin_user
+  end
 
   # This should return the minimal set of attributes required to create a valid
   # PfitmapRelease. As you add validations to PfitmapRelease, be sure to
@@ -35,7 +38,7 @@ describe PfitmapReleasesController do
   # in order to pass any filters (e.g. authentication) defined in
   # PfitmapReleasesController. Be sure to keep this updated too.
   def valid_session
-    {}
+    {user_id: @user.id}
   end
 
   describe "GET index" do

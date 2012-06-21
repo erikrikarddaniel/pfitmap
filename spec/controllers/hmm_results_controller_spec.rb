@@ -19,10 +19,14 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe HmmResultsController do
+  let!(:hmm_profile) {FactoryGirl.create(:hmm_profile) }
+  let!(:sequence_source) { FactoryGirl.create(:sequence_source) }
   before(:each) do
-    @hmm_profile = FactoryGirl.create(:hmm_profile) 
-    @sequence_source = FactoryGirl.create(:sequence_source)
+    @user = get_admin_user
     @bulk_tblout = fixture_file_upload('/sample.tblout')
+    @hmm_profile = HmmProfile.create!(name: 'exclass',
+                                      version: '20120621',
+                                      hierarchy: '999')
   end
   # This should return the minimal set of attributes required to create a valid
   # HmmResult. As you add validations to HmmResult, be sure to
@@ -30,7 +34,7 @@ describe HmmResultsController do
   def valid_attributes
     {
       :executed => 1.day.ago,
-      :sequence_source_id => @sequence_source
+      :sequence_source_id => sequence_source.id,
     }
   end
   
@@ -38,7 +42,7 @@ describe HmmResultsController do
   # in order to pass any filters (e.g. authentication) defined in
   # HmmResultsController. Be sure to keep this updated too.
   def valid_session
-    {}
+    {user_id: @user.id}
   end
 
   describe "GET index" do

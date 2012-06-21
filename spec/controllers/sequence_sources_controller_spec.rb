@@ -19,6 +19,9 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe SequenceSourcesController do
+  before do
+    @user = get_admin_user
+  end
 
   # This should return the minimal set of attributes required to create a valid
   # SequenceSource. As you add validations to SequenceSource, be sure to
@@ -33,7 +36,7 @@ describe SequenceSourcesController do
   # in order to pass any filters (e.g. authentication) defined in
   # SequenceSourcesController. Be sure to keep this updated too.
   def valid_session
-    {}
+    {user_id: @user.id}
   end
 
   describe "GET index" do
