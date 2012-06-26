@@ -13,9 +13,10 @@
 
 <div class="input-large">
   <%= f.label :role %>
-  <%= f.text_field :role%>
+  <%= f.select(:role, options_for_select(["admin","guest"]))%>
+</div>
 
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit 'Save Changes', {:class => 'btn btn-large btn-primary'} %>
   </div>
 <% end %>
