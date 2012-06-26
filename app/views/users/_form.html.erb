@@ -1,0 +1,21 @@
+<%= form_for(@user) do |f| %>
+<%= render :partial => 'shared/error_messages', :locals => { :error_subject => @user } %>
+
+<div class="input-large">
+  <%= f.label :name %>
+  <%= f.text_field :name%>
+</div>
+
+<div class="input-large">
+  <%= f.label :email %>
+  <%= f.text_field :email%>
+</div>
+
+<div class="input-large">
+  <%= f.label :role %>
+  <%= f.text_field :role%>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
