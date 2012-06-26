@@ -19,6 +19,9 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe UsersController do
+  before do
+    @admin_user = get_admin_user
+  end
 
   # This should return the minimal set of attributes required to create a valid
   # User. As you add validations to User, be sure to
@@ -31,14 +34,14 @@ describe UsersController do
   # in order to pass any filters (e.g. authentication) defined in
   # UsersController. Be sure to keep this updated too.
   def valid_session
-    {}
+    { :user_id => @admin_user.id}
   end
 
   describe "GET index" do
     it "assigns all users as @users" do
       user = User.create! valid_attributes
       get :index, {}, valid_session
-      assigns(:users).should eq([user])
+      assigns(:users).should eq([@admin_user, user])
     end
   end
 
@@ -52,8 +55,7 @@ describe UsersController do
 
   describe "GET new" do
     it "assigns a new user as @user" do
-      get :new, {}, valid_session
-      assigns(:user).should be_a_new(User)
+      lambda {get :new, {}, valid_session}.should raise_error
     end
   end
 
@@ -68,36 +70,21 @@ describe UsersController do
   describe "POST create" do
     describe "with valid params" do
       it "creates a new User" do
-        expect {
+        lambda {
           post :create, {:user => valid_attributes}, valid_session
-        }.to change(User, :count).by(1)
+        }.should raise_error
       end
 
       it "assigns a newly created user as @user" do
-        post :create, {:user => valid_attributes}, valid_session
-        assigns(:user).should be_a(User)
-        assigns(:user).should be_persisted
+        lambda{ 
+          post :create, {:user => valid_attributes}, valid_session
+        }.should raise_error
       end
 
       it "redirects to the created user" do
-        post :create, {:user => valid_attributes}, valid_session
-        response.should redirect_to(User.last)
-      end
-    end
-
-    describe "with invalid params" do
-      it "assigns a newly created but unsaved user as @user" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        User.any_instance.stub(:save).and_return(false)
-        post :create, {:user => {}}, valid_session
-        assigns(:user).should be_a_new(User)
-      end
-
-      it "re-renders the 'new' template" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        User.any_instance.stub(:save).and_return(false)
-        post :create, {:user => {}}, valid_session
-        response.should render_template("new")
+        lambda{
+          post :create, {:user => valid_attributes}, valid_session
+        }.should raise_error
       end
     end
   end
