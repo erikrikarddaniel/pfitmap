@@ -1,0 +1,26 @@
+<% provide(:title, 'Users') %>
+<div class="pageheader1">
+  <div class="row">
+    <div class="span6">
+      <h1>Listing Users</h1>
+    </div>
+  </div>
+</div>
+<div class="main-content">
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Role</th>
+    <th>Action</th>
+  </tr>
+  <% @users.each do |user| %>
+  <tr>
+    <td> <%= user.name %></td>
+    <td> <%= user.email %></td>
+    <td> <%= user.role %></td>
+    <td> <%= link_to "Show", user_path(user) %> </td>
+  </tr>
+  <% end %>
+</table>
+</div>

@@ -1,0 +1,10 @@
+<%= form_for(:user, :html => {:class => "well"}) do |f| %>
+<%= render :partial => 'shared/error_messages', :locals => {:error_subject => @user} %>
+<div class="row">
+  <div class="control-group span4">
+    <%= f.label :role %>
+    <%= select(@db_user, :role, User::ROLES) %>
+  </div>
+</div>
+  <%= f.submit "Update User", :class => "btn btn-large btn-primary"%>
+<% end %>
