@@ -13,9 +13,13 @@ describe "Authorization" do
       page.should have_content('HMM Profiles')
     end
     it "cannot visit new hmm profile page" do
-      lambda {get new_hmm_profile_path}.should raise_error
+      visit new_hmm_profile_path
+      page.should have_content('You are not authorized')
     end
   end
+
+  
+
   describe "When logged in" do
 
     it "can log out" do
@@ -34,7 +38,8 @@ describe "Authorization" do
       end
 
       it "cannot visit new hmm profile page" do
-        lambda {get new_hmm_profile_path}.should raise_error
+        visit new_hmm_profile_path
+        page.should have_content('You are not authorized')
       end
     end
     
