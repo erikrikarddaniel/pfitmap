@@ -4,7 +4,7 @@
       <% if current_user %>
       <li><%= link_to "Sign Out #{current_user.name}", signout_path %></li>
       <% else %>
-      <li><%= link_to "Sign in with openid", "/auth/open_id"  %></li>
+      <li><%= link_to "Sign in with Google", "/auth/open_id?openid_url=https://www.google.com/accounts/o8/id"  %></li>
       <% end %>
       <li><%= link_to "Help",  help_path %></li>
       <li><%= link_to "Contact", contact_path %></li>
