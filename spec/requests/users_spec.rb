@@ -12,7 +12,7 @@ describe "Users" do
 
     it "cannot access edit page" do
       visit edit_user_path(user)
-      page.should have_content("Your are not authorized")
+      page.should have_content("You are not authorized")
     end
   end
       
@@ -29,19 +29,7 @@ describe "Users" do
     
     it "can access user edit page" do
       visit edit_user_path(user)
-      page.should have_content(user.name)
-    end
-
-    it "can demote admin user" do
-      visit edit_user_path(admin)
-      click_on "Demote to guest"
-      admin.role.should == 'guest'
-    end
-    
-    it "can promote guest user" do
-      visit edit_user_path(user)
-      click_on "Promote to admin"
-      user.role.should == 'admin'
+      page.should have_content('Editing user')
     end
     
   end
