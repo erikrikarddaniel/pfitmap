@@ -20,6 +20,8 @@ Pfitmap::Application.routes.draw do
   resources :hmm_profiles do
     resources :hmm_results, :only => [:new, :edit, :create]
   end
+
+  resources :users
   
 
   root to: "static_pages#home"
