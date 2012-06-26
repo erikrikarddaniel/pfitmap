@@ -104,4 +104,11 @@ FactoryGirl.define do
     release_date "2005-10-10"
     current false
   end
+
+  factory :user do
+    provider "open_id"
+    uid "ex123456"
+    name "johannes"
+    email "jorasaatte@gmail.com"
+  end
 end
