@@ -110,5 +110,14 @@ FactoryGirl.define do
     uid "ex123456"
     name "johannes"
     email "jorasaatte@gmail.com"
+    role "guest"
   end
+
+  factory :user_admin, class: User do
+    provider "open_id"
+    uid "ex1236"
+    name "Bob"
+    email "bob@example.com"
+    role "guest"
+  end 
 end
