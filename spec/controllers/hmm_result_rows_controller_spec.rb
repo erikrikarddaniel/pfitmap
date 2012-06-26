@@ -41,26 +41,11 @@ describe HmmResultRowsController do
     {user_id: @user.id}
   end
 
-  describe "GET index" do
-    it "assigns all hmm_result_rows as @hmm_result_rows" do
-      hmm_result_row = HmmResultRow.create! valid_attributes
-      get :index, {}, valid_session
-      assigns(:hmm_result_rows).should eq([hmm_result_row])
-    end
-  end
-
   describe "GET show" do
     it "assigns the requested hmm_result_row as @hmm_result_row" do
       hmm_result_row = HmmResultRow.create! valid_attributes
       get :show, {:id => hmm_result_row.to_param}, valid_session
       assigns(:hmm_result_row).should eq(hmm_result_row)
-    end
-  end
-
-  describe "GET new" do
-    it "assigns a new hmm_result_row as @hmm_result_row" do
-      get :new, {}, valid_session
-      assigns(:hmm_result_row).should be_a_new(HmmResultRow)
     end
   end
 
