@@ -28,7 +28,7 @@ describe HmmProfile do
   it { should respond_to(:parent_id) }
   it { should respond_to(:children) }
   it { should respond_to(:last_parent_id) }
-  it { should respond_to(:hmm_score_criterion) }
+  it { should respond_to(:hmm_score_criteria) }
   it { should respond_to(:inclusion_criteria) }
   it { should be_valid }
   
@@ -110,15 +110,15 @@ describe HmmProfile do
     end
 
     it "correctly finds the score criterion" do 
-      hmm_profile.hmm_score_criterion.should == hmm_score_criterion1
+      hmm_profile.hmm_score_criteria.should == [hmm_score_criterion1]
     end
     
     it "evaluates the best profile with high enough score" do
-      hmm_profile.hmm_score_criterion.evaluate?(db_sequence1).should be_true
+      hmm_profile.evaluate?(db_sequence1).should be_true
     end
     
     it "evaluates the best profile with score below threshold" do
-      hmm_profile_00101.hmm_score_criterion.evaluate?(db_sequence2).should be_false
+      hmm_profile_00101.evaluate?(db_sequence2).should be_false
     end
     describe "Evaluates a profile that is not the best" do
       let!(:hmm_profile3) { FactoryGirl.create(:hmm_profile) }

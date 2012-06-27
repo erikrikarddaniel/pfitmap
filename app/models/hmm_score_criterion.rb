@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: hmm_score_criterions
+# Table name: hmm_score_criteria
 #
 #  id                :integer         not null, primary key
 #  min_fullseq_score :float
