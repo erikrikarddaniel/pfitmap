@@ -22,6 +22,7 @@ class HmmProfilesController < ApplicationController
     @hmm_result = @hmm_profile.hmm_results.build()
     @hmm_results = @hmm_profile.hmm_results.paginate(page: params[:page])
     @sequence_sources = SequenceSource.all
+    @hmm_score_criteria = @hmm_profile.hmm_score_criteria
     
     respond_to do |format|
       format.html # show.html.erb

@@ -37,7 +37,7 @@
       <p>
 	<b>HMM Score Criteria:</b>
 	<ul>
-	  <% @hmm_profile.hmm_score_criteria.each do |criterion|%>
+	  <% @hmm_score_criteria.each do |criterion|%>
 	  <li>
 	    <%= link_to "Min Fullseq Score: #{criterion.min_fullseq_score}", hmm_score_criterion_path(criterion) %>
 	  </li>
