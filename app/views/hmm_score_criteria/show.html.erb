@@ -1,4 +1,13 @@
 <p id="notice"><%= notice %></p>
+<div class="pageheader1">
+<h3>Showing HMM score criterion for HMM profile <%= @hmm_score_criterion.hmm_profile.name %> </h3>
+</div>
+
+<div class="main-content">
+  <p>HMM Profile: 
+    <%= link_to @hmm_score_criterion.hmm_profile.name, hmm_profile_path(@hmm_score_criterion.hmm_profile) %></p>
+  <p>Min Fullseq Score: <%=@hmm_score_criterion.min_fullseq_score %> </p>
+</div>
 
 
 <%= link_to 'Edit', edit_hmm_score_criterion_path(@hmm_score_criterion) %> |

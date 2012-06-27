@@ -1,7 +1,9 @@
-<h1>Listing hmm_score_criteria</h1>
-
+<h1>Listing HMM Score Criteria</h1>
+<div class="main-content">
 <table>
   <tr>
+    <th>HMM Profile</th>
+    <th>Min Fullseq Score</th>
     <th></th>
     <th></th>
     <th></th>
@@ -9,6 +11,8 @@
 
 <% @hmm_score_criteria.each do |hmm_score_criterion| %>
   <tr>
+    <td><%= hmm_score_criterion.hmm_profile.name %> </td>
+    <td><%= hmm_score_criterion.min_fullseq_score %></td>
     <td><%= link_to 'Show', hmm_score_criterion %></td>
     <td><%= link_to 'Edit', edit_hmm_score_criterion_path(hmm_score_criterion) %></td>
     <td><%= link_to 'Destroy', hmm_score_criterion, confirm: 'Are you sure?', method: :delete %></td>
@@ -19,3 +23,4 @@
 <br />
 
 <%= link_to 'New Hmm score criterion', new_hmm_score_criterion_path %>
+</div>
