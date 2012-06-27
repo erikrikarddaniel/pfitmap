@@ -22,6 +22,8 @@ Pfitmap::Application.routes.draw do
   end
 
   resources :users
+
+  resources :hmm_score_criteria
   
 
   root to: "static_pages#home"
