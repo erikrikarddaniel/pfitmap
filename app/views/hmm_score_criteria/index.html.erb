@@ -1,0 +1,21 @@
+<h1>Listing hmm_score_criteria</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @hmm_score_criteria.each do |hmm_score_criterion| %>
+  <tr>
+    <td><%= link_to 'Show', hmm_score_criterion %></td>
+    <td><%= link_to 'Edit', edit_hmm_score_criterion_path(hmm_score_criterion) %></td>
+    <td><%= link_to 'Destroy', hmm_score_criterion, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Hmm score criterion', new_hmm_score_criterion_path %>

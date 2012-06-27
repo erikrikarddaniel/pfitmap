@@ -1,0 +1,17 @@
+<%= form_for(@hmm_score_criterion) do |f| %>
+  <% if @hmm_score_criterion.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@hmm_score_criterion.errors.count, "error") %> prohibited this hmm_score_criterion from being saved:</h2>
+
+      <ul>
+      <% @hmm_score_criterion.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
