@@ -26,6 +26,7 @@ class HmmScoreCriteriaController < ApplicationController
   # GET /hmm_score_criteria/new.json
   def new
     @hmm_score_criterion = HmmScoreCriterion.new
+    @hmm_profiles = HmmProfile.all
 
     respond_to do |format|
       format.html # new.html.erb
@@ -36,6 +37,7 @@ class HmmScoreCriteriaController < ApplicationController
   # GET /hmm_score_criteria/1/edit
   def edit
     @hmm_score_criterion = HmmScoreCriterion.find(params[:id])
+    @hmm_profiles = HmmProfile.all
   end
 
   # POST /hmm_score_criteria

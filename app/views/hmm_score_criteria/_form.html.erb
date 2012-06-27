@@ -1,17 +1,17 @@
-<%= form_for(@hmm_score_criterion) do |f| %>
-  <% if @hmm_score_criterion.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@hmm_score_criterion.errors.count, "error") %> prohibited this hmm_score_criterion from being saved:</h2>
-
-      <ul>
-      <% @hmm_score_criterion.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
+<%= form_for(@hmm_score_criterion, :html => {:class => "well"}) do |f| %>
+<%= render :partial => 'shared/error_messages', :locals => {:error_subject => @hmm_score_criterion} %>
+<div class="row-fluid">
+  <div class="control-group span6">
+    <%= f.label "HMM profile" %>
+    <%= collection_select( :hmm_score_criterion, :hmm_profile_id, @hmm_profiles, :id, :name) %>
+  </div>
+  <div class="control-group span6">
+    <%= f.label "Minimum Full-Sequence Score" %>
+    <%= f.text_field :min_fullseq_score %>
+  </div>
   <div class="actions">
     <%= f.submit %>
   </div>
+</div>
+
 <% end %>
