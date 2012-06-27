@@ -11,4 +11,9 @@ class ApplicationController < ActionController::Base
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
+
+  def current_user_admin?
+    current_u = current_user
+    return ((current_u =! nil) && (current_u.role == 'admin'))
+  end
 end
