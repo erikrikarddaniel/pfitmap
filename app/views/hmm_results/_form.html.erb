@@ -1,14 +1,16 @@
 <%= form_for([@hmm_profile, @hmm_profile.hmm_results.build], :html => { :class => "well"}) do |f| %>
 <%= render :partial => 'shared/error_messages', :locals => { :error_subject => @hmm_result } %>
-<div class ="control-group span3">
-<%= f.label :sequence_source, "Sequence database"%>
-<%= collection_select(:hmm_result, :sequence_source_id, SequenceSource.all, :id, :list_name) %>
+<div class="row-fluid">
+  <div class="control-group span4">
+    <%= f.label :sequence_source, "Sequence database"%>
+    <%= collection_select(:hmm_result, :sequence_source_id, SequenceSource.all, :id, :list_name) %>
+  </div>
+  <div class="control-group span4">
+    <%= f.label :file, "Choose a file containing your hmm-results (tblout format)" %>
+    <%= f.file_field :file, :class => "span12"%>
+  </div>
+  <div class="control-group span4">
+    <%= f.submit "Create Result", :class => "btn btn-large btn-primary", disable_with: 'Processing...' %>
+  </div>
+  <% end %>
 </div>
-<div class ="control-group span6 offset1">
-  <%= f.label :file, "Choose a file containing your hmm-results (tblout format)" %>
-  <%= f.file_field :file%>
-</div>
-
-<%= f.submit "Create Result", :class => "btn btn-large btn-primary", disable_with: 'Processing...' %>
-
-<% end %>

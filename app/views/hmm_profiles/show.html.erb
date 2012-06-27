@@ -1,15 +1,18 @@
 <% provide(:title, @hmm_profile.name) %>
-<div class="row">
+<div class="row-fluid">
   <h1> HMM Profile </h1>
 </div>
-<div class="row">
-  <div class="pageheader2">
+
+<% if can? :manage, :all %>
+<div class="row-fluid">
+  <div class="pageheader1">
     <h3>Create a new HMM Result: </h3>
     <%= render "hmm_results/form" %>
   </div>
 </div>
+<% end %>
 
-<div class="row">
+<div class="row-fluid">
   <aside class="span4">
     <section>
       <h1>
