@@ -3,6 +3,7 @@ namespace :db do
   task populate: :environment do
     make_hmm_profiles
     make_sequence_sources
+    make_hmm_score_criteria
     # make_hmm_results
     # make_hmm_result_rows
     # make_hmm_db_hits
@@ -18,6 +19,12 @@ def make_hmm_profiles
     HmmProfile.create!(name: "RNR R1 and PFL", version: "20120402", hierarchy: "000")
     
 end
+
+def make_hmm_score_criteria
+    HmmScoreCriterion.create!(hmm_profile_id: HmmProfile.first.id, min_fullseq_score: 15.0)
+    HmmScoreCriterion.create!(hmm_profile_id: HmmProfile.last.id, min_fullseq_score: 10.0)
+end
+
 
 def make_sequence_sources
     SequenceSource.create!(name: "NR", source: "NCBI", version: "1899-12-24")
