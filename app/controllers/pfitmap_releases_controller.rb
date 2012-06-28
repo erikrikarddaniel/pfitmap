@@ -4,6 +4,7 @@ class PfitmapReleasesController < ApplicationController
   # GET /pfitmap_releases.json
   def index
     @pfitmap_releases = PfitmapRelease.all
+    @current_release = PfitmapRelease.find_by_current(true)
 
     respond_to do |format|
       format.html # index.html.erb
