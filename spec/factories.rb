@@ -118,6 +118,6 @@ FactoryGirl.define do
     uid "ex1236"
     name "Bob"
     email "bob@example.com"
-    role "guest"
+    role "admin"
   end 
 end
