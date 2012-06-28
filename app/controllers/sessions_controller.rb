@@ -24,4 +24,12 @@ class SessionsController < ApplicationController
     flash[:notice] = "You are now signed out!"
     redirect_to root_path
   end
+
+  #Method to control which pfitmap_release used all over the site
+  #within a session
+  def change_release
+    @new_release = PfitmapRelease.find(params[:release_id])
+    session[:release_id] = @new_release.id
+    redirect_to :back
+  end
 end

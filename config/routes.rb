@@ -25,6 +25,7 @@ Pfitmap::Application.routes.draw do
 
   resources :hmm_score_criteria
   
+  post 'change_release' => 'sessions#change_release'
 
   root to: "static_pages#home"
   

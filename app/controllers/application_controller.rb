@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  helper_method :current_user
+  helper_method :current_user, :header_releases, :header_session_release
   check_authorization
 
   rescue_from CanCan::AccessDenied do |exception|
@@ -8,6 +8,15 @@ class ApplicationController < ActionController::Base
     redirect_to root_url
   end
 
+  #Header methods, to generate the release options in the header
+  def header_session_release
+    PfitmapRelease.find_by_id(session[:release_id])
+  end
+  
+  def header_releases
+    PfitmapRelease.all(:order => "release", :limit => '5')
+  end
+  
   def current_user
     @current_user ||= User.find_by_id(session[:user_id]) if session[:user_id]
   end
