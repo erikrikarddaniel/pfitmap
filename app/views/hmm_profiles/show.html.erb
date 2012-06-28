@@ -53,7 +53,7 @@
     </section>
   </aside>
   <div class="main-content span8">
-    <% if @hmm_profile.hmm_results.any? %>
+    <% if @hmm_results != [] %>
     <h3>Results (<%= @hmm_results.count %>)</h3>
     <table>
       <thead>
