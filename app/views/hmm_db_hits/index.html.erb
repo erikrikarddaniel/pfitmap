@@ -1,29 +1,32 @@
-<h1>Listing hmm_db_hits</h1>
+<div class="pageheader1">
+  <h1>Listing HMM Database Hits</h1>
+</div>
+<div class="main-content">
+  <table>
+    <tr>
+      <th>Gi</th>
+      <th>Db</th>
+      <th>Acc</th>
+      <th>Desc</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
 
-<table>
-  <tr>
-    <th>Gi</th>
-    <th>Db</th>
-    <th>Acc</th>
-    <th>Desc</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+    <% @hmm_db_hits.each do |hmm_db_hit| %>
+    <tr>
+      <td><%= hmm_db_hit.gi %></td>
+      <td><%= hmm_db_hit.db %></td>
+      <td><%= hmm_db_hit.acc %></td>
+      <td><%= hmm_db_hit.desc %></td>
+      <td><%= link_to 'Show', hmm_db_hit %></td>
+      <td><%= link_to 'Edit', edit_hmm_db_hit_path(hmm_db_hit) %></td>
+      <td><%= link_to 'Destroy', hmm_db_hit, confirm: 'Are you sure?', method: :delete %></td>
+    </tr>
+    <% end %>
+  </table>
+  <%= will_paginate @hmm_db_hits %>
+  <br />
 
-<% @hmm_db_hits.each do |hmm_db_hit| %>
-  <tr>
-    <td><%= hmm_db_hit.gi %></td>
-    <td><%= hmm_db_hit.db %></td>
-    <td><%= hmm_db_hit.acc %></td>
-    <td><%= hmm_db_hit.desc %></td>
-    <td><%= link_to 'Show', hmm_db_hit %></td>
-    <td><%= link_to 'Edit', edit_hmm_db_hit_path(hmm_db_hit) %></td>
-    <td><%= link_to 'Destroy', hmm_db_hit, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Hmm db hit', new_hmm_db_hit_path %>
+  <%= link_to 'New Hmm db hit', new_hmm_db_hit_path %>
+</div>

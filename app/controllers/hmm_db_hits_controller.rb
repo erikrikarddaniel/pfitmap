@@ -3,7 +3,7 @@ class HmmDbHitsController < ApplicationController
   # GET /hmm_db_hits
   # GET /hmm_db_hits.json
   def index
-    @hmm_db_hits = HmmDbHit.all
+    @hmm_db_hits = HmmDbHit.paginate(page: params[:page])
 
     respond_to do |format|
       format.html # index.html.erb
