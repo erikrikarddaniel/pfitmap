@@ -89,9 +89,9 @@ class HmmResultsController < ApplicationController
           line.chomp!
           fields = line.split(/\s+/)
           all_names = "#{fields[0]} #{fields[17..-1].join(" ")}"
-          separate_entries=all_names.split(/\001/)
+          separate_entries_description=all_names.split(/\001/)
           
-          separate_entries.each do |f|
+          separate_entries_description.each do |f|
             entry_fields=f.split("|")
             #If any db_hit with the same gi exists, then they share sequence.
             present_db_hit = HmmDbHit.find_by_gi(entry_fields[1].to_i)
@@ -115,16 +115,16 @@ class HmmResultsController < ApplicationController
                                               :db_sequence_id => present_sequence.id
                                               )
             end
-            hmm_result_row = add_hmm_result_row(fields,result,present_sequence)
+            hmm_result_row = add_hmm_result_row(f,fields,result,present_sequence)
           end
         end
       end
     end
   end
   
-  def add_hmm_result_row(fields,result, present_sequence)
+  def add_hmm_result_row(target_name,fields,result, present_sequence)
     hmm_result_row = result.hmm_result_rows.create(
-                                                   :target_name => fields[0],
+                                                   :target_name => target_name,
                                                    :target_acc => ( fields[1] == '-' ? fields[0].split('|')[2..3].join(':') : fields[1] ),
                                                    :query_name => fields[2],
                                                    :query_acc => fields[3],
