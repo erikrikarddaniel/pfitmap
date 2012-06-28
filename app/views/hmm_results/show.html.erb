@@ -8,7 +8,7 @@
     <%= link_to "Browse this source", @hmm_result.sequence_source, class: "btn"%>
   </div>
 </div>
-<div class="row">
+<div class="row-fluid">
   <aside class="span4">
     <section>
       <h1>
@@ -42,7 +42,7 @@
 	<%= render @hmm_result_rows%>
       </tbody>
     </table>
-    <%= will_paginate @hmm_result_rows%>
+    <%= will_paginate @hmm_result_rows %>
     <% end %> 
   </div>
 
