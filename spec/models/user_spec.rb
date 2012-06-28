@@ -15,5 +15,17 @@
 require 'spec_helper'
 
 describe User do
-  pending "add some examples to (or delete) #{__FILE__}"
+  before do
+    @user = User.new(name: "jonas", email: "jonas@example.com")
+    @user.provider = "open_id"
+    @user.uid = "ex123456"
+  end
+  subject{ @user }
+
+  it { should be_valid }
+  
+  describe "only one per id/provider" do
+    let!(:user) { FactoryGirl.create(:user) }
+    it {should_not be_valid }
+  end
 end
