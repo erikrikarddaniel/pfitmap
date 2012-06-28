@@ -57,6 +57,7 @@ class HmmResultsController < ApplicationController
           @hmm_result = @hmm_result
           @hmm_results = @hmm_profile.hmm_results.paginate(page: params[:page])
           @sequence_sources = SequenceSource.all
+          @hmm_score_criteria = @hmm_profile.hmm_score_criteria
           format.html { render :template => "hmm_profiles/show"}
           format.json { render json: @hmm_result.errors, status: :unprocessable_entity }
         end
@@ -115,16 +116,16 @@ class HmmResultsController < ApplicationController
                                               :db_sequence_id => present_sequence.id
                                               )
             end
-            hmm_result_row = add_hmm_result_row(f,fields,result,present_sequence)
           end
+          hmm_result_row = add_hmm_result_row(fields,result,present_sequence)
         end
       end
     end
   end
   
-  def add_hmm_result_row(target_name,fields,result, present_sequence)
+  def add_hmm_result_row(fields,result, present_sequence)
     hmm_result_row = result.hmm_result_rows.create(
-                                                   :target_name => target_name,
+                                                   :target_name => fields[0],
                                                    :target_acc => ( fields[1] == '-' ? fields[0].split('|')[2..3].join(':') : fields[1] ),
                                                    :query_name => fields[2],
                                                    :query_acc => fields[3],
