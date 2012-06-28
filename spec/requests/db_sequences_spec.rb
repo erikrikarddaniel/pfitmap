@@ -31,7 +31,7 @@ describe "DbSequences" do
       page.should have_content("Best HMM Profile:")
     end
     it "should display som information" do
-      page.should have_content(hmm_result_row.target_name)
+      page.should have_content(hmm_result_row.fullseq_evalue)
       page.should have_content(hmm_profile.name)
     end
   end
