@@ -90,7 +90,7 @@ class SequenceSourcesController < ApplicationController
 
   def evaluate
     @sequence_source = SequenceSource.find(params[:sequence_source_id])
-    @head_release = PfitmapRelease.find_head_release
+    @head_release = PfitmapRelease.find_current_release
 
     if @head_release
       @sequence_source.evaluate(@head_release)

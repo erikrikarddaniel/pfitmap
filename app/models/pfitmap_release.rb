@@ -27,13 +27,13 @@ class PfitmapRelease < ActiveRecord::Base
     end
   end
     
-  def self.find_head_release
+  def self.find_current_release
       return find_by_current(true)
   end
 
   private 
   def only_one_current
-    current_release = PfitmapRelease.find_head_release
+    current_release = PfitmapRelease.find_current_release
     if current_release
       if self.current
         self.errors[:base] << "There can only be one current release at a time!"

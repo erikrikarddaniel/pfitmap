@@ -28,7 +28,7 @@ describe PfitmapRelease do
 
   describe "class methods" do
     subject{ PfitmapRelease }
-    it { should respond_to(:find_head_release) }
+    it { should respond_to(:find_current_release) }
   end
 
   describe "current" do
@@ -49,7 +49,7 @@ describe PfitmapRelease do
       let!(:pfitmap_release) { FactoryGirl.create(:pfitmap_release) }
       let!(:pfitmap_release2) { FactoryGirl.create(:pfitmap_release, :current => true) }
       it "returns the current head" do
-        PfitmapRelease.find_head_release.should == pfitmap_release2
+        PfitmapRelease.find_current_release.should == pfitmap_release2
       end
     end
   end
