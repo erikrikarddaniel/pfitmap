@@ -3,7 +3,7 @@ class DbSequencesController < ApplicationController
   # GET /db_sequences
   # GET /db_sequences.json
   def index
-    @db_sequences = DbSequence.all
+    @db_sequences = DbSequence.paginate(page: params[:page])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -15,6 +15,8 @@ class DbSequencesController < ApplicationController
   # GET /db_sequences/1.json
   def show
     @db_sequence = DbSequence.find(params[:id])
+    @hmm_result_rows = @db_sequence.hmm_result_rows
+    @hmm_db_hits = @db_sequence.hmm_db_hits
     @best_profile = HmmProfile.find(@db_sequence.best_hmm_profile)
 
     respond_to do |format|

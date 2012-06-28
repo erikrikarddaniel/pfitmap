@@ -1,24 +1,48 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Result Rows</b>
-  <% @db_sequence.hmm_result_rows.each do |row|%>
-<p> <%= row.target_name %> </p>
-<% end %>
-</p>
+<div class="row">
+  <aside class="span4">
+    <p>
+      <b>Hmm db hits:</b>
+      <% if @hmm_db_hits != [] %>
+      <%  @hmm_db_hits.each do |hit| %>
+    <p> <%= link_to hit.gi, hmm_db_hit_path(hit) %> </p> 
+    <% end %>
+    <% else %>
+    None
+    <% end %>
+    </p>
 
-<p>
-  <b>Hmm db hits:</b>
-  <%  @db_sequence.hmm_db_hits.each do |hit| %>
-<p> <%= hit.gi %> </p> 
-<% end %>
-</p>
+    <p>
+      <b> Best HMM Profile: </b>
+    <p><%= link_to @best_profile.name, hmm_profile_path(@best_profile) %></p>
+    </p>
 
-<p>
-<b> Best HMM Profile: </b>
-<p><%= link_to @best_profile.name, hmm_profile_path(@best_profile) %></p>
-</p>
+    <%= link_to 'Edit', edit_db_sequence_path(@db_sequence) %> |
+    <%= link_to 'Back', db_sequences_path %>
+  </aside>
+  <div class="main-content span8">
+    <h3>Result Rows</h3>
+    <% if @hmm_result_rows != [] %>
+    <table>
+      <thead>
+	<tr>
+	  <th>HMM Profile</th>
+	  <th>Name</th>
+	</tr>
+      </thead>
+      <tbody>
+	<% @hmm_result_rows.each do |row|%>
+	<tr>
+	  <td> <%= row.hmm_result.hmm_profile.name %> </td>
+	  <td> <%= link_to row.target_name, hmm_result_row_path(row) %> </td>
+	</tr>
+	<% end %>
+      </tbody>
+    </table>
+    <% else %>
+    None
+    <% end %>
 
-
-<%= link_to 'Edit', edit_db_sequence_path(@db_sequence) %> |
-<%= link_to 'Back', db_sequences_path %>
+  </div>
+</div>
