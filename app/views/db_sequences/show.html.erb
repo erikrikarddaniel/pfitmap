@@ -23,19 +23,24 @@
   </aside>
   <div class="main-content span8">
     <h3>Result Rows</h3>
+    <p>This sequence is present in the following result rows</p>
     <% if @hmm_result_rows != [] %>
     <table>
       <thead>
 	<tr>
 	  <th>HMM Profile</th>
-	  <th>Name</th>
+	  <th>Sequence Source</th>
+	  <th>Fullseq E-value</th>
+	  <th><th>
 	</tr>
       </thead>
       <tbody>
 	<% @hmm_result_rows.each do |row|%>
 	<tr>
-	  <td> <%= row.hmm_result.hmm_profile.name %> </td>
-	  <td> <%= link_to row.target_name, hmm_result_row_path(row) %> </td>
+	  <td> <%= link_to row.hmm_result.hmm_profile.name, hmm_profile_path(row.hmm_result.hmm_profile) %> </td>
+	  <td> <%= link_to row.hmm_result.sequence_source.list_name, sequence_source_path(row.hmm_result.sequence_source) %> </td>
+	  <td> <%= row.fullseq_evalue %>
+	  <td> <%= link_to "View result row", hmm_result_row_path(row), class: "btn" %> </td>
 	</tr>
 	<% end %>
       </tbody>

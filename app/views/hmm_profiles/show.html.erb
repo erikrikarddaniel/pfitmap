@@ -36,6 +36,7 @@
 
       <p>
 	<b>HMM Score Criteria:</b>
+	<% if @hmm_score_criteria %>
 	<ul>
 	  <% @hmm_score_criteria.each do |criterion|%>
 	  <li>
@@ -43,6 +44,9 @@
 	  </li>
 	  <% end %>
 	</ul>
+	<% else %>
+	none
+	<% end %>
       </p>
       
       <%= link_to 'Delete', { :action => :destroy, :id => @hmm_profile.id }, :method => :delete, :confirm => 'Are you sure you whant to delete this HMM Profile and all its related results?', :class => "btn" %>
