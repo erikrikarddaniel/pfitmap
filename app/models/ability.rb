@@ -10,7 +10,7 @@ class Ability
       cannot :read, User
       # Static pages
       can [:home, :help, :contact, :error_404], :static_page
-      can [:create, :failure, :destroy], :session
+      can [:create, :failure, :destroy, :change_release], :session
     end
   end
 end
