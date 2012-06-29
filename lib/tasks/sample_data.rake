@@ -19,9 +19,9 @@ def make_hmm_profiles
 end
 
 def make_hmm_score_criteria
-    HmmScoreCriterion.create!(hmm_profile_id: HmmProfile.find_by_hierarchy("001.00").id, min_fullseq_score: 5.0e-100)
-    HmmScoreCriterion.create!(hmm_profile_id: HmmProfile.find_by_hierarchy("001.00.00").id, min_fullseq_score: 3.0e-130)
-    HmmScoreCriterion.create!(hmm_profile_id: HmmProfile.find_by_hierarchy("001.00.01").id, min_fullseq_score: 5.0e-130)
+    HmmScoreCriterion.create!(hmm_profile_id: HmmProfile.find_by_hierarchy("001.00").id, min_fullseq_score: 20)
+    HmmScoreCriterion.create!(hmm_profile_id: HmmProfile.find_by_hierarchy("001.00.00").id, min_fullseq_score: 30)
+    HmmScoreCriterion.create!(hmm_profile_id: HmmProfile.find_by_hierarchy("001.00.01").id, min_fullseq_score: 50)
 end
 
 
