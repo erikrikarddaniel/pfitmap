@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
       session[:release_id] = nil
     end
     flash[:success] = "Signed in!"
-    redirect_to :back
+    redirect_to root_path
   end
 
   def failure
