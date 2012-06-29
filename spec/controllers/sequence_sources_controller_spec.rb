@@ -87,7 +87,21 @@ describe SequenceSourcesController do
         post :evaluate, { :sequence_source_id => sequence_source.to_param}, valid_session
         response.code.should eq("302")
       end
+      
+      describe "iteratively" do
+        let!(:extra_db_sequence) { FactoryGirl.create(:db_sequence) }
+        let!(:pfitmap_sequence) { FactoryGirl.create(:pfitmap_sequence, db_sequence: extra_db_sequence, pfitmap_release: pfitmap_release) }
+
+        it "old pfitmap_sequence should be there at first" do
+          pfitmap_release.pfitmap_sequences.should == [pfitmap_sequence]
+        end
+        it "old pfitmap_sequence should be erased after evaluation" do
+          post :evaluate, { :sequence_source_id => sequence_source.to_param}, valid_session
+          pfitmap_release.pfitmap_sequences.should_not include(pfitmap_sequence)
+        end
+      end
     end
+
     
     describe "without current release" do
       it "cannot evaluate the source" do
