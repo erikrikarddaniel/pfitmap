@@ -23,7 +23,7 @@ class SessionsController < ApplicationController
     session[:user_id] = nil
     reset_session
     flash[:notice] = "You are now signed out!"
-    redirect_to :back
+    redirect_to root_path
   end
 
   #Method to control which pfitmap_release used all over the site
