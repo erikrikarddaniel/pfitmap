@@ -1,17 +1,18 @@
 class SessionsController < ApplicationController
   authorize_resource :class => false
   def create
+    save_release_choice = session[:release_id]
     reset_session # see http://guides.rubyonrails.org/security.html#session-fixation
     auth = request.env["omniauth.auth"]
     user = User.find_by_provider_and_uid(auth["provider"], auth["uid"]) || User.create_with_omniauth(auth)
     session[:user_id] = user.id
-    release = PfitmapRelease.find_current_release()
-    if release != nil
-      session[:release_id] = release.id
+    if save_release_choice
+      session[:release_id] = save_release_choice
     else
       session[:release_id] = nil
     end
-    redirect_to root_path, :notice => "Signed in!"
+    flash[:success] = "Signed in!"
+    redirect_to :back
   end
 
   def failure
@@ -22,7 +23,7 @@ class SessionsController < ApplicationController
     session[:user_id] = nil
     reset_session
     flash[:notice] = "You are now signed out!"
-    redirect_to root_path
+    redirect_to :back
   end
 
   #Method to control which pfitmap_release used all over the site
