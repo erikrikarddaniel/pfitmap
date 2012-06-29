@@ -1,32 +1,31 @@
 <% provide(:title, "Hmm Results") %>
-<div class="row">
-  <aside class="span4">
-    <section>
-      <h1>Listing hmm_results</h1>
-    </section>
-  </aside>
-  <div class="span8">
-<table>
-  <tr>
-    <th>Executed</th>
-    <th>Result db</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<div class="pageheader1">
+  <h1>Listing HMM Results</h1>
+</div>
+<div class="main-content">
+  <table>
+    <tr>
+      <th>Executed</th>
+      <th>Sequence Source</th>
+      <th>HMM Profile</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
 
-<% @hmm_results.each do |hmm_result| %>
-  <tr>
-    <td>
-      <% if not hmm_result.executed.nil? %>
-      <%= hmm_result.executed.to_formatted_s(:long) %>
-      <% end %>
-    </td>
-    <td><%= hmm_result.sequence_source.source.to_s %>:
-      <%= hmm_result.sequence_source.name.to_s %></td>
-    <td><%= link_to 'Show', hmm_result %></td>
-    <td><%= link_to 'Destroy', hmm_result, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-<% end %>
-</table>
+    <% @hmm_results.each do |hmm_result| %>
+    <tr>
+      <td>
+	<% if not hmm_result.executed.nil? %>
+	<%= hmm_result.executed.to_formatted_s(:long) %>
+	<% end %>
+      </td>
+      <td><%= hmm_result.sequence_source.source.to_s %>:
+	<%= hmm_result.sequence_source.name.to_s %></td>
+      <td> <%= hmm_result.hmm_profile.name %> </td>
+      <td><%= link_to 'Show', hmm_result %></td>
+      <td><%= link_to 'Destroy', hmm_result, confirm: 'Are you sure?', method: :delete %></td>
+    </tr>
+    <% end %>
+  </table>
 </div>
