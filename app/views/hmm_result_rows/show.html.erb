@@ -1,4 +1,7 @@
 <% provide(:title, @hmm_result_row.hmm_result.hmm_profile.name) %>
+<div class="main-content">
+  <h1> HMM Result Row </h1>
+</div>
 <div class="row">
   <aside class="span4">
     <section>
@@ -110,10 +113,41 @@
     </section>
   </aside>
   
-  <div class="span8">
+  <div class="main-content span8">
+    <div>
+      <h3>Database Sequence</h3>
+      <p>The best profile for this database sequence is:
+	<%= @best_hmm_profile.name %></p>
+    </div>
+
+    <%  if @hmm_result_row.db_sequence.hmm_result_rows.any? %>
+    <h3>All rows for this Database Sequence </h3>
+    <table>
+      <thead>
+	<tr>
+	  <th>HMM Profile</th>
+	  <th>Fullseq Score</th>
+	  <th></th>
+	</tr>
+      </thead>
+      <tbody>
+	<% @hmm_result_row.db_sequence.hmm_result_rows(order: "fullseq_score").each do |related_row|%>
+	<tr>
+	  <td><%= related_row.hmm_result.hmm_profile.name %></td>
+	  <td><%= related_row.fullseq_score %></td>
+	  <td><% if related_row.id == @hmm_result_row.id%>
+	    <i>This row</i>
+	    <% else %>
+	    <%= link_to "Show this row", hmm_result_row_path(related_row) %></td>
+	  <% end %>
+	</tr>
+	<% end %>
+      </tbody>
+    </table>
+    <% end %>
     <%  if @hmm_result_row.hmm_db_hits.any? %>
     <h3> Listing HMM database hits </h3>
-    <table class="table table-striped" >
+    <table>
       <thead>
 	<tr>
 	  <th>Database</th>

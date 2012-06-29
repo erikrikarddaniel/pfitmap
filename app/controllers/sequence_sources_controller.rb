@@ -93,6 +93,7 @@ class SequenceSourcesController < ApplicationController
     @head_release = PfitmapRelease.find_current_release
 
     if @head_release
+      @head_release.pfitmap_sequences.delete_all
       @sequence_source.evaluate(@head_release)
       flash[:success] = 'Sequence source was successfully evaluated.'
       respond_to do |format|
