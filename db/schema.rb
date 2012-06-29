@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120627111734) do
+ActiveRecord::Schema.define(:version => 20120629083334) do
 
   create_table "db_sequences", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -91,12 +91,9 @@ ActiveRecord::Schema.define(:version => 20120627111734) do
   create_table "pfitmap_releases", :force => true do |t|
     t.string   "release"
     t.date     "release_date"
-    t.boolean  "current"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
   end
-
-  add_index "pfitmap_releases", ["current"], :name => "index_pfitmap_releases_on_current"
 
   create_table "pfitmap_sequences", :force => true do |t|
     t.integer  "db_sequence_id"

@@ -30,7 +30,6 @@ describe PfitmapReleasesController do
     {
     release: "1.1",
     release_date: "2005-10-10",
-    current: false
     }
   end
   
