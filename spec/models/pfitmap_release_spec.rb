@@ -5,7 +5,6 @@
 #  id           :integer         not null, primary key
 #  release      :string(255)
 #  release_date :date
-#  current      :boolean
 #  created_at   :datetime        not null
 #  updated_at   :datetime        not null
 #
@@ -14,14 +13,13 @@ require 'spec_helper'
 
 describe PfitmapRelease do
   before do
-    @pfitmap_release = PfitmapRelease.new(release: "0.1", release_date: "2001-04-20",current: false)
+    @pfitmap_release = PfitmapRelease.new(release: "0.1", release_date: "2001-04-20")
   end
   subject{ @pfitmap_release }
-
+  
   it { should be_valid }
   it { should respond_to(:release) }
   it { should respond_to(:release_date) }
-  it { should respond_to(:current) }
   it { should respond_to(:pfitmap_sequences) }
   it { should respond_to(:db_sequences) }
   it { should respond_to(:add_seq) }
@@ -31,26 +29,11 @@ describe PfitmapRelease do
     it { should respond_to(:find_current_release) }
   end
 
-  describe "current" do
-    describe "without current" do
-      before{ @pfitmap_release.current = nil }
-      it { should_not be_valid }
-    end
-
-    describe "only one at a time" do
-      before do
-        @pfitmap_release2 = PfitmapRelease.create!(release: "0.2", release_date: "2001-04-21", current: true)
-        @pfitmap_release.current = true
-      end
-      it { should_not be_valid }
-    end
-
-    describe "find head release" do
-      let!(:pfitmap_release) { FactoryGirl.create(:pfitmap_release) }
-      let!(:pfitmap_release2) { FactoryGirl.create(:pfitmap_release, :current => true) }
-      it "returns the current head" do
-        PfitmapRelease.find_current_release.should == pfitmap_release2
-      end
+  describe "find current release" do
+    let!(:pfitmap_release) { FactoryGirl.create(:pfitmap_release) }
+    let!(:pfitmap_release2) { FactoryGirl.create(:pfitmap_release) }
+    it "returns the current release" do
+      PfitmapRelease.find_current_release.should == pfitmap_release2
     end
   end
 
@@ -83,8 +66,7 @@ describe PfitmapRelease do
     describe "adds to the correct release" do
       before do
         @current_release = PfitmapRelease.create!(release: "1.2",
-                                                  release_date: "2012-06-10",
-                                                  current: true)
+                                                  release_date: "2012-06-10")
         @current_release.add_seq(db_sequence2)
       end
       subject { @current_release }
@@ -95,7 +77,7 @@ describe PfitmapRelease do
     
     describe "an already existing sequence" do
       let!(:db_sequence3){ FactoryGirl.create(:db_sequence) }
-      let!(:pfitmap_release_current) { FactoryGirl.create(:pfitmap_release, current: true) }
+      let!(:pfitmap_release_current) { FactoryGirl.create(:pfitmap_release) }
       let!(:pfitmap_sequence) { FactoryGirl.create(:pfitmap_sequence,
                                                    db_sequence: db_sequence3,
                                                    pfitmap_release: pfitmap_release_current

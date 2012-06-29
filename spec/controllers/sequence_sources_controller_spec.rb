@@ -82,7 +82,7 @@ describe SequenceSourcesController do
                                                hmm_result: hmm_result, 
                                                db_sequence: db_sequence) }
     describe "with existing current release" do
-      let!(:pfitmap_release) { FactoryGirl.create(:pfitmap_release, current: true) }
+      let!(:pfitmap_release) { FactoryGirl.create(:pfitmap_release) }
       it "can evaluate the source correctly" do
         post :evaluate, { :sequence_source_id => sequence_source.to_param}, valid_session
         response.code.should eq("302")
@@ -90,7 +90,6 @@ describe SequenceSourcesController do
     end
     
     describe "without current release" do
-      let!(:pfitmap_release) { FactoryGirl.create(:pfitmap_release, current: false) }
       it "cannot evaluate the source" do
         post :evaluate, { :sequence_source_id => sequence_source.to_param}, valid_session
         response.code.should eq("200")
