@@ -29,6 +29,7 @@
     <th></th>
     <th></th>
     <th></th>
+    <th></th>
   </tr>
 
 <% @pfitmap_releases.each do |pfitmap_release| %>
@@ -38,6 +39,7 @@
     <td><%= link_to 'Show', pfitmap_release %></td>
     <td><%= link_to 'Edit', edit_pfitmap_release_path(pfitmap_release) %></td>
     <td><%= link_to 'Destroy', pfitmap_release, confirm: 'Are you sure?', method: :delete %></td>
+    <td><%= link_to 'Use this release', change_release_path(:release_id => pfitmap_release.id), :method => :post %> </td>
   </tr>
 <% end %>
 </table>
