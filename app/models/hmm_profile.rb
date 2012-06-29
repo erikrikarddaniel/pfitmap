@@ -20,7 +20,7 @@ class HmmProfile < ActiveRecord::Base
   has_many :hmm_score_criteria, :dependent => :destroy
   validates :name, presence: true
   validates :version, presence: true
-  validates :hierarchy, presence: true
+  validates :hierarchy, presence: true, :uniqueness => :true
   # A method to pick up all criterias independent of type
   def inclusion_criteria
     self.hmm_score_criteria
