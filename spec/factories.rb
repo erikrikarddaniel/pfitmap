@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :hmm_profile do
     sequence(:name){ |n| "Example Class #{n}" }
-    sequence(:hierarchy) { |n| "00#{n}" }
+    sequence(:hierarchy) { |n| "00#{n+1}" }
     sequence(:version) { |n| "version #{n}" }
   end
   
@@ -9,13 +9,6 @@ FactoryGirl.define do
     name "RNR R2 and R2lox"
     hierarchy "001"
     version "20120401"
-  end
-  
-  factory :hmm_profile_00100, class: HmmProfile do
-    name "RNR R2"
-    hierarchy "001.00"
-    version "20120401"
-    association :parent, factory: :hmm_profile_001
   end
 
   factory :hmm_profile_001_with_children, class: HmmProfile do |p|

@@ -29,7 +29,7 @@ describe HmmScoreCriterion do
                                                    hmm_profile: hmm_profile1) }
   
   #Profile with lower score
-  let!(:hmm_profile2) { FactoryGirl.create(:hmm_profile_00100) }
+  let!(:hmm_profile2) { FactoryGirl.create(:hmm_profile) }
   let!(:hmm_result2) { FactoryGirl.create(:hmm_result, 
                                           hmm_profile: hmm_profile2, 
                                           sequence_source: sequence_source) }

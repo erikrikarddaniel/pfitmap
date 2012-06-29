@@ -61,7 +61,7 @@ describe HmmProfile do
 
   describe "Profiles produced in the factory" do
     let(:hmm_profile_001) { FactoryGirl.create(:hmm_profile_001) }
-    let(:hmm_profile_00100) { FactoryGirl.create(:hmm_profile_00100, parent: hmm_profile_001) }
+    let(:hmm_profile) { FactoryGirl.create(:hmm_profile, parent: hmm_profile_001) }
     let(:hmm_profile_00101) { FactoryGirl.create(:hmm_profile_00101, parent: hmm_profile_001) }
     let(:hmm_profile_0010101){ FactoryGirl.create(:hmm_profile, parent: hmm_profile_00101) }
     
@@ -70,7 +70,7 @@ describe HmmProfile do
     end
     
     it "should be able to list their closest children" do
-      hmm_profile_001.children.should include(hmm_profile_00100)
+      hmm_profile_001.children.should include(hmm_profile)
     end
     
     it "should be able to list all last parents (root nodes)" do
