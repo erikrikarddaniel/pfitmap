@@ -5,20 +5,18 @@
 #  id           :integer         not null, primary key
 #  release      :string(255)
 #  release_date :date
-#  current      :boolean
 #  created_at   :datetime        not null
 #  updated_at   :datetime        not null
 #
 
 
 class PfitmapRelease < ActiveRecord::Base
-  attr_accessible :release, :release_date, :current
+  attr_accessible :release, :release_date
   has_many :pfitmap_sequences
   has_many :db_sequences, :through => :pfitmap_sequences
   validates :release, :presence => :true
   validates :release_date, :presence => :true
-  validates_inclusion_of :current, :in => [true, false]
-  validate :only_one_current
+
 
   # Should only be called when there exists a head release
   def add_seq(db_seq)
@@ -28,16 +26,6 @@ class PfitmapRelease < ActiveRecord::Base
   end
     
   def self.find_current_release
-      return find_by_current(true)
-  end
-
-  private 
-  def only_one_current
-    current_release = PfitmapRelease.find_current_release
-    if current_release
-      if self.current
-        self.errors[:base] << "There can only be one current release at a time!"
-      end
-    end
+      return first(:order => "release DESC")
   end
 end
