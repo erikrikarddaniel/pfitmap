@@ -11,12 +11,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120702063710) do
+ActiveRecord::Schema.define(:version => 20120702065129) do
 
   create_table "db_sequences", :force => true do |t|
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "enzyme_profiles", :force => true do |t|
+    t.integer  "hmm_profile_id"
+    t.integer  "enzyme_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  add_index "enzyme_profiles", ["enzyme_id"], :name => "index_enzyme_profiles_on_enzyme_id"
+  add_index "enzyme_profiles", ["hmm_profile_id"], :name => "index_enzyme_profiles_on_hmm_profile_id"
 
   create_table "enzymes", :force => true do |t|
     t.string   "name"

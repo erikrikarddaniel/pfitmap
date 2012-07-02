@@ -11,5 +11,5 @@
 class Enzyme < ActiveRecord::Base
   attr_accessible :name
   has_many :enzyme_profiles
-  has_many :hmm_profiles through: :enzyme_profiles
+  has_many :hmm_profiles, through: :enzyme_profiles
 end

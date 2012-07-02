@@ -112,4 +112,13 @@ FactoryGirl.define do
     email "bob@example.com"
     role "admin"
   end 
+
+  factory :enzyme do
+    name "Example ENZ"
+  end
+
+  factory :enzyme_profile do
+    enzyme
+    hmm_profile
+  end
 end
