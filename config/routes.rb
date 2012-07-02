@@ -1,4 +1,6 @@
 Pfitmap::Application.routes.draw do
+  resources :enzymes
+
   match '/auth/:provider/callback', to: 'sessions#create'
   match '/auth/failure', to: 'sessions#failure'
   match '/signout' => "sessions#destroy", :as => :signout
