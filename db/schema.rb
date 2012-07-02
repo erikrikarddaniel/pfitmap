@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120702065129) do
+ActiveRecord::Schema.define(:version => 20120702134627) do
 
   create_table "db_sequences", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -109,6 +109,7 @@ ActiveRecord::Schema.define(:version => 20120702065129) do
     t.date     "release_date"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+    t.boolean  "current"
   end
 
   create_table "pfitmap_sequences", :force => true do |t|
