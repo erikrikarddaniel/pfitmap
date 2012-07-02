@@ -17,6 +17,7 @@ class PfitmapRelease < ActiveRecord::Base
   has_many :db_sequences, :through => :pfitmap_sequences
   validates :release, :presence => :true
   validates :release_date, :presence => :true
+  validates_inclusion_of :current, :in => [true, false]
 
 
   # Should only be called when there exists a head release
@@ -27,6 +28,6 @@ class PfitmapRelease < ActiveRecord::Base
   end
     
   def self.find_current_release
-      return first(:order => "release DESC")
+      return self.find_by_current('true', limit: 1)
   end
 end

@@ -15,6 +15,7 @@ require 'spec_helper'
 describe PfitmapRelease do
   before do
     @pfitmap_release = PfitmapRelease.new(release: "0.1", release_date: "2001-04-20")
+    @pfitmap_release.current = false
   end
   subject{ @pfitmap_release }
   
@@ -32,7 +33,7 @@ describe PfitmapRelease do
 
   describe "find current release" do
     let!(:pfitmap_release) { FactoryGirl.create(:pfitmap_release) }
-    let!(:pfitmap_release2) { FactoryGirl.create(:pfitmap_release) }
+    let!(:pfitmap_release2) { FactoryGirl.create(:pfitmap_release, current: true) }
     it "returns the current release" do
       PfitmapRelease.find_current_release.should == pfitmap_release2
     end
@@ -66,8 +67,11 @@ describe PfitmapRelease do
     
     describe "adds to the correct release" do
       before do
-        @current_release = PfitmapRelease.create!(release: "1.2",
-                                                  release_date: "2012-06-10")
+        @current_release = PfitmapRelease.new(release: "1.2",
+                                                  release_date: "2012-06-10",
+                                                  )
+        @current_release.current = 'true'
+        @current_release.save
         @current_release.add_seq(db_sequence2)
       end
       subject { @current_release }

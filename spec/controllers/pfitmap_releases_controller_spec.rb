@@ -42,7 +42,9 @@ describe PfitmapReleasesController do
 
   describe "GET index" do
     it "assigns all pfitmap_releases as @pfitmap_releases" do
-      pfitmap_release = PfitmapRelease.create! valid_attributes
+      pfitmap_release = PfitmapRelease.new valid_attributes
+      pfitmap_release.current = false
+      pfitmap_release.save
       get :index, {}, valid_session
       assigns(:pfitmap_releases).should eq([pfitmap_release])
     end
@@ -50,7 +52,9 @@ describe PfitmapReleasesController do
 
   describe "GET show" do
     it "assigns the requested pfitmap_release as @pfitmap_release" do
-      pfitmap_release = PfitmapRelease.create! valid_attributes
+      pfitmap_release = PfitmapRelease.new valid_attributes
+      pfitmap_release.current = false
+      pfitmap_release.save
       get :show, {:id => pfitmap_release.to_param}, valid_session
       assigns(:pfitmap_release).should eq(pfitmap_release)
     end
@@ -65,7 +69,9 @@ describe PfitmapReleasesController do
 
   describe "GET edit" do
     it "assigns the requested pfitmap_release as @pfitmap_release" do
-      pfitmap_release = PfitmapRelease.create! valid_attributes
+      pfitmap_release = PfitmapRelease.new valid_attributes
+      pfitmap_release.current = false
+      pfitmap_release.save
       get :edit, {:id => pfitmap_release.to_param}, valid_session
       assigns(:pfitmap_release).should eq(pfitmap_release)
     end
@@ -111,7 +117,9 @@ describe PfitmapReleasesController do
   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested pfitmap_release" do
-        pfitmap_release = PfitmapRelease.create! valid_attributes
+        pfitmap_release = PfitmapRelease.new valid_attributes
+        pfitmap_release.current = false
+        pfitmap_release.save
         # Assuming there are no other pfitmap_releases in the database, this
         # specifies that the PfitmapRelease created on the previous line
         # receives the :update_attributes message with whatever params are
@@ -121,13 +129,17 @@ describe PfitmapReleasesController do
       end
 
       it "assigns the requested pfitmap_release as @pfitmap_release" do
-        pfitmap_release = PfitmapRelease.create! valid_attributes
+        pfitmap_release = PfitmapRelease.new valid_attributes
+        pfitmap_release.current = false
+        pfitmap_release.save
         put :update, {:id => pfitmap_release.to_param, :pfitmap_release => valid_attributes}, valid_session
         assigns(:pfitmap_release).should eq(pfitmap_release)
       end
 
       it "redirects to the pfitmap_release" do
-        pfitmap_release = PfitmapRelease.create! valid_attributes
+        pfitmap_release = PfitmapRelease.new valid_attributes
+        pfitmap_release.current = false
+        pfitmap_release.save
         put :update, {:id => pfitmap_release.to_param, :pfitmap_release => valid_attributes}, valid_session
         response.should redirect_to(pfitmap_release)
       end
@@ -135,7 +147,9 @@ describe PfitmapReleasesController do
 
     describe "with invalid params" do
       it "assigns the pfitmap_release as @pfitmap_release" do
-        pfitmap_release = PfitmapRelease.create! valid_attributes
+        pfitmap_release = PfitmapRelease.new valid_attributes
+        pfitmap_release.current = false
+        pfitmap_release.save
         # Trigger the behavior that occurs when invalid params are submitted
         PfitmapRelease.any_instance.stub(:save).and_return(false)
         put :update, {:id => pfitmap_release.to_param, :pfitmap_release => {}}, valid_session
@@ -143,7 +157,9 @@ describe PfitmapReleasesController do
       end
 
       it "re-renders the 'edit' template" do
-        pfitmap_release = PfitmapRelease.create! valid_attributes
+        pfitmap_release = PfitmapRelease.new valid_attributes
+        pfitmap_release.current = false
+        pfitmap_release.save
         # Trigger the behavior that occurs when invalid params are submitted
         PfitmapRelease.any_instance.stub(:save).and_return(false)
         put :update, {:id => pfitmap_release.to_param, :pfitmap_release => {}}, valid_session
@@ -154,14 +170,18 @@ describe PfitmapReleasesController do
 
   describe "DELETE destroy" do
     it "destroys the requested pfitmap_release" do
-      pfitmap_release = PfitmapRelease.create! valid_attributes
+      pfitmap_release = PfitmapRelease.new valid_attributes
+      pfitmap_release.current = false
+      pfitmap_release.save
       expect {
         delete :destroy, {:id => pfitmap_release.to_param}, valid_session
       }.to change(PfitmapRelease, :count).by(-1)
     end
 
     it "redirects to the pfitmap_releases list" do
-      pfitmap_release = PfitmapRelease.create! valid_attributes
+      pfitmap_release = PfitmapRelease.new valid_attributes
+      pfitmap_release.current = false
+      pfitmap_release.save
       delete :destroy, {:id => pfitmap_release.to_param}, valid_session
       response.should redirect_to(pfitmap_releases_url)
     end

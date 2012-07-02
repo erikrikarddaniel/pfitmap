@@ -44,7 +44,7 @@ class PfitmapReleasesController < ApplicationController
   # POST /pfitmap_releases.json
   def create
     @pfitmap_release = PfitmapRelease.new(params[:pfitmap_release])
-
+    @pfitmap_release.current = 'false'
     respond_to do |format|
       if @pfitmap_release.save
         format.html { redirect_to @pfitmap_release, notice: 'Pfitmap release was successfully created.' }

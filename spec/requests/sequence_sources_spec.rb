@@ -80,7 +80,7 @@ describe "SequenceSources" do
                                                :db_sequence => db_sequence) }
     describe "with existing current release" do
       let!(:pfitmap_release_not_current) { FactoryGirl.create(:pfitmap_release) }
-      let!(:pfitmap_release) { FactoryGirl.create(:pfitmap_release) }
+      let!(:pfitmap_release) { FactoryGirl.create(:pfitmap_release, current: true) }
       before do
         visit sequence_source_path(sequence_source)
         click_button('Evaluate')

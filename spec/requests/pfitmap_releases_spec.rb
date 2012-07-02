@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "PfitmapReleases" do
   describe "header functionality" do
     let!(:pfitmap_release1) { FactoryGirl.create(:pfitmap_release) }
-    let!(:pfitmap_release2) { FactoryGirl.create(:pfitmap_release) }
+    let!(:pfitmap_release2) { FactoryGirl.create(:pfitmap_release, current: true) }
     
     it "should display a chosen release on root page" do
       visit root_path
