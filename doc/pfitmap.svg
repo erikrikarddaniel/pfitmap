@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
+<svg width="67cm" height="32cm" viewBox="-359 -102 1326 630" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g>
+    <rect style="fill: #ffffff" x="289.202" y="139" width="181.6" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ff0000" x="289.202" y="139" width="181.6" height="28"/>
+    <text style="fill: #ff0000;text-anchor:middle;font-size:16;font-family:sanserif;font-style:normal;font-weight:700" x="380.002" y="158">TaxonProteinCount</text>
+    <rect style="fill: #ffffff" x="289.202" y="167" width="181.6" height="20"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ff0000" x="289.202" y="167" width="181.6" height="20"/>
+    <text style="fill: #ff0000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="292.202" y="181">+count: integer</text>
+    <rect style="fill: #ffffff" x="289.202" y="187" width="181.6" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ff0000" x="289.202" y="187" width="181.6" height="8"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="536" y="107" width="187.1" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff" x="536" y="107" width="187.1" height="28"/>
+    <text style="fill: #0000ff;text-anchor:middle;font-size:16;font-family:sanserif;font-style:normal;font-weight:700" x="629.55" y="126">Taxon</text>
+    <rect style="fill: #ffffff" x="536" y="135" width="187.1" height="84"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff" x="536" y="135" width="187.1" height="84"/>
+    <text style="fill: #0000ff;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="539" y="149">+taxon_id: integer</text>
+    <text style="fill: #0000ff;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="539" y="165">+ncbi_taxon_id: integer</text>
+    <text style="fill: #0000ff;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="539" y="181">+left_value: integer</text>
+    <text style="fill: #0000ff;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="539" y="197">+right_value: integer</text>
+    <text style="fill: #0000ff;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="539" y="213">+rank: string</text>
+    <rect style="fill: #ffffff" x="536" y="219" width="187.1" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff" x="536" y="219" width="187.1" height="8"/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="471.808,167 471.808,167 534.994,167 534.994,167 "/>
+    <text style="fill: #000000;text-anchor:middle;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="503.401" y="163"></text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="475.808" y="163">1</text>
+    <text style="fill: #000000;text-anchor:end;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="530.994" y="163">*</text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="74.6324" y="-6.91168" width="114.05" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #00aa00" x="74.6324" y="-6.91168" width="114.05" height="28"/>
+    <text style="fill: #00aa00;text-anchor:middle;font-size:16;font-family:sanserif;font-style:normal;font-weight:700" x="131.657" y="12.0883">HMMProfile</text>
+    <rect style="fill: #ffffff" x="74.6324" y="21.0883" width="114.05" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #00aa00" x="74.6324" y="21.0883" width="114.05" height="8"/>
+    <rect style="fill: #ffffff" x="74.6324" y="29.0883" width="114.05" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #00aa00" x="74.6324" y="29.0883" width="114.05" height="8"/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="288.203,167 249.364,167 249.364,166.845 218.429,166.845 "/>
+    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="251.364" y="162.923"></text>
+    <text style="fill: #000000;text-anchor:end;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="284.203" y="163">1</text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="222.429" y="162.845">*</text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="-357.554" y="139" width="110.1" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ff0000" x="-357.554" y="139" width="110.1" height="28"/>
+    <text style="fill: #ff0000;text-anchor:middle;font-size:16;font-family:sanserif;font-style:normal;font-weight:700" x="-302.504" y="158">Enzyme</text>
+    <rect style="fill: #ffffff" x="-357.554" y="167" width="110.1" height="20"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ff0000" x="-357.554" y="167" width="110.1" height="20"/>
+    <text style="fill: #ff0000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="-354.554" y="181">+name: string</text>
+    <rect style="fill: #ffffff" x="-357.554" y="187" width="110.1" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ff0000" x="-357.554" y="187" width="110.1" height="8"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="-186.291" y="138.752" width="156.3" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ff0000" x="-186.291" y="138.752" width="156.3" height="28"/>
+    <text style="fill: #ff0000;text-anchor:middle;font-size:16;font-family:sanserif;font-style:normal;font-weight:700" x="-108.141" y="157.752">EnzymeProtein</text>
+    <rect style="fill: #ffffff" x="-186.291" y="166.752" width="156.3" height="20"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ff0000" x="-186.291" y="166.752" width="156.3" height="20"/>
+    <text style="fill: #ff0000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="-183.291" y="180.752">+num_units: integer</text>
+    <rect style="fill: #ffffff" x="-186.291" y="186.752" width="156.3" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ff0000" x="-186.291" y="186.752" width="156.3" height="8"/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="-187.301,166.752 -216.874,166.752 -216.874,167 -246.447,167 "/>
+    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="-214.874" y="162.876"></text>
+    <text style="fill: #000000;text-anchor:end;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="-191.301" y="162.752">1</text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="-242.447" y="163">*</text>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="-28.9933,166.752 25.9186,166.752 25.9186,166.845 44.7365,166.845 "/>
+    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="27.9186" y="162.799"></text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="-24.9933" y="162.752">1</text>
+    <text style="fill: #000000;text-anchor:end;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="40.7365" y="162.845">*</text>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="801.325,166.887 762.715,166.887 762.715,167 724.106,167 "/>
+    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="764.715" y="162.944"></text>
+    <text style="fill: #000000;text-anchor:end;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="797.325" y="162.887">1</text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="728.106" y="163">1..*</text>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="629.55,106.005 629.55,84.9926 776,84.9926 776,167 724.094,167 "/>
+    <text style="fill: #000000;text-anchor:middle;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="702.775" y="80.9926">parent</text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="633.55" y="102.005">1</text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="728.094" y="163">*</text>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="131.657,-7.9173 131.657,-27.9173 209.689,-27.9173 209.689,15.0883 189.689,15.0883 "/>
+    <text style="fill: #000000;text-anchor:middle;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="170.673" y="-31.9173">parent</text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="135.657" y="-11.9173">1</text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="193.689" y="11.0883">*</text>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="632.994,294.907 632.994,258.104 629.55,258.104 629.55,227.999 "/>
+    <text style="fill: #000000;text-anchor:middle;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="631.272" y="254.104"></text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="636.994" y="290.907">0..1</text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="633.55" y="239.999">*</text>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="461.995,356.35 507.915,356.35 507.915,355.864 553.834,355.864 "/>
+    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="509.915" y="352.107"></text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="465.995" y="352.35">1</text>
+    <text style="fill: #000000;text-anchor:end;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="549.834" y="351.864">0..1</text>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="712.117,355.864 725.644,355.864 725.644,356.392 780.159,356.392 "/>
+    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="727.644" y="352.128"></text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="716.117" y="351.864">1</text>
+    <text style="fill: #000000;text-anchor:end;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="776.159" y="352.392">*</text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="543.38" y="471.156" width="199.9" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff" x="543.38" y="471.156" width="199.9" height="28"/>
+    <text style="fill: #0000ff;text-anchor:middle;font-size:16;font-family:sanserif;font-style:normal;font-weight:700" x="643.33" y="490.156">BioEntryRelationship</text>
+    <rect style="fill: #ffffff" x="543.38" y="499.156" width="199.9" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff" x="543.38" y="499.156" width="199.9" height="8"/>
+    <rect style="fill: #ffffff" x="543.38" y="507.156" width="199.9" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff" x="543.38" y="507.156" width="199.9" height="8"/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="643.33,470.742 643.33,415.616 632.994,415.616 632.994,355.864 "/>
+    <text style="fill: #000000;text-anchor:middle;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="638.162" y="411.616"></text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="647.33" y="466.742">1</text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="636.994" y="367.864">*</text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="45.7276" y="114.845" width="171.7" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ff0000" x="45.7276" y="114.845" width="171.7" height="28"/>
+    <text style="fill: #ff0000;text-anchor:middle;font-size:16;font-family:sanserif;font-style:normal;font-weight:700" x="131.578" y="133.845">Protein</text>
+    <rect style="fill: #ffffff" x="45.7276" y="142.845" width="171.7" height="68"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ff0000" x="45.7276" y="142.845" width="171.7" height="68"/>
+    <text style="fill: #ff0000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="48.7276" y="156.845">+name: string</text>
+    <text style="fill: #ff0000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="48.7276" y="172.845">+rank: string</text>
+    <text style="fill: #ff0000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="48.7276" y="188.845">+left_value: integer</text>
+    <text style="fill: #ff0000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="48.7276" y="204.845">+right_value: integer</text>
+    <rect style="fill: #ffffff" x="45.7276" y="210.845" width="171.7" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ff0000" x="45.7276" y="210.845" width="171.7" height="8"/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="131.657,37.2113 131.657,71.7232 131.578,71.7232 131.578,113.838 "/>
+    <text style="fill: #000000;text-anchor:middle;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="131.618" y="67.7232"></text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="135.657" y="49.2113">1</text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="135.578" y="109.838">*</text>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="131.578,219.851 131.578,270.964 239.432,270.964 239.432,166.845 218.433,166.845 "/>
+    <text style="fill: #000000;text-anchor:middle;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="185.505" y="266.964">parent</text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="135.578" y="231.851">0..1</text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="222.433" y="162.845">*</text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="798.09" y="-100.115" width="167.95" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ff0000" x="798.09" y="-100.115" width="167.95" height="28"/>
+    <text style="fill: #ff0000;text-anchor:middle;font-size:16;font-family:sanserif;font-style:normal;font-weight:700" x="882.065" y="-81.1154">PfitmapSequence</text>
+    <rect style="fill: #ffffff" x="798.09" y="-72.1154" width="167.95" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ff0000" x="798.09" y="-72.1154" width="167.95" height="8"/>
+    <rect style="fill: #ffffff" x="798.09" y="-64.1154" width="167.95" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ff0000" x="798.09" y="-64.1154" width="167.95" height="8"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="301.7" y="-44.9608" width="156.3" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ff0000" x="301.7" y="-44.9608" width="156.3" height="28"/>
+    <text style="fill: #ff0000;text-anchor:middle;font-size:16;font-family:sanserif;font-style:normal;font-weight:700" x="379.85" y="-25.9608">PfitmapRelease</text>
+    <rect style="fill: #ffffff" x="301.7" y="-16.9608" width="156.3" height="52"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ff0000" x="301.7" y="-16.9608" width="156.3" height="52"/>
+    <text style="fill: #ff0000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="304.7" y="-2.9608">+release: string</text>
+    <text style="fill: #ff0000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="304.7" y="13.0392">+release_date: date</text>
+    <text style="fill: #ff0000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="304.7" y="29.0392">+current: boolean</text>
+    <rect style="fill: #ffffff" x="301.7" y="35.0392" width="156.3" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ff0000" x="301.7" y="35.0392" width="156.3" height="8"/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="458.992,-0.9608 665.144,-0.960799 665.144,-78.1154 797.085,-78.1154 "/>
+    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="667.144" y="-43.5381"></text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="462.992" y="-4.9608"></text>
+    <text style="fill: #000000;text-anchor:end;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="793.085" y="-82.1154">1</text>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="380.002,137.993 380.002,91.0188 379.85,91.0188 379.85,44.0447 "/>
+    <text style="fill: #000000;text-anchor:middle;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="379.926" y="87.0188"></text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="384.002" y="133.993">1</text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="383.85" y="56.0447">*</text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="812.232" y="455.67" width="140.9" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff" x="812.232" y="455.67" width="140.9" height="28"/>
+    <text style="fill: #0000ff;text-anchor:middle;font-size:16;font-family:sanserif;font-style:normal;font-weight:700" x="882.682" y="474.67">Term</text>
+    <rect style="fill: #ffffff" x="812.232" y="483.67" width="140.9" height="36"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff" x="812.232" y="483.67" width="140.9" height="36"/>
+    <text style="fill: #0000ff;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="815.232" y="497.67">+name: string</text>
+    <text style="fill: #0000ff;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="815.232" y="513.67">+definition: text</text>
+    <rect style="fill: #ffffff" x="812.232" y="519.67" width="140.9" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff" x="812.232" y="519.67" width="140.9" height="8"/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="744.286,493.156 777.755,493.156 777.755,491.67 811.223,491.67 "/>
+    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="779.755" y="488.413"></text>
+    <polygon style="fill: #000000" points="781.755,488.413 781.755,480.413 789.755,484.413 "/>
+    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="748.286" y="489.156"></text>
+    <text style="fill: #000000;text-anchor:end;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="807.223" y="487.67"></text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="781.118" y="328.392" width="123.85" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff" x="781.118" y="328.392" width="123.85" height="28"/>
+    <text style="fill: #0000ff;text-anchor:middle;font-size:16;font-family:sanserif;font-style:normal;font-weight:700" x="843.043" y="347.392">BioDatabase</text>
+    <rect style="fill: #ffffff" x="781.118" y="356.392" width="123.85" height="20"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff" x="781.118" y="356.392" width="123.85" height="20"/>
+    <text style="fill: #0000ff;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="784.118" y="370.392">+name: string</text>
+    <rect style="fill: #ffffff" x="781.118" y="376.392" width="123.85" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff" x="781.118" y="376.392" width="123.85" height="8"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="554.844" y="295.864" width="156.3" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff" x="554.844" y="295.864" width="156.3" height="28"/>
+    <text style="fill: #0000ff;text-anchor:middle;font-size:16;font-family:sanserif;font-style:normal;font-weight:700" x="632.994" y="314.864">BioEntry</text>
+    <rect style="fill: #ffffff" x="554.844" y="323.864" width="156.3" height="84"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff" x="554.844" y="323.864" width="156.3" height="84"/>
+    <text style="fill: #0000ff;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="557.844" y="337.864">+name: string</text>
+    <text style="fill: #0000ff;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="557.844" y="353.864">+accession: string</text>
+    <text style="fill: #0000ff;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="557.844" y="369.864">+identifier: string</text>
+    <text style="fill: #0000ff;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="557.844" y="385.864">+description: text</text>
+    <text style="fill: #0000ff;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="557.844" y="401.864">+version: integer</text>
+    <rect style="fill: #ffffff" x="554.844" y="407.864" width="156.3" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff" x="554.844" y="407.864" width="156.3" height="8"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="320.086" y="304.35" width="140.9" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff" x="320.086" y="304.35" width="140.9" height="28"/>
+    <text style="fill: #0000ff;text-anchor:middle;font-size:16;font-family:sanserif;font-style:normal;font-weight:700" x="390.536" y="323.35">BioSequence</text>
+    <rect style="fill: #ffffff" x="320.086" y="332.35" width="140.9" height="68"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff" x="320.086" y="332.35" width="140.9" height="68"/>
+    <text style="fill: #0000ff;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="323.086" y="346.35">+version: integer</text>
+    <text style="fill: #0000ff;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="323.086" y="362.35">+length: integer</text>
+    <text style="fill: #0000ff;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="323.086" y="378.35">+alphabet: string</text>
+    <text style="fill: #0000ff;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="323.086" y="394.35">+seq: text</text>
+    <rect style="fill: #ffffff" x="320.086" y="400.35" width="140.9" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff" x="320.086" y="400.35" width="140.9" height="8"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="802.332" y="138.887" width="114.05" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff" x="802.332" y="138.887" width="114.05" height="28"/>
+    <text style="fill: #0000ff;text-anchor:middle;font-size:16;font-family:sanserif;font-style:normal;font-weight:700" x="859.357" y="157.887">TaxonName</text>
+    <rect style="fill: #ffffff" x="802.332" y="166.887" width="114.05" height="20"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff" x="802.332" y="166.887" width="114.05" height="20"/>
+    <text style="fill: #0000ff;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="805.332" y="180.887">+name: string</text>
+    <rect style="fill: #ffffff" x="802.332" y="186.887" width="114.05" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff" x="802.332" y="186.887" width="114.05" height="8"/>
+  </g>
+</svg>

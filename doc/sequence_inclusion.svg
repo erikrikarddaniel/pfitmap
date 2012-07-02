@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
-<svg width="74cm" height="32cm" viewBox="-57 1 1480 633" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="77cm" height="32cm" viewBox="-57 1 1524 633" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <g>
     <rect style="fill: #ffffff" x="101" y="131" width="210.2" height="28"/>
     <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="101" y="131" width="210.2" height="28"/>
@@ -69,24 +69,24 @@
     <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="637.993" y="177"></text>
   </g>
   <g>
-    <rect style="fill: #ffffff" x="1306" y="260" width="116.75" height="28"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1306" y="260" width="116.75" height="28"/>
-    <text style="fill: #000000;text-anchor:middle;font-size:16;font-family:sanserif;font-style:normal;font-weight:700" x="1364.38" y="279">HMMDBHits</text>
-    <rect style="fill: #ffffff" x="1306" y="288" width="116.75" height="68"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1306" y="288" width="116.75" height="68"/>
-    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="1309" y="302">+gi: integer</text>
-    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="1309" y="318">+db: string</text>
-    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="1309" y="334">+acc: string</text>
-    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="1309" y="350">+desc: string</text>
-    <rect style="fill: #ffffff" x="1306" y="356" width="116.75" height="8"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1306" y="356" width="116.75" height="8"/>
+    <rect style="fill: #ffffff" x="1349.84" y="268.486" width="116.75" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1349.84" y="268.486" width="116.75" height="28"/>
+    <text style="fill: #000000;text-anchor:middle;font-size:16;font-family:sanserif;font-style:normal;font-weight:700" x="1408.22" y="287.486">HMMDBHits</text>
+    <rect style="fill: #ffffff" x="1349.84" y="296.486" width="116.75" height="68"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1349.84" y="296.486" width="116.75" height="68"/>
+    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="1352.84" y="310.486">+gi: integer</text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="1352.84" y="326.486">+db: string</text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="1352.84" y="342.486">+acc: string</text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="1352.84" y="358.486">+desc: string</text>
+    <rect style="fill: #ffffff" x="1349.84" y="364.486" width="116.75" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1349.84" y="364.486" width="116.75" height="8"/>
   </g>
   <g>
-    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="861.607,181 891.799,181 891.799,320 921.99,320 "/>
-    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="893.799" y="246.5"></text>
-    <polygon style="fill: #000000" points="895.799,246.5 895.799,238.5 903.799,242.5 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="861.607,181 891.801,181 891.801,336 921.995,336 "/>
+    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="893.801" y="254.5"></text>
+    <polygon style="fill: #000000" points="895.801,254.5 895.801,246.5 903.801,250.5 "/>
     <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="865.607" y="177">1</text>
-    <text style="fill: #000000;text-anchor:end;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="917.99" y="316">*</text>
+    <text style="fill: #000000;text-anchor:end;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="917.995" y="332">*</text>
   </g>
   <g>
     <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="206.1,104.824 206.1,87 49,87 49,169 101,169 "/>
@@ -117,21 +117,23 @@
     <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="479.15" y="149">1</text>
   </g>
   <g>
-    <rect style="fill: #ffffff" x="923" y="292" width="310.3" height="28"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="923" y="292" width="310.3" height="28"/>
-    <text style="fill: #000000;text-anchor:middle;font-size:16;font-family:sanserif;font-style:normal;font-weight:700" x="1078.15" y="311">DBSequence</text>
-    <rect style="fill: #ffffff" x="923" y="320" width="310.3" height="8"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="923" y="320" width="310.3" height="8"/>
-    <rect style="fill: #ffffff" x="923" y="328" width="310.3" height="20"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="923" y="328" width="310.3" height="20"/>
-    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="926" y="342">+all_hits(sequence_db): hmm_result_rows</text>
+    <rect style="fill: #ffffff" x="923" y="292" width="341.1" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="923" y="292" width="341.1" height="28"/>
+    <text style="fill: #000000;text-anchor:middle;font-size:16;font-family:sanserif;font-style:normal;font-weight:700" x="1093.55" y="311">DBSequence</text>
+    <rect style="fill: #ffffff" x="923" y="320" width="341.1" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="923" y="320" width="341.1" height="8"/>
+    <rect style="fill: #ffffff" x="923" y="328" width="341.1" height="52"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="923" y="328" width="341.1" height="52"/>
+    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="926" y="342">+all_hits(sequence_source): hmm_result_rows</text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="926" y="358">+best_hmm_profile(sequence_source): integer</text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="926" y="374">+best_hmm_result_row(): float</text>
   </g>
   <g>
-    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1306,330 1262.75,330 1262.75,330 1233.3,330 "/>
-    <text style="fill: #000000;text-anchor:middle;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="1262.75" y="326"></text>
-    <polygon style="fill: #000000" points="1264.75,326 1264.75,318 1272.75,322 "/>
-    <text style="fill: #000000;text-anchor:end;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="1302" y="326">1</text>
-    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="1237.3" y="326">*</text>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1349.84,338.486 1302.13,338.486 1302.13,338 1264.1,338 "/>
+    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="1304.13" y="334.243"></text>
+    <polygon style="fill: #000000" points="1306.13,334.243 1306.13,326.243 1314.13,330.243 "/>
+    <text style="fill: #000000;text-anchor:end;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="1345.84" y="334.486">1</text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="1268.1" y="334">*</text>
   </g>
   <g>
     <rect style="fill: #ffffff" x="664.598" y="496.102" width="167.95" height="28"/>
@@ -143,16 +145,16 @@
     <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ff0000" x="664.598" y="532.102" width="167.95" height="8"/>
   </g>
   <g>
-    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1078.15,348 1078.15,421.548 748.573,421.548 748.573,495.096 "/>
-    <text style="fill: #000000;text-anchor:middle;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="913.361" y="417.548"></text>
-    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="1082.15" y="360">0..1</text>
-    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="752.573" y="491.096">1</text>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="923,354 878.277,354 878.277,518.102 833.553,518.102 "/>
+    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="880.277" y="432.051"></text>
+    <text style="fill: #000000;text-anchor:end;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="919" y="350">*</text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="837.553" y="514.102">1</text>
   </g>
   <g>
-    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1078.15,348.977 1078.15,399.658 206.1,399.658 206.1,231.994 "/>
-    <text style="fill: #000000;text-anchor:middle;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="642.125" y="395.658">best_hmm_profile</text>
-    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="1082.15" y="360.977">1</text>
-    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="210.1" y="243.994">0..1</text>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1093.55,380.884 1093.55,399.658 206.1,399.658 206.1,231.994 "/>
+    <text style="fill: #000000;text-anchor:middle;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="649.825" y="395.658">best_hmm_profile</text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="1097.55" y="392.884">0..1</text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="210.1" y="243.994">*</text>
   </g>
   <g>
     <rect style="fill: #ffffff" x="-55.2376" y="428.22" width="256.4" height="28"/>
@@ -162,7 +164,7 @@
     <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-55.2376" y="456.22" width="256.4" height="8"/>
     <rect style="fill: #ffffff" x="-55.2376" y="464.22" width="256.4" height="20"/>
     <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-55.2376" y="464.22" width="256.4" height="20"/>
-    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="-52.2376" y="478.22">+evaluate(DBSequence)(): boolean</text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:italic;font-weight:700" x="-52.2376" y="478.22">+evaluate(DBSequence)(): boolean</text>
   </g>
   <g>
     <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="72.9624,428.22 72.9624,201 101,201 "/>
@@ -190,20 +192,20 @@
     <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ff0000" points="985.624,518.546 971.624,523.346 957.624,518.546 971.624,513.746 "/>
     <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="904.588" y="514.324"></text>
     <text style="fill: #000000;text-anchor:end;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="953.624" y="514.546"></text>
-    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="837.477" y="514.102"></text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="837.477" y="514.102">1</text>
   </g>
   <g>
-    <rect style="fill: #ffffff" x="84.1958" y="545.322" width="202.5" height="28"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="84.1958" y="545.322" width="202.5" height="28"/>
-    <text style="fill: #000000;text-anchor:middle;font-size:16;font-family:sanserif;font-style:normal;font-weight:700" x="185.446" y="564.322">HMMScoreCriterion</text>
-    <rect style="fill: #ffffff" x="84.1958" y="573.322" width="202.5" height="20"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="84.1958" y="573.322" width="202.5" height="20"/>
-    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="87.1958" y="587.322">+min_fullseq_score: float</text>
-    <rect style="fill: #ffffff" x="84.1958" y="593.322" width="202.5" height="8"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="84.1958" y="593.322" width="202.5" height="8"/>
+    <rect style="fill: #ffffff" x="43.1958" y="561.322" width="202.5" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="43.1958" y="561.322" width="202.5" height="28"/>
+    <text style="fill: #000000;text-anchor:middle;font-size:16;font-family:sanserif;font-style:normal;font-weight:700" x="144.446" y="580.322">HMMScoreCriterion</text>
+    <rect style="fill: #ffffff" x="43.1958" y="589.322" width="202.5" height="20"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="43.1958" y="589.322" width="202.5" height="20"/>
+    <text style="fill: #000000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="46.1958" y="603.322">+min_fullseq_score: float</text>
+    <rect style="fill: #ffffff" x="43.1958" y="609.322" width="202.5" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="43.1958" y="609.322" width="202.5" height="8"/>
   </g>
   <g>
-    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="72.9624,503.463 72.9624,514.771 185.446,514.771 185.446,544.315 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="72.9624,503.463 72.9624,522.771 144.446,522.771 144.446,560.315 "/>
     <polygon style="fill: #ffffff" points="80.9624,503.463 72.9624,487.463 64.9624,503.463 "/>
     <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="80.9624,503.463 72.9624,487.463 64.9624,503.463 "/>
   </g>
@@ -215,5 +217,39 @@
       <tspan x="815.274" y="608.406">Classes in red belong to</tspan>
       <tspan x="815.274" y="624.406">the Pfitmap-core subsystem</tspan>
     </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="479.632" y="519.314" width="110.1" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ff0000" x="479.632" y="519.314" width="110.1" height="28"/>
+    <text style="fill: #ff0000;text-anchor:middle;font-size:16;font-family:sanserif;font-style:normal;font-weight:700" x="534.682" y="538.314">Enzyme</text>
+    <rect style="fill: #ffffff" x="479.632" y="547.314" width="110.1" height="20"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ff0000" x="479.632" y="547.314" width="110.1" height="20"/>
+    <text style="fill: #ff0000;text-anchor:start;font-size:12.8;font-family:monospace;font-style:normal;font-weight:normal" x="482.632" y="561.314">+name: string</text>
+    <rect style="fill: #ffffff" x="479.632" y="567.314" width="110.1" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ff0000" x="479.632" y="567.314" width="110.1" height="8"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="276.824" y="524.972" width="138.45" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ff0000" x="276.824" y="524.972" width="138.45" height="28"/>
+    <text style="fill: #ff0000;text-anchor:middle;font-size:16;font-family:sanserif;font-style:normal;font-weight:700" x="346.049" y="543.972">EnzymeProfile</text>
+    <rect style="fill: #ffffff" x="276.824" y="552.972" width="138.45" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ff0000" x="276.824" y="552.972" width="138.45" height="8"/>
+    <rect style="fill: #ffffff" x="276.824" y="560.972" width="138.45" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ff0000" x="276.824" y="560.972" width="138.45" height="8"/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="453.454,547.314 447.454,547.314 447.454,546.972 416.283,546.972 "/>
+    <polygon style="fill: #ffffff" points="478.625,547.314 464.625,552.114 450.625,547.314 464.625,542.514 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="478.625,547.314 464.625,552.114 450.625,547.314 464.625,542.514 "/>
+    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="449.454" y="543.143"></text>
+    <text style="fill: #000000;text-anchor:end;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="446.625" y="543.314"></text>
+    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="420.283" y="542.972"></text>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="311.2,201 344.708,201 344.708,524.972 346.05,524.972 "/>
+    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="346.708" y="358.986"></text>
+    <polygon style="fill: #000000" points="348.708,358.986 348.708,350.986 356.708,354.986 "/>
+    <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="315.2" y="197"></text>
+    <text style="fill: #000000;text-anchor:end;font-size:12.7998;font-family:monospace;font-style:normal;font-weight:normal" x="342.05" y="520.972"></text>
   </g>
 </svg>
