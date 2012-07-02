@@ -58,7 +58,7 @@
   </aside>
   <div class="main-content span8">
     <% if @hmm_results != [] %>
-    <h3>Results (<%= @hmm_results.count %>)</h3>
+    <h3>Results registered(<%= @hmm_results.count %>)</h3>
     <table>
       <thead>
 	<tr>
@@ -72,9 +72,28 @@
 	<%= render :partial => "hmm_profiles/hmm_result", :collection => @hmm_results %>
       </tbody>
     </table>
-    <%= will_paginate @hmm_results %>
+    <%= will_paginate @hmm_results, :param_name => 'hmm_results_page' %>
     <% else %>
     <h3>No results registered</h3>
+    <% end %>
+
+    <% if @enzymes.any? %>
+    <h3>Enzymes containing this profile</h3>
+    <table>
+      <thead>
+	<tr>
+	  <th>Name</th>
+	</tr>
+      </thead>
+      <tbody>
+	<% @enzymes.each do |enzyme| %>
+	<tr>
+	  <td><%= link_to enzyme.name, enzyme_path(enzyme) %> </td>
+	</tr>
+	<% end %>
+      </tbody>
+    </table>
+    <%= will_paginate @enzymes, :param_name => 'enzymes_page'%>
     <% end %>
   </div>
 </div>

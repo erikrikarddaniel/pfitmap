@@ -20,9 +20,10 @@ class HmmProfilesController < ApplicationController
   def show
     @hmm_profile = HmmProfile.find(params[:id])
     @hmm_result = @hmm_profile.hmm_results.build()
-    @hmm_results = @hmm_profile.hmm_results.paginate(page: params[:page])
+    @hmm_results = @hmm_profile.hmm_results.paginate(page: params[:hmm_results_page], per_page: 10)
     @sequence_sources = SequenceSource.all
     @hmm_score_criteria = @hmm_profile.hmm_score_criteria
+    @enzymes = @hmm_profile.enzymes.paginate(page: params[:enzymes_page], per_page: 10)
     
     respond_to do |format|
       format.html # show.html.erb
