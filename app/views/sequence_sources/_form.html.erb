@@ -1,19 +1,19 @@
 <%= form_for(@sequence_source, :html => { :class => "well"} ) do |f| %>
 <%= render :partial => 'shared/error_messages', :locals => { :error_subject => @sequence_source } %>
-  <div class="input-large">
-    <%= f.label :source %>
-    <%= f.text_field :source, :placeholder => 'Typical value: NCBI'%>
-  </div>
-  <div class="input-large">
-    <%= f.label :name %>
-    <%= f.text_field :name, :placeholder => 'Typical value: NR'%>
-  </div>
-  <div class="input-large">
-    <%= f.label :version %>
-    <%= f.text_field :version, :placeholder => 'Typical value: 2012-06-04'%>
-  </div>
-  <div class="actions">
-    <%= f.submit 'Save Sequence Source', :class => 'btn btn-primary' %> <br />
-    <%= link_to 'Cancel', sequence_sources_path, :class => 'btn' %>
-  </div>
+<div class="control-group input-large">
+  <%= f.label :source %>
+  <%= f.text_field :source, :placeholder => 'Typical value: NCBI'%>
+</div>
+<div class="control-group input-large">
+  <%= f.label :name %>
+  <%= f.text_field :name, :placeholder => 'Typical value: NR'%>
+</div>
+<div class="control-group input-large">
+  <%= f.label :version %>
+  <%= f.text_field :version, :placeholder => 'Typical value: 2012-06-04'%>
+</div>
+<div class="control-group actions">
+  <%= f.submit 'Save Sequence Source', :class => 'btn btn-primary' %> <br />
+</div>
+<%= link_to 'Cancel', sequence_sources_path, :class => 'btn' %>
 <% end %>
