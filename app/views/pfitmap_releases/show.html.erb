@@ -1,5 +1,26 @@
 <p id="notice"><%= notice %></p>
 
+<div class="main-content">
+<% if @db_sequences.any? %>
+<table>
+  <thead>
+    <tr>
+      <th>HMM Profile</th>
+      <th>Fullseq Score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @db_sequences.each do |seq|%>
+    <tr>
+      <td><%= seq.best_hmm_profile %></td>
+      <td><%= seq.best_hmm_result_row.fullseq_score %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= will_paginate @db_sequences %>
+<% end %>
+</div>
 
 <%= link_to 'Edit', edit_pfitmap_release_path(@pfitmap_release) %> |
 <%= link_to 'Back', pfitmap_releases_path %>

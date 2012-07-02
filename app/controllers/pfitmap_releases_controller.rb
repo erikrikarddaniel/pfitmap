@@ -16,6 +16,7 @@ class PfitmapReleasesController < ApplicationController
   # GET /pfitmap_releases/1.json
   def show
     @pfitmap_release = PfitmapRelease.find(params[:id])
+    @db_sequences = @pfitmap_release.db_sequences.paginate(page: params[:page])
 
     respond_to do |format|
       format.html # show.html.erb
