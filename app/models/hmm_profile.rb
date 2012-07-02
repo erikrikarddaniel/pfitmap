@@ -18,6 +18,8 @@ class HmmProfile < ActiveRecord::Base
   belongs_to :parent, :class_name => "HmmProfile", :foreign_key => "parent_id"
   has_many :hmm_results
   has_many :hmm_score_criteria, :dependent => :destroy
+  has_many :enzyme_profiles
+  has_many :enzymes, :through => :enzyme_profiles
   validates :name, presence: true
   validates :version, presence: true
   validates :hierarchy, presence: true, :uniqueness => :true

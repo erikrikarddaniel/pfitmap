@@ -30,6 +30,7 @@ describe HmmProfile do
   it { should respond_to(:last_parent_id) }
   it { should respond_to(:hmm_score_criteria) }
   it { should respond_to(:inclusion_criteria) }
+  it { should respond_to(:enzymes) }
   it { should be_valid }
   
   describe "Should not be valid when name is not present" do
@@ -136,7 +137,13 @@ describe HmmProfile do
         hmm_profile_00101.evaluate?(db_sequence1).should be_false
       end
     end
-
     
+  end
+
+  describe "enzyme association" do
+    let!(:enzyme) { FactoryGirl.create(:enzyme) }
+    let!(:enzyme_profile) { FactoryGirl.create(:enzyme_profile, enzyme: enzyme, hmm_profile: hmm_profile) }
+    subject{hmm_profile}
+    its(:enzymes) { should include( enzyme) }
   end
 end
