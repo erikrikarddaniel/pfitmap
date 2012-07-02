@@ -5,6 +5,7 @@ describe "enzymes/new" do
     assign(:enzyme, stub_model(Enzyme,
       :name => "MyString"
     ).as_new_record)
+    @hmm_profiles = [assign(:hmm_profile, stub_model(HmmProfile, :name => "MyString"))]
   end
 
   it "renders new enzyme form" do

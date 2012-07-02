@@ -5,6 +5,7 @@ describe "enzymes/edit" do
     @enzyme = assign(:enzyme, stub_model(Enzyme,
       :name => "MyString"
     ))
+    @hmm_profiles = [assign(:hmm_profile, stub_model(HmmProfile, :name => "MyString"))]
   end
 
   it "renders the edit enzyme form" do
