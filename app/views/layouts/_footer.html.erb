@@ -3,8 +3,9 @@
     <ul>
       <% if current_user %>
       <li>
-	<b><%= link_to "Sign Out #{current_user.name}", signout_path %></li>
-      </b>
+	<b><%= link_to "Sign Out #{current_user.name}", signout_path %></b>
+      </li>
+      <li><%= link_to "Users", users_path %></li>
       <% else %>
       <li><%= link_to "Sign in with Google", "/auth/open_id?openid_url=https://www.google.com/accounts/o8/id"  %></li>
       <% end %>
