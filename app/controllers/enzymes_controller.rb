@@ -1,4 +1,6 @@
 class EnzymesController < ApplicationController
+  load_and_authorize_resource
+
   # GET /enzymes
   # GET /enzymes.json
   def index
@@ -14,6 +16,7 @@ class EnzymesController < ApplicationController
   # GET /enzymes/1.json
   def show
     @enzyme = Enzyme.find(params[:id])
+    @hmm_profiles = @enzyme.hmm_profiles.paginate(page: params[:page])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -25,6 +28,7 @@ class EnzymesController < ApplicationController
   # GET /enzymes/new.json
   def new
     @enzyme = Enzyme.new
+    @hmm_profiles = HmmProfile.all
 
     respond_to do |format|
       format.html # new.html.erb
@@ -35,15 +39,23 @@ class EnzymesController < ApplicationController
   # GET /enzymes/1/edit
   def edit
     @enzyme = Enzyme.find(params[:id])
+    @hmm_profiles = HmmProfile.all
   end
 
   # POST /enzymes
   # POST /enzymes.json
   def create
     @enzyme = Enzyme.new(params[:enzyme])
+    @hmm_profiles = HmmProfile.find(params[:hmm_profile_ids])
 
     respond_to do |format|
       if @enzyme.save
+        @hmm_profiles.each do |profile|
+          enzyme_profile = EnzymeProfile.new()
+          enzyme_profile.hmm_profile_id = profile.id
+          enzyme_profile.enzyme_id = @enzyme.id
+          enzyme_profile.save
+        end
         format.html { redirect_to @enzyme, notice: 'Enzyme was successfully created.' }
         format.json { render json: @enzyme, status: :created, location: @enzyme }
       else
@@ -57,9 +69,17 @@ class EnzymesController < ApplicationController
   # PUT /enzymes/1.json
   def update
     @enzyme = Enzyme.find(params[:id])
-
+    @hmm_profiles = HmmProfile.find(params[:hmm_profile_ids])
+    
     respond_to do |format|
       if @enzyme.update_attributes(params[:enzyme])
+        @hmm_profiles.each do |profile|
+          enzyme_profile = EnzymeProfile.new()
+          enzyme_profile.hmm_profile_id = profile.id
+          enzyme_profile.enzyme_id = @enzyme.id
+          enzyme_profile.save
+        end
+
         format.html { redirect_to @enzyme, notice: 'Enzyme was successfully updated.' }
         format.json { head :no_content }
       else

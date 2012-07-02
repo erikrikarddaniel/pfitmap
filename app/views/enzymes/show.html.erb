@@ -1,10 +1,31 @@
 <p id="notice"><%= notice %></p>
+<div class="pageheader1">
+  <h1> <%= @enzyme.name %> </h1>
+</div>
 
-<p>
-  <b>Name:</b>
-  <%= @enzyme.name %>
-</p>
+<div class="main-content">
+
+  <% if @hmm_profiles.any? %>
+  <table>
+    <thead>
+      <tr>
+	<th>Name</th>
+	<th>Version</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @hmm_profiles.each do |profile|%>
+      <tr>
+	<td><%= profile.name %></td>
+	<td><%= profile.version %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= will_paginate @hmm_profiles %>
+  <% end %>
 
 
-<%= link_to 'Edit', edit_enzyme_path(@enzyme) %> |
-<%= link_to 'Back', enzymes_path %>
+  <%= link_to 'Edit', edit_enzyme_path(@enzyme) %> |
+  <%= link_to 'Back', enzymes_path %>
+</div>

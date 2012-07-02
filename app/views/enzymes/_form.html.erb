@@ -1,19 +1,14 @@
 <%= form_for(@enzyme) do |f| %>
-  <% if @enzyme.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@enzyme.errors.count, "error") %> prohibited this enzyme from being saved:</h2>
-
-      <ul>
-      <% @enzyme.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+<%= render :partial => 'shared/error_messages', :locals => { :error_subject => @enzyme} %>
 
   <div class="field">
     <%= f.label :name %><br />
     <%= f.text_field :name %>
+  </div>
+  
+  <div class="field">
+    <%= f.label :hmm_profile %>
+    <%= select_tag("hmm_profile_ids[]", options_for_select(@hmm_profiles.collect { |profile| [profile.name, profile.id] }, @enzyme.hmm_profiles.collect { |profile| profile.id}), {:multiple=> true})%>
   </div>
   <div class="actions">
     <%= f.submit %>
