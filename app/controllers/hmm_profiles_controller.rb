@@ -24,6 +24,7 @@ class HmmProfilesController < ApplicationController
     @sequence_sources = SequenceSource.all
     @hmm_score_criteria = @hmm_profile.hmm_score_criteria
     @enzymes = @hmm_profile.enzymes.paginate(page: params[:enzymes_page], per_page: 10)
+    @parent = HmmProfile.find_by_id(@hmm_profile.parent_id)
     
     respond_to do |format|
       format.html # show.html.erb

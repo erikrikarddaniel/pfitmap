@@ -2,7 +2,7 @@
 <%= render :partial => 'shared/error_messages', :locals => { :error_subject => @hmm_result } %>
 <div class="row-fluid">
   <div class="control-group span4">
-    <%= f.label :sequence_source, "Sequence database"%>
+    <%= f.label :sequence_source, "Sequence source"%>
     <%= collection_select(:hmm_result, :sequence_source_id, SequenceSource.all, :id, :list_name) %>
   </div>
   <div class="control-group span4">

@@ -31,7 +31,7 @@
       
       <p>
 	<b>Parent hmm profile:</b>
-	<%= @hmm_profile.parent_id ||= "none" %>
+	<%= @parent ? @parent.name : "none" %>
       </p>
 
       <p>
@@ -65,6 +65,7 @@
 	  <th>Source</th>
 	  <th>Name</th>
 	  <th>Version</th>
+	  <th></th>
 	  <th></th>
 	</tr>
       </thead>
