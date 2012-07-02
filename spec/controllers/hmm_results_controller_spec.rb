@@ -65,8 +65,13 @@ describe HmmResultsController do
     describe "with valid params" do
       it "creates new HmmResult object from a tblout-line from a hmmer run" do
         expect {
-          post :create, {:hmm_result => valid_attributes.merge( :file => @bulk_tblout), :hmm_profile_id => @hmm_profile.id }
+          post :create, {:hmm_result => valid_attributes.merge( :file => @bulk_tblout), :hmm_profile_id => @hmm_profile.id }, valid_session
         }.to change(HmmResult, :count).by(1)
+      end
+
+      it "does not work for guests" do
+        post :create, {:hmm_result => valid_attributes.merge( :file => @bulk_tblout), :hmm_profile_id => @hmm_profile.id }, {}
+        response.should redirect_to(root_path)
       end
       
       it "assigns a newly created hmm_result as @hmm_result" do

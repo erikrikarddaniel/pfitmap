@@ -32,42 +32,47 @@ class HmmResultsController < ApplicationController
   # POST /hmm_results
   # POST /hmm_results.json
   def create
-    @hmm_profile = HmmProfile.find(params[:hmm_profile_id])
-    # Squirrel away the file parameter to avoid problems when creating the result object
-    file = params[:hmm_result].delete(:file)
-    if file
-      @hmm_result = @hmm_profile.hmm_results.new(params[:hmm_result].merge(:executed => File.mtime(file.path)))
+    if current_user.nil? || current_user.role != "admin"
+      flash[:error] = "Please sign in to register result"
+      redirect_to root_path
     else
-      @hmm_result = @hmm_profile.hmm_results.new(params[:hmm_result].merge(:executed => 101.years.ago))
-    end
-    respond_to do |format|
+      @hmm_profile = HmmProfile.find(params[:hmm_profile_id])
+      # Squirrel away the file parameter to avoid problems when creating the result object
+      file = params[:hmm_result].delete(:file)
       if file
-        if @hmm_result.save
-          if parse_results(@hmm_result,file)
-            format.html { redirect_to hmm_result_path(@hmm_result), notice: 'Hmm result was successfully created.' }
-            format.json { render json: hmm_result_path(@hmm_result), status: :created, location: @hmm_result }
+        @hmm_result = @hmm_profile.hmm_results.new(params[:hmm_result].merge(:executed => File.mtime(file.path)))
+      else
+        @hmm_result = @hmm_profile.hmm_results.new(params[:hmm_result].merge(:executed => 101.years.ago))
+      end
+      respond_to do |format|
+        if file
+          if @hmm_result.save
+            if parse_results(@hmm_result,file)
+              format.html { redirect_to hmm_result_path(@hmm_result), notice: 'Hmm result was successfully created.' }
+              format.json { render json: hmm_result_path(@hmm_result), status: :created, location: @hmm_result }
+            else
+              ActiveRecord.delete(@hmm_result.id)
+              format.html { redirect_to @hmm_profile, notice: 'Error while parsing the given file' }
+              format.json { render json: @hmm_result, status: :unprocessable_entity }
+            end
           else
-            ActiveRecord.delete(@hmm_result.id)
-            format.html { redirect_to @hmm_profile, notice: 'Error while parsing the given file' }
-            format.json { render json: @hmm_result, status: :unprocessable_entity }
+            #Return to hmm_profile show page
+            @hmm_profile = @hmm_profile
+            @hmm_result = @hmm_result
+            @hmm_results = @hmm_profile.hmm_results.paginate(page: params[:page])
+            @sequence_sources = SequenceSource.all
+            @hmm_score_criteria = @hmm_profile.hmm_score_criteria
+            format.html { render :template => "hmm_profiles/show"}
+            format.json { render json: @hmm_result.errors, status: :unprocessable_entity }
           end
         else
-          #Return to hmm_profile show page
-          @hmm_profile = @hmm_profile
-          @hmm_result = @hmm_result
-          @hmm_results = @hmm_profile.hmm_results.paginate(page: params[:page])
-          @sequence_sources = SequenceSource.all
-          @hmm_score_criteria = @hmm_profile.hmm_score_criteria
-          format.html { render :template => "hmm_profiles/show"}
+          format.html { redirect_to hmm_profile_path(@hmm_profile), notice: 'No file given' }
           format.json { render json: @hmm_result.errors, status: :unprocessable_entity }
         end
-      else
-        format.html { redirect_to hmm_profile_path(@hmm_profile), notice: 'No file given' }
-        format.json { render json: @hmm_result.errors, status: :unprocessable_entity }
       end
     end
   end
-
+  
   # DELETE /hmm_results/1
   # DELETE /hmm_results/1.json
   def destroy

@@ -107,20 +107,20 @@ describe "Hmm Profile Pages" do
   describe "Register new result" do
     let!(:hmm_profile) { FactoryGirl.create(:hmm_profile) }
     let!(:sequence_source) { FactoryGirl.create(:sequence_source) }
-    before do
+    it "should be able to create a new HmmResult" do
       # @bulk_tblout = fixture_file_upload('/sample.tblout')
       visit hmm_profile_path(hmm_profile)
       select(sequence_source.list_name, :from => 'hmm_result[sequence_source_id]')
-      click_on 'Create Result'
-    end
-    it "should be able to create a new HmmResult" do
       attach_file 'file', '/home/johannes/RNRdb/pfitmap/spec/fixtures/sample.tblout'
       click_on 'Create Result'
       page.should have_content('successfully')
     end
+    
+    it "is not possible through browser for non-admins" do
+      visit signout_path
+      visit hmm_profile_path(hmm_profile)
 
-    it "is secure" do
-      pending "There is no authorization for creating hmm_results file" 
+      page.should_not have_content('Create Result')
     end
   end
 end
