@@ -1,3 +1,7 @@
 <%= form_tag sequence_source_evaluate_path(@sequence_source), :method => "post" do %>
+<div class="control-group input-large">
+  <%= label_tag :release_id, "Evaluate for Release:" %>
+  <%= select_tag :release_id, options_for_select(@pfitmap_releases), {:default => 'Show All'}%>
+</div>
 <%= submit_tag("Evaluate", :class => "btn, btn-primary", disable_with: 'Evaluating...') %>
 <% end %>
