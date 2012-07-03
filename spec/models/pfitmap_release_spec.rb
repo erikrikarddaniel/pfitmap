@@ -29,6 +29,7 @@ describe PfitmapRelease do
   describe "class methods" do
     subject{ PfitmapRelease }
     it { should respond_to(:find_current_release) }
+    it { should respond_to(:find_all_after_current) }
   end
 
   describe "find current release" do
@@ -36,6 +37,18 @@ describe PfitmapRelease do
     let!(:pfitmap_release2) { FactoryGirl.create(:pfitmap_release, current: true) }
     it "returns the current release" do
       PfitmapRelease.find_current_release.should == pfitmap_release2
+    end
+  end
+
+  describe "find all after current" do
+    let!(:pfitmap_release) { FactoryGirl.create(:pfitmap_release, current: true) }
+    let!(:pfitmap_release1) { FactoryGirl.create(:pfitmap_release) }
+    let!(:pfitmap_release2) { FactoryGirl.create(:pfitmap_release) }
+
+    it "returns the correct releases" do
+      PfitmapRelease.find_all_after_current.should include(pfitmap_release1)
+      PfitmapRelease.find_all_after_current.should include(pfitmap_release2)
+      PfitmapRelease.find_all_after_current.should_not include(pfitmap_release)
     end
   end
 
