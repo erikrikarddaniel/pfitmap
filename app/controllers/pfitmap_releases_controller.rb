@@ -3,7 +3,7 @@ class PfitmapReleasesController < ApplicationController
   # GET /pfitmap_releases
   # GET /pfitmap_releases.json
   def index
-    @pfitmap_releases = PfitmapRelease.all
+    @pfitmap_releases = PfitmapRelease.all(order: "release DESC")
     @current_release = PfitmapRelease.find_current_release
 
     respond_to do |format|
@@ -78,6 +78,27 @@ class PfitmapReleasesController < ApplicationController
     @pfitmap_release = PfitmapRelease.find(params[:id])
     @pfitmap_release.destroy
 
+    respond_to do |format|
+      format.html { redirect_to pfitmap_releases_url }
+      format.json { head :no_content }
+    end
+  end
+  
+  # POST /make_current/1
+  def make_current
+    @pfitmap_release = PfitmapRelease.find(params[:pfitmap_release_id])
+    @current_release = PfitmapRelease.find_current_release
+    
+    if @current_release != @pfitmap_release
+      if @current_release
+        @current_release.current = false
+        @current_release.save
+      end
+
+      @pfitmap_release.current = true
+      @pfitmap_release.save
+    end
+    
     respond_to do |format|
       format.html { redirect_to pfitmap_releases_url }
       format.json { head :no_content }

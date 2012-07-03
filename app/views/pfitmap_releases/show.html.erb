@@ -1,6 +1,24 @@
 <p id="notice"><%= notice %></p>
+<div class="pageheader1">
+  <h1>Pfitmap Release</h1>
+    <% if can? :make_current, @pfitmap_release %>
+    <%= button_to "Make this release current", pfitmap_release_make_current_path(@pfitmap_release), class: "btn btn-large"%>
+    <% end %>
+</div>
+<hr>
 
-<div class="main-content">
+<div class="row">
+  <aside class="span4">
+    <p> 
+      <b> Release No: </b>
+      <%= @pfitmap_release.release %>
+    </p>
+    <p>
+      <b> Release Date: </b>
+      <%= @pfitmap_release.release_date %>
+    </p>
+  </aside>
+<div class="main-content span8">
 <% if @db_sequences.any? %>
 <table>
   <thead>
@@ -24,3 +42,4 @@
 
 <%= link_to 'Edit', edit_pfitmap_release_path(@pfitmap_release) %> |
 <%= link_to 'Back', pfitmap_releases_path %>
+</div>

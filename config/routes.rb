@@ -5,7 +5,9 @@ Pfitmap::Application.routes.draw do
   match '/auth/failure', to: 'sessions#failure'
   match '/signout' => "sessions#destroy", :as => :signout
 
-  resources :pfitmap_releases
+  resources :pfitmap_releases do
+    post 'make_current', :as => :make_current
+  end
 
   resources :db_sequences
 

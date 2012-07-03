@@ -22,7 +22,7 @@
     <% end %>
   </aside>
 <div class="main-content span8">
-<table>
+<table class="table">
   <tr>
     <th>Release</th>
     <th>Release Date</th>
@@ -33,7 +33,7 @@
   </tr>
 
 <% @pfitmap_releases.each do |pfitmap_release| %>
-  <tr>
+  <tr <%= pfitmap_release.current ? 'class=special-row' : ''%>>
     <td><%= pfitmap_release.release %></td>
     <td><%= pfitmap_release.release_date %></td>
     <td><%= link_to 'Show', pfitmap_release %></td>
