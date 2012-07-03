@@ -1,0 +1,18 @@
+<div class="pageheader">
+  <h1>Signing in or signing up</h1>
+</div>
+<div class="row">
+<aside class="span4">
+  <p>
+    <b>Important Information:</b>
+    <br/>
+    <i>RNRdb saves limited information about its users, such as name and email address if such is supplied from the open id provider. 
+      <br/>
+      By signing in, the user accepts that such personal information will be stored.</i>
+  </p> 
+</aside>
+<div class="main-content span8">
+  <p><h3>Sign in with Google</h3> <br/>
+  <%= button_to "Sign in with Google", "/auth/open_id?openid_url=https://www.google.com/accounts/o8/id", class: "btn btn-large btn-primary"  %> </p>
+</div>
+</div>

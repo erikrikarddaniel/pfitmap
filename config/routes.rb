@@ -33,6 +33,7 @@ Pfitmap::Application.routes.draw do
   
   get '/help', to: 'static_pages#help'
   get '/contact', to: 'static_pages#contact'
+  get '/sign_in', to: 'static_pages#sign_in'
 
   get "/404", :to => "static_pages#error_404"
 

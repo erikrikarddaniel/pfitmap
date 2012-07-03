@@ -7,7 +7,7 @@
       </li>
       <li><%= link_to "Users", users_path %></li>
       <% else %>
-      <li><%= link_to "Sign in with Google", "/auth/open_id?openid_url=https://www.google.com/accounts/o8/id"  %></li>
+      <li><%= link_to "Sign in", sign_in_path  %></li>
       <% end %>
       <li><%= link_to "Help",  help_path %></li>
       <li><%= link_to "Contact", contact_path %></li>

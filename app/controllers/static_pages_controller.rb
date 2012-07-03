@@ -11,4 +11,7 @@ class StaticPagesController < ApplicationController
 
   def error_404
   end
+
+  def sign_in
+  end
 end

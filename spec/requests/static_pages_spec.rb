@@ -10,15 +10,26 @@ describe "Static pages" do
     it { should have_selector('h1',    text: 'RNRdb') }
     it { should have_selector('title', text: full_title('')) }
     it { should_not have_selector 'title', text: '| Home' }
-    it { should have_tag('li', :text => 'Sign in with Google' ) }
+    it { should have_tag('li', :text => 'Sign in' ) }
   end
 
   describe 'omniauth' do
+    context "as guest" do
+      it "has the right link" do
+        login_with_oauth
+        visit root_path    
+        page.should have_content("Sign Out Bob Example")  
+      end
+    end
 
-    it "works!" do
-      login_with_oauth
-      visit root_path    
-      page.should have_content("Sign Out Bob Example")  
+    context "as admin" do
+      it "has the right links" do
+        make_mock_admin
+        login_with_oauth
+        visit root_path
+        page.should have_content("Users")
+        page.should have_content("Sign Out Bob Example")
+      end
     end
   end
 
