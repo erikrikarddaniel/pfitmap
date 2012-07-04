@@ -81,10 +81,10 @@ describe SequenceSourcesController do
     let!(:hmm_result_row) { FactoryGirl.create(:hmm_result_row, 
                                                hmm_result: hmm_result, 
                                                db_sequence: db_sequence) }
-    describe "with existing current release" do
-      let!(:pfitmap_release) { FactoryGirl.create(:pfitmap_release, current: 'true') }
+    describe "with existing new release" do
+      let!(:pfitmap_release) { FactoryGirl.create(:pfitmap_release) }
       it "can evaluate the source correctly" do
-        post :evaluate, { :sequence_source_id => sequence_source.to_param}, valid_session
+        post :evaluate, { :sequence_source_id => sequence_source.to_param, :release_id => pfitmap_release.id}, valid_session
         response.code.should eq("302")
       end
       
@@ -96,7 +96,7 @@ describe SequenceSourcesController do
           pfitmap_release.pfitmap_sequences.should == [pfitmap_sequence]
         end
         it "old pfitmap_sequence should be erased after evaluation" do
-          post :evaluate, { :sequence_source_id => sequence_source.to_param}, valid_session
+          post :evaluate, { :sequence_source_id => sequence_source.to_param, :release_id => pfitmap_release.id}, valid_session
           PfitmapSequence.all.should_not include(pfitmap_sequence)
         end
       end

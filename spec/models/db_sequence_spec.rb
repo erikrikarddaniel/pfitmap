@@ -52,15 +52,26 @@ describe DbSequence do
     it {should include(hmm_result_row)}
   end
 
-  describe "best hmm profile" do
+  describe "best- methods" do
     let!(:db_sequence) { FactoryGirl.create(:db_sequence) }
     let!(:hmm_result2) { FactoryGirl.create(:hmm_result, hmm_profile: hmm_profile2, sequence_source: sequence_source, executed: 100.years.ago) }
     let!(:hmm_result_row) { FactoryGirl.create(:hmm_result_row, hmm_result: hmm_result, db_sequence: db_sequence) }
     #Create a second result row with lower score
     let!(:hmm_result_row2) { FactoryGirl.create(:hmm_result_row2, hmm_result: hmm_result2, db_sequence: db_sequence) }
-    subject { db_sequence}
-    its(:best_hmm_profile) { should eq(hmm_profile.id) }
-    its(:best_hmm_profile) { should_not eq(hmm_profile2.id) }
+    
+    describe "best hmm profile" do
+      subject { db_sequence}
+      its(:best_hmm_profile) { should eq(hmm_profile.id) }
+      its(:best_hmm_profile) { should_not eq(hmm_profile2.id) }
+    end
+
+    describe "best hmm result row" do
+      subject { db_sequence }
+      its(:best_hmm_result_row) { should eq(hmm_result_row) }
+      it "should have a higher score" do
+        db_sequence.best_hmm_result_row.fullseq_score.should be > hmm_result_row2.fullseq_score
+      end
+    end
   end
 
   describe "pfitmap sequence" do

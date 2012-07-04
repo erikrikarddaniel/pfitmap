@@ -30,7 +30,7 @@ class DbSequence < ActiveRecord::Base
   end
 
   # A method that returns the best hmm profile id.
-  def best_hmm_profile
+  def best_hmm_profile(sequence_source)
     max_score_row = self.best_hmm_result_row()
     return max_score_row.hmm_result.hmm_profile.id
   end
