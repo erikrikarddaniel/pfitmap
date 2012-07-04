@@ -12,9 +12,12 @@ class DbSequence < ActiveRecord::Base
   has_many :hmm_db_hits
   has_many :pfitmap_sequences
 
-  # Given a database, it will browse through all profiles in order to
-  # find all hits 
+  #virtual attributes used in controllers
+  attr_accessor :hmm_profile, :score
 
+  # Given a source, it will browse through all profiles in order to
+  # find all hits.
+  #
   # All result rows that share sequence_source.id
   def all_hits(sequence_source)
     hmm_results = HmmResult.where("sequence_source_id = ?", sequence_source.id)
@@ -32,8 +35,14 @@ class DbSequence < ActiveRecord::Base
     return max_score_row.hmm_result.hmm_profile.id
   end
 
+  # Method for finding the profile OBJECT and its fullseq_score
+  def best_hmm_profile_with_score
+    max_score_row = self.best_hmm_result_row()
+    return [max_score_row.hmm_result.hmm_profile.id, max_score_row.fullseq_score]
+  end
+
   # The result row having the highest fullseq_score.
   def best_hmm_result_row
-    return  self.hmm_result_rows.sort_by{ |row| row.fullseq_score }.last
+    return  HmmResultRow.where("db_sequence_id = ?", self.id).order("fullseq_score DESC").first
   end
 end
