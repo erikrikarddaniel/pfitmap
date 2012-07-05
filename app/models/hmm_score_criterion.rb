@@ -16,8 +16,8 @@ class HmmScoreCriterion < InclusionCriterion
 
   #Assumes best hmm profile for db_sequence is the profile that 
   # inclusion criterion belongs to.
-  def evaluate?(db_sequence)
-    score = db_sequence.best_hmm_result_row.fullseq_score
+  def evaluate?(db_sequence, sequence_source)
+    score = db_sequence.best_hmm_result_row(sequence_source).fullseq_score
     return (score > self.min_fullseq_score)
   end
 end

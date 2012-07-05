@@ -20,6 +20,8 @@ class HmmProfile < ActiveRecord::Base
   has_many :hmm_score_criteria, :dependent => :destroy
   has_many :enzyme_profiles
   has_many :enzymes, :through => :enzyme_profiles
+  has_many :view_db_sequence_best_profiles
+  has_many :db_sequences, through: :view_db_sequence_best_profiles
   validates :name, presence: true
   validates :version, presence: true
   validates :hierarchy, presence: true, :uniqueness => :true
@@ -39,9 +41,9 @@ class HmmProfile < ActiveRecord::Base
     HmmProfile.where("parent_id IS NULL")
   end
 
-  def evaluate?(db_sequence)
-    best_profile = (db_sequence.best_hmm_profile == self.id)
-    bool = self.inclusion_criteria.inject(best_profile) { |result, element| result && element.evaluate?(db_sequence) } 
+  def evaluate?(db_sequence, sequence_source)
+    best_profile = (db_sequence.best_hmm_profile_id(sequence_source) == self.id)
+    bool = self.inclusion_criteria.inject(best_profile) { |result, element| result && element.evaluate?(db_sequence,sequence_source) } 
     return bool
   end
 
