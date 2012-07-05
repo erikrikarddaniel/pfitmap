@@ -6,7 +6,7 @@ gem 'faker', '1.0.1'
 gem 'will_paginate', '3.0.3'
 gem 'bootstrap-will_paginate', '0.0.5'
 gem 'bio'
-gem 'rails_sql_views'
+gem 'schema_plus'
 # Authentication and Authorization
 gem 'omniauth-openid'
 gem 'cancan'
