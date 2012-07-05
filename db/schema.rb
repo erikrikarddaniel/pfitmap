@@ -23,10 +23,9 @@ ActiveRecord::Schema.define(:version => 20120705074545) do
     t.integer  "enzyme_id"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
+    t.index ["enzyme_id"], :name => "index_enzyme_profiles_on_enzyme_id"
+    t.index ["hmm_profile_id"], :name => "index_enzyme_profiles_on_hmm_profile_id"
   end
-
-  add_index "enzyme_profiles", ["enzyme_id"], :name => "index_enzyme_profiles_on_enzyme_id"
-  add_index "enzyme_profiles", ["hmm_profile_id"], :name => "index_enzyme_profiles_on_hmm_profile_id"
 
   create_table "enzymes", :force => true do |t|
     t.string   "name"
@@ -42,11 +41,10 @@ ActiveRecord::Schema.define(:version => 20120705074545) do
     t.datetime "updated_at",     :null => false
     t.integer  "db_sequence_id"
     t.text     "desc"
+    t.index ["db", "acc"], :name => "index_hmm_db_hits_on_db_and_acc"
+    t.index ["db_sequence_id"], :name => "index_hmm_db_hits_on_db_sequence_id"
+    t.index ["gi"], :name => "index_hmm_db_hits_on_gi"
   end
-
-  add_index "hmm_db_hits", ["db", "acc"], :name => "index_hmm_db_hits_on_db_and_acc"
-  add_index "hmm_db_hits", ["db_sequence_id"], :name => "index_hmm_db_hits_on_db_sequence_id"
-  add_index "hmm_db_hits", ["gi"], :name => "index_hmm_db_hits_on_gi"
 
   create_table "hmm_profiles", :force => true do |t|
     t.string   "name"
@@ -80,9 +78,8 @@ ActiveRecord::Schema.define(:version => 20120705074545) do
     t.integer  "hmm_result_id"
     t.integer  "domnumest_dom"
     t.integer  "db_sequence_id"
+    t.index ["db_sequence_id"], :name => "index_hmm_result_rows_on_db_sequence_id"
   end
-
-  add_index "hmm_result_rows", ["db_sequence_id"], :name => "index_hmm_result_rows_on_db_sequence_id"
 
   create_table "hmm_results", :force => true do |t|
     t.datetime "executed"
@@ -90,19 +87,17 @@ ActiveRecord::Schema.define(:version => 20120705074545) do
     t.datetime "updated_at",         :null => false
     t.integer  "hmm_profile_id"
     t.integer  "sequence_source_id", :null => false
+    t.index ["hmm_profile_id"], :name => "index_hmm_results_on_hmm_profile_id"
+    t.index ["sequence_source_id"], :name => "index_hmm_results_on_sequence_source_id"
   end
-
-  add_index "hmm_results", ["hmm_profile_id"], :name => "index_hmm_results_on_hmm_profile_id"
-  add_index "hmm_results", ["sequence_source_id"], :name => "index_hmm_results_on_sequence_source_id"
 
   create_table "hmm_score_criteria", :force => true do |t|
     t.float    "min_fullseq_score"
     t.integer  "hmm_profile_id"
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
+    t.index ["hmm_profile_id"], :name => "index_hmm_score_criterions_on_hmm_profile_id"
   end
-
-  add_index "hmm_score_criteria", ["hmm_profile_id"], :name => "index_hmm_score_criterions_on_hmm_profile_id"
 
   create_table "pfitmap_releases", :force => true do |t|
     t.string   "release"
@@ -117,10 +112,9 @@ ActiveRecord::Schema.define(:version => 20120705074545) do
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
     t.integer  "pfitmap_release_id"
+    t.index ["db_sequence_id"], :name => "index_pfitmap_sequences_on_db_sequence_id"
+    t.index ["pfitmap_release_id"], :name => "index_pfitmap_sequences_on_pfitmap_release_id"
   end
-
-  add_index "pfitmap_sequences", ["db_sequence_id"], :name => "index_pfitmap_sequences_on_db_sequence_id"
-  add_index "pfitmap_sequences", ["pfitmap_release_id"], :name => "index_pfitmap_sequences_on_pfitmap_release_id"
 
   create_table "sequence_sources", :force => true do |t|
     t.string   "source"
@@ -140,4 +134,5 @@ ActiveRecord::Schema.define(:version => 20120705074545) do
     t.string   "role"
   end
 
+  create_view "view_db_sequence_best_profiles", "SELECT hmmp.id AS hmm_profile_id, ss.id AS sequence_source_id, dbs.id AS db_sequence_id, hmmrr.fullseq_score FROM ((((db_sequences dbs JOIN hmm_result_rows hmmrr ON ((dbs.id = hmmrr.db_sequence_id))) JOIN hmm_results hmmr ON ((hmmrr.hmm_result_id = hmmr.id))) JOIN hmm_profiles hmmp ON ((hmmr.hmm_profile_id = hmmp.id))) JOIN sequence_sources ss ON ((hmmr.sequence_source_id = ss.id))) WHERE (hmmrr.fullseq_score = (SELECT max(hmmrrinner.fullseq_score) AS max FROM ((hmm_result_rows hmmrrinner JOIN hmm_results hmmrinner ON ((hmmrrinner.hmm_result_id = hmmrinner.id))) JOIN sequence_sources ssinner ON ((hmmrinner.sequence_source_id = ssinner.id))) WHERE ((hmmrrinner.db_sequence_id = dbs.id) AND (ssinner.id = ss.id))))", :force => true
 end
