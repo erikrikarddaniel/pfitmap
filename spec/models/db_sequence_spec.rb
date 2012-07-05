@@ -59,17 +59,56 @@ describe DbSequence do
     #Create a second result row with lower score
     let!(:hmm_result_row2) { FactoryGirl.create(:hmm_result_row2, hmm_result: hmm_result2, db_sequence: db_sequence) }
     
-    describe "best hmm profile" do
-      subject { db_sequence}
-      its(:best_hmm_profile) { should eq(hmm_profile.id) }
-      its(:best_hmm_profile) { should_not eq(hmm_profile2.id) }
+    context "with only one result and one result row" do
+      
+      describe "best hmm profile" do
+        subject { db_sequence}
+        its(:best_hmm_profile) { should eq(hmm_profile.id) }
+        its(:best_hmm_profile) { should_not eq(hmm_profile2.id) }
+      end
+
+      describe "best hmm result row" do
+        subject { db_sequence }
+        its(:best_hmm_result_row) { should eq(hmm_result_row) }
+        it "should have a higher score" do
+          db_sequence.best_hmm_result_row.fullseq_score.should be > hmm_result_row2.fullseq_score
+        end
+      end
     end
 
-    describe "best hmm result row" do
-      subject { db_sequence }
-      its(:best_hmm_result_row) { should eq(hmm_result_row) }
-      it "should have a higher score" do
-        db_sequence.best_hmm_result_row.fullseq_score.should be > hmm_result_row2.fullseq_score
+    context "with two results and a row each" do
+      #Create a second result row with lower score
+      let!(:hmm_result_row2) { FactoryGirl.create(:hmm_result_row2, hmm_result: hmm_result2, db_sequence: db_sequence) }
+      describe "best hmm profile" do
+        subject { db_sequence}
+        its(:best_hmm_profile) { should eq(hmm_profile.id) }
+        its(:best_hmm_profile) { should_not eq(hmm_profile2.id) }
+      end
+
+      describe "best hmm result row" do
+        subject { db_sequence }
+        its(:best_hmm_result_row) { should eq(hmm_result_row) }
+        it "should have a higher score" do
+          db_sequence.best_hmm_result_row.fullseq_score.should be > hmm_result_row2.fullseq_score
+        end
+      end
+    end
+    context "with two sequence sources" do
+      let!(:sequence_source2) { FactoryGirl.create(:sequence_source_older) }
+      let!(:hmm_result3) { FactoryGirl.create(:hmm_result, sequence_source: sequence_source2) }
+      let!(:hmm_result_row3) { FactoryGirl.create(:hmm_result_row2, hmm_result: hmm_result3, db_sequence: db_sequence) }
+      describe "best hmm profile" do
+        subject { db_sequence}
+        its(:best_hmm_profile) { should eq(hmm_profile.id) }
+        its(:best_hmm_profile) { should_not eq(hmm_profile2.id) }
+      end
+
+      describe "best hmm result row" do
+        subject { db_sequence }
+        its(:best_hmm_result_row) { should eq(hmm_result_row) }
+        it "should have a higher score" do
+          db_sequence.best_hmm_result_row.fullseq_score.should be > hmm_result_row2.fullseq_score
+        end
       end
     end
   end

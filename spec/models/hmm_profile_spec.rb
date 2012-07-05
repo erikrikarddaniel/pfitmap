@@ -60,24 +60,6 @@ describe HmmProfile do
     it {  should respond_to(:name) }
   end
 
-  describe "Profiles produced in the factory" do
-    let(:hmm_profile_001) { FactoryGirl.create(:hmm_profile_001) }
-    let(:hmm_profile) { FactoryGirl.create(:hmm_profile, parent: hmm_profile_001) }
-    let(:hmm_profile_00101) { FactoryGirl.create(:hmm_profile_00101, parent: hmm_profile_001) }
-    let(:hmm_profile_0010101){ FactoryGirl.create(:hmm_profile, parent: hmm_profile_00101) }
-    
-    it "should be able to find its last parent" do
-      hmm_profile_0010101.last_parent_id.should == hmm_profile_001.id
-    end
-    
-    it "should be able to list their closest children" do
-      hmm_profile_001.children.should include(hmm_profile)
-    end
-    
-    it "should be able to list all last parents (root nodes)" do
-      HmmProfile.last_parents().should include(hmm_profile_001)
-    end
-  end
 
   describe "inclusion criteria" do
     #two alternative sequences
@@ -126,7 +108,7 @@ describe HmmProfile do
       let!(:hmm_result3) { FactoryGirl.create(:hmm_result, 
                                               hmm_profile: hmm_profile3, 
                                               sequence_source: sequence_source) }
-      let!(:hmm_result_row3) { FactoryGirl.create(:hmm_result_row, 
+      let!(:hmm_result_row3) { FactoryGirl.create(:hmm_result_row2, 
                                                   hmm_result: hmm_result3, 
                                                   db_sequence: db_sequence1) }
       let!(:hmm_score_criterion3) { FactoryGirl.create(:hmm_score_criterion, hmm_profile: hmm_profile3, min_fullseq_score: 5.0) }
