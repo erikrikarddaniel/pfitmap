@@ -1,7 +1,7 @@
 class CreateViewDbSequenceBestProfile < ActiveRecord::Migration
   def up
     execute 'create or replace view view_db_sequence_best_profiles as
-select hmmp.id AS hmm_profile_id, ss.id AS sequence_source_id, dbs.id AS db_sequence_id, hmmrr.fullseq_score AS "fullseq_score"
+select hmmp.id AS hmm_profile_id, ss.id AS sequence_source_id, dbs.id AS db_sequence_id, hmmrr.id AS "hmm_result_row_id", hmmrr.fullseq_score AS "fullseq_score"
 from 
   db_sequences dbs join 
   hmm_result_rows hmmrr on dbs.id = hmmrr.db_sequence_id join
