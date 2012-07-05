@@ -2,12 +2,13 @@
 #
 # Table name: pfitmap_releases
 #
-#  id           :integer         not null, primary key
-#  release      :string(255)
-#  release_date :date
-#  created_at   :datetime        not null
-#  updated_at   :datetime        not null
-#  current      :boolean
+#  id                 :integer         not null, primary key
+#  release            :string(255)
+#  release_date       :date
+#  created_at         :datetime        not null
+#  updated_at         :datetime        not null
+#  current            :boolean
+#  sequence_source_id :integer
 #
 
 require 'spec_helper'
