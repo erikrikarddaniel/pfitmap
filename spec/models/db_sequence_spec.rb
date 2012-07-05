@@ -26,10 +26,13 @@ describe DbSequence do
   it { should respond_to(:hmm_db_hits) }
   it { should_not respond_to(:pfitmap_sequence) }
   it { should respond_to(:pfitmap_sequences) }
+  it { should respond_to(:view_db_sequence_best_profiles) }
 
-  #Operations
+  # Methods
   it { should respond_to(:all_hits) }
   it { should respond_to(:best_hmm_profile) }
+  it { should respond_to(:best_hmm_result_row) }
+  it { should respond_to(:best_hmm_profile_id) }
 
   describe "with valid parameters" do
     it {should be_valid}
@@ -64,14 +67,18 @@ describe DbSequence do
       describe "best hmm profile" do
         subject { db_sequence}
         it "is hmm_profile" do
-          db_sequence.best_hmm_profile(sequence_source).should eq(hmm_profile.id)
-          db_sequence.best_hmm_profile(sequence_source).should eq(hmm_profile.id)
+          db_sequence.best_hmm_profile_id(sequence_source).should eq(hmm_profile.id)
+          db_sequence.best_hmm_profile(sequence_source).should eq(hmm_profile)
+          db_sequence.best_hmm_profile_id(sequence_source).should eq(hmm_profile.id) 
+          db_sequence.best_hmm_profile(sequence_source).should eq(hmm_profile)
         end
       end
 
       describe "best hmm result row" do
         subject { db_sequence }
-        its(:best_hmm_result_row) { should eq(hmm_result_row) }
+        it "finds the best row" do
+          db_sequence.best_hmm_result_row(sequence_source).should eq(hmm_result_row)
+        end
         it "should have a higher score" do
           db_sequence.best_hmm_result_row(sequence_source).fullseq_score.should be > hmm_result_row2.fullseq_score
         end
@@ -84,14 +91,18 @@ describe DbSequence do
       describe "best hmm profile" do
         subject { db_sequence}
         it "is hmm_profile" do
-          db_sequence.best_hmm_profile(sequence_source).should eq(hmm_profile.id)
-          db_sequence.best_hmm_profile(sequence_source).should eq(hmm_profile.id)
+          db_sequence.best_hmm_profile_id(sequence_source).should eq(hmm_profile.id)
+          db_sequence.best_hmm_profile(sequence_source).should eq(hmm_profile)
+          db_sequence.best_hmm_profile_id(sequence_source).should eq(hmm_profile.id)
+          db_sequence.best_hmm_profile(sequence_source).should eq(hmm_profile)
         end
       end
 
       describe "best hmm result row" do
         subject { db_sequence }
-        its(:best_hmm_result_row) { should eq(hmm_result_row) }
+        it "is hmm_result_row" do
+          db_sequence.best_hmm_result_row(sequence_source).should eq(hmm_result_row)
+        end
         it "should have a higher score" do
           db_sequence.best_hmm_result_row(sequence_source).fullseq_score.should be > hmm_result_row2.fullseq_score
         end
@@ -106,15 +117,21 @@ describe DbSequence do
       
       describe "best hmm profile" do
         subject { db_sequence}
-        its(:best_hmm_profile) { should eq(hmm_profile.id) }
-        its(:best_hmm_profile) { should_not eq(hmm_profile2.id) }
+        it "is hmm_profile" do
+          db_sequence.best_hmm_profile_id(sequence_source).should eq(hmm_profile.id)
+          db_sequence.best_hmm_profile(sequence_source).should eq(hmm_profile)
+          db_sequence.best_hmm_profile_id(sequence_source).should eq(hmm_profile.id) 
+          db_sequence.best_hmm_profile(sequence_source).should eq(hmm_profile)
+        end
       end
 
       describe "best hmm result row" do
         subject { db_sequence }
-        its(:best_hmm_result_row) { should eq(hmm_result_row) }
+        it "is hmm_result_row" do
+          db_sequence.best_hmm_result_row(sequence_source).should eq(hmm_result_row)
+        end
         it "should have a higher score" do
-          db_sequence.best_hmm_result_row.fullseq_score.should be > hmm_result_row2.fullseq_score
+          db_sequence.best_hmm_result_row(sequence_source).fullseq_score.should be > hmm_result_row2.fullseq_score
         end
       end
     end

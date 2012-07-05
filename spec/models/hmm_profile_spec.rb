@@ -31,6 +31,8 @@ describe HmmProfile do
   it { should respond_to(:hmm_score_criteria) }
   it { should respond_to(:inclusion_criteria) }
   it { should respond_to(:enzymes) }
+  it { should respond_to(:view_db_sequence_best_profiles)}
+  it { should respond_to(:db_sequences) }
   it { should be_valid }
   
   describe "Should not be valid when name is not present" do
@@ -97,11 +99,11 @@ describe HmmProfile do
     end
     
     it "evaluates the best profile with high enough score" do
-      hmm_profile.evaluate?(db_sequence1).should be_true
+      hmm_profile.evaluate?(db_sequence1,sequence_source).should be_true
     end
     
     it "evaluates the best profile with score below threshold" do
-      hmm_profile_00101.evaluate?(db_sequence2).should be_false
+      hmm_profile_00101.evaluate?(db_sequence2,sequence_source).should be_false
     end
     describe "Evaluates a profile that is not the best" do
       let!(:hmm_profile3) { FactoryGirl.create(:hmm_profile) }
@@ -113,10 +115,10 @@ describe HmmProfile do
                                                   db_sequence: db_sequence1) }
       let!(:hmm_score_criterion3) { FactoryGirl.create(:hmm_score_criterion, hmm_profile: hmm_profile3, min_fullseq_score: 5.0) }
       it "with score above threshold" do
-        hmm_profile3.evaluate?(db_sequence1).should be_false
+        hmm_profile3.evaluate?(db_sequence1,sequence_source).should be_false
       end
       it "with score below threshold" do
-        hmm_profile_00101.evaluate?(db_sequence1).should be_false
+        hmm_profile_00101.evaluate?(db_sequence1,sequence_source).should be_false
       end
     end
     
@@ -127,5 +129,22 @@ describe HmmProfile do
     let!(:enzyme_profile) { FactoryGirl.create(:enzyme_profile, enzyme: enzyme, hmm_profile: hmm_profile) }
     subject{hmm_profile}
     its(:enzymes) { should include( enzyme) }
+  end
+
+  describe "Best Profile reverse association" do
+    let!(:hmm_profile) { FactoryGirl.create(:hmm_profile) }
+    let!(:db_sequence) { FactoryGirl.create(:db_sequence) }
+    let!(:sequence_source) { FactoryGirl.create(:sequence_source) }
+    let!(:hmm_result) { FactoryGirl.create(:hmm_result, 
+                                            hmm_profile: hmm_profile, 
+                                            sequence_source: sequence_source) }
+    let!(:hmm_result_row) { FactoryGirl.create(:hmm_result_row2, 
+                                               hmm_result: hmm_result, 
+                                               db_sequence: db_sequence) }
+
+    it "has correct db_sequence association" do
+      hmm_profile.db_sequences.should include(db_sequence)
+    end
+
   end
 end
