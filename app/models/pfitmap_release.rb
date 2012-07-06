@@ -14,8 +14,9 @@
 
 class PfitmapRelease < ActiveRecord::Base
   attr_accessible :release, :release_date
-  has_many :pfitmap_sequences
+  has_many :pfitmap_sequences, :dependent => :destroy
   has_many :db_sequences, :through => :pfitmap_sequences
+  belongs_to :sequence_source
   validates :release, :presence => :true
   validates :release_date, :presence => :true
   validates_inclusion_of :current, :in => [true, false]
