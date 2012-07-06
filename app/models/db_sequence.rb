@@ -33,7 +33,7 @@ class DbSequence < ActiveRecord::Base
 
   # A method that returns the best hmm profile id.
   def best_hmm_profile_id(sequence_source)
-    self.view_db_sequence_best_profiles.find_by_sequence_source_id(sequence_source.id).hmm_profile_id
+    self.view_db_sequence_best_profiles.find(:first, conditions: ["sequence_source_id = ?", sequence_source.id]).hmm_profile_id
   end
 
   # A method that returns the best hmm profile object
