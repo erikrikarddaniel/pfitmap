@@ -7,6 +7,7 @@
 #  db_sequence_id     :integer
 #  hmm_result_row_id  :integer
 #  fullseq_score      :float
+#  pfitmap_release_id :integer
 #
 
 require 'spec_helper'
