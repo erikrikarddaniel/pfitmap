@@ -19,7 +19,7 @@
     </p>
     <p>
       <b> Sequence Source </b>
-      <%= @sequence_source.list_name %>
+      <%= @sequence_source ? @sequence_source.list_name : "none" %>
     </p>
   </aside>
   <div class="main-content span8">
