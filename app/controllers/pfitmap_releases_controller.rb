@@ -16,31 +16,8 @@ class PfitmapReleasesController < ApplicationController
   # GET /pfitmap_releases/1.json
   def show
     @pfitmap_release = PfitmapRelease.find(params[:id])
-    @hmm_profiles = HmmProfile.all
-    @hmm_profiles.each do
-      
-    end
-    @sequences = @pfitmap_release.db_sequences
-    
-    #Set virtual attribute hmm_profile
-    #Store the result of the possibly heavy operation "best_hmm_profile"
-
-    @sequences.each do |seq|
-      seq.hmm_profile, seq.score = seq.best_hmm_profile_with_score
-    end
-    
-    #Create instance variable @profiles_with_sequences containing
-    #an array of pairs [profile_id,[sequences_for_that_profile]]
-    @profiles_with_sequences = @sequences.group_by { |a| a.hmm_profile }
-    
-    @profiles_with_statistics = @profiles_with_sequences.map do |pair|
-      profile = HmmProfile.find(pair[0])
-      seq_arr = pair[1]
-      seq_count = seq_arr.count
-      min_score = seq_arr.min { |a,b| a.score <=> b.score }.score
-      max_score = seq_arr.max { |a,b| a.score <=> b.score }.score
-      [profile, [seq_count,min_score, max_score]]
-    end
+    @db_sequences = @pfitmap_release.db_sequences
+    @sequence_source = @pfitmap_release.sequence_source
     
 
     respond_to do |format|
