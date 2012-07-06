@@ -37,12 +37,12 @@ class DbSequence < ActiveRecord::Base
   end
 
   # A method that returns the best hmm profile object
-  def best_hmm_profile(sequence_source)
-    begin
-      p = self.view_db_sequence_best_profiles.find_by_sequence_source_id(sequence_source.id).hmm_profile
-    rescue
-      nil
-    end
+  def best_hmm_profile_by_release(pfitmap_release)
+    p = self.view_db_sequence_best_profiles.find_by_sequence_source_id(sequence_source.id).hmm_profile
+  end
+
+  def best_hmm_profile_by_source(sequence_source)
+
   end
 
   # The result row having the highest fullseq_score.
