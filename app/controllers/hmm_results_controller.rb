@@ -56,13 +56,8 @@ class HmmResultsController < ApplicationController
               format.json { render json: @hmm_result, status: :unprocessable_entity }
             end
           else
-            #Return to hmm_profile show page
-            @hmm_profile = @hmm_profile
-            @hmm_result = @hmm_result
-            @hmm_results = @hmm_profile.hmm_results.paginate(page: params[:page])
-            @sequence_sources = SequenceSource.all
-            @hmm_score_criteria = @hmm_profile.hmm_score_criteria
-            format.html { render :template => "hmm_profiles/show"}
+            flash[:error] = @hmm_result.errors.full_messages.inspect
+            format.html { redirect_to hmm_profile_path(@hmm_profile)}
             format.json { render json: @hmm_result.errors, status: :unprocessable_entity }
           end
         else
