@@ -21,7 +21,7 @@ class HmmProfile < ActiveRecord::Base
   has_many :enzyme_profiles
   has_many :enzymes, :through => :enzyme_profiles
   has_many :view_db_sequence_best_profiles
-  has_many :db_sequences, through: :view_db_sequence_best_profiles
+  has_many :best_profile_sequences, through: :view_db_sequence_best_profiles, source: :db_sequence
   validates :name, presence: true
   validates :version, presence: true
   validates :hierarchy, presence: true, :uniqueness => :true
@@ -48,7 +48,7 @@ class HmmProfile < ActiveRecord::Base
   end
 
   def db_sequences_stats(pfitmap_release, sequence_source)
-    self.view_db_sequence_best_profiles.joins('JOIN pfitmap_sequences ON view_db_sequence_best_profiles.id = pfitmap_sequence_ 
+    self.joins(:best_profile_sequences).where("sequence_source_id")
     self.db_sequences.where("sequence_source_id = ?", sequence_source.id)
   end
 
@@ -64,6 +64,6 @@ class HmmProfile < ActiveRecord::Base
   end
 
   def db_sequences_limited(pfitmap_release, sequence_source)
-    DbSequence.where(
+    DbSequence.where()
   end
 end
