@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120702134627) do
+ActiveRecord::Schema.define(:version => 20120705144027) do
 
   create_table "db_sequences", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -99,12 +99,23 @@ ActiveRecord::Schema.define(:version => 20120702134627) do
     t.index ["hmm_profile_id"], :name => "index_hmm_score_criterions_on_hmm_profile_id"
   end
 
+  create_table "sequence_sources", :force => true do |t|
+    t.string   "source"
+    t.string   "name"
+    t.string   "version"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "pfitmap_releases", :force => true do |t|
     t.string   "release"
     t.date     "release_date"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
     t.boolean  "current"
+    t.integer  "sequence_source_id"
+    t.index ["sequence_source_id"], :name => "index_pfitmap_releases_on_sequence_source_id"
+    t.foreign_key ["sequence_source_id"], "sequence_sources", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "pfitmap_releases_sequence_source_id_fkey"
   end
 
   create_table "pfitmap_sequences", :force => true do |t|
@@ -114,14 +125,6 @@ ActiveRecord::Schema.define(:version => 20120702134627) do
     t.integer  "pfitmap_release_id"
     t.index ["db_sequence_id"], :name => "index_pfitmap_sequences_on_db_sequence_id"
     t.index ["pfitmap_release_id"], :name => "index_pfitmap_sequences_on_pfitmap_release_id"
-  end
-
-  create_table "sequence_sources", :force => true do |t|
-    t.string   "source"
-    t.string   "name"
-    t.string   "version"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
   end
 
   create_table "users", :force => true do |t|
