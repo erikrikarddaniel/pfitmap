@@ -37,11 +37,11 @@ class DbSequence < ActiveRecord::Base
   end
 
   # A method that returns the best hmm profile object
-  def best_hmm_profile_by_release(pfitmap_release)
+  def best_hmm_profile(sequence_source)
     p = self.view_db_sequence_best_profiles.find_by_sequence_source_id(sequence_source.id).hmm_profile
   end
 
-  def best_hmm_profile_by_source(sequence_source)
+  def best_hmm_profile_by_release(sequence_source)
 
   end
 
