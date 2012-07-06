@@ -16,6 +16,10 @@ class PfitmapReleasesController < ApplicationController
   # GET /pfitmap_releases/1.json
   def show
     @pfitmap_release = PfitmapRelease.find(params[:id])
+    @hmm_profiles = HmmProfile.all
+    @hmm_profiles.each do
+      
+    end
     @sequences = @pfitmap_release.db_sequences
     
     #Set virtual attribute hmm_profile

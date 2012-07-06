@@ -95,6 +95,7 @@ class SequenceSourcesController < ApplicationController
 
     if @head_release
       @head_release.pfitmap_sequences.destroy_all
+      @head_release.sequence_source_id = @sequence_source.id
       @sequence_source.evaluate(@head_release)
       flash[:success] = 'Sequence source was successfully evaluated.'
       respond_to do |format|

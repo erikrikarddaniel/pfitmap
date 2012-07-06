@@ -47,6 +47,12 @@ class HmmProfile < ActiveRecord::Base
     return bool
   end
 
+  def db_sequences_stats(pfitmap_release, sequence_source)
+    self.view_db_sequence_best_profiles.joins('JOIN pfitmap_sequences ON view_db_sequence_best_profiles.id = pfitmap_sequence_ 
+    self.db_sequences.where("sequence_source_id = ?", sequence_source.id)
+  end
+
+
   private
   def last_parent_recursion(id)
     parent = HmmProfile.find(id)
@@ -55,5 +61,9 @@ class HmmProfile < ActiveRecord::Base
     else
       last_parent_recursion(parent.parent_id)
     end
+  end
+
+  def db_sequences_limited(pfitmap_release, sequence_source)
+    DbSequence.where(
   end
 end
