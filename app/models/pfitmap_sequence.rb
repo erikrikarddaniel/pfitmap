@@ -13,4 +13,5 @@ class PfitmapSequence < ActiveRecord::Base
   attr_accessible :db_sequence_id, :pfitmap_release_id
   belongs_to :db_sequence
   belongs_to :pfitmap_release
+  has_one :sequence_source, :through => :pfitmap_release
 end

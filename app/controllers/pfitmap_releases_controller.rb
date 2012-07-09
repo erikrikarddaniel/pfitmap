@@ -16,8 +16,14 @@ class PfitmapReleasesController < ApplicationController
   # GET /pfitmap_releases/1.json
   def show
     @pfitmap_release = PfitmapRelease.find(params[:id])
-    @db_sequences = @pfitmap_release.db_sequences
     @sequence_source = @pfitmap_release.sequence_source
+    @hmm_profiles = HmmProfile.all
+    @hmm_profiles.each do |profile|
+      included_count, included_min, included_max = profile.included_statistics(@sequence_source)
+      #not_inc_count, not_inc_min, not_inc_max = profile.not_included_statistics(sequence_source)
+      profile.release_statistics = {:included => {:count => included_count, :min_score => included_min, :max_score => included_max}}
+      #hmm_profile.release_statistics[:not_included] = {:count => not_inc_count, :min_score =>  not_inc_min, :max_score => not_inc_max}
+    end
     
 
     respond_to do |format|

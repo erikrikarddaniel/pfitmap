@@ -29,6 +29,10 @@ class PfitmapRelease < ActiveRecord::Base
       PfitmapSequence.create!(db_sequence_id: db_seq.id, pfitmap_release_id: self.id)
     end
   end
+
+  def db_sequence_ids
+    self.db_sequences.select("db_sequences.id")
+  end
     
   def self.find_current_release
     return self.find_by_current('true', limit: 1)
