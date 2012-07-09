@@ -112,7 +112,7 @@ describe SequenceSource do
     let!(:hmm_score_criterion2) { FactoryGirl.create(:hmm_score_criterion,
                                                      hmm_profile: hmm_profile2) }
     # Pfitmap Release
-    let!(:pfitmap_release) { FactoryGirl.create(:pfitmap_release) }
+    let!(:pfitmap_release) { FactoryGirl.create(:pfitmap_release, sequence_source: sequence_source) }
     before do
       sequence_source.evaluate(pfitmap_release)
     end

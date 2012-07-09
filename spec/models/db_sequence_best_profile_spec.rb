@@ -96,6 +96,11 @@ describe DbSequenceBestProfile do
     it { should respond_to(:fullseq_score) }
     it { should respond_to(:hmm_result_row) }
     
+    its(:hmm_profile) { should == hmm_profile1 }
+    its(:sequence_source) { should == sequence_source1 }
+    its(:db_sequence) { should == db_sequence3 }
+    its(:fullseq_score) {should == hmm_result_row10.fullseq_score }
+    its(:hmm_result_row) {should == hmm_result_row10 }
     
   end
   describe "performs the correct query" do
