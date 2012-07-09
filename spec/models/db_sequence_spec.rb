@@ -26,7 +26,7 @@ describe DbSequence do
   it { should respond_to(:hmm_db_hits) }
   it { should_not respond_to(:pfitmap_sequence) }
   it { should respond_to(:pfitmap_sequences) }
-  it { should respond_to(:view_db_sequence_best_profiles) }
+  it { should respond_to(:db_sequence_best_profiles) }
 
   # Methods
   it { should respond_to(:all_hits) }
@@ -69,8 +69,12 @@ describe DbSequence do
         it "is hmm_profile" do
           db_sequence.best_hmm_profile_id(sequence_source).should eq(hmm_profile.id)
           db_sequence.best_hmm_profile(sequence_source).should eq(hmm_profile)
-          db_sequence.best_hmm_profile_id(sequence_source).should eq(hmm_profile.id) 
-          db_sequence.best_hmm_profile(sequence_source).should eq(hmm_profile)
+        end
+      end
+
+      describe "best hmm profiles" do
+        it "is hmm profile" do
+          db_sequence.best_hmm_profiles.should include(hmm_profile)
         end
       end
 
@@ -85,7 +89,7 @@ describe DbSequence do
       end
     end
 
-    context "with two results and a row each" do
+    context "with two result rows" do
       #Create a second result row with lower score
       let!(:hmm_result_row2) { FactoryGirl.create(:hmm_result_row2, hmm_result: hmm_result2, db_sequence: db_sequence) }
       describe "best hmm profile" do
@@ -93,10 +97,15 @@ describe DbSequence do
         it "is hmm_profile" do
           db_sequence.best_hmm_profile_id(sequence_source).should eq(hmm_profile.id)
           db_sequence.best_hmm_profile(sequence_source).should eq(hmm_profile)
-          db_sequence.best_hmm_profile_id(sequence_source).should eq(hmm_profile.id)
-          db_sequence.best_hmm_profile(sequence_source).should eq(hmm_profile)
         end
       end
+
+      describe "best hmm profiles" do
+        it "is hmm profile" do
+          db_sequence.best_hmm_profiles.should include(hmm_profile)
+        end
+      end
+
 
       describe "best hmm result row" do
         subject { db_sequence }
@@ -109,9 +118,10 @@ describe DbSequence do
       end
     end
     
-    context "with two sequence sources" do
+    context "with two sequence sources and profiles" do
       let!(:sequence_source2) { FactoryGirl.create(:sequence_source_older) }
-      let!(:hmm_result3) { FactoryGirl.create(:hmm_result, sequence_source: sequence_source2) }
+      let!(:hmm_profile2) { FactoryGirl.create(:hmm_profile) }
+      let!(:hmm_result3) { FactoryGirl.create(:hmm_result, sequence_source: sequence_source2, hmm_profile: hmm_profile2) }
       let!(:hmm_result_row3) { FactoryGirl.create(:hmm_result_row2, hmm_result: hmm_result3, db_sequence: db_sequence) }
 
       
@@ -120,8 +130,13 @@ describe DbSequence do
         it "is hmm_profile" do
           db_sequence.best_hmm_profile_id(sequence_source).should eq(hmm_profile.id)
           db_sequence.best_hmm_profile(sequence_source).should eq(hmm_profile)
-          db_sequence.best_hmm_profile_id(sequence_source).should eq(hmm_profile.id) 
-          db_sequence.best_hmm_profile(sequence_source).should eq(hmm_profile)
+        end
+      end
+
+      describe "best hmm profiles" do
+        it "is hmm profile" do
+          db_sequence.best_hmm_profiles.should include(hmm_profile)
+          db_sequence.best_hmm_profiles.should include(hmm_profile2)
         end
       end
 

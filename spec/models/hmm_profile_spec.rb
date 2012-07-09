@@ -31,8 +31,8 @@ describe HmmProfile do
   it { should respond_to(:hmm_score_criteria) }
   it { should respond_to(:inclusion_criteria) }
   it { should respond_to(:enzymes) }
-  it { should respond_to(:view_db_sequence_best_profiles)}
-  it { should respond_to(:db_sequences) }
+  it { should respond_to(:db_sequence_best_profiles)}
+  it { should respond_to(:best_profile_sequences) }
   it { should be_valid }
   
   describe "Should not be valid when name is not present" do
@@ -143,7 +143,7 @@ describe HmmProfile do
                                                db_sequence: db_sequence) }
 
     it "has correct db_sequence association" do
-      hmm_profile.db_sequences.should include(db_sequence)
+      hmm_profile.best_profile_sequences(sequence_source).should include(db_sequence)
     end
 
   end

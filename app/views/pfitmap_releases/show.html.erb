@@ -35,7 +35,7 @@
       <tbody>
 	<% @db_sequences.each do |seq| %>
 	<tr>
-	  <td><%= seq.hmm_db_hits.first.gi %></td>
+	  <td><%= seq.hmm_db_hits.first ? seq.hmm_db_hits.first.gi : None %></td>
 	  <td><%= seq.best_hmm_profile(@sequence_source) ? seq.best_hmm_profile(@sequence_source).name : "none"%></td>
 	</tr>
 	<% end %>

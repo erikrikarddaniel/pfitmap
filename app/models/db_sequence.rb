@@ -11,8 +11,8 @@ class DbSequence < ActiveRecord::Base
   has_many :hmm_result_rows
   has_many :hmm_db_hits
   has_many :pfitmap_sequences
-  has_many :view_db_sequence_best_profiles
-  has_many :best_hmm_profiles, :through => :view_db_sequence_best_profiles, :source => :hmm_profile
+  has_many :db_sequence_best_profiles
+  has_many :best_hmm_profiles, :through => :db_sequence_best_profiles, :source => :hmm_profile
 
   #virtual attributes used in controllers
   attr_accessor :hmm_profile, :hmm_profiles, :score
@@ -33,20 +33,20 @@ class DbSequence < ActiveRecord::Base
 
   # A method that returns the best hmm profile id.
   def best_hmm_profile_id(sequence_source)
-    self.view_db_sequence_best_profiles.find(:first, conditions: ["sequence_source_id = ?", sequence_source.id]).hmm_profile_id
+    self.db_sequence_best_profiles.find(:first, conditions: ["sequence_source_id = ?", sequence_source.id]).hmm_profile_id
   end
 
   # A method that returns the best hmm profile object
   def best_hmm_profile(sequence_source)
-    p = self.view_db_sequence_best_profiles.find_by_sequence_source_id(sequence_source.id).hmm_profile
-  end
-
-  def best_hmm_profile_by_release(sequence_source)
-
+    begin
+      p = self.db_sequence_best_profiles.find_by_sequence_source_id(sequence_source.id).hmm_profile
+    rescue NoMethodError
+      nil
+    end
   end
 
   # The result row having the highest fullseq_score.
   def best_hmm_result_row(sequence_source)
-    self.view_db_sequence_best_profiles.find_by_sequence_source_id(sequence_source.id).hmm_result_row
+    self.db_sequence_best_profiles.find_by_sequence_source_id(sequence_source.id).hmm_result_row
   end
 end

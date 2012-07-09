@@ -20,8 +20,8 @@ class HmmProfile < ActiveRecord::Base
   has_many :hmm_score_criteria, :dependent => :destroy
   has_many :enzyme_profiles
   has_many :enzymes, :through => :enzyme_profiles
-  has_many :view_db_sequence_best_profiles
-  has_many :best_profile_sequences, through: :view_db_sequence_best_profiles, source: :db_sequence
+  has_many :db_sequence_best_profiles
+  has_many :best_profile_sequences, through: :db_sequence_best_profiles, source: :db_sequence
   validates :name, presence: true
   validates :version, presence: true
   validates :hierarchy, presence: true, :uniqueness => :true
@@ -47,9 +47,12 @@ class HmmProfile < ActiveRecord::Base
     return bool
   end
 
-  def db_sequences_stats(pfitmap_release, sequence_source)
-    self.joins(:best_profile_sequences).where("sequence_source_id")
-    self.db_sequences.where("sequence_source_id = ?", sequence_source.id)
+  def db_sequences_stats(sequence_source)
+    
+  end
+
+  def best_profile_sequences(sequence_source)
+    DbSequence.joins(:db_sequence_best_profiles).where(:db_sequence_best_profiles => {hmm_profile_id: self.id, sequence_source_id: sequence_source.id})
   end
 
 
