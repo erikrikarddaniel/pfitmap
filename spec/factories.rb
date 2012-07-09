@@ -1,6 +1,7 @@
 FactoryGirl.define do
   factory :hmm_profile do
     sequence(:name){ |n| "Example Class #{n}" }
+    sequence(:protein_name) { |n| "NrdX #{n}" }
     sequence(:hierarchy) { |n| "00#{n+1}" }
     sequence(:version) { |n| "version #{n}" }
   end

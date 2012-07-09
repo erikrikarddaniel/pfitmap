@@ -2,13 +2,14 @@
 #
 # Table name: hmm_profiles
 #
-#  id         :integer         not null, primary key
-#  name       :string(255)
-#  version    :string(255)
-#  hierarchy  :string(255)
-#  parent_id  :integer
-#  created_at :datetime        not null
-#  updated_at :datetime        not null
+#  id           :integer         not null, primary key
+#  name         :string(255)
+#  version      :string(255)
+#  hierarchy    :string(255)
+#  parent_id    :integer
+#  created_at   :datetime        not null
+#  updated_at   :datetime        not null
+#  protein_name :string(255)
 #
 
 require 'spec_helper'
@@ -23,6 +24,7 @@ describe HmmProfile do
   subject { @hmm_profile }
 
   it { should respond_to(:name) }
+  it { should respond_to(:protein_name) }
   it { should respond_to(:version) }
   it { should respond_to(:hierarchy) }
   it { should respond_to(:parent_id) }
@@ -52,12 +54,14 @@ describe HmmProfile do
     subject do
       @child = @hmm_profile.children.create(
 	name: "1st gen. child HMM profile",
+	protein_name: 'NrdA',
 	version: "20120328",
 	hierarchy: "000.00"
       )
     end
     it { should be_valid }
     it {  should respond_to(:name) }
+    it {  should respond_to(:protein_name) }
   end
 
   describe "Profiles produced in the factory" do

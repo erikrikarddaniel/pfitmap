@@ -1,4 +1,4 @@
-<% provide(:title, @hmm_profile.name) %>
+<% provide(:title, @hmm_profile.description) %>
 <div class="row-fluid">
   <h1> HMM Profile </h1>
 </div>
@@ -16,7 +16,7 @@
   <aside class="span4">
     <section>
       <h1>
-	<%= @hmm_profile.name %>
+	<%= @hmm_profile.description %>
       </h1>
       
       <p>
@@ -31,7 +31,7 @@
       
       <p>
 	<b>Parent hmm profile:</b>
-	<%= @parent ? @parent.name : "none" %>
+	<%= @parent ? @parent.description : "none" %>
       </p>
 
       <p>

@@ -3,7 +3,7 @@ module HmmProfilesHelper
   def list_children(profile_collection)
     html_var = ""
     profile_collection.each do |p|
-      html_var << "<li>" << p.name
+      html_var << "<li>" << p.description
       link_html = "<p>" << link_to(" Browse", p) << "</p>"
       html_var << link_html
       if not p.children.empty?
