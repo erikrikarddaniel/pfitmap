@@ -31,6 +31,7 @@ describe SequenceSource do
   it { should respond_to(:db_sequences) }
   it { should respond_to(:view_db_sequence_best_profiles) }
   it { should respond_to(:list_name) }
+  it { should respond_to(:pfitmap_release) }
   it { should be_valid }
 
   describe "Should not be valid when source is not present" do
@@ -117,6 +118,9 @@ describe SequenceSource do
     end
     it "adds pfitmap sequences" do
       pfitmap_release.db_sequences.should_not == []
+    end
+    it "receives an association" do
+      sequence_source.pfitmap_release.should == pfitmap_release
     end
   end
 end

@@ -96,6 +96,7 @@ FactoryGirl.define do
     sequence(:release) { |n|  (0.0 + 0.1*n).to_s }
     sequence(:release_date) { |n| (Date.new(2012,01,01) + n.days).to_s }
     current "false"
+    sequence_source
   end
 
   factory :user do

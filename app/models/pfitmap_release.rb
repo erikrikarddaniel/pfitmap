@@ -13,13 +13,14 @@
 
 
 class PfitmapRelease < ActiveRecord::Base
-  attr_accessible :release, :release_date
+  attr_accessible :release, :release_date, :sequence_source_id
   has_many :pfitmap_sequences, :dependent => :destroy
   has_many :db_sequences, :through => :pfitmap_sequences
   belongs_to :sequence_source
   validates :release, :presence => :true
   validates :release_date, :presence => :true
   validates_inclusion_of :current, :in => [true, false]
+  validates :sequence_source_id, :presence => :true, :uniqueness => :true
 
 
   # Should only be called when there exists a head release
