@@ -1,18 +1,16 @@
 # == Schema Information
 #
-# Table name: view_db_sequence_best_profiles
+# Table name: db_sequence_best_profiles
 #
+#  db_sequence_id     :integer
 #  hmm_profile_id     :integer
 #  sequence_source_id :integer
-#  db_sequence_id     :integer
 #  hmm_result_row_id  :integer
-#  fullseq_score      :float
-#  pfitmap_release_id :integer
 #
 
 require 'spec_helper'
 
-describe ViewDbSequenceBestProfile do
+describe DbSequenceBestProfile do
   # Hmm Profiles
   let!(:hmm_profile1) { FactoryGirl.create(:hmm_profile)  }
   let!(:hmm_profile2) { FactoryGirl.create(:hmm_profile)  }
@@ -83,12 +81,12 @@ describe ViewDbSequenceBestProfile do
                                              fullseq_score: 50.0) }
   
   it "should create some rows in the views" do
-    ViewDbSequenceBestProfile.count.should == 6
+    DbSequenceBestProfile.count.should == 6
   end
 
   describe "associations" do
     before do 
-      @view_row = ViewDbSequenceBestProfile.first
+      @view_row = DbSequenceBestProfile.first
     end
     subject { @view_row }
     
@@ -96,14 +94,15 @@ describe ViewDbSequenceBestProfile do
     it { should respond_to(:sequence_source) }
     it { should respond_to(:db_sequence) }
     it { should respond_to(:fullseq_score) }
+    it { should respond_to(:hmm_result_row) }
     
     
   end
   describe "performs the correct query" do
     describe "for db_sequence1" do
       before do
-        @view_row1 = db_sequence1.view_db_sequence_best_profiles.find_by_sequence_source_id(sequence_source2.id)
-        @view_row2 =  db_sequence1.view_db_sequence_best_profiles.find_by_sequence_source_id(sequence_source1.id)
+        @view_row1 = db_sequence1.db_sequence_best_profiles.find_by_sequence_source_id(sequence_source2.id)
+        @view_row2 =  db_sequence1.db_sequence_best_profiles.find_by_sequence_source_id(sequence_source1.id)
       end
       it "has correct best profile" do
         @view_row1.hmm_profile.should == hmm_profile2
@@ -117,8 +116,8 @@ describe ViewDbSequenceBestProfile do
     end
     describe "for db_sequence2" do
       before do
-        @view_row1 = db_sequence2.view_db_sequence_best_profiles.find_by_sequence_source_id(sequence_source2.id)
-        @view_row2 = db_sequence2.view_db_sequence_best_profiles.find_by_sequence_source_id(sequence_source1.id)
+        @view_row1 = db_sequence2.db_sequence_best_profiles.find_by_sequence_source_id(sequence_source2.id)
+        @view_row2 = db_sequence2.db_sequence_best_profiles.find_by_sequence_source_id(sequence_source1.id)
       end
 
       it "has correct best profile" do
@@ -134,8 +133,8 @@ describe ViewDbSequenceBestProfile do
     
     describe "for db_sequence3" do
       before do
-        @view_row1 = db_sequence3.view_db_sequence_best_profiles.find_by_sequence_source_id(sequence_source2.id)
-        @view_row2 = db_sequence3.view_db_sequence_best_profiles.find_by_sequence_source_id(sequence_source1.id)
+        @view_row1 = db_sequence3.db_sequence_best_profiles.find_by_sequence_source_id(sequence_source2.id)
+        @view_row2 = db_sequence3.db_sequence_best_profiles.find_by_sequence_source_id(sequence_source1.id)
       end
 
       it "has correct best profile" do
