@@ -1,18 +1,20 @@
 # == Schema Information
 #
-# Table name: view_db_sequence_best_profiles
+# Table name: db_sequence_best_profiles
 #
+#  db_sequence_id     :integer
 #  hmm_profile_id     :integer
 #  sequence_source_id :integer
-#  db_sequence_id     :integer
 #  hmm_result_row_id  :integer
-#  fullseq_score      :float
-#  pfitmap_release_id :integer
 #
 
-class ViewDbSequenceBestProfile < ActiveRecord::Base
+class DbSequenceBestProfile < ActiveRecord::Base
   belongs_to :hmm_profile
   belongs_to :sequence_source
   belongs_to :db_sequence
   belongs_to :hmm_result_row
+
+  def fullseq_score
+    self.hmm_result_row.fullseq_score
+  end
 end
