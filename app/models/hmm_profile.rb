@@ -49,6 +49,26 @@ class HmmProfile < ActiveRecord::Base
     return bool
   end
 
+  def included_statistics(sequence_source)
+    all_included_sequence_ids = sequence_source.pfitmap_release.db_sequence_ids
+    [DbSequenceBestProfile.where('db_sequence_id IN (?) AND hmm_profile_id = ? AND sequence_source_id = ?', all_included_sequence_ids, self.id, sequence_source.id).count,
+     DbSequenceBestProfile.where('db_sequence_id IN (?) AND hmm_profile_id = ? AND sequence_source_id = ?', all_included_sequence_ids, self.id, sequence_source.id).minimum(:db_sequence_id),
+     DbSequenceBestProfile.where('db_sequence_id IN (?) AND hmm_profile_id = ? AND sequence_source_id = ?', all_included_sequence_ids, self.id, sequence_source.id).maximum(:db_sequence_id)]
+  end
+
+
+  def not_included_statistics(sequence_source)
+    best_profile_sequence_ids(sequence_source) 
+  end
+
+  def best_profile_sequences(sequence_source)
+    DbSequence.joins(:db_sequence_best_profiles).where(:db_sequence_best_profiles => {hmm_profile_id: self.id, sequence_source_id: sequence_source.id})
+  end
+  
+  def best_profile_sequence_ids(sequence_source)
+    DbSequenceBestProfile.select(:db_sequence_id).where(:db_sequence_best_profiles => {hmm_profile_id: self.id, sequence_source_id: sequence_source.id})
+  end
+
   private
   def last_parent_recursion(id)
     parent = HmmProfile.find(id)

@@ -17,6 +17,7 @@ class DbSequenceBestProfile < ActiveRecord::Base
   has_one :pfitmap_release, :through => :sequence_source
 
 
+
   def self.included_stats(hp,ss)
     [included(hp,ss).count, 
      included(hp,ss).minimum(:fullseq_score), 
