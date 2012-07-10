@@ -7,6 +7,7 @@
 #  created_at         :datetime        not null
 #  updated_at         :datetime        not null
 #  pfitmap_release_id :integer
+#  hmm_profile_id     :integer
 #
 
 require 'spec_helper'

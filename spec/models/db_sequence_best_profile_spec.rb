@@ -6,6 +6,7 @@
 #  hmm_profile_id     :integer
 #  sequence_source_id :integer
 #  hmm_result_row_id  :integer
+#  fullseq_score      :float
 #
 
 require 'spec_helper'
@@ -86,7 +87,7 @@ describe DbSequenceBestProfile do
 
   describe "associations" do
     before do 
-      @view_row = DbSequenceBestProfile.first
+      @view_row = DbSequenceBestProfile.find(:first, :conditions => {hmm_profile_id: hmm_profile1.id, sequence_source_id: sequence_source1.id, db_sequence_id: db_sequence3.id})
     end
     subject { @view_row }
     
@@ -152,6 +153,58 @@ describe DbSequenceBestProfile do
         @view_row2.fullseq_score.should == 50.0
       end
     end
-    
+  end
+  describe "the stats" do
+    let!(:pfitmap_release1) { FactoryGirl.create(:pfitmap_release, sequence_source: sequence_source1) }
+    let!(:pfitmap_release2) { FactoryGirl.create(:pfitmap_release, sequence_source: sequence_source2) }
+    let!(:pfitmap_sequence1) { FactoryGirl.create(:pfitmap_sequence, pfitmap_release: pfitmap_release1, db_sequence: db_sequence2, hmm_profile: hmm_profile2) }
+    let!(:pfitmap_sequence2) { FactoryGirl.create(:pfitmap_sequence, pfitmap_release: pfitmap_release1, db_sequence: db_sequence3, hmm_profile: hmm_profile1) }
+    let!(:pfitmap_sequence3) { FactoryGirl.create(:pfitmap_sequence, pfitmap_release: pfitmap_release2, db_sequence: db_sequence1, hmm_profile: hmm_profile2) }
+    let!(:pfitmap_sequence4) { FactoryGirl.create(:pfitmap_sequence, pfitmap_release: pfitmap_release2, db_sequence: db_sequence2, hmm_profile: hmm_profile2) }
+    let!(:pfitmap_sequence5) { FactoryGirl.create(:pfitmap_sequence, pfitmap_release: pfitmap_release2, db_sequence: db_sequence3, hmm_profile: hmm_profile2) }
+
+
+    it "gives the correct included numbers for source1, profile1" do
+      stats = DbSequenceBestProfile.included_stats(hmm_profile1, sequence_source1)
+      count, min, max  = stats
+      count.should == 1
+      min.should == 50.0
+      max.should == 50.0
+    end
+
+    it "gives the correct included numbers for source1, profile2" do
+      count, min, max  = DbSequenceBestProfile.included_stats(hmm_profile2, sequence_source1)
+      count.should == 1
+      min.should == 20.0
+      max.should == 20.0
+    end
+
+    it "gives the correct included numbers for source2, profile1" do
+      count, min, max  = DbSequenceBestProfile.included_stats(hmm_profile1, sequence_source2)
+      count.should == 0
+      min.should == nil
+      max.should == nil
+    end
+
+    it "gives the correct included numbers for source2, profile2" do
+      count, min, max  = DbSequenceBestProfile.included_stats(hmm_profile2, sequence_source2)
+      count.should == 3
+      max.should == 45.0
+      min.should == 35.0
+    end
+
+    it "gives the correct not included numbers for source1 profile1" do
+      count, min, max  = DbSequenceBestProfile.not_included_stats(hmm_profile1, sequence_source1)
+      count.should == 0
+      min.should == nil
+      max.should == nil
+    end
+
+    it "gives the correct not included numbers for source1 profile2" do
+      count, min, max  = DbSequenceBestProfile.not_included_stats(hmm_profile2, sequence_source1)
+      count.should == 1
+      min.should == 15.0
+      max.should == 15.0
+    end
   end
 end

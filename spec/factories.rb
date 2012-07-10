@@ -85,6 +85,7 @@ FactoryGirl.define do
   factory :pfitmap_sequence do
     db_sequence
     pfitmap_release
+    hmm_profile
   end
 
   factory :hmm_score_criterion do

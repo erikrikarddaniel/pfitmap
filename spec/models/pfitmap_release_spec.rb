@@ -106,6 +106,7 @@ let!(:sequence_source5) { FactoryGirl.create(:sequence_source) }
   end
 
   describe "add sequence to head" do
+    let!(:hmm_profile) { FactoryGirl.create(:hmm_profile) }
     let!(:db_sequence1) { FactoryGirl.create(:db_sequence) }
     let!(:db_sequence2) { FactoryGirl.create(:db_sequence) }
     let!(:pfitmap_release_not_current) { FactoryGirl.create(:pfitmap_release, sequence_source: sequence_source) }
@@ -116,7 +117,7 @@ let!(:sequence_source5) { FactoryGirl.create(:sequence_source) }
     describe "adds to the correct release" do
       let!(:current_release) { FactoryGirl.create(:pfitmap_release) }
       before do
-        current_release.add_seq(db_sequence2)
+        current_release.add_seq(db_sequence2, hmm_profile )
       end
 
       it "adds to the correct release" do
@@ -133,7 +134,7 @@ let!(:sequence_source5) { FactoryGirl.create(:sequence_source) }
                                                    pfitmap_release: pfitmap_release_current
                                                    ) }
       before do
-        pfitmap_release_current.add_seq(db_sequence3)
+        pfitmap_release_current.add_seq(db_sequence3, hmm_profile)
       end
       subject{ pfitmap_release_current }
       its(:db_sequences) { should include(db_sequence3) }

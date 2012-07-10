@@ -111,7 +111,7 @@ describe "Hmm Profile Pages" do
       # @bulk_tblout = fixture_file_upload('/sample.tblout')
       visit hmm_profile_path(hmm_profile)
       select(sequence_source.list_name, :from => 'hmm_result[sequence_source_id]')
-      attach_file 'file', '/home/johannes/RNRdb/pfitmap/spec/fixtures/sample.tblout'
+      attach_file 'file', "#{Rails.root}/spec/fixtures/sample.tblout"
       click_on 'Create Result'
       page.should have_content('successfully')
     end
