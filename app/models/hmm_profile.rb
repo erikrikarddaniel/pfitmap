@@ -14,6 +14,7 @@
 class HmmProfile < ActiveRecord::Base
   # Could be a reason to remove parent_id from accessible attributes
   attr_accessible :name, :version, :hierarchy, :parent_id
+  attr_accessor :release_statistics
   has_many :children, :class_name => "HmmProfile", :foreign_key => "parent_id", :dependent => :destroy
   belongs_to :parent, :class_name => "HmmProfile", :foreign_key => "parent_id"
   has_many :hmm_results
@@ -22,6 +23,7 @@ class HmmProfile < ActiveRecord::Base
   has_many :enzymes, :through => :enzyme_profiles
   has_many :db_sequence_best_profiles
   has_many :best_profile_sequences, through: :db_sequence_best_profiles, source: :db_sequence
+  has_many :pfitmap_sequences
   validates :name, presence: true
   validates :version, presence: true
   validates :hierarchy, presence: true, :uniqueness => :true
@@ -47,15 +49,6 @@ class HmmProfile < ActiveRecord::Base
     return bool
   end
 
-  def db_sequences_stats(sequence_source)
-    
-  end
-
-  def best_profile_sequences(sequence_source)
-    DbSequence.joins(:db_sequence_best_profiles).where(:db_sequence_best_profiles => {hmm_profile_id: self.id, sequence_source_id: sequence_source.id})
-  end
-
-
   private
   def last_parent_recursion(id)
     parent = HmmProfile.find(id)
@@ -64,9 +57,5 @@ class HmmProfile < ActiveRecord::Base
     else
       last_parent_recursion(parent.parent_id)
     end
-  end
-
-  def db_sequences_limited(pfitmap_release, sequence_source)
-    DbSequence.where()
   end
 end
