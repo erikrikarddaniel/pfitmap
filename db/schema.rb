@@ -11,45 +11,8 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120709104445) do
+ActiveRecord::Schema.define(:version => 20120705144027) do
 
-  create_table "hmm_result_rows", :force => true do |t|
-    t.string   "target_name"
-    t.string   "target_acc"
-    t.string   "query_name"
-    t.string   "query_acc"
-    t.float    "fullseq_evalue"
-    t.float    "fullseq_score"
-    t.float    "fullseq_bias"
-    t.float    "bestdom_evalue"
-    t.float    "bestdom_score"
-    t.float    "bestdom_bias"
-    t.float    "domnumest_exp"
-    t.integer  "domnumest_reg"
-    t.integer  "domnumest_clu"
-    t.integer  "domnumest_ov"
-    t.integer  "domnumest_env"
-    t.integer  "domnumest_rep"
-    t.integer  "domnumest_inc"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
-    t.integer  "hmm_result_id"
-    t.integer  "domnumest_dom"
-    t.integer  "db_sequence_id"
-    t.index ["db_sequence_id"], :name => "index_hmm_result_rows_on_db_sequence_id"
-  end
-
-  create_table "hmm_results", :force => true do |t|
-    t.datetime "executed"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
-    t.integer  "hmm_profile_id"
-    t.integer  "sequence_source_id", :null => false
-    t.index ["hmm_profile_id"], :name => "index_hmm_results_on_hmm_profile_id"
-    t.index ["sequence_source_id"], :name => "index_hmm_results_on_sequence_source_id"
-  end
-
-  create_view "db_sequence_best_profiles", "SELECT hmmrr.db_sequence_id, hmmr.hmm_profile_id, hmmr.sequence_source_id, hmmrr.id AS hmm_result_row_id FROM (hmm_results hmmr JOIN hmm_result_rows hmmrr ON ((hmmr.id = hmmrr.hmm_result_id))) WHERE (hmmrr.fullseq_score = (SELECT max(hmmrrinner.fullseq_score) AS max FROM (hmm_result_rows hmmrrinner JOIN hmm_results hmmrinner ON ((hmmrrinner.hmm_result_id = hmmrinner.id))) WHERE ((hmmrrinner.db_sequence_id = hmmrr.db_sequence_id) AND (hmmrinner.sequence_source_id = hmmr.sequence_source_id))))", :force => true
   create_table "db_sequences", :force => true do |t|
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
@@ -90,6 +53,42 @@ ActiveRecord::Schema.define(:version => 20120709104445) do
     t.integer  "parent_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "hmm_result_rows", :force => true do |t|
+    t.string   "target_name"
+    t.string   "target_acc"
+    t.string   "query_name"
+    t.string   "query_acc"
+    t.float    "fullseq_evalue"
+    t.float    "fullseq_score"
+    t.float    "fullseq_bias"
+    t.float    "bestdom_evalue"
+    t.float    "bestdom_score"
+    t.float    "bestdom_bias"
+    t.float    "domnumest_exp"
+    t.integer  "domnumest_reg"
+    t.integer  "domnumest_clu"
+    t.integer  "domnumest_ov"
+    t.integer  "domnumest_env"
+    t.integer  "domnumest_rep"
+    t.integer  "domnumest_inc"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.integer  "hmm_result_id"
+    t.integer  "domnumest_dom"
+    t.integer  "db_sequence_id"
+    t.index ["db_sequence_id"], :name => "index_hmm_result_rows_on_db_sequence_id"
+  end
+
+  create_table "hmm_results", :force => true do |t|
+    t.datetime "executed"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+    t.integer  "hmm_profile_id"
+    t.integer  "sequence_source_id", :null => false
+    t.index ["hmm_profile_id"], :name => "index_hmm_results_on_hmm_profile_id"
+    t.index ["sequence_source_id"], :name => "index_hmm_results_on_sequence_source_id"
   end
 
   create_table "hmm_score_criteria", :force => true do |t|
