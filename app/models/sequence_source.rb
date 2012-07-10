@@ -17,6 +17,7 @@ class SequenceSource < ActiveRecord::Base
   has_many :hmm_result_rows, :through => :hmm_results
   has_many :db_sequences, :through => :hmm_result_rows
   has_many :view_db_sequence_best_profiles
+  has_one :pfitmap_release
   validates :source, presence: true
   validates :name, presence: true
   validates :version, presence: true
@@ -30,7 +31,7 @@ class SequenceSource < ActiveRecord::Base
       hmm_profile_id = seq.best_hmm_profile(self)
       hmm_profile = HmmProfile.find(hmm_profile_id)
       if hmm_profile.evaluate?(seq,self)
-        head_release.add_seq(seq)
+        head_release.add_seq(seq, hmm_profile)
       end
     end
   end
