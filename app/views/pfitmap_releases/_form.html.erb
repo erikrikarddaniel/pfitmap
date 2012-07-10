@@ -9,6 +9,11 @@
     <%= f.text_field :release_date, :placeholder => 'Typical value: 2012-06-13' %>
   </div>
 
+  <div class="input-large">
+    <%= f.label :sequence_source %>
+    <%= collection_select(:pfitmap_release, :sequence_source_id, @sequence_sources, :id, :list_name) %>
+  </div>
+
   <div class="actions">
     <%= f.submit %>
   </div>
