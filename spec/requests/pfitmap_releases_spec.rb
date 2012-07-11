@@ -66,11 +66,12 @@ describe "PfitmapReleases" do
     end
   end
 
-  describe "GET /pfitmap_releases" do
-    it "works! (now write some real specs)" do
-      # Run the generator again with the --webrat flag if you want to use webrat methods/matchers
-      get pfitmap_releases_path
-      response.status.should be(200)
+  describe "show page" do
+    let!(:pfitmap_release1) { FactoryGirl.create(:pfitmap_release) }
+    it "works for empty release" do
+      visit pfitmap_release_path(pfitmap_release1)
+      save_and_open_page
+      page.should have_content('Pfitmap Release')
     end
   end
 end

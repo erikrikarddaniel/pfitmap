@@ -88,6 +88,7 @@ class PfitmapReleasesController < ApplicationController
         format.html { redirect_to @pfitmap_release, notice: 'Pfitmap release was successfully updated.' }
         format.json { head :no_content }
       else
+        @sequence_sources = SequenceSource.all
         format.html { render action: "edit" }
         format.json { render json: @pfitmap_release.errors, status: :unprocessable_entity }
       end
