@@ -50,11 +50,11 @@ class HmmProfile < ActiveRecord::Base
     return bool
   end
 
-<<<<<<< HEAD
   # Provides a concatenation of name and protein name useful for display
   def description
     "#{name}#{protein_name ? " (#{protein_name})" : ""}"
-=======
+  end
+
   def included_statistics(sequence_source)
     all_included_sequence_ids = sequence_source.pfitmap_release.db_sequence_ids
     [DbSequenceBestProfile.where('db_sequence_id IN (?) AND hmm_profile_id = ? AND sequence_source_id = ?', all_included_sequence_ids, self.id, sequence_source.id).count,
@@ -73,7 +73,6 @@ class HmmProfile < ActiveRecord::Base
   
   def best_profile_sequence_ids(sequence_source)
     DbSequenceBestProfile.select(:db_sequence_id).where(:db_sequence_best_profiles => {hmm_profile_id: self.id, sequence_source_id: sequence_source.id})
->>>>>>> pfitmap_release
   end
 
   private
