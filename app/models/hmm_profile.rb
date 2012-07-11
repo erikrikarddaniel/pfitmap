@@ -2,18 +2,19 @@
 #
 # Table name: hmm_profiles
 #
-#  id         :integer         not null, primary key
-#  name       :string(255)
-#  version    :string(255)
-#  hierarchy  :string(255)
-#  parent_id  :integer
-#  created_at :datetime        not null
-#  updated_at :datetime        not null
+#  id           :integer         not null, primary key
+#  name         :string(255)
+#  version      :string(255)
+#  hierarchy    :string(255)
+#  parent_id    :integer
+#  created_at   :datetime        not null
+#  updated_at   :datetime        not null
+#  protein_name :string(255)
 #
 
 class HmmProfile < ActiveRecord::Base
   # Could be a reason to remove parent_id from accessible attributes
-  attr_accessible :name, :version, :hierarchy, :parent_id
+  attr_accessible :name, :protein_name, :version, :hierarchy, :parent_id
   has_many :children, :class_name => "HmmProfile", :foreign_key => "parent_id", :dependent => :destroy
   belongs_to :parent, :class_name => "HmmProfile", :foreign_key => "parent_id"
   has_many :hmm_results
@@ -43,6 +44,11 @@ class HmmProfile < ActiveRecord::Base
     best_profile = (db_sequence.best_hmm_profile == self.id)
     bool = self.inclusion_criteria.inject(best_profile) { |result, element| result && element.evaluate?(db_sequence) } 
     return bool
+  end
+
+  # Provides a concatenation of name and protein name useful for display
+  def description
+    "#{name}#{protein_name ? " (#{protein_name})" : ""}"
   end
 
   private

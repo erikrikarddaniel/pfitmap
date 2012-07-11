@@ -18,6 +18,7 @@
 *~
 .*.sw?
 *.dia.autosave
+\#.*\#
 
 # Ignore database settings file
 /config/database.yml

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120702134627) do
+ActiveRecord::Schema.define(:version => 20120709122034) do
 
   create_table "db_sequences", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -53,8 +53,9 @@ ActiveRecord::Schema.define(:version => 20120702134627) do
     t.string   "version"
     t.string   "hierarchy"
     t.integer  "parent_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.string   "protein_name"
   end
 
   create_table "hmm_result_rows", :force => true do |t|

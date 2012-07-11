@@ -10,8 +10,8 @@ namespace :db do
 def make_hmm_profiles
     HmmProfile.create!(name: "RNR R2 and R2lox", version: "20120402", hierarchy: "001")
     @hmm_profile_001 = HmmProfile.find_by_hierarchy("001")
-    @hmm_profile_00100 = HmmProfile.create!(name: "RNR R2", version: "20120402", hierarchy: "001.00", parent_id: @hmm_profile_001.id)
-    HmmProfile.create!(name: "RNR R2 Child1", version: "20120402", hierarchy: "001.00.00", parent_id: @hmm_profile_00100.id)
+    @hmm_profile_00100 = HmmProfile.create!(name: "RNR R2", protein_name: "NrdB", version: "20120402", hierarchy: "001.00", parent_id: @hmm_profile_001.id)
+    HmmProfile.create!(name: "RNR R2 Child1", protein_name: "NrdF", version: "20120402", hierarchy: "001.00.00", parent_id: @hmm_profile_00100.id)
     HmmProfile.create!(name: "RNR R2 Child2", version: "20120402", hierarchy: "001.00.01", parent_id: @hmm_profile_00100.id)
     HmmProfile.create!(name: "R2lox", version: "20120402", hierarchy: "001.01", parent_id: @hmm_profile_001.id)
     HmmProfile.create!(name: "RNR R1 and PFL", version: "20120402", hierarchy: "000")
