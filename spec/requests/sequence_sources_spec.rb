@@ -114,4 +114,47 @@ describe "SequenceSources" do
     end
 
   end
+
+  describe "Form page" do
+    before do
+      make_mock_admin
+      login_with_oauth
+    end
+    describe "new page" do
+      before do
+        visit new_sequence_source_path()
+      end
+      it "can handle invalid parameters" do
+        click_button "Save Sequence Source"
+        page.should have_content("The form contains 3 error")
+      end
+      
+      it "can handle valid parameters" do
+        page.fill_in 'Source', :with => "NCBI"
+        page.fill_in 'Name', :with => "NR"
+        page.fill_in 'Version', :with => "1988-06-13"
+        click_button "Save Sequence Source"
+        page.should have_content("successfully created")
+      end
+    end
+      
+    describe "edit page" do
+      let!(:sequence_source) { FactoryGirl.create(:sequence_source) }
+      before do
+        visit edit_sequence_source_path(sequence_source)
+      end
+      it "can handle invalid parameters" do
+        page.fill_in 'Source', :with => ""
+        click_button "Save Sequence Source"
+        page.should have_content("The form contains 1 error")
+      end
+      
+      it "can handle valid parameters" do
+        page.fill_in 'Source', :with => "NCBI2"
+        click_button "Save Sequence Source"
+        page.should have_content("successfully updated")
+      end
+    end
+  end
+
 end

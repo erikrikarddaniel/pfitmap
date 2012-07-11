@@ -33,5 +33,25 @@ describe "Users" do
     end
     
   end
+
+  describe "Form page" do
+    before do
+      make_mock_admin
+      login_with_oauth
+    end      
+      
+    describe "edit page" do
+      before do
+        visit edit_user_path(User.first)
+      end
+      
+      it "can handle valid parameters" do
+        page.fill_in 'Name', :with => "Johannes"
+        click_button "Save Changes"
+        page.should have_content("successfully updated")
+      end
+    end
+  end
+
 end
   
