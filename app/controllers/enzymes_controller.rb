@@ -46,7 +46,7 @@ class EnzymesController < ApplicationController
   # POST /enzymes.json
   def create
     @enzyme = Enzyme.new(params[:enzyme])
-    @hmm_profiles = HmmProfile.find_by_id(params[:hmm_profile_ids])
+    @hmm_profiles = HmmProfile.find_all_by_id(params[:hmm_profile_ids])
 
     respond_to do |format|
       if @enzyme.save
@@ -61,6 +61,7 @@ class EnzymesController < ApplicationController
         format.html { redirect_to @enzyme, notice: 'Enzyme was successfully created.' }
         format.json { render json: @enzyme, status: :created, location: @enzyme }
       else
+        @hmm_profiles = HmmProfile.all
         format.html { render action: "new" }
         format.json { render json: @enzyme.errors, status: :unprocessable_entity }
       end
@@ -87,6 +88,7 @@ class EnzymesController < ApplicationController
         format.html { redirect_to @enzyme, notice: 'Enzyme was successfully updated.' }
         format.json { head :no_content }
       else
+        @hmm_profiles = HmmProfile.all
         format.html { render action: "edit" }
         format.json { render json: @enzyme.errors, status: :unprocessable_entity }
       end

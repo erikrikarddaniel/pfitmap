@@ -77,6 +77,7 @@ class HmmProfilesController < ApplicationController
         format.html { redirect_to @hmm_profile, notice: 'Hmm profile was successfully updated.' }
         format.json { head :no_content }
       else
+        @parent_candidates = HmmProfile.all
         format.html { render action: "edit" }
         format.json { render json: @hmm_profile.errors, status: :unprocessable_entity }
       end
