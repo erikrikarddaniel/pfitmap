@@ -32,7 +32,6 @@ describe DbSequence do
   it { should respond_to(:all_hits) }
   it { should respond_to(:best_hmm_profile) }
   it { should respond_to(:best_hmm_result_row) }
-  it { should respond_to(:best_hmm_profile_id) }
 
   describe "with valid parameters" do
     it {should be_valid}
@@ -67,7 +66,6 @@ describe DbSequence do
       describe "best hmm profile" do
         subject { db_sequence}
         it "is hmm_profile" do
-          db_sequence.best_hmm_profile_id(sequence_source).should eq(hmm_profile.id)
           db_sequence.best_hmm_profile(sequence_source).should eq(hmm_profile)
         end
       end
@@ -95,7 +93,6 @@ describe DbSequence do
       describe "best hmm profile" do
         subject { db_sequence}
         it "is hmm_profile" do
-          db_sequence.best_hmm_profile_id(sequence_source).should eq(hmm_profile.id)
           db_sequence.best_hmm_profile(sequence_source).should eq(hmm_profile)
         end
       end
@@ -128,7 +125,6 @@ describe DbSequence do
       describe "best hmm profile" do
         subject { db_sequence}
         it "is hmm_profile" do
-          db_sequence.best_hmm_profile_id(sequence_source).should eq(hmm_profile.id)
           db_sequence.best_hmm_profile(sequence_source).should eq(hmm_profile)
         end
       end
