@@ -16,7 +16,7 @@ class HmmResultsController < ApplicationController
   # GET /hmm_results/1.json
   def show
     @hmm_result = HmmResult.find(params[:id])
-    @hmm_result_rows = @hmm_result.hmm_result_rows.paginate(page: params[:page])
+    @hmm_result_rows = @hmm_result.hmm_result_rows.paginate(page: params[:page], order: "fullseq_score DESC")
     
     respond_to do |format|
       format.html # show.html.erb
