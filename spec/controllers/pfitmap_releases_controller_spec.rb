@@ -19,6 +19,7 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe PfitmapReleasesController do
+  let!(:sequence_source) { FactoryGirl.create(:sequence_source) }
   before do
     @user = get_admin_user
   end
@@ -30,6 +31,7 @@ describe PfitmapReleasesController do
     {
     release: "1.1",
     release_date: "2005-10-10",
+    sequence_source_id: sequence_source.id
     }
   end
   

@@ -16,8 +16,12 @@
     </p>
 
     <p>
-      <b> Best HMM Profile: </b>
-    <p><%= link_to @best_profile.name, hmm_profile_path(@best_profile) %></p>
+      <b> Best HMM Profile(s): </b>
+      <% @best_profiles.each do |source,profile| %>
+      <% if profile %>
+    <p> <%= source.list_name %> : <%= link_to profile.name, hmm_profile_path(profile) %></p>
+       <% end %>
+    <% end %>
     </p>
 
     <%= link_to 'Edit', edit_db_sequence_path(@db_sequence) %> |

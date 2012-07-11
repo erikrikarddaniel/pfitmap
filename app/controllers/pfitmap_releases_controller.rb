@@ -16,26 +16,24 @@ class PfitmapReleasesController < ApplicationController
   # GET /pfitmap_releases/1.json
   def show
     @pfitmap_release = PfitmapRelease.find(params[:id])
-    @sequences = @pfitmap_release.db_sequences
-    
-    #Set virtual attribute hmm_profile
-    #Store the result of the possibly heavy operation "best_hmm_profile"
+    @sequence_source = @pfitmap_release.sequence_source
+    @hmm_profiles = HmmProfile.all
+    @hmm_profiles.each do |profile|
+      included_count, included_min, included_max = 
+        DbSequenceBestProfile.included_stats(profile, @sequence_source)
+      not_inc_count, not_inc_min, not_inc_max = 
+        DbSequenceBestProfile.not_included_stats(profile, @sequence_source)
 
-    @sequences.each do |seq|
-      seq.hmm_profile, seq.score = seq.best_hmm_profile_with_score
-    end
-    
-    #Create instance variable @profiles_with_sequences containing
-    #an array of pairs [profile_id,[sequences_for_that_profile]]
-    @profiles_with_sequences = @sequences.group_by { |a| a.hmm_profile }
-    
-    @profiles_with_statistics = @profiles_with_sequences.map do |pair|
-      profile = HmmProfile.find(pair[0])
-      seq_arr = pair[1]
-      seq_count = seq_arr.count
-      min_score = seq_arr.min { |a,b| a.score <=> b.score }.score
-      max_score = seq_arr.max { |a,b| a.score <=> b.score }.score
-      [profile, [seq_count,min_score, max_score]]
+      profile.release_statistics = {
+        :included => 
+        {:count => included_count, 
+          :min_score => included_min, 
+          :max_score => included_max},
+        :not_included =>
+        {:count => not_inc_count,
+          :min_score => not_inc_min,
+          :max_score => not_inc_max}
+      }
     end
     
 
@@ -49,6 +47,7 @@ class PfitmapReleasesController < ApplicationController
   # GET /pfitmap_releases/new.json
   def new
     @pfitmap_release = PfitmapRelease.new
+    @sequence_sources = SequenceSource.all
 
     respond_to do |format|
       format.html # new.html.erb
@@ -59,6 +58,7 @@ class PfitmapReleasesController < ApplicationController
   # GET /pfitmap_releases/1/edit
   def edit
     @pfitmap_release = PfitmapRelease.find(params[:id])
+    @sequence_sources = SequenceSource.all
   end
 
   # POST /pfitmap_releases
@@ -71,6 +71,7 @@ class PfitmapReleasesController < ApplicationController
         format.html { redirect_to @pfitmap_release, notice: 'Pfitmap release was successfully created.' }
         format.json { render json: @pfitmap_release, status: :created, location: @pfitmap_release }
       else
+        @sequence_sources = SequenceSource.all
         format.html { render action: "new" }
         format.json { render json: @pfitmap_release.errors, status: :unprocessable_entity }
       end

@@ -17,31 +17,62 @@
       <b> Release Date: </b>
       <%= @pfitmap_release.release_date %>
     </p>
+    <p>
+      <b> Sequence Source </b>
+      <%= @sequence_source ? @sequence_source.list_name : "none" %>
+    </p>
   </aside>
   <div class="main-content span8">
-    <h3>Passed</h3>
-    <% if @profiles_with_statistics.any? %>
-    <table>
-      <thead>
-	<tr>
-	  <th>HMM Profile</th>
-	  <th>Count</th>
-	  <th>Min Score</th>
-	  <th>Max Score</th>
-	</tr>
-      </thead>
-      <tbody>
-	<% @profiles_with_statistics.each do |pair|%>
-	<tr>
-	  <td><%= pair[0].name %></td>
-	  <td><%= pair[1][0] %></td>
-	  <td><%= pair[1][1] %></td>
-	  <td><%= pair[1][2] %></td>
-	</tr>
-	<% end %>
-      </tbody>
-    </table>
-    <% end %>
+    <div>
+      <h3>Included</h3>
+      <% if @hmm_profiles.any? %>
+      <table>
+	<thead>
+	  <tr>
+	    <th>HMM Profile</th>
+	    <th>Count</th>
+	    <th>Min Score</th>
+	    <th>Max Score</th>
+	  </tr>
+	</thead>
+	<tbody>
+	  <% @hmm_profiles.each do |profile|%>
+	  <tr>
+	    <td><%= profile.name %></td>
+	    <td><%= profile.release_statistics[:included][:count] %></td>
+	    <td><%= profile.release_statistics[:included][:min_score] %></td>
+	    <td><%= profile.release_statistics[:included][:max_score] %></td>
+	  </tr>
+	  <% end %>
+	</tbody>
+      </table>
+      <% end %>
+    </div>
+    <div>
+      <h3>Not Included</h3>
+      <% if @hmm_profiles.any? %>
+      <table>
+	<thead>
+	  <tr>
+	    <th>HMM Profile</th>
+	    <th>Count</th>
+	    <th>Min Score</th>
+	    <th>Max Score</th>
+	  </tr>
+	</thead>
+	<tbody>
+	  <% @hmm_profiles.each do |profile|%>
+	  <tr>
+	    <td><%= profile.name %></td>
+	    <td><%= profile.release_statistics[:not_included][:count] %></td>
+	    <td><%= profile.release_statistics[:not_included][:min_score] %></td>
+	    <td><%= profile.release_statistics[:not_included][:max_score] %></td>
+	  </tr>
+	  <% end %>
+	</tbody>
+      </table>
+      <% end %>
+    </div>
   </div>
 
   <%= link_to 'Edit', edit_pfitmap_release_path(@pfitmap_release) %> |

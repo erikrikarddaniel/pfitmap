@@ -28,7 +28,7 @@ describe "DbSequences" do
     end
     it "should display some information headers" do
       page.should have_content("Result Rows")
-      page.should have_content("Best HMM Profile:")
+      page.should have_content("Best HMM Profile(s):")
     end
     it "should display som information" do
       page.should have_content(hmm_result_row.fullseq_evalue)
