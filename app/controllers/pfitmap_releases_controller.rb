@@ -82,7 +82,9 @@ class PfitmapReleasesController < ApplicationController
   # PUT /pfitmap_releases/1.json
   def update
     @pfitmap_release = PfitmapRelease.find(params[:id])
-
+    if not @pfitmap_release.current
+      @pfitmap_release.current = 'false'
+    end
     respond_to do |format|
       if @pfitmap_release.update_attributes(params[:pfitmap_release])
         format.html { redirect_to @pfitmap_release, notice: 'Pfitmap release was successfully updated.' }
