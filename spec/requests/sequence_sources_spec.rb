@@ -16,13 +16,17 @@ describe "SequenceSources" do
 
   describe "show" do
     before{visit sequence_source_path(sequence_source) }
+ 
     it "displays atleast the name" do
       page.should have_content(sequence_source.name)
     end
-    
-    it "should have an evaluate button" do
-      page.should have_button("Evaluate")                           
+
+    context "whithout new release" do    
+      it "should not have an evaluate button" do
+        page.should have_content("There is no release created after the current")
+      end
     end
+    
     describe "with results" do
       let!(:source1) { FactoryGirl.create(:sequence_source) }
       let!(:source2) { FactoryGirl.create(:sequence_source_older) }
@@ -80,35 +84,77 @@ describe "SequenceSources" do
                                                :db_sequence => db_sequence) }
     describe "with existing current release" do
       let!(:pfitmap_release_not_current) { FactoryGirl.create(:pfitmap_release) }
-      let!(:pfitmap_release) { FactoryGirl.create(:pfitmap_release, current: true) }
-      before do
-        visit sequence_source_path(sequence_source)
-        click_button('Evaluate')
+      let!(:pfitmap_release_current) { FactoryGirl.create(:pfitmap_release, current: true) }
+      context "but without new release" do
+        it "should not have an evaluate button" do
+          visit sequence_source_path(sequence_source)
+          page.should have_content("There is no release created after the current")
+        end
       end
-      it "should give the current release a db_sequence" do
-        pfitmap_release.db_sequences.should include(db_sequence)
+      context "with a new release" do
+        let!(:pfitmap_release) { FactoryGirl.create(:pfitmap_release) }
+        before do
+          visit sequence_source_path(sequence_source)
+          click_button('Evaluate')
+        end
+        
+        it "should give the current release a db_sequence" do
+          pfitmap_release.db_sequences.should include(db_sequence)
+        end
+        
+        it "should not give other releases a db_sequence" do
+          pfitmap_release_not_current.db_sequences.should == []
+          pfitmap_release_current.db_sequences.should == []
+        end
+        
+        it "should be a success" do
+          page.should have_content('successfully')
+        end
       end
-
-      it "should give other releases a db_sequence" do
-        pfitmap_release_not_current.db_sequences.should_not include(db_sequence)
-      end
-      
-      it "should be a success" do
-        page.should have_content('successfully')
-      end
-    end
-    
-    describe "without existing current release" do
-      before do
-        visit sequence_source_path(sequence_source)
-        click_on('Evaluate')
-      end
-      
-      it "should be an error" do
-        page.should have_css('.alert-error')
-      end
-      
     end
 
   end
+
+  describe "Form page" do
+    before do
+      make_mock_admin
+      login_with_oauth
+    end
+    describe "new page" do
+      before do
+        visit new_sequence_source_path()
+      end
+      it "can handle invalid parameters" do
+        click_button "Save Sequence Source"
+        page.should have_content("The form contains 3 error")
+      end
+      
+      it "can handle valid parameters" do
+        page.fill_in 'Source', :with => "NCBI"
+        page.fill_in 'Name', :with => "NR"
+        page.fill_in 'Version', :with => "1988-06-13"
+        click_button "Save Sequence Source"
+        page.should have_content("successfully created")
+      end
+    end
+      
+    describe "edit page" do
+      let!(:sequence_source) { FactoryGirl.create(:sequence_source) }
+      before do
+        visit edit_sequence_source_path(sequence_source)
+      end
+      it "can handle invalid parameters" do
+        page.fill_in 'Source', :with => ""
+        click_button "Save Sequence Source"
+        page.should have_content("The form contains 1 error")
+      end
+      
+      it "can handle valid parameters" do
+        page.fill_in 'Source', :with => "NCBI2"
+        click_button "Save Sequence Source"
+        page.should have_content("successfully updated")
+      end
+    end
+  end
+
 end

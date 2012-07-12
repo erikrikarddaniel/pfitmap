@@ -17,6 +17,7 @@ class SequenceSourcesController < ApplicationController
     @sequence_source = SequenceSource.find(params[:id])
     @hmm_results = @sequence_source.hmm_results.paginate(page: params[:page])
     @hmm_profiles_last_parents = HmmProfile.last_parents.sort_by{|p| p.hierarchy }
+    @pfitmap_releases = PfitmapRelease.find_all_after_current.map{|rel| [rel.release, rel.id]}
     @hmm_profiles = @sequence_source.hmm_profiles
 
     respond_to do |format|
@@ -90,10 +91,12 @@ class SequenceSourcesController < ApplicationController
 
   def evaluate
     @sequence_source = SequenceSource.find(params[:sequence_source_id])
-    @head_release = PfitmapRelease.find_current_release
+    @head_release = PfitmapRelease.find_by_id(params[:release_id])
 
-    if @head_release
+    if (@head_release and @sequence_source)
       @head_release.pfitmap_sequences.destroy_all
+      @head_release.sequence_source_id = @sequence_source.id
+      @head_release.save
       @sequence_source.evaluate(@head_release)
       flash[:success] = 'Sequence source was successfully evaluated.'
       respond_to do |format|
@@ -105,6 +108,8 @@ class SequenceSourcesController < ApplicationController
       @hmm_results = @sequence_source.hmm_results.paginate(page: params[:page])
       @hmm_profiles_last_parents = HmmProfile.last_parents.sort_by{|p| p.hierarchy }
       @hmm_profiles = @sequence_source.hmm_profiles
+      @pfitmap_releases = PfitmapRelease.find_all_after_current.map{|rel| [rel.release, rel.id]}
+
       flash.now[:error] = 'There is no current Pfitmap Release, thus the source was not evaluated.'
       respond_to do |format|
         format.html { render 'show' }

@@ -7,6 +7,7 @@
     <thead>
       <tr>
 	<th>Created at</th>
+	<th>Best Profile</th>
 	<th></th>
 	<th></th>
 	<th></th>
@@ -16,6 +17,7 @@
       <% @db_sequences.each do |db_sequence| %>
       <tr>
 	<td><%= db_sequence.created_at %></td>
+	<td><%= db_sequence.hmm_profiles %></td>
 	<td><%= link_to 'Show', db_sequence %></td>
 	<td><%= link_to 'Edit', edit_db_sequence_path(db_sequence) %></td>
 	<td><%= link_to 'Destroy', db_sequence, confirm: 'Are you sure?', method: :delete %></td>

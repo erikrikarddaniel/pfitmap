@@ -162,6 +162,9 @@ GEM
       railties (~> 3.2.0)
       sass (>= 3.1.10)
       tilt (~> 1.3)
+    schema_plus (0.4.1)
+      rails
+      valuable
     selenium-webdriver (2.24.0)
       childprocess (>= 0.2.5)
       libwebsocket (~> 0.1.3)
@@ -183,6 +186,7 @@ GEM
     uglifier (1.2.5)
       execjs (>= 0.3.0)
       multi_json (~> 1.3)
+    valuable (0.9.5)
     will_paginate (3.0.3)
     xpath (0.1.4)
       nokogiri (~> 1.3)
@@ -212,6 +216,7 @@ DEPENDENCIES
   rspec-rails (= 2.8.1)
   rvm-capistrano
   sass-rails (~> 3.2.3)
+  schema_plus
   term-ansicolor
   therubyracer
   uglifier (>= 1.0.3)

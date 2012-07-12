@@ -84,10 +84,10 @@ describe HmmScoreCriterion do
 
   describe "evaluating db_sequence" do
     it "the best profile evaluates to true" do
-      hmm_score_criterion1.evaluate?(db_sequence1).should be_true
+      hmm_score_criterion1.evaluate?(db_sequence1,sequence_source).should be_true
     end
     it "a mediocre profile evaluates to false" do
-      hmm_score_criterion1.evaluate?(db_sequence2).should be_false
+      hmm_score_criterion1.evaluate?(db_sequence2, sequence_source).should be_false
     end
   end
 end

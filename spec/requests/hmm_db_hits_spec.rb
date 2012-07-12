@@ -41,4 +41,30 @@ describe "HmmDbHits" do
       page.should have_content(hmm_db_hit.desc)
     end
   end
+  describe "Form page" do
+    before do
+      make_mock_admin
+      login_with_oauth
+    end
+      
+    describe "edit page" do
+      let!(:hmm_db_hit) { FactoryGirl.create(:hmm_db_hit) }
+      before do
+        visit edit_hmm_db_hit_path(hmm_db_hit)
+      end
+      it "can handle invalid parameters" do
+        page.fill_in 'Gi', :with => ""
+        click_button "Update Hmm db hit"
+        page.should have_content("1 error prohibited")
+      end
+      
+      it "can handle valid parameters" do
+        page.fill_in 'Gi', :with => "12345"
+        click_button "Update Hmm db hit"
+        page.should have_content("successfully updated")
+      end
+    end
+  end
+
+
 end

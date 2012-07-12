@@ -15,12 +15,16 @@
 class HmmProfile < ActiveRecord::Base
   # Could be a reason to remove parent_id from accessible attributes
   attr_accessible :name, :protein_name, :version, :hierarchy, :parent_id
+  attr_accessor :release_statistics
   has_many :children, :class_name => "HmmProfile", :foreign_key => "parent_id", :dependent => :destroy
   belongs_to :parent, :class_name => "HmmProfile", :foreign_key => "parent_id"
   has_many :hmm_results
   has_many :hmm_score_criteria, :dependent => :destroy
   has_many :enzyme_profiles
   has_many :enzymes, :through => :enzyme_profiles
+  has_many :db_sequence_best_profiles
+  has_many :best_profile_sequences, through: :db_sequence_best_profiles, source: :db_sequence
+  has_many :pfitmap_sequences
   validates :name, presence: true
   validates :version, presence: true
   validates :hierarchy, presence: true, :uniqueness => :true
@@ -40,9 +44,9 @@ class HmmProfile < ActiveRecord::Base
     HmmProfile.where("parent_id IS NULL")
   end
 
-  def evaluate?(db_sequence)
-    best_profile = (db_sequence.best_hmm_profile == self.id)
-    bool = self.inclusion_criteria.inject(best_profile) { |result, element| result && element.evaluate?(db_sequence) } 
+  def evaluate?(db_sequence, sequence_source)
+    best_profile = (db_sequence.best_hmm_profile(sequence_source) == self)
+    bool = self.inclusion_criteria.inject(best_profile) { |result, element| result && element.evaluate?(db_sequence,sequence_source) } 
     return bool
   end
 

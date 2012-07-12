@@ -11,10 +11,15 @@ class DbSequence < ActiveRecord::Base
   has_many :hmm_result_rows
   has_many :hmm_db_hits
   has_many :pfitmap_sequences
+  has_many :db_sequence_best_profiles
+  has_many :best_hmm_profiles, :through => :db_sequence_best_profiles, :source => :hmm_profile
 
-  # Given a database, it will browse through all profiles in order to
-  # find all hits 
+  #virtual attributes used in controllers
+  attr_accessor :hmm_profile, :hmm_profiles, :score
 
+  # Given a source, it will browse through all profiles in order to
+  # find all hits.
+  #
   # All result rows that share sequence_source.id
   def all_hits(sequence_source)
     hmm_results = HmmResult.where("sequence_source_id = ?", sequence_source.id)
@@ -26,14 +31,17 @@ class DbSequence < ActiveRecord::Base
     return hmm_result_rows
   end
 
-  # A method that returns the best hmm profile id.
-  def best_hmm_profile
-    max_score_row = self.best_hmm_result_row()
-    return max_score_row.hmm_result.hmm_profile.id
+  # A method that returns the best hmm profile object
+  def best_hmm_profile(sequence_source)
+    begin
+      p = self.db_sequence_best_profiles.find_by_sequence_source_id(sequence_source.id).hmm_profile
+    rescue NoMethodError
+      nil
+    end
   end
 
   # The result row having the highest fullseq_score.
-  def best_hmm_result_row
-    return  self.hmm_result_rows.sort_by{ |row| row.fullseq_score }.last
+  def best_hmm_result_row(sequence_source)
+    self.db_sequence_best_profiles.find_by_sequence_source_id(sequence_source.id).hmm_result_row
   end
 end

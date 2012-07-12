@@ -66,11 +66,55 @@ describe "PfitmapReleases" do
     end
   end
 
-  describe "GET /pfitmap_releases" do
-    it "works! (now write some real specs)" do
-      # Run the generator again with the --webrat flag if you want to use webrat methods/matchers
-      get pfitmap_releases_path
-      response.status.should be(200)
+  describe "show page" do
+    let!(:pfitmap_release1) { FactoryGirl.create(:pfitmap_release) }
+    it "works for empty release" do
+      visit pfitmap_release_path(pfitmap_release1)
+      page.should have_content('Pfitmap Release')
+    end
+  end
+
+  describe "Form page" do
+    before do
+      make_mock_admin
+      login_with_oauth
+    end
+    describe "new page" do
+      let!(:sequence_source) { FactoryGirl.create(:sequence_source) }
+      before do
+        visit new_pfitmap_release_path()
+      end
+      it "can handle invalid parameters" do
+        click_button "Create Pfitmap release"
+        page.should have_content("The form contains 2 error")
+      end
+      
+      it "can handle valid parameters" do
+        page.fill_in 'Release', :with => "1.0"
+        page.fill_in 'Release date', :with => "1988-06-13"
+        page.select("#{sequence_source.list_name}")
+        click_button "Create Pfitmap release"
+        page.should have_content("successfully created")
+      end
+    end
+      
+    describe "edit page" do
+      let!(:sequence_source) { FactoryGirl.create(:sequence_source) }
+      let!(:pfitmap_release) { FactoryGirl.create(:pfitmap_release) }
+      before do
+        visit edit_pfitmap_release_path(pfitmap_release)
+      end
+      it "can handle invalid parameters" do
+        page.fill_in 'Release', :with => ""
+        click_button "Update Pfitmap release"
+        page.should have_content("The form contains 1 error")
+      end
+      
+      it "can handle valid parameters" do
+        page.fill_in 'Release', :with => "1.0"
+        click_button "Update Pfitmap release"
+        page.should have_content("successfully updated")
+      end
     end
   end
 end

@@ -9,9 +9,16 @@
     <%= link_to 'Edit', edit_sequence_source_path(@sequence_source) %> |
     <%= link_to 'Back', sequence_sources_path %>
   </div>
+  <%if can? :evaluate, @sequence_sources %>
   <div class="span4">
+    <% if @pfitmap_releases.any? %>
     <%= render 'evaluate_form' %>
+    <% else %>
+    <h2> There is no release created after the current</h2>
+    <%= link_to "Create new release", new_pfitmap_release_path, class: "btn" %>
+    <% end %>
   </div>
+  <% end %>
 </div>
 <hr>
 <div class="row">
