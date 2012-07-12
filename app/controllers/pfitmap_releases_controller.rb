@@ -129,4 +129,28 @@ class PfitmapReleasesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  # POST /calculate/1
+  # A method to fill the ProteinCount table
+  def calculate
+    @pfitmap_release = PfitmapRelease.find(params[:pfitmap_release_id])
+    @pfitmap_sequences = @pfitmap_release.pfitmap_sequences
+    @protein_counts = @pfitmap_release.protein_counts
+    if all_gi_present
+      @protein_counts.destroy_all
+      @pfitmap_sequences.each do |seq|
+        seq.calculate_counts(@pfitmap_release)
+      end
+      respond_to do |format|
+        flash[:success] = "The ProteinCount table was calculated successfully"
+        format.html { redirect_to pfitmap_release_path(@pfitmap_release) }
+        end
+    else
+      respond_to do |format|
+        flash[:error] = "All gi's included in this release are not yet loaded, make sure you have updated the biosql database to the latest release"
+        format.html { redirect_to pfitmap_release_path(@pfitmap_release) }
+      end
+    end
+    
+  end
 end

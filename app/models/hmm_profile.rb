@@ -55,6 +55,10 @@ class HmmProfile < ActiveRecord::Base
     "#{name}#{protein_name ? " (#{protein_name})" : ""}"
   end
 
+  def all_parents_including_self
+    all_parents_recursion([],self)
+  end
+
   private
   def last_parent_recursion(id)
     parent = HmmProfile.find(id)
@@ -62,6 +66,16 @@ class HmmProfile < ActiveRecord::Base
       return id
     else
       last_parent_recursion(parent.parent_id)
+    end
+  end
+
+  def all_parents_recursion(acc, profile)
+    parent_profile = profile.parent
+    acc << profile
+    if parent_profile
+      all_parents_recursion(acc, parent_profile)
+    else
+      return acc
     end
   end
 end

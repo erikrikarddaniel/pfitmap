@@ -16,4 +16,25 @@ class PfitmapSequence < ActiveRecord::Base
   belongs_to :pfitmap_release
   belongs_to :hmm_profile
   has_one :sequence_source, :through => :pfitmap_release
+
+  # calculate_counts(pr : pfitmap_release)
+  def calculate_counts(pr)
+    ref_hits = self.db_hits_from_ref
+    best_profile = self.hmm_profile
+    profiles = best_profile.all_parents_including_self
+    ref_hits.each do |ref_hit|
+      profiles.each do |profile|
+        if profile.enzymes != []
+          profile.enzymes.each do |enzyme|
+            protein = Protein.add_if_not_existing(enzyme,profile)
+            Taxon.add_if_not_existing(ref_hit.all_gold_taxons)
+            ProteinCount.add_to_count(protein, ref_hit.all_gold_taxons, pr)
+          end
+        else
+          protein = Protein.add_if_not_existing(nil,profile)
+          ProteinCount.add_to_count(protein, ref_hit.all_gold_taxons, pr)
+        end
+      end
+    end
+  end
 end
