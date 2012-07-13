@@ -24,6 +24,8 @@ class PfitmapSequence < ActiveRecord::Base
     best_profile = self.hmm_profile
     profiles = best_profile.all_parents_including_self
     ref_hits.each do |ref_hit|
+      taxons = ref_hit.all_taxons
+      next unless taxons.first.wgs
       profiles.each do |profile|
         if profile.enzymes != []
           profile.enzymes.each do |enzyme|
