@@ -11,6 +11,10 @@ gem 'schema_plus'
 gem 'omniauth-openid'
 gem 'cancan'
 
+# Talking with biosql at scilifelab.se
+gem 'httparty'
+gem 'json'
+
 # Deployment
 gem 'capistrano'
 gem 'rvm-capistrano'
