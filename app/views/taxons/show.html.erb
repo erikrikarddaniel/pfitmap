@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @taxon.name %>
+</p>
+
+<p>
+  <b>Rank:</b>
+  <%= @taxon.rank %>
+</p>
+
+<p>
+  <b>Wgs:</b>
+  <%= @taxon.wgs %>
+</p>
+
+
+<%= link_to 'Edit', edit_taxon_path(@taxon) %> |
+<%= link_to 'Back', taxons_path %>

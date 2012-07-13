@@ -1,4 +1,6 @@
 Pfitmap::Application.routes.draw do
+  resources :taxons
+
   resources :enzymes
 
   match '/auth/:provider/callback', to: 'sessions#create'
