@@ -1,4 +1,6 @@
 Pfitmap::Application.routes.draw do
+  resources :proteins
+
   resources :taxons
 
   resources :enzymes
