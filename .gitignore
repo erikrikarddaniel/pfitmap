@@ -22,7 +22,3 @@
 
 # Ignore database settings file
 /config/database.yml
-
-# Ignore deployment settings file
-/config/deploy.rb
-
