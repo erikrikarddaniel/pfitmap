@@ -17,4 +17,13 @@ class ProteinCount < ActiveRecord::Base
   belongs_to :protein
   belongs_to :pfitmap_release
   belongs_to :taxon
+
+  # The "dry run", creates all rows that is needed
+  # for a specified pfitmap_release by retrieving 
+  # all whole genome sequenced genomes and their full
+  # taxonomic hierarchy.
+  def initialize_dry(pr)
+    all_wgs_gis_with_taxa =  
+  end
+
 end

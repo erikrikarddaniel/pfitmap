@@ -18,13 +18,13 @@ class PfitmapSequence < ActiveRecord::Base
   has_many :hmm_db_hits, :through => :db_sequence
   has_one :sequence_source, :through => :pfitmap_release
 
-  # calculate_counts(pr : pfitmap_release)
-  def calculate_counts(pr)
-    ref_hits = self.db_hits_from_ref
+  # calculate_counts(pr : pfitmap_release, db_string : e.g. 'ref' or nil)
+  def calculate_counts(pr, db_string)
+    db_hits = self.db_hits_from(db_string)
     best_profile = self.hmm_profile
     profiles = best_profile.all_parents_including_self
-    ref_hits.each do |ref_hit|
-      taxons = ref_hit.all_taxons
+    db_hits.each do |db_hit|
+      taxons = db_hit.all_taxons
       next unless taxons.first.wgs
       profiles.each do |profile|
         if profile.enzymes != []
@@ -41,7 +41,10 @@ class PfitmapSequence < ActiveRecord::Base
     end
   end
 
-  def db_hits_from_ref
-    self.hmm_db_hits.where("db = 'ref'")
-  end
+  def db_hits_from(db_string)
+    if db_string
+      self.hmm_db_hits.where("db = ?", db_string)
+    else
+      self.hmm_db_hits
+    end
 end
