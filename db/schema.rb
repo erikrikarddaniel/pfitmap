@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120713143558) do
+ActiveRecord::Schema.define(:version => 20120713150839) do
 
   create_table "hmm_result_rows", :force => true do |t|
     t.string   "target_name"
@@ -130,6 +130,19 @@ ActiveRecord::Schema.define(:version => 20120713143558) do
     t.index ["hmm_profile_id"], :name => "index_pfitmap_sequences_on_hmm_profile_id"
     t.index ["pfitmap_release_id"], :name => "index_pfitmap_sequences_on_pfitmap_release_id"
     t.foreign_key ["hmm_profile_id"], "hmm_profiles", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "pfitmap_sequences_hmm_profile_id_fkey"
+  end
+
+  create_table "proteins", :force => true do |t|
+    t.string   "name"
+    t.string   "rank"
+    t.integer  "hmm_profile_id"
+    t.integer  "enzyme_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.index ["enzyme_id"], :name => "index_proteins_on_enzyme_id"
+    t.index ["hmm_profile_id"], :name => "index_proteins_on_hmm_profile_id"
+    t.foreign_key ["hmm_profile_id"], "hmm_profiles", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "proteins_hmm_profile_id_fkey"
+    t.foreign_key ["enzyme_id"], "enzymes", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "proteins_enzyme_id_fkey"
   end
 
   create_table "taxons", :force => true do |t|
