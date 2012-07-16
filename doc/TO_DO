@@ -16,3 +16,6 @@ Things to fix
 
 * Replace only HMMProfile name in lists with HMMProfile.description (which
   includes the protein name.
+
+* When AJAX expandable table/list is implemented for the ProteinCount, 
+  use it for the pfitmap_release show page as well. 
