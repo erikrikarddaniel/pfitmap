@@ -1,0 +1,2 @@
+module ProteinCountsHelper
+end

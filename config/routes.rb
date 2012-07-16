@@ -1,4 +1,6 @@
 Pfitmap::Application.routes.draw do
+  resources :protein_counts
+
   resources :proteins
 
   resources :taxons

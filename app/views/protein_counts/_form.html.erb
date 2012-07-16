@@ -1,0 +1,41 @@
+<%= form_for(@protein_count) do |f| %>
+  <% if @protein_count.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@protein_count.errors.count, "error") %> prohibited this protein_count from being saved:</h2>
+
+      <ul>
+      <% @protein_count.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :no_genomes %><br />
+    <%= f.number_field :no_genomes %>
+  </div>
+  <div class="field">
+    <%= f.label :no_proteins %><br />
+    <%= f.number_field :no_proteins %>
+  </div>
+  <div class="field">
+    <%= f.label :no_genomes_with_proteins %><br />
+    <%= f.number_field :no_genomes_with_proteins %>
+  </div>
+  <div class="field">
+    <%= f.label :protein %><br />
+    <%= f.text_field :protein %>
+  </div>
+  <div class="field">
+    <%= f.label :pfitmap_release %><br />
+    <%= f.text_field :pfitmap_release %>
+  </div>
+  <div class="field">
+    <%= f.label :taxon %><br />
+    <%= f.text_field :taxon %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

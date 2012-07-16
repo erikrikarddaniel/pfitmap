@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120713150839) do
+ActiveRecord::Schema.define(:version => 20120716084808) do
 
   create_table "hmm_result_rows", :force => true do |t|
     t.string   "target_name"
@@ -151,6 +151,23 @@ ActiveRecord::Schema.define(:version => 20120713150839) do
     t.boolean  "wgs"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "protein_counts", :force => true do |t|
+    t.integer  "no_genomes"
+    t.integer  "no_proteins"
+    t.integer  "no_genomes_with_proteins"
+    t.integer  "protein_id"
+    t.integer  "pfitmap_release_id"
+    t.integer  "taxon_id"
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
+    t.index ["pfitmap_release_id"], :name => "index_protein_counts_on_pfitmap_release_id"
+    t.index ["protein_id"], :name => "index_protein_counts_on_protein_id"
+    t.index ["taxon_id"], :name => "index_protein_counts_on_taxon_id"
+    t.foreign_key ["protein_id"], "proteins", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "protein_counts_protein_id_fkey"
+    t.foreign_key ["pfitmap_release_id"], "pfitmap_releases", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "protein_counts_pfitmap_release_id_fkey"
+    t.foreign_key ["taxon_id"], "taxons", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "protein_counts_taxon_id_fkey"
   end
 
   create_table "users", :force => true do |t|
