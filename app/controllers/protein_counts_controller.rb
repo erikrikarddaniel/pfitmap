@@ -1,4 +1,5 @@
 class ProteinCountsController < ApplicationController
+  load_and_authorize_resource
   # GET /protein_counts
   # GET /protein_counts.json
   def index
