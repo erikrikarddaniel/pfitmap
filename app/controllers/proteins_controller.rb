@@ -1,4 +1,5 @@
 class ProteinsController < ApplicationController
+  load_and_authorize_resource
   # GET /proteins
   # GET /proteins.json
   def index

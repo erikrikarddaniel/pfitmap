@@ -1,4 +1,5 @@
 class TaxonsController < ApplicationController
+  load_and_authorize_resource
   # GET /taxons
   # GET /taxons.json
   def index
