@@ -1,7 +1,8 @@
 class CreateTaxons < ActiveRecord::Migration
   def change
-    create_table :taxons, :id => false do |t|
-      t.integer :ncbi_taxon_id, :primary_key
+    create_table :taxons do |t|
+      #schema-plus forces :references => nil to be added
+      t.integer :ncbi_taxon_id, :references => nil
       t.string :name
       t.string :rank
       t.boolean :wgs
@@ -9,6 +10,5 @@ class CreateTaxons < ActiveRecord::Migration
 
       t.timestamps
     end
-    add_index :taxons, :pfitmap_release_id
   end
 end
