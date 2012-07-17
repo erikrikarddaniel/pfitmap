@@ -6,7 +6,6 @@ class CreateTaxons < ActiveRecord::Migration
       t.string :name
       t.string :rank
       t.boolean :wgs
-      t.integer :pfitmap_release_id
 
       t.timestamps
     end
