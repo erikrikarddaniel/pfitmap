@@ -20,12 +20,7 @@ class HmmDbHit < ActiveRecord::Base
   validates :db_sequence_id, presence: true
 
   def all_taxons
-    taxons = http_get_taxons_by_gi(self.gi)
+    taxons = BiosqlWeb.get_taxons_by_gi(self.gi)
   end
  
-  private
-  def http_get_taxons_by_gi(gi)
-    response = HTTParty.get('http://biosql.scilifelab.se/gi/' + gi + '.json')
-    taxons = JSON.parse(response)
-  end
 end
