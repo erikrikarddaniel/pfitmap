@@ -146,11 +146,15 @@ ActiveRecord::Schema.define(:version => 20120716084808) do
   end
 
   create_table "taxons", :force => true do |t|
+    t.integer  "ncbi_taxon_id"
     t.string   "name"
     t.string   "rank"
     t.boolean  "wgs"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "pfitmap_release_id"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+    t.index ["pfitmap_release_id"], :name => "index_taxons_on_pfitmap_release_id"
+    t.foreign_key ["pfitmap_release_id"], "pfitmap_releases", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "taxons_pfitmap_release_id_fkey"
   end
 
   create_table "protein_counts", :force => true do |t|
