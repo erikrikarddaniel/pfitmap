@@ -1,8 +1,9 @@
 class BiosqlWeb < ActiveRecord::Base  
   self.abstract_class = true
   BASE_URL = 'http://biosql.scilifelab.se'
-  def self.get_taxons_by_gi(gi)
-    response = HTTParty.get(BASE_URL + '/gi/' + gi + '.json')
+  def self.get_taxons_by_gis(gis)
+    options = {:headers => { 'Content-Type' => 'application/json', 'Accepts' => 'application/json'}, :body => {:gis => gis}.to_json}
+    response = HTTParty.get(BASE_URL + '/fetch_gis.json', options)
     taxons = response.parsed_response
   end
 
