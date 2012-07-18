@@ -19,8 +19,10 @@ class PfitmapSequence < ActiveRecord::Base
   has_one :sequence_source, :through => :pfitmap_release
 
   # calculate_counts(pr : pfitmap_release, db_string : e.g. 'ref' or nil)
-  def calculate_counts(pr, db_string)
-    db_hits = self.db_hits_from(db_string)
+  def calculate_counts(pr, ncbi_gi_taxon_hash)
+    # This line can later pick out db_hits from 
+    # a specified db with db_hits_from method
+    db_hits = self.hmm_db_hits
     best_profile = self.hmm_profile
     profiles = best_profile.all_parents_including_self
     db_hits.each do |db_hit|
@@ -47,4 +49,5 @@ class PfitmapSequence < ActiveRecord::Base
     else
       self.hmm_db_hits
     end
+  end
 end
