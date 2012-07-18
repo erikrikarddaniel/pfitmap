@@ -24,7 +24,16 @@ class HmmDbHit < ActiveRecord::Base
     self.select(:gi).each do |hit|
       gi_list << hit.gi
     end
-    taxons = BiosqlWeb.get_taxons_by_gis(gi_list)
+    gi_taxons = BiosqlWeb.get_taxons_by_gis(gi_list)
+    
+  end
+
+  def self.all_taxons_for(pr)
+    gi_list = []
+    pr.select(:gi).each do |hit|
+      gi_list << hit.gi
+    end
+    gi_taxons = BiosqlWeb.get_taxons_by_gis(gi_list)
   end
  
 end
