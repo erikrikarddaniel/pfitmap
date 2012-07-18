@@ -7,7 +7,7 @@ class BiosqlWeb < ActiveRecord::Base
     taxons = response.parsed_response
   end
 
-  def self.all_wgs_gis_with_taxa
+  def self.all_wgs_with_full_taxa
     response = HTTParty.get(BASE_URL + '/gold_taxon_hierarchy.json')
     wgs_taxons = response.parsed_response
   end
