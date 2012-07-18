@@ -132,25 +132,40 @@ class PfitmapReleasesController < ApplicationController
 
   # POST /calculate/1
   # A method to fill the ProteinCount table
+  # Assumes that all proteins are already created
   def calculate
-    @pfitmap_release = PfitmapRelease.find(params[:pfitmap_release_id])
-    @pfitmap_sequences = @pfitmap_release.pfitmap_sequences
-    @protein_counts = @pfitmap_release.protein_counts
-    if all_gi_present
+    begin
+      @pfitmap_release = PfitmapRelease.find(params[:pfitmap_release_id])
+      @pfitmap_sequences = @pfitmap_release.pfitmap_sequences
+
+      # Get all hmm_db_hits and its taxons
+      gi_taxon_for_included_hits = HmmDbHit.all_taxons_for(@pfitmap_release)
+      
+      # Build a hash with gi as keys and ncbi_taxon_id as values 
+      ncbi_gi_taxon_hash = @pfitmap_release.build_gi_ncbi_taxon_hash(gi_taxon_for_included_hits)
+      
+      # Destroy old protein counts rows for this release
+      @protein_counts = @pfitmap_release.protein_counts
       @protein_counts.destroy_all
+      
+      # Fill the taxon table and dry run for the protein_counts
+      @pfitmap_release.protein_counts_initialize_dry
+      
+      # Iterate over the sequences and populate protein counts for each
+      # protein, 
       @pfitmap_sequences.each do |seq|
-        seq.calculate_counts(@pfitmap_release)
+        seq.calculate_counts(@pfitmap_release, ncbi_gi_taxon_hash)
       end
+    rescue
+      respond_to do |format|
+        flash[:error] = "Some error has occured, please check the log for more details"
+        format.html { redirect_to pfitmap_release_path(@pfitmap_release) }
+      end
+    else
       respond_to do |format|
         flash[:success] = "The ProteinCount table was calculated successfully"
         format.html { redirect_to pfitmap_release_path(@pfitmap_release) }
-        end
-    else
-      respond_to do |format|
-        flash[:error] = "All gi's included in this release are not yet loaded, make sure you have updated the biosql database to the latest release"
-        format.html { redirect_to pfitmap_release_path(@pfitmap_release) }
       end
     end
-    
   end
 end
