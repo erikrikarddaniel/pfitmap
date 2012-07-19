@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120716084808) do
+ActiveRecord::Schema.define(:version => 20120719070228) do
 
   create_table "hmm_result_rows", :force => true do |t|
     t.string   "target_name"
@@ -150,8 +150,10 @@ ActiveRecord::Schema.define(:version => 20120716084808) do
     t.string   "name"
     t.string   "rank"
     t.boolean  "wgs"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.integer  "parent_ncbi_id"
+    t.index ["ncbi_taxon_id"], :name => "index_taxons_on_ncbi_taxon_id", :unique => true
   end
 
   create_table "protein_counts", :force => true do |t|
