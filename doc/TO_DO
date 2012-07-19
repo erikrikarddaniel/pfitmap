@@ -1,0 +1,21 @@
+Discussion points
+-----------------
+
+* Should we drop the hierarchy field in HMMProfile? Could be replaced by a --
+  rather cheap I think since the hierarchy is shallow -- orderstring method on 
+  objects that calculates a concatenated string of ids: 00001:00002:00003 for an
+  object with id 3 at level three of the hierarchy (perhaps we need more than
+  five digits).
+
+Things to fix
+-------------
+
+* Set up system to enable links from accession numbers to target database. See
+  doc/sequence_inclusion.dia (SequenceDatabase model). Note the comments
+  regarding the accession_url field.
+
+* Replace only HMMProfile name in lists with HMMProfile.description (which
+  includes the protein name.
+
+* When AJAX expandable table/list is implemented for the ProteinCount, 
+  use it for the pfitmap_release show page as well. 
