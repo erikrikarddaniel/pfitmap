@@ -13,6 +13,7 @@ Pfitmap::Application.routes.draw do
 
   resources :pfitmap_releases do
     post 'make_current', :as => :make_current
+    post 'calculate', :as => :calculate
   end
 
   resources :db_sequences
