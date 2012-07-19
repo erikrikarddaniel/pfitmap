@@ -9,6 +9,13 @@ Discussion points
 
 Things to fix
 -------------
+* Tests that are not yet implemented:
+  - Hierarchy of taxon
+  - The dry run initialization
+  - 
+
+* hmm_profile.all_proteins_including_parents
+  taxon.self_and_ancestors
 
 * Set up system to enable links from accession numbers to target database. See
   doc/sequence_inclusion.dia (SequenceDatabase model). Note the comments
