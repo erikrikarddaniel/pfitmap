@@ -14,5 +14,15 @@
 require 'spec_helper'
 
 describe Protein do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let!(:hmm_profile1) { FactoryGirl.create(:hmm_profile) }
+  let!(:hmm_profile2) { FactoryGirl.create(:hmm_profile) }
+
+  describe "initialization" do
+    before do
+      Protein.initialize_proteins
+    end
+    it "should have created some proteins" do
+      Protein.all.should_not == []
+    end
+  end
 end
