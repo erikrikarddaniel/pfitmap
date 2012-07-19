@@ -12,6 +12,41 @@
 #
 
 class Protein < ActiveRecord::Base
+  attr_accessible :name, :rank
   belongs_to :HmmProfile
   belongs_to :Enzyme
+
+
+  def self.initialize_proteins
+    profiles = HmmProfile.all
+    profiles.each do |profile|
+      if profile.enzymes != []
+        profile.enzymes.each do |enzyme|
+          add_if_not_existing(enzyme,profile)
+        end
+      else
+        add_if_not_existing(nil,profile)
+      end
+    end
+  end
+
+  private
+  def self.add_if_not_existing(enzyme, profile)
+    if not find_by_belongs_to(enzyme,profile).first
+      protein = new(name: profile.protein_name)
+      protein.hmm_profile_id = profile.id
+      if enzyme
+        protein.enzyme_id = enzyme.id
+      end
+      protein.save
+    end
+  end
+  
+  def self.find_by_belongs_to(enzyme,profile)
+    if enzyme
+      where("hmm_profile_id = ? AND enzyme_id = ?", profile.id, enzyme.id)
+    else
+      where("hmm_profile_id = ?", profile.id)
+    end
+  end
 end

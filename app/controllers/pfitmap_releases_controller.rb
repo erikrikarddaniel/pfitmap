@@ -148,15 +148,20 @@ class PfitmapReleasesController < ApplicationController
       @protein_counts = @pfitmap_release.protein_counts
       @protein_counts.destroy_all
       
+      # Make sure the protein table is filled
+      Protein.initialize_proteins
+
       # Fill the taxon table and dry run for the protein_counts
       @pfitmap_release.protein_counts_initialize_dry
       
       # Iterate over the sequences and populate protein counts for each
-      # protein, 
-      @pfitmap_sequences.each do |seq|
-        seq.calculate_counts(@pfitmap_release, ncbi_gi_taxon_hash)
-      end
+      # protein and taxon. 
+      #@pfitmap_sequences.each do |seq|
+      #  seq.calculate_counts(@pfitmap_release, ncbi_gi_taxon_hash)
+      #end
     rescue
+      logger.debug "#{__FILE__}"
+      logger.debug "blablabla This is the error: #{$!}"
       respond_to do |format|
         flash[:error] = "Some error has occured, please check the log for more details"
         format.html { redirect_to pfitmap_release_path(@pfitmap_release) }

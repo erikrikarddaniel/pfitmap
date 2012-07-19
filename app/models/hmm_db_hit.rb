@@ -30,7 +30,7 @@ class HmmDbHit < ActiveRecord::Base
 
   def self.all_taxons_for(pr)
     gi_list = []
-    pr.select(:gi).each do |hit|
+    pr.hmm_db_hits.select(:gi).each do |hit|
       gi_list << hit.gi
     end
     gi_taxons = BiosqlWeb.get_taxons_by_gis(gi_list)

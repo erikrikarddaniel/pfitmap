@@ -18,27 +18,19 @@ class PfitmapSequence < ActiveRecord::Base
   has_many :hmm_db_hits, :through => :db_sequence
   has_one :sequence_source, :through => :pfitmap_release
 
-  # calculate_counts(pr : pfitmap_release, db_string : e.g. 'ref' or nil)
+  # calculate_counts(pr : pfitmap_release, ncbi_gi_taxon_hash)
   def calculate_counts(pr, ncbi_gi_taxon_hash)
     # This line can later pick out db_hits from 
     # a specified db with db_hits_from method
     db_hits = self.hmm_db_hits
     best_profile = self.hmm_profile
-    profiles = best_profile.all_parents_including_self
+    proteins = best_profile.all_proteins_including_parents
     db_hits.each do |db_hit|
-      taxons = db_hit.all_taxons
-      next unless taxons.first.wgs
-      profiles.each do |profile|
-        if profile.enzymes != []
-          profile.enzymes.each do |enzyme|
-            protein = Protein.add_if_not_existing(enzyme,profile)
-            Taxon.add_all_if_not_existing(ref_hit.all_gold_taxons)
-            ProteinCount.add_to_count(protein, ref_hit.all_gold_taxons, pr)
-          end
-        else
-          protein = Protein.add_if_not_existing(nil,profile)
-          ProteinCount.add_to_count(protein, ref_hit.all_gold_taxons, pr)
-        end
+      ncbi_taxon_id = ncbi_gi_taxon_hash[db_hit.gi]
+      genome_taxon = Taxon.find_by_ncbi_taxon_id(ncbi_taxon_id)
+      taxons = genome_taxon.self_and_ancestors
+      proteins.each do |protein|
+        ProteinCount.add_hit(protein, taxons, pr)
       end
     end
   end
@@ -50,4 +42,5 @@ class PfitmapSequence < ActiveRecord::Base
       self.hmm_db_hits
     end
   end
+
 end

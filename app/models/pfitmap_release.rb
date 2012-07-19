@@ -51,21 +51,9 @@ class PfitmapRelease < ActiveRecord::Base
   # all whole genome sequenced genomes and their full
   # taxonomic hierarchy.
   def protein_counts_initialize_dry
-    pr = self
-    taxons = BiosqlWeb.all_wgs_with_full_taxa
+    taxons = BiosqlWeb.all_wgs_with_full_taxa_test
     taxons.each do |hierarchy|
-      first_taxon, *rest = *hierarchy
-      first_taxon_in_db = taxon_in_db_lookup(first_taxon)
-      # Make sure this taxon exists and has wgs=true
-      taxon = dry_taxon_first(first_taxon, first_taxon_in_db)
-      # For each protein, initialize protein_count and/or add 1 to no_genomes
-      protein_count_init_or_add(taxon)
-      rest.each do |taxon|
-        taxon_in_db = taxon_in_db_lookup(taxon)
-        #Make sure this taxon exist but let wgs be as before
-        taxon = dry_taxon(taxon, taxon_in_db)
-        protein_count_init_or_add(taxon)
-      end
+      init_taxons_and_protein_count(hierarchy)
     end
   end
 
@@ -84,8 +72,32 @@ class PfitmapRelease < ActiveRecord::Base
   
   private
   def taxon_in_db_lookup(taxon_hash)
-    Taxon.find(:first, :conditions => ["ncbi_taxon_id = ? AND pfitmap_release_id = ?", taxon_hash["ncbi_taxon_id"], self.id])
+    Taxon.find(:first, :conditions => ["ncbi_taxon_id = ?", taxon_hash["ncbi_taxon_id"]])
   end
+
+  def init_taxons_and_protein_count(hierarchy)
+    first_taxon, *rest = *hierarchy
+    second_taxon = rest.first
+    first_taxon_in_db = taxon_in_db_lookup(first_taxon)
+    # Make sure this taxon exists and has wgs=true
+    taxon = dry_taxon_first(first_taxon, first_taxon_in_db, second_taxon)
+    # For each protein, initialize protein_count and/or add 1 to no_genomes
+    protein_count_init_or_add(taxon)
+    # Rename variable before loop
+    current_taxon = second_taxon 
+    rest.each do |next_taxon|
+      taxon_in_db = taxon_in_db_lookup(current_taxon)
+      #Make sure this taxon exist but let wgs be as before
+      taxon = dry_taxon(current_taxon, taxon_in_db, next_taxon)
+      protein_count_init_or_add(taxon)
+      current_taxon = next_taxon
+    end
+    # The last taxon should also be added:
+    taxon_in_db = taxon_in_db_lookup(current_taxon)
+    taxon = dry_taxon(current_taxon, taxon_in_db, nil)
+  end
+
+
 
   def protein_count_init_or_add(taxon)
     proteins = Protein.all
@@ -103,21 +115,22 @@ class PfitmapRelease < ActiveRecord::Base
   end
   
 
-  def dry_taxon(taxon_hash,taxon_in_db)
-    how to add the parents into the taxon
+  def dry_taxon(taxon_hash,taxon_in_db,next_taxon)
     if not taxon_in_db
       taxon_in_db = Taxon.new
       taxon_in_db.ncbi_taxon_id = taxon_hash["ncbi_taxon_id"]
       taxon_in_db.name = taxon_hash["scientific_name"]
       taxon_in_db.rank = taxon_hash["rank"]
-      taxon_in_db.pfitmap_release_id = self.id
+      if next_taxon
+        taxon_in_db.parent_ncbi_id = next_taxon["ncbi_taxon_id"]
+      end
       taxon_in_db.save
     end
     return taxon_in_db
   end
 
 
-  def dry_taxon_first(first_taxon_hash,taxon_in_db)
+  def dry_taxon_first(first_taxon_hash,taxon_in_db, next_taxon)
     if taxon_in_db
       taxon_in_db.wgs = "true"
     else
@@ -125,8 +138,8 @@ class PfitmapRelease < ActiveRecord::Base
       taxon_in_db.ncbi_taxon_id = first_taxon_hash["ncbi_taxon_id"]
       taxon_in_db.name = first_taxon_hash["scientific_name"]
       taxon_in_db.rank = first_taxon_hash["rank"]
+      taxon_in_db.parent_ncbi_id = next_taxon["ncbi_taxon_id"]
       taxon_in_db.wgs = "true"
-      taxon_in_db.pfitmap_release_id = self.id
     end
     taxon_in_db.save
     return taxon_in_db
