@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120719070228) do
+ActiveRecord::Schema.define(:version => 20120720095745) do
 
   create_table "hmm_result_rows", :force => true do |t|
     t.string   "target_name"
@@ -165,6 +165,7 @@ ActiveRecord::Schema.define(:version => 20120719070228) do
     t.integer  "taxon_id"
     t.datetime "created_at",               :null => false
     t.datetime "updated_at",               :null => false
+    t.boolean  "obs_as_genome"
     t.index ["pfitmap_release_id"], :name => "index_protein_counts_on_pfitmap_release_id"
     t.index ["protein_id"], :name => "index_protein_counts_on_protein_id"
     t.index ["taxon_id"], :name => "index_protein_counts_on_taxon_id"
