@@ -34,6 +34,16 @@ class HmmDbHit < ActiveRecord::Base
       gi_list << hit.gi
     end
     gi_taxons = BiosqlWeb.get_taxons_by_gis(gi_list)
+
+    logger.debug "#{__FILE__}"
+    logger.debug "blabla this the pr.hmm_db_hits.select(:gi) in the hmm_db_hit model  #{pr.hmm_db_hits.select(:gi).all}"
+
+    logger.debug "#{__FILE__}"
+    logger.debug "blabla this the gi list in the hmm_db_hit model  #{gi_list}"
+    
+    logger.debug "#{__FILE__}"
+    logger.debug "blabla this the taxons in the hmm_db_hit model  #{gi_taxons}"
+
   end
  
 end
