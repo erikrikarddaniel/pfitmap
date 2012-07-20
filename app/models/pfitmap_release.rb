@@ -51,7 +51,11 @@ class PfitmapRelease < ActiveRecord::Base
   # all whole genome sequenced genomes and their full
   # taxonomic hierarchy.
   def protein_counts_initialize_dry
-    taxons = BiosqlWeb.all_wgs_with_full_taxa_test
+    if Rails.env == "test"
+      taxons = BiosqlWeb.all_wgs_with_full_taxa_test
+    else
+      taxons = BiosqlWeb.all_wgs_with_full_taxa
+    end
     taxons.each do |hierarchy|
       init_taxons_and_protein_count(hierarchy)
     end
@@ -76,8 +80,7 @@ class PfitmapRelease < ActiveRecord::Base
   end
 
   def init_taxons_and_protein_count(hierarchy)
-    first_taxon, *rest = *hierarchy
-    second_taxon = rest.first
+    first_taxon, second_taxon, *rest = *hierarchy
     first_taxon_in_db = taxon_in_db_lookup(first_taxon)
     # Make sure this taxon exists and has wgs=true
     taxon = dry_taxon_first(first_taxon, first_taxon_in_db, second_taxon)
@@ -95,6 +98,7 @@ class PfitmapRelease < ActiveRecord::Base
     # The last taxon should also be added:
     taxon_in_db = taxon_in_db_lookup(current_taxon)
     taxon = dry_taxon(current_taxon, taxon_in_db, nil)
+    protein_count_init_or_add(taxon)
   end
 
 
@@ -102,13 +106,13 @@ class PfitmapRelease < ActiveRecord::Base
   def protein_count_init_or_add(taxon)
     proteins = Protein.all
     proteins.each do |protein|
-      protein_count = protein_count_for(taxon,protein)
+      protein_count = protein_count_for(taxon,protein).first
       if not protein_count
         protein_count = ProteinCount.new(no_genomes: 0, no_proteins: 0, no_genomes_with_proteins: 0)
         protein_count.pfitmap_release_id = self.id
         protein_count.protein_id = protein.id
         protein_count.taxon_id = taxon.id
-      protein_count.save
+        protein_count.save
       end
       protein_count.add_genome
     end
