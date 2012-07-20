@@ -11,6 +11,7 @@
 #  taxon_id                 :integer
 #  created_at               :datetime        not null
 #  updated_at               :datetime        not null
+#  obs_as_genome            :boolean
 #
 
 require 'spec_helper'

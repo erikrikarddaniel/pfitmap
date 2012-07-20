@@ -140,4 +140,25 @@ let!(:sequence_source5) { FactoryGirl.create(:sequence_source) }
       its(:db_sequences) { should include(db_sequence3) }
     end
   end
+
+  
+  describe "build hash" do
+    let!(:db_sequence1) { FactoryGirl.create(:db_sequence) }
+    let!(:hmm_db_hit1) { FactoryGirl.create(:hmm_db_hit, gi: 297089704, db: "ref", db_sequence: db_sequence1) }
+    let!(:hmm_db_hit2) { FactoryGirl.create(:hmm_db_hit, gi: 297089710, db: "pdb", db_sequence: db_sequence1) }
+    let!(:hmm_db_hit3) { FactoryGirl.create(:hmm_db_hit, gi: 297089654, db: "pdb", db_sequence: db_sequence1) }
+    
+    let!(:pfitmap_release) {FactoryGirl.create(:pfitmap_release) }
+    let!(:pfitmap_sequence) {FactoryGirl.create(:pfitmap_sequence, pfitmap_release: pfitmap_release, db_sequence: db_sequence1) }
+    it "should give the correct taxons back" do
+      gi_taxons = HmmDbHit.all_taxons_for(pfitmap_release)
+      hash = pfitmap_release.build_gi_ncbi_taxon_hash(gi_taxons)
+      hash[297089704].should == 1000569
+      hash[297089710].should == 1000569
+      hash[297089654].should_not == 1000569
+      hash[297089654].should == 1000565
+    end
+  end
+
+
 end

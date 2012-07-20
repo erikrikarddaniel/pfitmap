@@ -121,6 +121,9 @@ describe "PfitmapReleases" do
   describe "evaluate and calculate" do
     let!(:hmm_profile1) { FactoryGirl.create(:hmm_profile, protein_name: "ex1") }
     let!(:hmm_profile2) { FactoryGirl.create(:hmm_profile, protein_name: "ex2") }
+    let!(:hmm_score_criterion1) { FactoryGirl.create(:hmm_score_criterion, hmm_profile: hmm_profile1)}
+    let!(:hmm_score_criterion2) { FactoryGirl.create(:hmm_score_criterion, hmm_profile: hmm_profile2)}
+
     let!(:sequence_source) { FactoryGirl.create(:sequence_source) }
     let!(:hmm_result1) { FactoryGirl.create(:hmm_result, hmm_profile: hmm_profile1, sequence_source: sequence_source) }
     let!(:hmm_result2) { FactoryGirl.create(:hmm_result, hmm_profile: hmm_profile2, sequence_source: sequence_source) }
@@ -128,19 +131,23 @@ describe "PfitmapReleases" do
     let!(:db_sequence2) { FactoryGirl.create(:db_sequence) }
     let!(:db_sequence3) { FactoryGirl.create(:db_sequence) }
     let!(:db_sequence4) { FactoryGirl.create(:db_sequence) }
-    let!(:hmm_db_hit1) { FactoryGirl.create(:hmm_db_hit, gi: 104780528) }
-    let!(:hmm_db_hit2) { FactoryGirl.create(:hmm_db_hit, gi: 95109515) }
-    let!(:hmm_db_hit3) { FactoryGirl.create(:hmm_db_hit, gi: 107021672) }
-    let!(:hmm_db_hit4) { FactoryGirl.create(:hmm_db_hit, gi: 116688618) }
-    let!(:hmm_db_hit5) { FactoryGirl.create(:hmm_db_hit, gi: 170731917) }
+    let!(:db_sequence5) { FactoryGirl.create(:db_sequence) }
+    
+    let!(:hmm_db_hit1) { FactoryGirl.create(:hmm_db_hit, gi: 297089654, db_sequence: db_sequence1)}
+    # Hit 2 and 3 are from the same species
+    let!(:hmm_db_hit2) { FactoryGirl.create(:hmm_db_hit, gi: 297089694, db_sequence: db_sequence2)}
+    let!(:hmm_db_hit3) { FactoryGirl.create(:hmm_db_hit, gi: 297089697, db_sequence: db_sequence3)}
+    # Hit 4 and 5 are from the same species 
+    let!(:hmm_db_hit4) { FactoryGirl.create(:hmm_db_hit, gi: 297089704, db_sequence: db_sequence4)}
+    let!(:hmm_db_hit5) { FactoryGirl.create(:hmm_db_hit, gi: 297089710, db_sequence: db_sequence5)}
     let!(:hmm_result_row) { FactoryGirl.create(:hmm_result_row, hmm_result: hmm_result1, db_sequence: db_sequence1) }
-    let!(:hmm_result_row) { FactoryGirl.create(:hmm_result_row, hmm_result: hmm_result1, db_sequence: db_sequence2 ) }
-    let!(:hmm_result_row) { FactoryGirl.create(:hmm_result_row, hmm_result: hmm_result1, db_sequence: db_sequence3) }
-    let!(:hmm_result_row) { FactoryGirl.create(:hmm_result_row, hmm_result: hmm_result1, db_sequence: db_sequence4) }
-    let!(:hmm_result_row) { FactoryGirl.create(:hmm_result_row, hmm_result: hmm_result2, db_sequence: db_sequence1) }
-    let!(:hmm_result_row) { FactoryGirl.create(:hmm_result_row, hmm_result: hmm_result2, db_sequence: db_sequence2) }
-    let!(:hmm_result_row) { FactoryGirl.create(:hmm_result_row, hmm_result: hmm_result2, db_sequence: db_sequence3) }
-    let!(:hmm_result_row) { FactoryGirl.create(:hmm_result_row, hmm_result: hmm_result2, db_sequence: db_sequence4) }
+    let!(:hmm_result_row1) { FactoryGirl.create(:hmm_result_row, hmm_result: hmm_result1, db_sequence: db_sequence2 ) }
+    let!(:hmm_result_row2) { FactoryGirl.create(:hmm_result_row, hmm_result: hmm_result1, db_sequence: db_sequence3) }
+    let!(:hmm_result_row3) { FactoryGirl.create(:hmm_result_row, hmm_result: hmm_result1, db_sequence: db_sequence4) }
+    let!(:hmm_result_row4) { FactoryGirl.create(:hmm_result_row, hmm_result: hmm_result2, db_sequence: db_sequence1) }
+    let!(:hmm_result_row5) { FactoryGirl.create(:hmm_result_row, hmm_result: hmm_result2, db_sequence: db_sequence2) }
+    let!(:hmm_result_row6) { FactoryGirl.create(:hmm_result_row, hmm_result: hmm_result2, db_sequence: db_sequence3) }
+    let!(:hmm_result_row7) { FactoryGirl.create(:hmm_result_row, hmm_result: hmm_result2, db_sequence: db_sequence4) }
     let!(:pfitmap_release) { FactoryGirl.create(:pfitmap_release, sequence_source: sequence_source) }
     
     before do
@@ -150,14 +157,40 @@ describe "PfitmapReleases" do
       click_on "Evaluate"
     end
 
+    it "evaluated correclty" do
+      pfitmap_release.hmm_db_hits.should include(hmm_db_hit1)
+    end
     it "can calculate" do
       visit pfitmap_release_path(pfitmap_release)
       click_on "Calculate"
       page.should have_content "calculated successfully"
-      visit protein_counts_path
-      save_and_open_page
-      visit proteins_path
-      save_and_open_page
     end
   end
+
+  describe "small test" do
+    let!(:hmm_profile1) { FactoryGirl.create(:hmm_profile, protein_name: "ex1") }
+    let!(:hmm_score_criterion1) { FactoryGirl.create(:hmm_score_criterion, hmm_profile: hmm_profile1)}
+    let!(:sequence_source) { FactoryGirl.create(:sequence_source) }
+    let!(:hmm_result1) { FactoryGirl.create(:hmm_result, hmm_profile: hmm_profile1, sequence_source: sequence_source) }
+    let!(:db_sequence1) { FactoryGirl.create(:db_sequence) }
+    let!(:hmm_db_hit1) { FactoryGirl.create(:hmm_db_hit, gi: 297089654, db_sequence: db_sequence1)}
+    let!(:hmm_result_row) { FactoryGirl.create(:hmm_result_row, hmm_result: hmm_result1, db_sequence: db_sequence1 ) }
+    let!(:pfitmap_release) { FactoryGirl.create(:pfitmap_release, sequence_source: sequence_source) }
+
+
+
+    before do
+      make_mock_admin
+      login_with_oauth
+      visit sequence_source_path(sequence_source)
+      click_on "Evaluate"
+    end
+    
+#    it "can calculate" do
+#      visit pfitmap_release_path(pfitmap_release)
+#      click_on "Calculate"
+#      page.should have_content "calculated successfully"
+#    end
+  end
+  
 end
