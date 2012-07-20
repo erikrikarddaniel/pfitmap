@@ -5,6 +5,8 @@
     <th>Name</th>
     <th>Rank</th>
     <th>Wgs</th>
+    <th>NCBI_taxon_id</th>
+    <th>parent</th>
     <th></th>
     <th></th>
     <th></th>
@@ -15,6 +17,8 @@
     <td><%= taxon.name %></td>
     <td><%= taxon.rank %></td>
     <td><%= taxon.wgs %></td>
+    <td><%= taxon.ncbi_taxon_id %></td>
+    <td><%= taxon.parent_ncbi_id %></td>
     <td><%= link_to 'Show', taxon %></td>
     <td><%= link_to 'Edit', edit_taxon_path(taxon) %></td>
     <td><%= link_to 'Destroy', taxon, confirm: 'Are you sure?', method: :delete %></td>
