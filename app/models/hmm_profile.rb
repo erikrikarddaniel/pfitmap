@@ -62,7 +62,12 @@ class HmmProfile < ActiveRecord::Base
   end
 
   def all_proteins_including_parents
-    proteins = all_parents_including_self.map{|profile| profile.proteins }.uniq
+    proteins = []
+    profiles = all_parents_including_self
+    profiles.each do |profile|
+        proteins += profile.proteins
+    end
+    proteins.uniq
   end
     
   private
