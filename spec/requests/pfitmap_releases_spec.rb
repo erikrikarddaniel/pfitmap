@@ -186,11 +186,11 @@ describe "PfitmapReleases" do
       click_on "Evaluate"
     end
     
-#    it "can calculate" do
-#      visit pfitmap_release_path(pfitmap_release)
-#      click_on "Calculate"
-#      page.should have_content "calculated successfully"
-#    end
+    it "can calculate" do
+      visit pfitmap_release_path(pfitmap_release)
+      click_on "Calculate"
+      page.should have_content "calculated successfully"
+    end
   end
   
 end
