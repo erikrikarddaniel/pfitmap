@@ -62,7 +62,7 @@ class PfitmapRelease < ActiveRecord::Base
   end
 
   def protein_count_for(taxon, protein)
-    ProteinCount.where(["pfitmap_release_id = ? AND taxon_id = ?", self.id, taxon.id])
+    ProteinCount.where(["pfitmap_release_id = ? AND taxon_id = ? AND protein_id = ?", self.id, taxon.id, protein.id])
   end
 
   def build_gi_ncbi_taxon_hash(gi_taxon_for_all_hits)
