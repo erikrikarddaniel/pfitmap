@@ -25,8 +25,6 @@ class PfitmapSequence < ActiveRecord::Base
     db_hits = self.hmm_db_hits
     best_profile = self.hmm_profile
     proteins = best_profile.all_proteins_including_parents
-    logger.debug "#{__FILE__}"
-    logger.debug "blabla This is the hash: #{ncbi_gi_taxon_hash}"
     
     db_hits.each do |db_hit|
       ncbi_taxon_id = ncbi_gi_taxon_hash[db_hit.gi]

@@ -141,14 +141,8 @@ class PfitmapReleasesController < ApplicationController
       # Get all hmm_db_hits and its taxons
       gi_taxon_for_included_hits = HmmDbHit.all_taxons_for(@pfitmap_release)
 
-      logger.debug "#{__FILE__}"
-      logger.debug "blabla this all the taxons in the controller #{gi_taxon_for_included_hits}"
-      
       # Build a hash with gi as keys and ncbi_taxon_id as values 
       ncbi_gi_taxon_hash = @pfitmap_release.build_gi_ncbi_taxon_hash(gi_taxon_for_included_hits)
-
-      logger.debug "#{__FILE__}"
-      logger.debug "blabla this the hash in the controller #{ncbi_gi_taxon_hash}"
 
       # Destroy old protein counts rows for this release
       @protein_counts = @pfitmap_release.protein_counts
