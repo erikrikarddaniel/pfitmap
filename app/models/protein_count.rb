@@ -14,6 +14,10 @@
 #  obs_as_genome            :boolean
 #
 
+
+## obs_as_genome is a flag indicating that the taxon has been observed 
+## as a genome together with a protein.
+  
 class ProteinCount < ActiveRecord::Base
   attr_accessible :no_genomes, :no_proteins, :no_genomes_with_proteins, :obs_as_genome
   belongs_to :protein
