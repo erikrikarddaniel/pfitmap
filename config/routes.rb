@@ -3,7 +3,9 @@ Pfitmap::Application.routes.draw do
 
   resources :proteins
 
-  resources :taxons
+  resources :taxons do
+    get '/ajax_list', to: 'taxons#ajax_list'
+  end
 
   resources :enzymes
 

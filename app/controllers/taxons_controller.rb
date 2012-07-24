@@ -1,10 +1,12 @@
 class TaxonsController < ApplicationController
-  load_and_authorize_resource
+  load_and_authorize_resource :except => :ajax_list
+  skip_authorization_check :only => :ajax_list
+
   # GET /taxons
   # GET /taxons.json
   def index
     @taxons = Taxon.all
-
+    @taxon_root = Taxon.root
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @taxons }
@@ -81,4 +83,16 @@ class TaxonsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  # GET /taxons/1
+  # GET /taxons/1.json
+  def ajax_list
+    @taxon = Taxon.find(params[:taxon_id])
+    @taxons = @taxon.children
+    respond_to do |format|
+      format.html # show.html.erb
+      format.js { render :partial => 'taxons/ajax_list', :locals => {:taxons => @taxons}, :content_type => 'text/html' }
+      format.json { render json: @taxon }
+    end
+  end
+
 end

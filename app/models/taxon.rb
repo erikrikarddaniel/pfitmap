@@ -21,6 +21,10 @@ class Taxon < ActiveRecord::Base
     all_up_to_root_rec(self, [])
   end
 
+  def self.root
+    [Taxon.first.self_and_ancestors.last]
+  end
+
   private
   
   def all_up_to_root_rec(t, ancestors)
