@@ -32,3 +32,12 @@ Things to fix
   use it for the pfitmap_release show page as well. 
 
 * Enable sorting on columns as a default feature for all tables.
+
+* Test visual performance in all major browsers
+
+* Make the taxon name in the expandable list an ajax link for
+  updating a protein_counts summary table
+
+* Make protein_counts index page possible to govern by a "level"-dropdown
+
+* Make sure taxon ranks are saved correctly
