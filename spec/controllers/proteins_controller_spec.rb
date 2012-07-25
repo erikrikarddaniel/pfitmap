@@ -19,7 +19,9 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe ProteinsController do
-
+  before do
+    @user = get_admin_user
+  end
   # This should return the minimal set of attributes required to create a valid
   # Protein. As you add validations to Protein, be sure to
   # update the return value of this method accordingly.
@@ -31,7 +33,7 @@ describe ProteinsController do
   # in order to pass any filters (e.g. authentication) defined in
   # ProteinsController. Be sure to keep this updated too.
   def valid_session
-    {}
+    {user_id: @user.id}
   end
 
   describe "GET index" do
