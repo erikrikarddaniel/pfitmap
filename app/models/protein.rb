@@ -13,8 +13,8 @@
 
 class Protein < ActiveRecord::Base
   attr_accessible :name, :rank
-  belongs_to :HmmProfile
-  belongs_to :Enzyme
+  belongs_to :hmm_profile
+  belongs_to :enzyme
 
 
   def self.initialize_proteins
