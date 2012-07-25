@@ -40,4 +40,4 @@ Things to fix
 
 * Make protein_counts index page possible to govern by a "level"-dropdown
 
-* Make sure taxon ranks are saved correctly
+* Search function for hmm_db_hits/db_sequences
