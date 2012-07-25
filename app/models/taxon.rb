@@ -21,8 +21,8 @@ class Taxon < ActiveRecord::Base
     all_up_to_root_rec(self, [])
   end
 
-  def self.root
-    [Taxon.first.self_and_ancestors.last]
+  def self.roots
+    Taxon.find(:all, conditions: ["parent_ncbi_id IS NULL"])
   end
 
   private
