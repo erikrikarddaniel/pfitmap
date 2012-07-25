@@ -125,4 +125,25 @@ FactoryGirl.define do
     enzyme
     hmm_profile
   end
+
+  factory :taxon do
+    sequence(:name) { |n|  "example_taxon_name " + n.to_s }
+    sequence(:ncbi_taxon_id) { |n| n} 
+  end
+
+  factory :protein do
+    sequence(:name) { |n| "ex_protein " + n.to_s }
+    hmm_profile
+    enzyme
+ end
+
+  factory :protein_count do
+    no_genomes 0
+    no_proteins 0
+    no_genomes_with_proteins 0
+    protein
+    pfitmap_release
+    taxon
+  end
+
 end
