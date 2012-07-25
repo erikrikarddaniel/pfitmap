@@ -4,10 +4,14 @@
     <h2>(Only Whole Genome Sequenced Organisms)</h2>
   </div>
   <aside class="span4">
+    <% if @taxon_roots %>
     <div id="listContainer">
       <ul id="expListAjax">
-	<%= list_taxon_children @taxon_root %>
+	<%= list_taxon_children @taxon_roots %>
       </ul>
     </div>
+    <% else %>
+    <h3> Sorry, there is no taxon-tree loaded </h3>
+    <% end %>
   </aside>
 </div>
