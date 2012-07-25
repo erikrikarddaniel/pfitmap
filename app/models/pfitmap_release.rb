@@ -124,7 +124,7 @@ class PfitmapRelease < ActiveRecord::Base
       taxon_in_db = Taxon.new
       taxon_in_db.ncbi_taxon_id = taxon_hash["ncbi_taxon_id"]
       taxon_in_db.name = taxon_hash["scientific_name"]
-      taxon_in_db.rank = taxon_hash["rank"]
+      taxon_in_db.rank = taxon_hash["node_rank"]
       if next_taxon
         taxon_in_db.parent_ncbi_id = next_taxon["ncbi_taxon_id"]
       end
