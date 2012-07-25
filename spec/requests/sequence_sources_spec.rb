@@ -23,7 +23,7 @@ describe "SequenceSources" do
 
     context "whithout new release" do    
       it "should not have an evaluate button" do
-        page.should have_content("There is no release created after the current")
+        page.should have_content("There is no release connected to this source")
       end
     end
     
@@ -88,11 +88,11 @@ describe "SequenceSources" do
       context "but without new release" do
         it "should not have an evaluate button" do
           visit sequence_source_path(sequence_source)
-          page.should have_content("There is no release created after the current")
+          page.should have_content("There is no release connected to this source")
         end
       end
       context "with a new release" do
-        let!(:pfitmap_release) { FactoryGirl.create(:pfitmap_release) }
+        let!(:pfitmap_release) { FactoryGirl.create(:pfitmap_release, sequence_source: sequence_source) }
         before do
           visit sequence_source_path(sequence_source)
           click_button('Evaluate')
