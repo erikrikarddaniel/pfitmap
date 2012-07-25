@@ -153,10 +153,10 @@ let!(:sequence_source5) { FactoryGirl.create(:sequence_source) }
     it "should give the correct taxons back" do
       gi_taxons = HmmDbHit.all_taxons_for(pfitmap_release)
       hash = pfitmap_release.build_gi_ncbi_taxon_hash(gi_taxons)
-      hash[297089704].should == 1000569
-      hash[297089710].should == 1000569
-      hash[297089654].should_not == 1000569
-      hash[297089654].should == 1000565
+      hash[297089704].should == 767985
+      hash[297089710].should == 767985
+      hash[297089654].should_not == 767985
+      hash[297089654].should == 767981
     end
   end
 

@@ -72,7 +72,7 @@ describe HmmDbHit do
     it "should give the correct taxons back" do
       gi_taxon = HmmDbHit.all_taxons_for(pfitmap_release)
       gi_taxon.first["protein_gi"].should == hmm_db_hit1.gi
-      gi_taxon.first["taxon_with_name"]["scientific_name"].should == "Megasphaera sp. UPII 135-E"
+      gi_taxon.first["taxon_with_name"]["scientific_name"].should == "Influenza A virus (A/Guangdong/244/2009(H1N1))"
     end
   end
 end
