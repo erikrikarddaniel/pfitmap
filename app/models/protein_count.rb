@@ -24,6 +24,14 @@ class ProteinCount < ActiveRecord::Base
   belongs_to :pfitmap_release
   belongs_to :taxon
 
+  def self.from_rank(rank)
+    if rank
+      self.find(:all, joins: :taxon, conditions: ["Taxons.rank = ?", rank])
+    else
+      self.find(:all, :joins => :taxon, conditions: ["Taxons.rank IS NULL"])
+    end
+  end
+
   def add_genome
     self.no_genomes += 1
     self.save
