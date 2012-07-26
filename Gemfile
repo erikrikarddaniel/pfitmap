@@ -15,6 +15,9 @@ gem 'cancan'
 gem 'httparty'
 gem 'json'
 
+# Delay time-consuming jobs
+gem 'delayed_job_active_record', '0.3.2'
+
 # Deployment
 gem 'capistrano'
 gem 'rvm-capistrano'
