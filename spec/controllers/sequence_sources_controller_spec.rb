@@ -82,9 +82,9 @@ describe SequenceSourcesController do
                                                hmm_result: hmm_result, 
                                                db_sequence: db_sequence) }
     describe "with existing new release" do
-      let!(:pfitmap_release) { FactoryGirl.create(:pfitmap_release) }
+      let!(:pfitmap_release) { FactoryGirl.create(:pfitmap_release, sequence_source: sequence_source) }
       it "can evaluate the source correctly" do
-        post :evaluate, { :sequence_source_id => sequence_source.to_param, :release_id => pfitmap_release.id}, valid_session
+        post :evaluate, { :sequence_source_id => sequence_source.to_param}, valid_session
         response.code.should eq("302")
       end
       

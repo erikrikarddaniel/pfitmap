@@ -18,4 +18,22 @@ class HmmDbHit < ActiveRecord::Base
   belongs_to :db_sequence
   validates :gi, presence: true
   validates :db_sequence_id, presence: true
+
+  def self.all_taxons
+    gi_list = []
+    self.select(:gi).each do |hit|
+      gi_list << hit.gi
+    end
+    gi_taxons = BiosqlWeb.get_taxons_by_gis(gi_list)
+    
+  end
+
+  def self.all_taxons_for(pr)
+    gi_list = []
+    pr.hmm_db_hits.select(:gi).each do |hit|
+      gi_list << hit.gi
+    end
+    gi_taxons = BiosqlWeb.get_taxons_by_gis(gi_list)
+  end
+ 
 end

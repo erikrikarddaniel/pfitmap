@@ -1,4 +1,12 @@
 Pfitmap::Application.routes.draw do
+  resources :protein_counts
+
+  resources :proteins
+
+  resources :taxons do
+    get '/ajax_list', to: 'taxons#ajax_list'
+  end
+
   resources :enzymes
 
   match '/auth/:provider/callback', to: 'sessions#create'
@@ -7,6 +15,7 @@ Pfitmap::Application.routes.draw do
 
   resources :pfitmap_releases do
     post 'make_current', :as => :make_current
+    post 'calculate', :as => :calculate
   end
 
   resources :db_sequences

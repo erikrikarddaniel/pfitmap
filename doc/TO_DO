@@ -9,6 +9,14 @@ Discussion points
 
 Things to fix
 -------------
+* Tests that are not yet implemented:
+  - Hierarchy of taxon
+  - The dry run initialization
+
+* Possible optimizations:
+  - Add index on taxon_id in sll-biosql project, not used often, therefore not neccessary
+  - Use rails built in sql-increment count when iterating over the protein_counts
+    would speed up calculate-step.
 
 * Set up system to enable links from accession numbers to target database. See
   doc/sequence_inclusion.dia (SequenceDatabase model). Note the comments
@@ -19,3 +27,14 @@ Things to fix
 
 * When AJAX expandable table/list is implemented for the ProteinCount, 
   use it for the pfitmap_release show page as well. 
+
+* Enable sorting on columns as a default feature for all tables.
+
+* Test visual performance in all major browsers
+
+* Make the taxon name in the expandable list an ajax link for
+  updating a protein_counts summary table
+
+* Make protein_counts index page possible to govern by a "level"-dropdown
+
+* Search function for hmm_db_hits/db_sequences

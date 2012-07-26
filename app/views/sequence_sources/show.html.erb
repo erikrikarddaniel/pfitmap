@@ -11,10 +11,10 @@
   </div>
   <%if can? :evaluate, @sequence_sources %>
   <div class="span4">
-    <% if @pfitmap_releases.any? %>
+    <% if @sequence_source.pfitmap_release %>
     <%= render 'evaluate_form' %>
     <% else %>
-    <h2> There is no release created after the current</h2>
+    <h2> There is no release connected to this source</h2>
     <%= link_to "Create new release", new_pfitmap_release_path, class: "btn" %>
     <% end %>
   </div>

@@ -63,4 +63,16 @@ describe HmmDbHit do
     end
   end
 
+  describe "all taxons for" do
+    let!(:db_sequence1) { FactoryGirl.create(:db_sequence) }
+    let!(:hmm_db_hit1) { FactoryGirl.create(:hmm_db_hit, gi: 297089704, db: "ref", db_sequence: db_sequence1) }
+    let!(:hmm_db_hit2) { FactoryGirl.create(:hmm_db_hit, gi: 297089710, db: "pdb", db_sequence: db_sequence1) }
+    let!(:pfitmap_release) {FactoryGirl.create(:pfitmap_release) }
+    let!(:pfitmap_sequence) {FactoryGirl.create(:pfitmap_sequence, pfitmap_release: pfitmap_release, db_sequence: db_sequence1) }
+    it "should give the correct taxons back" do
+      gi_taxon = HmmDbHit.all_taxons_for(pfitmap_release)
+      gi_taxon.first["protein_gi"].should == hmm_db_hit1.gi
+      gi_taxon.first["taxon_with_name"]["scientific_name"].should == "Influenza A virus (A/Guangdong/244/2009(H1N1))"
+    end
+  end
 end

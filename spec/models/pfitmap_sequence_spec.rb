@@ -19,4 +19,6 @@ describe PfitmapSequence do
   subject{@pfitmap_sequence}
   it { should respond_to(:db_sequence) }
   it { should respond_to(:pfitmap_release) }
+  it { should respond_to(:calculate_counts) }
+  it { should respond_to(:hmm_profile) }
 end

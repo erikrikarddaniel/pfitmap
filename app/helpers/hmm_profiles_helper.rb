@@ -3,11 +3,10 @@ module HmmProfilesHelper
   def list_children(profile_collection)
     html_var = ""
     profile_collection.each do |p|
-      html_var << "<li>" << p.description
-      link_html = "<p>" << link_to(" Browse", p) << "</p>"
-      html_var << link_html
       if not p.children.empty?
-        html_var << "<ul>" << list_children(p.children) << "</ul>"
+        html_var << "<li><i class='icon-plus'> </i>" << link_to(p.description, p) << "<ul>" << list_children(p.children) << "</ul>"
+      else
+        html_var << "<li><i class='icon-white' style='visibility: hidden;'> </i>" << link_to(p.description, p)
       end
       html_var <<  "</li>\n"
     end

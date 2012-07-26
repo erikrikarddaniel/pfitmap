@@ -22,9 +22,11 @@ class HmmProfile < ActiveRecord::Base
   has_many :hmm_score_criteria, :dependent => :destroy
   has_many :enzyme_profiles
   has_many :enzymes, :through => :enzyme_profiles
+  has_many :proteins
   has_many :db_sequence_best_profiles
   has_many :best_profile_sequences, through: :db_sequence_best_profiles, source: :db_sequence
   has_many :pfitmap_sequences
+
   validates :name, presence: true
   validates :version, presence: true
   validates :hierarchy, presence: true, :uniqueness => :true
@@ -55,6 +57,19 @@ class HmmProfile < ActiveRecord::Base
     "#{name}#{protein_name ? " (#{protein_name})" : ""}"
   end
 
+  def all_parents_including_self
+    all_parents_recursion([],self)
+  end
+
+  def all_proteins_including_parents
+    proteins = []
+    profiles = all_parents_including_self
+    profiles.each do |profile|
+        proteins += profile.proteins
+    end
+    proteins.uniq
+  end
+    
   private
   def last_parent_recursion(id)
     parent = HmmProfile.find(id)
@@ -62,6 +77,16 @@ class HmmProfile < ActiveRecord::Base
       return id
     else
       last_parent_recursion(parent.parent_id)
+    end
+  end
+
+  def all_parents_recursion(acc, profile)
+    parent_profile = profile.parent
+    acc << profile
+    if parent_profile
+      all_parents_recursion(acc, parent_profile)
+    else
+      return acc
     end
   end
 end
