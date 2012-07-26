@@ -32,10 +32,12 @@ class SequenceSource < ActiveRecord::Base
       if index % 100 == 0
         logger.info "Next 100 db_sequences"
       end
-      hmm_profile_id = seq.best_hmm_profile(self)
-      hmm_profile = HmmProfile.find(hmm_profile_id)
-      if hmm_profile.evaluate?(seq,self)
-        head_release.add_seq(seq, hmm_profile)
+      hmm_profile_ids = seq.best_hmm_profiles(self)
+      hmm_profiles = HmmProfile.find_all_by_id(hmm_profile_ids)
+      hmm_profiles.each do |hmm_profile|
+        if hmm_profile.evaluate?(seq,self)
+          head_release.add_seq(seq, hmm_profile)
+        end
       end
     end
   end
