@@ -27,7 +27,11 @@ class SequenceSource < ActiveRecord::Base
 
   def evaluate(head_release)
     db_sequences =  self.db_sequences
-    db_sequences.each do |seq|
+    logger.info "Evaluating..."
+    db_sequences.each_with_index do |seq, index|
+      if index % 100 == 0
+        logger.info "Next 100 db_sequences"
+      end
       hmm_profile_id = seq.best_hmm_profile(self)
       hmm_profile = HmmProfile.find(hmm_profile_id)
       if hmm_profile.evaluate?(seq,self)

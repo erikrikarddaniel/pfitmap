@@ -90,14 +90,16 @@ class SequenceSourcesController < ApplicationController
   # POST /sequence_sources1/evaluate.json ???
 
   def evaluate
+    logger.info "Starting evaluate"
     @sequence_source = SequenceSource.find(params[:sequence_source_id])
     @head_release = @sequence_source.pfitmap_release
 
     if (@head_release and @sequence_source)
+      logger.info "Found the sequence_source and the head_release"
       @head_release.pfitmap_sequences.destroy_all
-      @head_release.sequence_source_id = @sequence_source.id
-      @head_release.save
+      logger.info "Destroyed all related pfitmap_sequences"
       @sequence_source.evaluate(@head_release)
+      logger.info "Finished evaluate method, now renders view"
       flash[:success] = 'Sequence source was successfully evaluated.'
       respond_to do |format|
         format.html { redirect_to @head_release }
