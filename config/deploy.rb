@@ -14,7 +14,7 @@ role :db, "rnrdb.pfitmap.org", :primary => true
 
 #server details
 default_run_options[:pty] = true
-#ssh_options[:forward_agent] = true
+ssh_options[:forward_agent] = true
 set :deploy_to, "/scratch/webapps/rnrdb.pfitmap.org"
 set :deploy_via, :remote_cache
 set :user, "passenger"
