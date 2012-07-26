@@ -28,7 +28,8 @@ class PfitmapRelease < ActiveRecord::Base
 
   # Should only be called when there exists a head release
   def add_seq(db_seq, hmm_profile)
-    if not self.db_sequences.find_by_id(db_seq.id)
+    existing = PfitmapSequence.find(:first, conditions: ["db_sequence_id = ? AND hmm_profile_id = ? AND pfitmap_release_id = ?", db_seq.id, hmm_profile.id, self.id])
+    if not existing
       PfitmapSequence.create!(db_sequence_id: db_seq.id, pfitmap_release_id: self.id, hmm_profile_id: hmm_profile.id)
     end
   end
