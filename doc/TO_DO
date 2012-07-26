@@ -12,6 +12,7 @@ Things to fix
 * Tests that are not yet implemented:
   - Hierarchy of taxon
   - The dry run initialization
+  - unit tests for the whole populate protein_counts procedure.
 
 * Possible optimizations:
   - Add index on taxon_id in sll-biosql project, not used often, therefore not neccessary
@@ -38,6 +39,9 @@ Things to fix
 * Make the taxon name in the expandable list an ajax link for
   updating a protein_counts summary table
 
-* Make protein_counts index page possible to govern by a "level"-dropdown
+* Make protein_counts index page possible to govern by a "rank"-dropdown
 
 * Search function for hmm_db_hits/db_sequences
+
+* Sequence source show page does not have a good overview
+  of which proteins that have results registered.
