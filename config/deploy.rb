@@ -23,7 +23,7 @@ set :port, 50021
 
 #repo details
 set :scm, :git
-set :repository, "https://github.com:alneberg/pfitmap.git"
+set :repository, "git@github.com:alneberg/pfitmap.git"
 set :branch, "stable"
 set :git_enable_submodules, 1
 
