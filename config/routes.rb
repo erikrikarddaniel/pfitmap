@@ -1,5 +1,6 @@
 Pfitmap::Application.routes.draw do
-  resources :protein_counts
+  resources :protein_counts, :only => [:index]
+  get '/protein_counts_by_taxons', to: 'protein_counts#protein_counts_by_taxons'
 
   resources :proteins
 

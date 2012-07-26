@@ -13,4 +13,25 @@ class ProteinCountsController < ApplicationController
       format.json { render json: @protein_counts }
     end
   end
+
+  def protein_counts_by_taxons
+    if params[:taxon_root_id]
+      @taxon_root = Taxon.find_by_id(params[:taxon_root_id])
+      @taxons = @taxon_root.children(:include => :protein_counts)
+      @protein_counts = @taxons.map{ |t| t.protein_counts }
+    else
+      @taxon_roots = Taxon.roots
+      logger.debug "blabla #{__FILE__}"
+      logger.debug "blabla roots: #{@taxon_roots}"
+      @taxons = @taxon_roots.map{ |tr| tr.children(:include => :protein_counts) }
+      logger.debug "blabla taxons: #{@taxons}"
+      @protein_counts = @taxons.map{ |trc| trc.map{ |t| t.protein_counts.all }}
+      logger.debug "blabla protein_counts: #{@protein_counts}"
+    end
+    respond_to do |format|
+      format.js 
+      format.html { render 'index' }
+    end
+  end
+
 end
