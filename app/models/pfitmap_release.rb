@@ -129,6 +129,8 @@ class PfitmapRelease < ActiveRecord::Base
         taxon_in_db.parent_ncbi_id = next_taxon["ncbi_taxon_id"]
       end
       taxon_in_db.save
+    else
+      taxon_in_db.rank = taxon_hash["node_rank"]
     end
     return taxon_in_db
   end
@@ -137,11 +139,12 @@ class PfitmapRelease < ActiveRecord::Base
   def dry_taxon_first(first_taxon_hash,taxon_in_db, next_taxon)
     if taxon_in_db
       taxon_in_db.wgs = "true"
+      taxon_in_db.rank = first_taxon_hash["node_rank"]
     else
       taxon_in_db = Taxon.new
       taxon_in_db.ncbi_taxon_id = first_taxon_hash["ncbi_taxon_id"]
       taxon_in_db.name = first_taxon_hash["scientific_name"]
-      taxon_in_db.rank = first_taxon_hash["rank"]
+      taxon_in_db.rank = first_taxon_hash["node_rank"]
       taxon_in_db.parent_ncbi_id = next_taxon["ncbi_taxon_id"]
       taxon_in_db.wgs = "true"
     end
