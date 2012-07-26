@@ -38,3 +38,9 @@ Things to fix
 * Make protein_counts index page possible to govern by a "level"-dropdown
 
 * Search function for hmm_db_hits/db_sequences
+
+* Evaluation adds rows below hmm_score_criterion if the score is equal 
+  to another result_row for that db_sequence belonging to a profile 
+  without hmm_score_criterion?
+  Maybe hmm_score_criterion should be at least the minimum of criterions 
+  for children
