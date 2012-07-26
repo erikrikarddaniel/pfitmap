@@ -5,7 +5,6 @@ class TaxonsController < ApplicationController
   # GET /taxons
   # GET /taxons.json
   def index
-    @taxons = Taxon.all
     @taxon_roots = Taxon.roots
     respond_to do |format|
       format.html # index.html.erb
