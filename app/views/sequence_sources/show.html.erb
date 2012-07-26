@@ -53,10 +53,10 @@
 	<%= render :partial => "sequence_sources/hmm_result", :collection => p.hmm_results.find_all{|result| result.sequence_source == @sequence_source} %>
       </tbody>
     </table>
-    <%= will_paginate @hmm_results %>
     <% end %>
     <% else %>
     <h3> No HMM Results Registered </h3>
     <% end %>
+    <%= will_paginate @hmm_profiles %>
   </div>
 </div>

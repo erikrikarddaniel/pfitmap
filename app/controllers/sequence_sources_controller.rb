@@ -15,10 +15,10 @@ class SequenceSourcesController < ApplicationController
   # GET /sequence_sources/1.json
   def show
     @sequence_source = SequenceSource.find(params[:id])
-    @hmm_results = @sequence_source.hmm_results.paginate(page: params[:page])
+    @hmm_results = @sequence_source.hmm_results
     @hmm_profiles_last_parents = HmmProfile.last_parents.sort_by{|p| p.hierarchy }
     @pfitmap_releases = PfitmapRelease.find_all_after_current.map{|rel| [rel.release, rel.id]}
-    @hmm_profiles = @sequence_source.hmm_profiles
+    @hmm_profiles = @sequence_source.hmm_profiles.paginate(page: params[:page])
 
     respond_to do |format|
       format.html # show.html.erb
