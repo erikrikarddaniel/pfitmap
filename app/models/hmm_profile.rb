@@ -47,8 +47,9 @@ class HmmProfile < ActiveRecord::Base
   end
 
   def evaluate?(db_sequence, sequence_source)
-    best_profile = (db_sequence.best_hmm_profile(sequence_source) == self)
-    bool = self.inclusion_criteria.inject(best_profile) { |result, element| result && element.evaluate?(db_sequence,sequence_source) } 
+    best_profile = db_sequence.best_hmm_profiles(sequence_source).include?(self)
+    has_criteria = self.inclusion_criteria != []
+    bool = self.inclusion_criteria.inject(best_profile && has_criteria) { |result, element| result && element.evaluate?(db_sequence,sequence_source) } 
     return bool
   end
 

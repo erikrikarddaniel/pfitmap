@@ -90,11 +90,15 @@ class SequenceSourcesController < ApplicationController
   # POST /sequence_sources1/evaluate.json ???
 
   def evaluate
+    logger.info "Starting evaluate"
     @sequence_source = SequenceSource.find(params[:sequence_source_id])
     @head_release = @sequence_source.pfitmap_release
 
     if (@head_release and @sequence_source)
+      logger.info "Found the sequence_source and the head_release"
       @head_release.pfitmap_sequences.destroy_all
+      logger.info "Destroyed all related pfitmap_sequences"
+
       @head_release.sequence_source_id = @sequence_source.id
       @head_release.save
       if Rails.env = "test"

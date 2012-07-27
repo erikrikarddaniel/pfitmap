@@ -20,10 +20,8 @@ class DbSequencesController < ApplicationController
     @db_sequence = DbSequence.find(params[:id])
     @hmm_result_rows = @db_sequence.hmm_result_rows
     @hmm_db_hits = @db_sequence.hmm_db_hits
-    @all_sources = SequenceSource.all
-    @best_profiles = @all_sources.map do |source|
-      [source, @db_sequence.best_hmm_profile(source)]
-    end
+    dsbps = @db_sequence.db_sequence_best_profiles(:include => [:hmm_profile, :sequence_source])
+    @best_profiles = dsbps.map{ |dsbp| [dsbp.sequence_source, dsbp.hmm_profile] }
 
     respond_to do |format|
       format.html # show.html.erb

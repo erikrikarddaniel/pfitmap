@@ -100,10 +100,48 @@ describe SequenceSourcesController do
           PfitmapSequence.all.should_not include(pfitmap_sequence)
         end
       end
+      describe "with multiple best_profiles" do
+        let!(:hmm_profile2) { FactoryGirl.create(:hmm_profile) }
+        let!(:hmm_score_criterion2) { FactoryGirl.create(:hmm_score_criterion, hmm_profile: hmm_profile2)}
+        let!(:hmm_result2) { FactoryGirl.create(:hmm_result, 
+                                                hmm_profile: hmm_profile2,
+                                                sequence_source: sequence_source) }
+        let!(:hmm_result_row2) { FactoryGirl.create(:hmm_result_row, 
+                                                    hmm_result: hmm_result2, 
+                                                    db_sequence: db_sequence) }
+        describe "match both profiles criteria" do
+          it "can add both profiles" do
+            post :evaluate, { :sequence_source_id => sequence_source.to_param, :release_id => pfitmap_release.id}, valid_session
+            pfitmap_release.db_sequences.should include(db_sequence)
+            db_sequence.best_hmm_profiles_for(sequence_source).count.should == 2
+            #          PfitmapSequence.all.should == []
+            PfitmapSequence.count.should == 2
+          end
+        end
+      end
+      describe "match only one profiles criteria" do
+        let!(:hmm_profile3) { FactoryGirl.create(:hmm_profile) }
+        let!(:hmm_score_criterion3) { FactoryGirl.create(:hmm_score_criterion, hmm_profile: hmm_profile3, min_fullseq_score: 1000) }
+        let!(:hmm_result3) { FactoryGirl.create(:hmm_result, 
+                                                hmm_profile: hmm_profile3,
+                                                sequence_source: sequence_source) }
+        let!(:hmm_result_row3) { FactoryGirl.create(:hmm_result_row, 
+                                                    hmm_result: hmm_result3, 
+                                                    db_sequence: db_sequence) }
+
+        it "can add only one" do
+          post :evaluate, { :sequence_source_id => sequence_source.to_param, :release_id => pfitmap_release.id}, valid_session
+          # db_sequence has two best profiles
+          db_sequence.best_hmm_profiles_for(sequence_source).should == [hmm_profile3, hmm_profile]
+          # But it is only included to one because of the higher criterion for hmm_profile3
+          hmm_profile3.pfitmap_sequences.should == []
+          hmm_profile.pfitmap_sequences.should_not == []
+        end
+      end
     end
 
     
-    describe "without current release" do
+    describe "without release" do
       it "cannot evaluate the source" do
         post :evaluate, { :sequence_source_id => sequence_source.to_param}, valid_session
         response.code.should eq("200")

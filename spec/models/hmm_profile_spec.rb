@@ -126,6 +126,19 @@ describe HmmProfile do
         hmm_profile_00101.evaluate?(db_sequence1,sequence_source).should be_false
       end
     end
+    describe "evaluates a profile without a criterion" do
+      let!(:hmm_profile4) { FactoryGirl.create(:hmm_profile) }
+      let!(:hmm_result4) { FactoryGirl.create(:hmm_result, 
+                                              hmm_profile: hmm_profile4, 
+                                              sequence_source: sequence_source) }
+      let!(:db_sequence4) { FactoryGirl.create(:db_sequence) }
+      let!(:hmm_result_row4) { FactoryGirl.create(:hmm_result_row, 
+                                                  hmm_result: hmm_result4, 
+                                                  db_sequence: db_sequence4) }
+      it "should be false" do
+        hmm_profile4.evaluate?(db_sequence4, sequence_source).should be_false
+      end
+    end
     
   end
 
