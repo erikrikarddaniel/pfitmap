@@ -38,3 +38,6 @@ Things to fix
 * Make protein_counts index page possible to govern by a "level"-dropdown
 
 * Search function for hmm_db_hits/db_sequences
+
+* Add file_name to hmm_results so that it's easier to debug if the wrong 
+  file has been uploaded.
