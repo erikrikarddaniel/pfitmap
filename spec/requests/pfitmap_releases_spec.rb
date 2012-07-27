@@ -67,10 +67,42 @@ describe "PfitmapReleases" do
   end
 
   describe "show page" do
-    let!(:pfitmap_release1) { FactoryGirl.create(:pfitmap_release) }
+    let!(:hmm_profile1) { FactoryGirl.create(:hmm_profile, name: "Hmm Profile 1") }
+    let!(:hmm_profile2) { FactoryGirl.create(:hmm_profile, name: "Hmm Profile 2") }
+    let!(:hmm_score_criterion1) { FactoryGirl.create(:hmm_score_criterion, hmm_profile: hmm_profile1) }
+    let!(:hmm_score_criterion2) { FactoryGirl.create(:hmm_score_criterion, hmm_profile: hmm_profile2) }
+    let!(:sequence_source) { FactoryGirl.create(:sequence_source) }
+    let!(:hmm_result1) { FactoryGirl.create(:hmm_result, hmm_profile: hmm_profile1, sequence_source: sequence_source) }
+    let!(:hmm_result2) { FactoryGirl.create(:hmm_result, hmm_profile: hmm_profile2, sequence_source: sequence_source) }
+    let!(:db_sequence1) { FactoryGirl.create(:db_sequence) }
+    let!(:db_sequence2) { FactoryGirl.create(:db_sequence) }
+    let!(:db_sequence3) { FactoryGirl.create(:db_sequence) }
+    let!(:hmm_result_row1) { FactoryGirl.create(:hmm_result_row, db_sequence: db_sequence1, hmm_result: hmm_result1) }
+    let!(:hmm_result_row2) { FactoryGirl.create(:hmm_result_row, db_sequence: db_sequence1, hmm_result: hmm_result2) }
+    let!(:hmm_result_row3) { FactoryGirl.create(:hmm_result_row, db_sequence: db_sequence2, hmm_result: hmm_result1) }
+    let!(:hmm_result_row4) { FactoryGirl.create(:hmm_result_row2, db_sequence: db_sequence2, hmm_result: hmm_result2) }
+    let!(:hmm_result_row5) { FactoryGirl.create(:hmm_result_row2, db_sequence: db_sequence3, hmm_result: hmm_result2) }
+    
+    before do
+      make_mock_admin
+      login_with_oauth
+    end
+    
+    let!(:pfitmap_release1) { FactoryGirl.create(:pfitmap_release, sequence_source: sequence_source) }
+
     it "works for empty release" do
       visit pfitmap_release_path(pfitmap_release1)
       page.should have_content('Pfitmap Release')
+    end
+    
+    it "shows the correct stats" do
+      visit sequence_source_path(sequence_source)
+      click_on "Evaluate"
+      visit pfitmap_release_path(pfitmap_release1)
+      DbSequenceBestProfile.included_stats(hmm_profile1, sequence_source).should == [2, 50.0, 50.0]
+      DbSequenceBestProfile.included_stats(hmm_profile2, sequence_source).should == [1, 50.0, 50.0]
+      DbSequenceBestProfile.not_included_stats(hmm_profile1, sequence_source).should == [0, nil, nil]
+      DbSequenceBestProfile.not_included_stats(hmm_profile2, sequence_source).should == [1, 10.0, 10.0]
     end
   end
 
