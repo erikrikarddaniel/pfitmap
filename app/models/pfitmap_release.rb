@@ -25,7 +25,18 @@ class PfitmapRelease < ActiveRecord::Base
   validates_inclusion_of :current, :in => [true, false]
   validates :sequence_source_id, :presence => :true, :uniqueness => :true
 
-
+  def make_current(current_release)
+    if current_release != self
+      if current_release
+        current_release.current = false
+        current_release.save
+      end
+      
+      self.current = true
+      self.save
+    end
+  end
+  
   # Should only be called when there exists a head release
   def add_seq(db_seq, hmm_profile)
     if not self.db_sequences.find_by_id(db_seq.id)

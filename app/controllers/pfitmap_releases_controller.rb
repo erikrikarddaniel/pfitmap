@@ -114,19 +114,19 @@ class PfitmapReleasesController < ApplicationController
     @pfitmap_release = PfitmapRelease.find(params[:pfitmap_release_id])
     @current_release = PfitmapRelease.find_current_release
     
-    if @current_release != @pfitmap_release
-      if @current_release
-        @current_release.current = false
-        @current_release.save
+    if Rails.env == "test"
+      @pfitmap_release.make_current(@current_release)
+      respond_to do |format|
+        format.html { redirect_to pfitmap_releases_url }
+        format.json { head :no_content }
       end
-
-      @pfitmap_release.current = true
-      @pfitmap_release.save
-    end
-    
-    respond_to do |format|
-      format.html { redirect_to pfitmap_releases_url }
-      format.json { head :no_content }
+    else
+      @pfitmap_release.delay.make_current(@current_release)
+      flash[:notice] = "This release will soon be made current."
+      respond_to do |format|
+        format.html { redirect_to pfitmap_releases_url }
+        format.json { head :no_content }
+      end
     end
   end
 
