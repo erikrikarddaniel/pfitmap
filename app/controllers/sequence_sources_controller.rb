@@ -97,13 +97,24 @@ class SequenceSourcesController < ApplicationController
       @head_release.pfitmap_sequences.destroy_all
       @head_release.sequence_source_id = @sequence_source.id
       @head_release.save
-      @sequence_source.evaluate(@head_release)
-      flash[:success] = 'Sequence source was successfully evaluated.'
-      respond_to do |format|
-        format.html { redirect_to @head_release }
-        format.json { head :no_content }
-      end
+      if Rails.env = "test"
+        @sequence_source.evaluate(@head_release)
+        
+        flash[:success] = 'This sequence source was successfully evaluated.'
+        respond_to do |format|
+          format.html { redirect_to @sequence_source }
+          format.json { head :no_content }
+        end
+
+      else
+        @sequence_source.delay.evaluate(@head_release)
       
+        flash[:success] = 'Evaluating, this may take some time.'
+        respond_to do |format|
+          format.html { redirect_to @sequence_source }
+          format.json { head :no_content }
+        end
+      end
     else
       @hmm_results = @sequence_source.hmm_results.paginate(page: params[:page])
       @hmm_profiles_last_parents = HmmProfile.last_parents.sort_by{|p| p.hierarchy }
