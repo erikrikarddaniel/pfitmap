@@ -1,6 +1,7 @@
 # RVM bootstrap
 #$:.unshift(File.expand_path('./lib', ENV['rvm_path']))
 require 'rvm/capistrano'
+
 # bundler bootstrap
 require 'bundler/capistrano'
 set :rvm_ruby_string, '1.9.3-p194'
@@ -54,3 +55,12 @@ after "deploy:finalize_update", "db:db_config"
 
 #This is neccessary, this will precompile assets. If this is missing we will get strange problems with no errors in the logs.
 load 'deploy/assets'
+
+# Delayed job daemon
+require "delayed/recipes"
+
+set :rails_env, "production" #added for delayed job
+
+after "deploy:stop",    "delayed_job:stop"
+after "deploy:start",   "delayed_job:start"
+after "deploy:restart", "delayed_job:restart"
