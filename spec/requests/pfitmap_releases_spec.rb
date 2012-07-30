@@ -165,20 +165,23 @@ describe "PfitmapReleases" do
     let!(:db_sequence4) { FactoryGirl.create(:db_sequence) }
     let!(:db_sequence5) { FactoryGirl.create(:db_sequence) }
     
-    let!(:hmm_db_hit1) { FactoryGirl.create(:hmm_db_hit, gi: 297089654, db_sequence: db_sequence1)}
-    # Hit 2 and 3 are from the same species
-    let!(:hmm_db_hit2) { FactoryGirl.create(:hmm_db_hit, gi: 297089694, db_sequence: db_sequence2)}
-    let!(:hmm_db_hit3) { FactoryGirl.create(:hmm_db_hit, gi: 297089697, db_sequence: db_sequence3)}
-    # Hit 4 and 5 are from the same species 
-    let!(:hmm_db_hit4) { FactoryGirl.create(:hmm_db_hit, gi: 297089704, db_sequence: db_sequence4)}
-    let!(:hmm_db_hit5) { FactoryGirl.create(:hmm_db_hit, gi: 297089710, db_sequence: db_sequence5)}
+    let!(:hmm_db_hit1) { FactoryGirl.create(:hmm_db_hit, gi: 341588351, db_sequence: db_sequence1)}
+    # Hit 2 and 3 are from the same species, but will match different profiles
+    let!(:hmm_db_hit2) { FactoryGirl.create(:hmm_db_hit, gi: 333757513, db_sequence: db_sequence2)}
+    let!(:hmm_db_hit3) { FactoryGirl.create(:hmm_db_hit, gi: 333757514, db_sequence: db_sequence3)}
+    # Hit 4 and 5 are from the same species and same sequence 
+    let!(:hmm_db_hit4) { FactoryGirl.create(:hmm_db_hit, gi: 342827622, db_sequence: db_sequence4)}
+    let!(:hmm_db_hit5) { FactoryGirl.create(:hmm_db_hit, gi: 342827623, db_sequence: db_sequence4)}
+    # One hit without hmm_result_row
+    let!(:hmm_db_hit_not_included) { FactoryGirl.create(:hmm_db_hit, gi: 88888888, db_sequence: db_sequence5) }
+    
     let!(:hmm_result_row) { FactoryGirl.create(:hmm_result_row, hmm_result: hmm_result1, db_sequence: db_sequence1) }
-    let!(:hmm_result_row1) { FactoryGirl.create(:hmm_result_row, hmm_result: hmm_result1, db_sequence: db_sequence2 ) }
+    let!(:hmm_result_row1) { FactoryGirl.create(:hmm_result_row2, hmm_result: hmm_result1, db_sequence: db_sequence2 ) }
     let!(:hmm_result_row2) { FactoryGirl.create(:hmm_result_row, hmm_result: hmm_result1, db_sequence: db_sequence3) }
     let!(:hmm_result_row3) { FactoryGirl.create(:hmm_result_row, hmm_result: hmm_result1, db_sequence: db_sequence4) }
     let!(:hmm_result_row4) { FactoryGirl.create(:hmm_result_row, hmm_result: hmm_result2, db_sequence: db_sequence1) }
     let!(:hmm_result_row5) { FactoryGirl.create(:hmm_result_row, hmm_result: hmm_result2, db_sequence: db_sequence2) }
-    let!(:hmm_result_row6) { FactoryGirl.create(:hmm_result_row, hmm_result: hmm_result2, db_sequence: db_sequence3) }
+    let!(:hmm_result_row6) { FactoryGirl.create(:hmm_result_row2, hmm_result: hmm_result2, db_sequence: db_sequence3) }
     let!(:hmm_result_row7) { FactoryGirl.create(:hmm_result_row, hmm_result: hmm_result2, db_sequence: db_sequence4) }
     let!(:pfitmap_release) { FactoryGirl.create(:pfitmap_release, sequence_source: sequence_source) }
     
@@ -195,7 +198,13 @@ describe "PfitmapReleases" do
     it "can calculate" do
       visit pfitmap_release_path(pfitmap_release)
       click_on "Calculate"
-      page.should have_content "calculated successfully"
+      page.should have_content("The Protein Counts will now be calculated")
+      taxon_root = Taxon.find_by_name("root")
+      taxon_root.protein_counts.each do |pc|
+        pc.no_genomes.should == 10
+        pc.no_proteins.should == 4
+        pc.no_genomes_with_proteins.should == 3
+      end
     end
   end
 
@@ -205,7 +214,7 @@ describe "PfitmapReleases" do
     let!(:sequence_source) { FactoryGirl.create(:sequence_source) }
     let!(:hmm_result1) { FactoryGirl.create(:hmm_result, hmm_profile: hmm_profile1, sequence_source: sequence_source) }
     let!(:db_sequence1) { FactoryGirl.create(:db_sequence) }
-    let!(:hmm_db_hit1) { FactoryGirl.create(:hmm_db_hit, gi: 297089654, db_sequence: db_sequence1)}
+    let!(:hmm_db_hit1) { FactoryGirl.create(:hmm_db_hit, gi: 341588351, db_sequence: db_sequence1)}
     let!(:hmm_result_row) { FactoryGirl.create(:hmm_result_row, hmm_result: hmm_result1, db_sequence: db_sequence1 ) }
     let!(:pfitmap_release) { FactoryGirl.create(:pfitmap_release, sequence_source: sequence_source) }
 
@@ -221,7 +230,13 @@ describe "PfitmapReleases" do
     it "can calculate" do
       visit pfitmap_release_path(pfitmap_release)
       click_on "Calculate"
-      page.should have_content "calculated successfully"
+      page.should have_content "The Protein Counts will now be calculated"
+      taxon_root = Taxon.find_by_name("root")
+      taxon_root.protein_counts.each do |pc|
+        pc.no_genomes.should == 10
+        pc.no_proteins.should == 1
+        pc.no_genomes_with_proteins.should == 1
+      end
     end
   end
   
