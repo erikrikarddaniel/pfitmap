@@ -82,6 +82,7 @@ GEM
     hashie (1.2.0)
     highline (1.6.13)
     hike (1.2.1)
+    hodel_3000_compliant_logger (0.1.0)
     httparty (0.8.3)
       multi_json (~> 1.0)
       multi_xml
@@ -111,6 +112,9 @@ GEM
     net-ssh-gateway (1.1.0)
       net-ssh (>= 1.99.1)
     nokogiri (1.5.4)
+    oink (0.9.3)
+      activerecord
+      hodel_3000_compliant_logger
     omniauth (1.1.0)
       hashie (~> 1.2)
       rack
@@ -223,6 +227,7 @@ DEPENDENCIES
   jquery-rails
   json
   launchy
+  oink
   omniauth-openid
   pg
   rails (= 3.2.1)
