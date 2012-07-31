@@ -85,6 +85,45 @@ class PfitmapRelease < ActiveRecord::Base
     end
     return gi_ncbi_taxon_hash
   end
+
+  def calculate_main(user)
+    begin
+      @pfitmap_release = self
+      @pfitmap_sequences = @pfitmap_release.pfitmap_sequences(:include => :hmm_profile )
+      
+      # Get all hmm_db_hits and its taxons
+      gi_taxon_for_included_hits = HmmDbHit.all_taxons_for(@pfitmap_release)
+
+      # Build a hash with gi as keys and ncbi_taxon_id as values 
+      ncbi_gi_taxon_hash = @pfitmap_release.build_gi_ncbi_taxon_hash(gi_taxon_for_included_hits)
+      
+      # Destroy old protein counts rows for this release
+      @protein_counts = @pfitmap_release.protein_counts
+      @protein_counts.destroy_all
+      
+      # Make sure the protein table is filled
+      Protein.initialize_proteins
+      
+      # Fill the taxon table and dry run for the protein_counts
+      @pfitmap_release.protein_counts_initialize_dry
+      
+      # Instantiate all taxons in a hash, instead of 
+
+      # Iterate over the sequences and populate protein counts for each
+      # protein and taxon. 
+      @pfitmap_sequences.each do |seq|
+        seq.calculate_counts(@pfitmap_release, ncbi_gi_taxon_hash)
+      end
+    rescue
+      logger.info "Calculate pfitmap release ended with an error!" 
+      logger.info " This is the error message: #{$!}"
+      UserMailer.calculate_failure_email(user, @pfitmap_release, $!).deliver
+    else
+      logger.info "Calculate pfitmap release was successful!"
+      UserMailer.calculate_success_email(user,@pfitmap_release).deliver
+    end
+  end
+
   
   private
   def taxon_in_db_lookup(taxon_hash)
