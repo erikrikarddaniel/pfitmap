@@ -132,7 +132,10 @@ describe SequenceSourcesController do
         it "can add only one" do
           post :evaluate, { :sequence_source_id => sequence_source.to_param, :release_id => pfitmap_release.id}, valid_session
           # db_sequence has two best profiles
-          db_sequence.best_hmm_profiles_for(sequence_source).should == [hmm_profile3, hmm_profile]
+          db_sequence.best_hmm_profiles_for(sequence_source).count.should == 2
+          db_sequence.best_hmm_profiles_for(sequence_source).should include(hmm_profile)
+          db_sequence.best_hmm_profiles_for(sequence_source).should include(hmm_profile3)
+          
           # But it is only included to one because of the higher criterion for hmm_profile3
           hmm_profile3.pfitmap_sequences.should == []
           hmm_profile.pfitmap_sequences.should_not == []
