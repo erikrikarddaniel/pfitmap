@@ -19,6 +19,9 @@ gem 'json'
 gem 'delayed_job_active_record', '0.3.2'
 gem 'daemons'
 
+# Debugging memory leak
+gem 'oink'
+
 # Deployment
 gem 'capistrano'
 gem 'rvm-capistrano'
