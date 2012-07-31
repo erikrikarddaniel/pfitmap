@@ -48,15 +48,13 @@ class ProteinCount < ActiveRecord::Base
       first_protein_count.obs_as_genome = true
       first_protein_count.save
     end
-        
-    taxons.each do |taxon|
 
-      protein_count = self.find(:first, :conditions => ["protein_id = ? AND taxon_id = ? AND pfitmap_release_id = ?", protein.id, taxon.id, pr.id])
+    taxons.each do |taxon|
       if first_protein
-        protein_count.no_genomes_with_proteins += 1
+        ProteinCount.where("protein_id = ? AND taxon_id = ? AND pfitmap_release_id = ?", protein.id, taxon.id, pr.id).update_all("no_genomes_with_proteins = no_genomes_with_proteins + 1, no_proteins = no_proteins + 1")
+      else
+        ProteinCount.where("protein_id = ? AND taxon_id = ? AND pfitmap_release_id = ?", protein.id, taxon.id, pr.id).update_all("no_proteins = no_proteins + 1")
       end
-      protein_count.no_proteins += 1
-      protein_count.save
     end
   end
 end
