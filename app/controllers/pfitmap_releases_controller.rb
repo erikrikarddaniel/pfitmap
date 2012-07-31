@@ -135,47 +135,17 @@ class PfitmapReleasesController < ApplicationController
   # Assumes that all proteins are already created
   def calculate
     @pfitmap_release = PfitmapRelease.find(params[:pfitmap_release_id])
+    user = current_user
+    if Rails.env == "test" 
+      @pfitmap_release.calculate_main(user)
+    else
+      @pfitmap_release.delay.calculate_main(user)
+    end
     
-    calculate_work_horse(@pfitmap_release)
-
     respond_to do |format|
-      flash[:success] = "The Protein Counts will now be calculated!"
+      flash[:success] = "The Protein Counts will now be calculated! An email will be sent when it is finished (approx 24h)."
       format.html { redirect_to pfitmap_release_path(@pfitmap_release) }
     end
   end
 
-  private
-  def calculate_work_horse(pr)
-    begin
-      @pfitmap_release = pr
-      @pfitmap_sequences = @pfitmap_release.pfitmap_sequences
-      
-      # Get all hmm_db_hits and its taxons
-      gi_taxon_for_included_hits = HmmDbHit.all_taxons_for(@pfitmap_release)
-
-      # Build a hash with gi as keys and ncbi_taxon_id as values 
-      ncbi_gi_taxon_hash = @pfitmap_release.build_gi_ncbi_taxon_hash(gi_taxon_for_included_hits)
-      
-      # Destroy old protein counts rows for this release
-      @protein_counts = @pfitmap_release.protein_counts
-      @protein_counts.destroy_all
-      
-      # Make sure the protein table is filled
-      Protein.initialize_proteins
-      
-      # Fill the taxon table and dry run for the protein_counts
-      @pfitmap_release.protein_counts_initialize_dry
-      
-      # Iterate over the sequences and populate protein counts for each
-      # protein and taxon. 
-      @pfitmap_sequences.each do |seq|
-        seq.calculate_counts(@pfitmap_release, ncbi_gi_taxon_hash)
-      end
-    rescue
-      logger.info "Calculate pfitmap release ended with an error!" 
-      logger.info " This is the error message: #{$!}"
-    else
-      logger.info "Calculate pfitmap release was successful!"
-    end
-  end
 end

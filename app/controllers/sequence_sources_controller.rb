@@ -93,16 +93,17 @@ class SequenceSourcesController < ApplicationController
     logger.info "Starting evaluate"
     @sequence_source = SequenceSource.find(params[:sequence_source_id])
     @head_release = @sequence_source.pfitmap_release
-
+    user = current_user
+    
     if (@head_release and @sequence_source)
       logger.info "Found the sequence_source and the head_release"
-      @head_release.pfitmap_sequences.destroy_all
+      @head_release.pfitmap_sequences.delete_all
       logger.info "Destroyed all related pfitmap_sequences"
 
       @head_release.sequence_source_id = @sequence_source.id
       @head_release.save
-      if Rails.env = "test"
-        @sequence_source.evaluate(@head_release)
+      if Rails.env == "test"
+        @sequence_source.evaluate(@head_release, user)
         
         flash[:success] = 'This sequence source was successfully evaluated.'
         respond_to do |format|
@@ -111,7 +112,7 @@ class SequenceSourcesController < ApplicationController
         end
 
       else
-        @sequence_source.delay.evaluate(@head_release)
+        @sequence_source.delay.evaluate(@head_release, user)
       
         flash[:success] = 'Evaluating, this may take some time.'
         respond_to do |format|
