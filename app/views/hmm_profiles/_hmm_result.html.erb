@@ -3,5 +3,5 @@
   <td> <%= hmm_result.sequence_source.name %> </td>
   <td> <%= hmm_result.sequence_source.version %> </td>
   <td> <%= link_to "show", hmm_result %> </td>
-<td> <%= link_to "destroy", hmm_result, confirm: 'Are you sure you want to delete this HMM Result and all its rows?', method: :delete %></td>
+<td> <%= link_to "destroy", hmm_result, data: {confirm: 'Are you sure you want to delete this HMM Result and all its rows?'}, method: :delete %></td>
 </tr>

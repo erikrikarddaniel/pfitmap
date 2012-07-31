@@ -49,7 +49,7 @@
 	<% end %>
       </p>
       
-      <%= link_to 'Delete', { :action => :destroy, :id => @hmm_profile.id }, :method => :delete, :confirm => 'Are you sure you whant to delete this HMM Profile and all its related results?', :class => "btn" %>
+      <%= link_to 'Delete', { :action => :destroy, :id => @hmm_profile.id }, :method => :delete, data: { :confirm => 'Are you sure you whant to delete this HMM Profile and all its related results?'}, :class => "btn" %>
       
       <%= link_to 'Edit', edit_hmm_profile_path(@hmm_profile), :class => "btn" %>
       <%= link_to 'Back', hmm_profiles_path, :class => "btn" %>

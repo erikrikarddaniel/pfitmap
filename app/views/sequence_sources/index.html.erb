@@ -29,7 +29,7 @@
 	  <td><%= sequence_source.version %></td>
 	  <td><%= link_to 'Show', sequence_source %></td>
 	  <td><%= link_to 'Edit', edit_sequence_source_path(sequence_source) %></td>
-	  <td><%= link_to 'Destroy', sequence_source, confirm: 'Are you sure?', method: :delete %></td>
+	  <td><%= link_to 'Destroy', sequence_source, data: { confirm: 'Are you sure?'}, method: :delete %></td>
 	</tr>
 	<% end %>
       </tbody>

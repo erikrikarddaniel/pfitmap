@@ -23,7 +23,7 @@
       <td><%= hmm_result.sequence_source.list_name %></td>
       <td> <%= hmm_result.hmm_profile.name %> </td>
       <td><%= link_to 'Show', hmm_result %></td>
-      <td><%= link_to 'Destroy', hmm_result, confirm: 'Are you sure?', method: :delete %></td>
+      <td><%= link_to 'Destroy', hmm_result, :data => { confirm: 'Are you sure?'}, method: :delete %></td>
     </tr>
     <% end %>
   </table>
