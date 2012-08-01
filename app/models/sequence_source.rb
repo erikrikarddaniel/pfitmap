@@ -40,10 +40,10 @@ class SequenceSource < ActiveRecord::Base
     rescue
       logger.info "Evaluation of sequence source ended with an error!"
       logger.info " This is the error message: #{$!}"
-      UserMailer.evaluate_failure_email(user, self, $!).deliver
+#      UserMailer.evaluate_failure_email(user, self, $!).deliver
     else
       logger.info "Evaluation of sequence source was successful!"
-      UserMailer.evaluate_success_email(user, self).deliver
+#      UserMailer.evaluate_success_email(user, self).deliver
     end      
   end
 end

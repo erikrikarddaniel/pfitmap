@@ -117,10 +117,10 @@ class PfitmapRelease < ActiveRecord::Base
     rescue
       logger.info "Calculate pfitmap release ended with an error!" 
       logger.info " This is the error message: #{$!}"
-      UserMailer.calculate_failure_email(user, @pfitmap_release, $!).deliver
+      # UserMailer.calculate_failure_email(user, @pfitmap_release, $!).deliver
     else
       logger.info "Calculate pfitmap release was successful!"
-      UserMailer.calculate_success_email(user,@pfitmap_release).deliver
+      # UserMailer.calculate_success_email(user,@pfitmap_release).deliver
     end
   end
 
