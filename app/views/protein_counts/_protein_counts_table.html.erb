@@ -1,0 +1,29 @@
+<table id="protein_counts_table">
+  <tr>
+    <th>Number of genomes</th>
+    <th>Number of proteins</th>
+    <th>Number of genomes with proteins</th>
+    <th>Protein</th>
+    <th>Pfitmap release</th>
+    <th>Taxon</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @protein_counts.each do |protein_count| %>
+  <tr>
+    <td><%= protein_count.no_genomes %></td>
+    <td><%= protein_count.no_proteins %></td>
+    <td><%= protein_count.no_genomes_with_proteins %></td>
+    <td><%= protein_count.protein.name %></td>
+    <td><%= protein_count.pfitmap_release.release %></td>
+    <td><%= protein_count.taxon.name %></td>
+    <td><%= link_to 'Show', protein_count %></td>
+    <td><%= link_to 'Edit', edit_protein_count_path(protein_count) %></td>
+    <td><%= link_to 'Destroy', protein_count, data: { confirm: 'Are you sure?'}, method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+<%= will_paginate @protein_counts %>
+<br />
