@@ -1,6 +1,27 @@
-<h1>Listing protein_counts</h1>
+<div class="pageheader1">
+  <div>
+    <h1>Listing Protein Counts</h1>
+  </div>
+  <div>
+    <ul class="nav nav-pills">
+      <li class="dropdown">
+	<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+	  Select Taxon Rank
+	  <b class="caret" ></b>
+	</a>
+	<ul id="taxon_rank_menu" class="dropdown-menu">
+	  <% @taxon_ranks.each do |rank_name| %>
+	  <li>
+	    <%= link_to rank_name ? rank_name : "all", protein_counts_path(rank: rank_name)%>
+	  </li>
+	  <% end %>
+	</ul>
+      </li>
+    </ul>
+  </div>
+</div> 
 <div class="main-content">
-<table>
+<table id="protein_counts_table">
   <tr>
     <th>Number of genomes</th>
     <th>Number of proteins</th>
@@ -23,12 +44,10 @@
     <td><%= protein_count.taxon.name %></td>
     <td><%= link_to 'Show', protein_count %></td>
     <td><%= link_to 'Edit', edit_protein_count_path(protein_count) %></td>
-    <td><%= link_to 'Destroy', protein_count, confirm: 'Are you sure?', method: :delete %></td>
+    <td><%= link_to 'Destroy', protein_count, data: { confirm: 'Are you sure?'}, method: :delete %></td>
   </tr>
 <% end %>
 </table>
 <%= will_paginate @protein_counts %>
 <br />
-
-<%= link_to 'New Protein count', new_protein_count_path %>
 </div>
