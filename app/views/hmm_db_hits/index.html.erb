@@ -21,7 +21,7 @@
       <td><%= hmm_db_hit.desc %></td>
       <td><%= link_to 'Show', hmm_db_hit %></td>
       <td><%= link_to 'Edit', edit_hmm_db_hit_path(hmm_db_hit) %></td>
-      <td><%= link_to 'Destroy', hmm_db_hit, confirm: 'Are you sure?', method: :delete %></td>
+      <td><%= link_to 'Destroy', hmm_db_hit, data: { confirm: 'Are you sure?'}, method: :delete %></td>
     </tr>
     <% end %>
   </table>

@@ -15,10 +15,10 @@ class SequenceSourcesController < ApplicationController
   # GET /sequence_sources/1.json
   def show
     @sequence_source = SequenceSource.find(params[:id])
-    @hmm_results = @sequence_source.hmm_results.paginate(page: params[:page])
+    @hmm_results = @sequence_source.hmm_results
     @hmm_profiles_last_parents = HmmProfile.last_parents.sort_by{|p| p.hierarchy }
     @pfitmap_releases = PfitmapRelease.find_all_after_current.map{|rel| [rel.release, rel.id]}
-    @hmm_profiles = @sequence_source.hmm_profiles
+    @hmm_profiles = @sequence_source.hmm_profiles.paginate(page: params[:page])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -90,20 +90,36 @@ class SequenceSourcesController < ApplicationController
   # POST /sequence_sources1/evaluate.json ???
 
   def evaluate
+    logger.info "Starting evaluate"
     @sequence_source = SequenceSource.find(params[:sequence_source_id])
     @head_release = @sequence_source.pfitmap_release
-
+    user = current_user
+    
     if (@head_release and @sequence_source)
-      @head_release.pfitmap_sequences.destroy_all
+      logger.info "Found the sequence_source and the head_release"
+      @head_release.pfitmap_sequences.delete_all
+      logger.info "Destroyed all related pfitmap_sequences"
+
       @head_release.sequence_source_id = @sequence_source.id
       @head_release.save
-      @sequence_source.evaluate(@head_release)
-      flash[:success] = 'Sequence source was successfully evaluated.'
-      respond_to do |format|
-        format.html { redirect_to @head_release }
-        format.json { head :no_content }
-      end
+      if Rails.env == "test"
+        @sequence_source.evaluate(@head_release, user)
+        
+        flash[:success] = 'This sequence source was successfully evaluated.'
+        respond_to do |format|
+          format.html { redirect_to @sequence_source }
+          format.json { head :no_content }
+        end
+
+      else
+        @sequence_source.delay.evaluate(@head_release, user)
       
+        flash[:success] = 'Evaluating, this may take some time.'
+        respond_to do |format|
+          format.html { redirect_to @sequence_source }
+          format.json { head :no_content }
+        end
+      end
     else
       @hmm_results = @sequence_source.hmm_results.paginate(page: params[:page])
       @hmm_profiles_last_parents = HmmProfile.last_parents.sort_by{|p| p.hierarchy }

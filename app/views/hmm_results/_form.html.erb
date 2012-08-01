@@ -10,7 +10,7 @@
     <%= f.file_field :file, :class => "span12"%>
   </div>
   <div class="control-group span4">
-    <%= f.submit "Create Result", :class => "btn btn-large btn-primary", disable_with: 'Processing...' %>
+    <%= f.submit "Create Result", :class => "btn btn-large btn-primary", data: { disable_with: 'Processing...'} %>
   </div>
   <% end %>
 </div>

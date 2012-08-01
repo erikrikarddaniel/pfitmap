@@ -25,14 +25,26 @@ class SequenceSource < ActiveRecord::Base
     "#{source}:#{name}:#{version}"
   end
 
-  def evaluate(head_release)
-    db_sequences =  self.db_sequences
-    db_sequences.each do |seq|
-      hmm_profile_id = seq.best_hmm_profile(self)
-      hmm_profile = HmmProfile.find(hmm_profile_id)
-      if hmm_profile.evaluate?(seq,self)
-        head_release.add_seq(seq, hmm_profile)
+  def evaluate(head_release, user)
+    begin
+      db_sequences =  self.db_sequences
+      logger.info "Evaluating..."
+      db_sequences.each_with_index do |seq, index|
+        hmm_profiles = seq.best_hmm_profiles_for(self)
+        hmm_profiles.each do |hmm_profile|
+          if hmm_profile.evaluate?(seq,self)
+            head_release.add_seq(seq, hmm_profile)
+          end
+        end
       end
-    end
+    rescue
+      logger.info "Evaluation of sequence source ended with an error!"
+      logger.info " This is the error message: #{$!}"
+#      UserMailer.evaluate_failure_email(user, self, $!).deliver
+    else
+      logger.info "Evaluation of sequence source was successful!"
+#      UserMailer.evaluate_success_email(user, self).deliver
+    end      
   end
 end
+

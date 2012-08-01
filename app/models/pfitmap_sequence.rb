@@ -28,7 +28,6 @@ class PfitmapSequence < ActiveRecord::Base
     
     db_hits.each do |db_hit|
       ncbi_taxon_id = ncbi_gi_taxon_hash[db_hit.gi]
-      # If genome_taxon = nil, could be useful to raise some exception
       genome_taxon = Taxon.find_by_ncbi_taxon_id(ncbi_taxon_id)
       if genome_taxon # Only GOLD taxons are in the db
         taxons = genome_taxon.self_and_ancestors

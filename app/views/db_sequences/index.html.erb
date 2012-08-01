@@ -20,7 +20,7 @@
 	<td><%= db_sequence.hmm_profiles %></td>
 	<td><%= link_to 'Show', db_sequence %></td>
 	<td><%= link_to 'Edit', edit_db_sequence_path(db_sequence) %></td>
-	<td><%= link_to 'Destroy', db_sequence, confirm: 'Are you sure?', method: :delete %></td>
+	<td><%= link_to 'Destroy', db_sequence, :data => { confirm: 'Are you sure?'}, method: :delete %></td>
       </tr>
       <% end %>
     </tbody>

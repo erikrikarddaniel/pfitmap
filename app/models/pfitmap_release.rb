@@ -25,10 +25,22 @@ class PfitmapRelease < ActiveRecord::Base
   validates_inclusion_of :current, :in => [true, false]
   validates :sequence_source_id, :presence => :true, :uniqueness => :true
 
-
+  def make_current(current_release)
+    if current_release != self
+      if current_release
+        current_release.current = false
+        current_release.save
+      end
+      
+      self.current = true
+      self.save
+    end
+  end
+  
   # Should only be called when there exists a head release
   def add_seq(db_seq, hmm_profile)
-    if not self.db_sequences.find_by_id(db_seq.id)
+    existing = PfitmapSequence.find(:first, conditions: ["db_sequence_id = ? AND hmm_profile_id = ? AND pfitmap_release_id = ?", db_seq.id, hmm_profile.id, self.id])
+    if not existing
       PfitmapSequence.create!(db_sequence_id: db_seq.id, pfitmap_release_id: self.id, hmm_profile_id: hmm_profile.id)
     end
   end
@@ -73,6 +85,45 @@ class PfitmapRelease < ActiveRecord::Base
     end
     return gi_ncbi_taxon_hash
   end
+
+  def calculate_main(user)
+    begin
+      @pfitmap_release = self
+      @pfitmap_sequences = @pfitmap_release.pfitmap_sequences(:include => :hmm_profile )
+      
+      # Get all hmm_db_hits and its taxons
+      gi_taxon_for_included_hits = HmmDbHit.all_taxons_for(@pfitmap_release)
+
+      # Build a hash with gi as keys and ncbi_taxon_id as values 
+      ncbi_gi_taxon_hash = @pfitmap_release.build_gi_ncbi_taxon_hash(gi_taxon_for_included_hits)
+      
+      # Destroy old protein counts rows for this release
+      @protein_counts = @pfitmap_release.protein_counts
+      @protein_counts.destroy_all
+      
+      # Make sure the protein table is filled
+      Protein.initialize_proteins
+      
+      # Fill the taxon table and dry run for the protein_counts
+      @pfitmap_release.protein_counts_initialize_dry
+      
+      # Instantiate all taxons in a hash, instead of 
+
+      # Iterate over the sequences and populate protein counts for each
+      # protein and taxon. 
+      @pfitmap_sequences.each do |seq|
+        seq.calculate_counts(@pfitmap_release, ncbi_gi_taxon_hash)
+      end
+    rescue
+      logger.info "Calculate pfitmap release ended with an error!" 
+      logger.info " This is the error message: #{$!}"
+      # UserMailer.calculate_failure_email(user, @pfitmap_release, $!).deliver
+    else
+      logger.info "Calculate pfitmap release was successful!"
+      # UserMailer.calculate_success_email(user,@pfitmap_release).deliver
+    end
+  end
+
   
   private
   def taxon_in_db_lookup(taxon_hash)

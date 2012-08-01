@@ -116,8 +116,14 @@
   <div class="main-content span8">
     <div>
       <h3>Database Sequence</h3>
+      <% if @best_hmm_profiles.length == 1 %>
       <p>The best profile for this database sequence is:
-	<%= @best_hmm_profile.name %></p>
+	<%= @best_hmm_profiles.first.name %></p>
+      <% else %>
+        <p>The best profiles for this database sequence is:
+	<% @best_hmm_profiles.map {|p| p.name }.join(', ') %>
+	</p>
+      <% end %>
     </div>
 
     <%  if @hmm_result_row.db_sequence.hmm_result_rows.any? %>

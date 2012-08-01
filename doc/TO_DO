@@ -19,9 +19,6 @@ Things to fix
   - Use rails built in sql-increment count when iterating over the protein_counts
     would speed up calculate-step.
 
-* hmm_profile.all_proteins_including_parents
-  taxon.self_and_ancestors
-
 * Set up system to enable links from accession numbers to target database. See
   doc/sequence_inclusion.dia (SequenceDatabase model). Note the comments
   regarding the accession_url field.
@@ -43,5 +40,14 @@ Things to fix
 
 * Search function for hmm_db_hits/db_sequences
 
+
 * Sequence source show page does not have a good overview
   of which proteins that have results registered.
+
+* Add file_name to hmm_results so that it's easier to debug if the wrong 
+  file has been uploaded.
+
+* Add possibility to 'remove as current' for pfitmap releases
+
+* From pfitmap_release show, link from a row to the not_included db_sequences
+  from there, make it possible to include a db_sequence, previously not included

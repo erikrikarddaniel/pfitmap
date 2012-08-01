@@ -17,13 +17,17 @@ class Taxon < ActiveRecord::Base
   belongs_to :parent, :class_name => "Taxon", :foreign_key => "parent_ncbi_id", :primary_key => "ncbi_taxon_id"
   has_many :children, :class_name => "Taxon", :foreign_key => "parent_ncbi_id", :primary_key => "ncbi_taxon_id"
   has_many :protein_counts
-  
+
   def self_and_ancestors
     all_up_to_root_rec(self, [])
   end
 
   def self.roots
     Taxon.find(:all, conditions: ["parent_ncbi_id IS NULL"])
+  end
+
+  def self.all_ranks
+    self.uniq.pluck(:rank)
   end
 
   private

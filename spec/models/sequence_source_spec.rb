@@ -113,8 +113,9 @@ describe SequenceSource do
                                                      hmm_profile: hmm_profile2) }
     # Pfitmap Release
     let!(:pfitmap_release) { FactoryGirl.create(:pfitmap_release, sequence_source: sequence_source) }
+    let!(:user) { FactoryGirl.create(:user_admin) }
     before do
-      sequence_source.evaluate(pfitmap_release)
+      sequence_source.evaluate(pfitmap_release, user)
     end
     it "adds pfitmap sequences" do
       pfitmap_release.db_sequences.should_not == []

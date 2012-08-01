@@ -5,7 +5,7 @@
     <%= button_to "Make this release current", pfitmap_release_make_current_path(@pfitmap_release), class: "btn btn-large"%>
     <% end %>
     <% if can? :calculate, @pfitmap_release %>
-    <%= button_to "Calculate", pfitmap_release_calculate_path(@pfitmap_release), class: "btn btn-large", disable_with: 'Calculating...'%>
+    <%= button_to "Calculate", pfitmap_release_calculate_path(@pfitmap_release), class: "btn btn-large", data: { disable_with: 'Calculating...'}%>
     <% end %>
     
 </div>
