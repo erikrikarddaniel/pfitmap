@@ -26,7 +26,7 @@ class ProteinCount < ActiveRecord::Base
 
   def self.from_rank(rank)
     if rank
-      self.find(:all, joins: :taxon, conditions: ["Taxons.rank = ?", rank])
+      self.joins(:taxon).where("Taxons.rank = ?", rank)
     else
       self.find(:all, :joins => :taxon, conditions: ["Taxons.rank IS NULL"])
     end
