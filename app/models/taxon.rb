@@ -26,6 +26,10 @@ class Taxon < ActiveRecord::Base
     Taxon.find(:all, conditions: ["parent_ncbi_id IS NULL"])
   end
 
+  def self.all_ranks
+    self.uniq.pluck(:rank)
+  end
+
   private
   
   def all_up_to_root_rec(t, ancestors)
