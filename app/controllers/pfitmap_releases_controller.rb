@@ -139,7 +139,7 @@ class PfitmapReleasesController < ApplicationController
     if Rails.env == "test" 
       @pfitmap_release.calculate_main(user)
     else
-      @pfitmap_release.delay.calculate_main(user)
+      @pfitmap_release.calculate_main(user)
     end
     
     respond_to do |format|
