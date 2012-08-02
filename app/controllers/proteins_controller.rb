@@ -11,17 +11,6 @@ class ProteinsController < ApplicationController
     end
   end
 
-  # GET /proteins/1
-  # GET /proteins/1.json
-  def show
-    @protein = Protein.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @protein }
-    end
-  end
-
   # GET /proteins/new
   # GET /proteins/new.json
   def new
@@ -45,7 +34,7 @@ class ProteinsController < ApplicationController
 
     respond_to do |format|
       if @protein.save
-        format.html { redirect_to @protein, notice: 'Protein was successfully created.' }
+        format.html { redirect_to proteins_path, notice: 'Protein was successfully created.' }
         format.json { render json: @protein, status: :created, location: @protein }
       else
         format.html { render action: "new" }
@@ -61,7 +50,7 @@ class ProteinsController < ApplicationController
 
     respond_to do |format|
       if @protein.update_attributes(params[:protein])
-        format.html { redirect_to @protein, notice: 'Protein was successfully updated.' }
+        format.html { redirect_to proteins_path, notice: 'Protein was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
