@@ -30,6 +30,10 @@ class Taxon < ActiveRecord::Base
     self.uniq.pluck(:rank)
   end
 
+  def self.from_rank(taxon_rank)
+    self.where('rank = ?', taxon_rank)
+  end
+
   private
   
   def all_up_to_root_rec(t, ancestors)

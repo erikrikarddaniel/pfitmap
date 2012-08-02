@@ -1,10 +1,13 @@
 Pfitmap::Application.routes.draw do
-  resources :protein_counts
 
+  get 'protein_counts_by_rank', to: 'protein_counts#by_rank'
+  get 'protein_counts_by_hierarchy', to: 'protein_counts#by_hierarchy'
+  
   resources :proteins
 
   resources :taxons do
     get '/ajax_list', to: 'taxons#ajax_list'
+    get '/ajax_list_protein_counts', to: 'taxons#ajax_list_protein_counts'
   end
 
   resources :enzymes

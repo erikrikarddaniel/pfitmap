@@ -28,8 +28,29 @@ class ProteinCount < ActiveRecord::Base
     if rank
       self.joins(:taxon).where("Taxons.rank = ?", rank)
     else
-      self.find(:all, :joins => :taxon, conditions: ["Taxons.rank IS NULL"])
+      self.joins(:taxon)
     end
+  end
+
+  def self.from_protein(protein_id)
+    if protein_id
+      self.joins(:protein).where("Proteins.id = ?", protein_id)
+    else
+      self.joins(:protein)
+    end
+  end
+
+  def self.protein_counts_hash_for(taxons, proteins, pr)
+    protein_counts_hash = {}
+    taxons.each do |taxon|
+      column_hash = {}
+      proteins.each do |protein|
+        protein_count = self.where("taxon_id = ? AND protein_id = ? AND pfitmap_release_id = ?", taxon.id , protein.id, pr.id).first
+        column_hash[protein.id] = protein_count
+      end
+      protein_counts_hash[taxon.id] = column_hash
+    end
+    return protein_counts_hash
   end
 
   def add_genome

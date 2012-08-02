@@ -1,0 +1,31 @@
+<div class="pageheader1">
+  <div>
+    <h1>Listing Protein Counts</h1>
+  </div>
+</div>
+<div id="taxon_tree">
+  <% if @taxon_roots %>
+  <div>
+    <h3> Instructions: </h3>
+    Expand the taxon tree on the plus sign and click on the taxon name you wish brows protein statistics for. This will generate the table for the chosed taxon and its closest children.
+  </div>
+  <div id="explanations">
+    Explanations:
+    (<a href="#" rel="tooltip" title="The number of whole sequenced genomes">GEN</a>|
+    <a href="#" rel="tooltip" title="The number of proteins in total for all genomes included">PRO</a>|
+    <a href="#" rel="tooltip" title="The number of genomes with at least one of the specified protein present.">GP</a>)
+  </div>
+  <hr />
+  <div id="listContainer">
+    <ul id="expListAjaxProteinCountTable">
+      <%= list_taxon_children_protein_counts @taxon_roots %>
+    </ul>
+  </div>
+  <% else %>
+  <h3> Sorry, there is no taxon-tree loaded </h3>
+  <% end %>
+</div>
+
+<div id="protein_counts_table">
+  <%= render partial: 'protein_counts_table_hierarchy' %>
+</div>

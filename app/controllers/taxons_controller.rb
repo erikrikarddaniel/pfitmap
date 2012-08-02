@@ -95,4 +95,14 @@ class TaxonsController < ApplicationController
     end
   end
 
+  def ajax_list_protein_counts
+    @taxon = Taxon.find(params[:taxon_id])
+    @taxons = @taxon.children
+    respond_to do |format|
+      format.html # show.html.erb
+      format.js { render :partial => 'taxons/ajax_list_protein_counts', :locals => {:taxons => @taxons}, :content_type => 'text/html' }
+      format.json { render json: @taxon }
+    end
+  end
+
 end
