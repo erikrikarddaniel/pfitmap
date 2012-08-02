@@ -44,14 +44,6 @@ describe ProteinsController do
     end
   end
 
-  describe "GET show" do
-    it "assigns the requested protein as @protein" do
-      protein = Protein.create! valid_attributes
-      get :show, {:id => protein.to_param}, valid_session
-      assigns(:protein).should eq(protein)
-    end
-  end
-
   describe "GET new" do
     it "assigns a new protein as @protein" do
       get :new, {}, valid_session
@@ -81,10 +73,6 @@ describe ProteinsController do
         assigns(:protein).should be_persisted
       end
 
-      it "redirects to the created protein" do
-        post :create, {:protein => valid_attributes}, valid_session
-        response.should redirect_to(Protein.last)
-      end
     end
 
     describe "with invalid params" do
@@ -122,11 +110,6 @@ describe ProteinsController do
         assigns(:protein).should eq(protein)
       end
 
-      it "redirects to the protein" do
-        protein = Protein.create! valid_attributes
-        put :update, {:id => protein.to_param, :protein => valid_attributes}, valid_session
-        response.should redirect_to(protein)
-      end
     end
 
     describe "with invalid params" do

@@ -33,12 +33,4 @@ describe ProteinCountsController do
   def valid_session
     {}
   end
-
-  describe "GET index" do
-    it "assigns all protein_counts as @protein_counts" do
-      protein_count = ProteinCount.create! valid_attributes
-      get :index, {}, valid_session
-      assigns(:protein_counts).should eq([protein_count])
-    end
-  end
 end

@@ -42,13 +42,13 @@ describe ProteinCount do
 
   describe "from_rank" do
     let!(:taxon2) { FactoryGirl.create(:taxon, rank: "genus") }
-    1000.times do |i|
+    10.times do |i|
       protein_count_name = "protein_count" + (i+2).to_s
       let!(protein_count_name.to_sym) { FactoryGirl.create(:protein_count, taxon: taxon2, protein: protein, pfitmap_release: pfitmap_release) }
     end
     it "gives the ones with the right rank back" do
-      ProteinCount.from_rank("genus").count.should == 1000
-      ProteinCount.from_rank(nil).should == [protein_count1]
+      ProteinCount.from_rank("genus").count.should == 10
+      ProteinCount.from_rank(nil).count.should == 11
     end
   end
 
