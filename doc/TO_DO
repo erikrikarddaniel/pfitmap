@@ -14,5 +14,5 @@ Things to fix
   doc/sequence_inclusion.dia (SequenceDatabase model). Note the comments
   regarding the accession_url field.
 
-* Replace only HMMProfile name in lists with HMMProfile.description (which
-  includes the protein name.
+* Replace only HMMProfile.name on its own in lists with HMMProfile.description
+  (which includes the protein name).
