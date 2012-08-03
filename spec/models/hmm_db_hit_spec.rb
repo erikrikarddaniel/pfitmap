@@ -69,10 +69,17 @@ describe HmmDbHit do
     let!(:hmm_db_hit2) { FactoryGirl.create(:hmm_db_hit, gi: 297089710, db: "pdb", db_sequence: db_sequence1) }
     let!(:pfitmap_release) {FactoryGirl.create(:pfitmap_release) }
     let!(:pfitmap_sequence) {FactoryGirl.create(:pfitmap_sequence, pfitmap_release: pfitmap_release, db_sequence: db_sequence1) }
-    it "should give the correct taxons back" do
-      gi_taxon = HmmDbHit.all_taxons_for(pfitmap_release)
+    it "should give the correct taxons back for ref" do
+      gi_taxon = HmmDbHit.all_taxons_for(pfitmap_release, "ref")
       gi_taxon.first["protein_gi"].should == hmm_db_hit1.gi
+      gi_taxon.count.should == 1
       gi_taxon.first["taxon_with_name"]["scientific_name"].should == "Influenza A virus (A/Guangdong/244/2009(H1N1))"
     end
+    it "should give the correct taxons back for ref" do
+      gi_taxon = HmmDbHit.all_taxons_for(pfitmap_release, "pdb")
+      gi_taxon.first["protein_gi"].should == hmm_db_hit2.gi
+      gi_taxon.count.should == 1
+    end
+    
   end
 end

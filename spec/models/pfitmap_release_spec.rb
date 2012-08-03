@@ -150,14 +150,23 @@ let!(:sequence_source5) { FactoryGirl.create(:sequence_source) }
     
     let!(:pfitmap_release) {FactoryGirl.create(:pfitmap_release) }
     let!(:pfitmap_sequence) {FactoryGirl.create(:pfitmap_sequence, pfitmap_release: pfitmap_release, db_sequence: db_sequence1) }
-    it "should give the correct taxons back" do
-      gi_taxons = HmmDbHit.all_taxons_for(pfitmap_release)
+    it "should give the correct taxons back for ref" do
+      gi_taxons = HmmDbHit.all_taxons_for(pfitmap_release, "ref")
       hash = pfitmap_release.build_gi_ncbi_taxon_hash(gi_taxons)
       hash[297089704].should == 767985
+      hash[297089710].should == nil
+      hash[297089654].should == nil
+    end
+
+    it "should give the correct taxons back for pdb" do
+      gi_taxons = HmmDbHit.all_taxons_for(pfitmap_release, "pdb")
+      hash = pfitmap_release.build_gi_ncbi_taxon_hash(gi_taxons)
+      hash[297089704].should == nil
       hash[297089710].should == 767985
       hash[297089654].should_not == 767985
       hash[297089654].should == 767981
     end
+    
   end
 
 

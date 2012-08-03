@@ -19,10 +19,10 @@ class PfitmapSequence < ActiveRecord::Base
   has_one :sequence_source, :through => :pfitmap_release
 
   # calculate_counts(pr : pfitmap_release, ncbi_gi_taxon_hash)
-  def calculate_counts(pr, ncbi_gi_taxon_hash)
+  def calculate_counts(pr, ncbi_gi_taxon_hash, db_string)
     # This line can later pick out db_hits from 
     # a specified db with db_hits_from method
-    db_hits = self.hmm_db_hits
+    db_hits = self.db_hits_from(db_string)
     best_profile = self.hmm_profile
     proteins = best_profile.all_proteins_including_parents
     

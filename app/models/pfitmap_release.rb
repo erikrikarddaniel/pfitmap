@@ -89,9 +89,11 @@ class PfitmapRelease < ActiveRecord::Base
   def calculate_main(user)
     @pfitmap_release = self
     @pfitmap_sequences = @pfitmap_release.pfitmap_sequences(:include => :hmm_profile )
+
+    db_string = "ref"
     
     # Get all hmm_db_hits and its taxons
-    gi_taxon_for_included_hits = HmmDbHit.all_taxons_for(@pfitmap_release)
+    gi_taxon_for_included_hits = HmmDbHit.all_taxons_for(@pfitmap_release, db_string)
     
     # Build a hash with gi as keys and ncbi_taxon_id as values 
     ncbi_gi_taxon_hash = @pfitmap_release.build_gi_ncbi_taxon_hash(gi_taxon_for_included_hits)
@@ -106,12 +108,10 @@ class PfitmapRelease < ActiveRecord::Base
     # Fill the taxon table and dry run for the protein_counts
     @pfitmap_release.protein_counts_initialize_dry
     
-    # Instantiate all taxons in a hash, instead of 
-    
     # Iterate over the sequences and populate protein counts for each
     # protein and taxon. 
     @pfitmap_sequences.each do |seq|
-      seq.calculate_counts(@pfitmap_release, ncbi_gi_taxon_hash)
+      seq.calculate_counts(@pfitmap_release, ncbi_gi_taxon_hash, db_string)
     end
     #    logger.info "Calculate pfitmap release ended with an error!" 
     #    logger.info " This is the error message: #{$!}"
