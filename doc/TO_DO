@@ -67,8 +67,18 @@ Things to fix
 
 * Add HMMDBHit.database link to counts table.
 
+* Add taxon hierarchy sort key to Taxon
+
+* Subset ranks in GUI
+
+* There's an array in protein_counts_controller that specifies which proteins to show -- fix.
+
+* On Enzymes form, indent the profiles, so easier to choose
+
 PfitmapRelease.calculate_main
 -----------------------------
+
+0. Implement model unit test
 
 1. Handle timeouts in current implementation
 
