@@ -58,3 +58,21 @@ Things to fix
 * Delayed job does not operate currently on server since smtp-settings are
   not fixed for action mailer. Could disable action mailer temporarily in order
   to execute calculation for the release.
+
+* Ajax loading of the pfitmap_release show
+
+* Model for displayed ranks
+
+* Link from pfitmap_releases/n to individual profile pages. Consider only best hits?
+
+* Add HMMDBHit.database link to counts table.
+
+PfitmapRelease.calculate_main
+-----------------------------
+
+1. Handle timeouts in current implementation
+
+2. Handle different sequence databases
+
+3. Look at nested loop implementation 
+
