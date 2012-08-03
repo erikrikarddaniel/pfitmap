@@ -1,0 +1,10 @@
+<div class="pageheader1">
+<h1>Editing protein</h1>
+<h2>Belonging to profile: <%= @protein.hmm_profile.name %></h2>
+</div>
+<div class="main-content">
+<%= render 'form' %>
+
+<%= link_to 'Show', @protein %> |
+<%= link_to 'Back', proteins_path %>
+</div>

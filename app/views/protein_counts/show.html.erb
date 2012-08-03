@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>No genomes:</b>
+  <%= @protein_count.no_genomes %>
+</p>
+
+<p>
+  <b>No proteins:</b>
+  <%= @protein_count.no_proteins %>
+</p>
+
+<p>
+  <b>No genomes with proteins:</b>
+  <%= @protein_count.no_genomes_with_proteins %>
+</p>
+
+<p>
+  <b>Protein:</b>
+  <%= @protein_count.protein %>
+</p>
+
+<p>
+  <b>Pfitmap release:</b>
+  <%= @protein_count.pfitmap_release %>
+</p>
+
+<p>
+  <b>Taxon:</b>
+  <%= @protein_count.taxon %>
+</p>
+
+
+<%= link_to 'Edit', edit_protein_count_path(@protein_count) %> |
+<%= link_to 'Back', protein_counts_path %>

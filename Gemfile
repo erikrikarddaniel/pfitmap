@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.1'
-gem 'bootstrap-sass'
+gem 'rails'
+gem 'bootstrap-sass', '2.0.3.1'
 gem 'faker', '1.0.1'
 gem 'will_paginate', '3.0.3'
 gem 'bootstrap-will_paginate', '0.0.5'
@@ -10,6 +10,17 @@ gem 'schema_plus'
 # Authentication and Authorization
 gem 'omniauth-openid'
 gem 'cancan'
+
+# Talking with biosql at scilifelab.se
+gem 'httparty'
+gem 'json'
+
+# Delay time-consuming jobs
+gem 'delayed_job_active_record', '0.3.2'
+gem 'daemons'
+
+# Debugging memory leak
+gem 'oink'
 
 # Deployment
 gem 'capistrano'

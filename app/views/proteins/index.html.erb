@@ -1,0 +1,28 @@
+<h1>Listing proteins</h1>
+<div class="main-content">
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Rank</th>
+    <th>HMM Profile</th>
+    <th>Enzyme</th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @proteins.each do |protein| %>
+  <tr>
+    <td><%= protein.name %></td>
+    <td><%= protein.rank %></td>
+    <td><%= protein.hmm_profile.name %></td>
+    <td><%= protein.enzyme ? protein.enzyme.name : "none" %></td>
+    <td><%= link_to 'Edit', edit_protein_path(protein) %></td>
+    <td><%= link_to 'Destroy', protein, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Protein', new_protein_path %>
+</div>

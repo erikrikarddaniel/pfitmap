@@ -1,0 +1,18 @@
+<div class="pageheader1">
+  <div>
+    <h1>Listing Protein Counts</h1>
+  </div>
+  <div id="explanations">
+    Explanations:
+    (<a href="#" rel="tooltip" title="The number of whole sequenced genomes">GEN</a>|
+    <a href="#" rel="tooltip" title="The number of proteins in total for all genomes included">PRO</a>|
+    <a href="#" rel="tooltip" title="The number of genomes with at least one of the specified protein present.">GP</a>)
+  </div>
+  <div>
+    <%= render :partial => 'filter_bar_rank' %>
+  </div>
+</div>
+
+<div id="protein_counts_table">
+  <%= render partial: 'protein_counts_table' %>
+</div>

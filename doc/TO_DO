@@ -7,8 +7,21 @@ Discussion points
   object with id 3 at level three of the hierarchy (perhaps we need more than
   five digits).
 
+* The server has shown some significant weaknesses with memory leak, 
+  it allocates allmost all available memory, and this has led to at least
+  one crash. This is possibly caused by delayed_job and/or its dependencies
+  such as 'daemons' gem. The problem was first observed short after these had
+  been deployed. The problem does not appear in development environment, so 
+  it could be due to caching, although most caching is now turned off, 
+  (I believe). 
+
 Things to fix
 -------------
+* Tests that are not yet implemented:
+  - Hierarchy of taxon
+  - The dry run initialization
+  - protein_counts_by_rank
+  - protein_counts_by_hierarchy
 
 * Set up system to enable links from accession numbers to target database. See
   doc/sequence_inclusion.dia (SequenceDatabase model). Note the comments
@@ -16,3 +29,32 @@ Things to fix
 
 * Replace only HMMProfile.name on its own in lists with HMMProfile.description
   (which includes the protein name).
+
+* When AJAX expandable table/list is implemented for the ProteinCount, 
+  use it for the pfitmap_release show page as well. 
+
+* Enable sorting on columns as a default feature for all tables.
+
+* Test visual performance in all major browsers
+
+* Make the taxon name in the expandable list an ajax link for
+  updating a protein_counts summary table
+
+* Search function for hmm_db_hits/db_sequences
+
+* Add file_name to hmm_results so that it's easier to debug if the wrong 
+  file has been uploaded.
+
+* Add possibility to 'remove as current' for pfitmap releases
+
+* From pfitmap_release show, link from a row to the not_included db_sequences
+  from there, make it possible to include a db_sequence, previously not included
+  the first task needs a custom controller method and route for db_sequences
+
+* Sequence source show page does not have a good overview
+  of which proteins that have results registered, when there are many 
+  hmm_profiles.
+
+* Delayed job does not operate currently on server since smtp-settings are
+  not fixed for action mailer. Could disable action mailer temporarily in order
+  to execute calculation for the release.

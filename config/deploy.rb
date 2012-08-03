@@ -1,6 +1,7 @@
 # RVM bootstrap
 #$:.unshift(File.expand_path('./lib', ENV['rvm_path']))
 require 'rvm/capistrano'
+
 # bundler bootstrap
 require 'bundler/capistrano'
 set :rvm_ruby_string, '1.9.3-p194'
@@ -14,7 +15,7 @@ role :db, "rnrdb.pfitmap.org", :primary => true
 
 #server details
 default_run_options[:pty] = true
-#ssh_options[:forward_agent] = true
+ssh_options[:forward_agent] = true
 set :deploy_to, "/scratch/webapps/rnrdb.pfitmap.org"
 set :deploy_via, :remote_cache
 set :user, "passenger"
@@ -23,7 +24,7 @@ set :port, 50021
 
 #repo details
 set :scm, :git
-set :repository, "https://github.com:alneberg/pfitmap.git"
+set :repository, "git@github.com:alneberg/pfitmap.git"
 set :branch, "stable"
 set :git_enable_submodules, 1
 
@@ -54,3 +55,12 @@ after "deploy:finalize_update", "db:db_config"
 
 #This is neccessary, this will precompile assets. If this is missing we will get strange problems with no errors in the logs.
 load 'deploy/assets'
+
+# Delayed job daemon
+require "delayed/recipes"
+
+set :rails_env, "production" #added for delayed job
+
+after "deploy:stop",    "delayed_job:stop"
+after "deploy:start",   "delayed_job:start"
+after "deploy:restart", "delayed_job:restart"

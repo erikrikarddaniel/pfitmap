@@ -64,6 +64,7 @@ describe HmmProfile do
     it { should be_valid }
     it {  should respond_to(:name) }
     it {  should respond_to(:protein_name) }
+    it { should respond_to(:all_parents_including_self) }
   end
 
 
@@ -125,6 +126,19 @@ describe HmmProfile do
         hmm_profile_00101.evaluate?(db_sequence1,sequence_source).should be_false
       end
     end
+    describe "evaluates a profile without a criterion" do
+      let!(:hmm_profile4) { FactoryGirl.create(:hmm_profile) }
+      let!(:hmm_result4) { FactoryGirl.create(:hmm_result, 
+                                              hmm_profile: hmm_profile4, 
+                                              sequence_source: sequence_source) }
+      let!(:db_sequence4) { FactoryGirl.create(:db_sequence) }
+      let!(:hmm_result_row4) { FactoryGirl.create(:hmm_result_row, 
+                                                  hmm_result: hmm_result4, 
+                                                  db_sequence: db_sequence4) }
+      it "should be false" do
+        hmm_profile4.evaluate?(db_sequence4, sequence_source).should be_false
+      end
+    end
     
   end
 
@@ -150,5 +164,28 @@ describe HmmProfile do
       hmm_profile.best_profile_sequences(sequence_source).should include(db_sequence)
     end
 
+  end
+
+  describe "hierarchy" do
+    let!(:hmm_profile1) { FactoryGirl.create(:hmm_profile) }
+    let!(:hmm_profile2) { FactoryGirl.create(:hmm_profile) }
+    let!(:hmm_profile11) { FactoryGirl.create(:hmm_profile, parent: hmm_profile1) }
+    let!(:hmm_profile12) { FactoryGirl.create(:hmm_profile, parent: hmm_profile1) } 
+    let!(:hmm_profile111) { FactoryGirl.create(:hmm_profile, parent: hmm_profile11) }
+    let!(:hmm_profile112) { FactoryGirl.create(:hmm_profile, parent: hmm_profile11) }
+    let!(:hmm_profile1111) { FactoryGirl.create(:hmm_profile, parent: hmm_profile111) }
+    
+    describe "all_parents_including_self" do
+      it "includes exactly what it should" do
+        hmm_profile1.all_parents_including_self.should == [hmm_profile1]
+        hmm_profile11.all_parents_including_self.should == [hmm_profile11, hmm_profile1]
+        hmm_profile111.all_parents_including_self.should == [hmm_profile111, hmm_profile11, hmm_profile1]
+      end
+    end
+    describe "last_parents" do
+      it "includes exactly what it should" do
+        HmmProfile.last_parents.should == [@hmm_profile, hmm_profile1, hmm_profile2]
+      end
+    end
   end
 end

@@ -114,19 +114,38 @@ class PfitmapReleasesController < ApplicationController
     @pfitmap_release = PfitmapRelease.find(params[:pfitmap_release_id])
     @current_release = PfitmapRelease.find_current_release
     
-    if @current_release != @pfitmap_release
-      if @current_release
-        @current_release.current = false
-        @current_release.save
+    if Rails.env == "test"
+      @pfitmap_release.make_current(@current_release)
+      respond_to do |format|
+        format.html { redirect_to pfitmap_releases_url }
+        format.json { head :no_content }
       end
+    else
+      @pfitmap_release.delay.make_current(@current_release)
+      flash[:notice] = "This release will soon be made current."
+      respond_to do |format|
+        format.html { redirect_to pfitmap_releases_url }
+        format.json { head :no_content }
+      end
+    end
+  end
 
-      @pfitmap_release.current = true
-      @pfitmap_release.save
+  # POST /calculate/1
+  # A method to fill the ProteinCount table
+  # Assumes that all proteins are already created
+  def calculate
+    @pfitmap_release = PfitmapRelease.find(params[:pfitmap_release_id])
+    user = current_user
+    if Rails.env == "test" 
+      @pfitmap_release.calculate_main(user)
+    else
+      @pfitmap_release.calculate_main(user)
     end
     
     respond_to do |format|
-      format.html { redirect_to pfitmap_releases_url }
-      format.json { head :no_content }
+      flash[:success] = "The Protein Counts will now be calculated! An email will be sent when it is finished (approx 24h)."
+      format.html { redirect_to pfitmap_release_path(@pfitmap_release) }
     end
   end
+
 end

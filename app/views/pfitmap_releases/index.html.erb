@@ -38,7 +38,7 @@
     <td><%= pfitmap_release.release_date %></td>
     <td><%= link_to 'Show', pfitmap_release %></td>
     <td><%= link_to 'Edit', edit_pfitmap_release_path(pfitmap_release) %></td>
-    <td><%= link_to 'Destroy', pfitmap_release, confirm: 'Are you sure?', method: :delete %></td>
+    <td><%= link_to 'Destroy', pfitmap_release, data: { confirm: 'Are you sure?'}, method: :delete %></td>
     <td><%= link_to 'Use this release', change_release_path(:release_id => pfitmap_release.id), :method => :post %> </td>
   </tr>
 <% end %>
