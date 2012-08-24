@@ -27,8 +27,13 @@ describe HmmResult do
   
   it { should be_valid }
   
-  describe "should not be valid when hmm profile_id is not present" do
+  describe "should not be valid when hmm_profile_id is not present" do
     before { @result.hmm_profile_id = nil }
+    it { should_not be_valid }
+  end
+
+  describe "should not be valid when sequence_source_id is not present" do
+    before { @result.sequence_source_id = nil }
     it { should_not be_valid }
   end
 
