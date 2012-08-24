@@ -13,7 +13,7 @@
       <th></th>
     </tr>
 
-    <% @hmm_results.each do |hmm_result| %>
+    <% @hmm_results.sort_by { |hr| hr.hmm_profile.hierarchy }.each do |hmm_result| %>
     <tr>
       <td>
 	<% if not hmm_result.executed.nil? %>
