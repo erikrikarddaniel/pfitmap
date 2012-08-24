@@ -5,7 +5,6 @@
 #  id           :integer         not null, primary key
 #  name         :string(255)
 #  version      :string(255)
-#  hierarchy    :string(255)
 #  parent_id    :integer
 #  created_at   :datetime        not null
 #  updated_at   :datetime        not null
@@ -14,7 +13,7 @@
 
 class HmmProfile < ActiveRecord::Base
   # Could be a reason to remove parent_id from accessible attributes
-  attr_accessible :name, :protein_name, :version, :hierarchy, :parent_id
+  attr_accessible :name, :protein_name, :version, :parent_id
   attr_accessor :release_statistics
   has_many :children, :class_name => "HmmProfile", :foreign_key => "parent_id", :dependent => :destroy
   belongs_to :parent, :class_name => "HmmProfile", :foreign_key => "parent_id"
@@ -29,7 +28,15 @@ class HmmProfile < ActiveRecord::Base
 
   validates :name, presence: true
   validates :version, presence: true
-  validates :hierarchy, presence: true, :uniqueness => :true
+
+  def hierarchy
+    if parent
+      "#{parent.hierarchy}:#{protein_name}"
+    else
+      protein_name
+    end
+  end
+
   # A method to pick up all criterias independent of type
   def inclusion_criteria
     self.hmm_score_criteria

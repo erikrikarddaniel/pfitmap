@@ -30,7 +30,7 @@ describe "SequenceSources" do
     describe "with results" do
       let!(:source1) { FactoryGirl.create(:sequence_source) }
       let!(:source2) { FactoryGirl.create(:sequence_source_older) }
-      let!(:hmm_profile) { FactoryGirl.create(:hmm_profile_001) }
+      let!(:hmm_profile) { FactoryGirl.create(:hmm_profile_nrdbr2lox) }
       let!(:hmm_profile2) { FactoryGirl.create(:hmm_profile, parent_id: hmm_profile.id) }
       # Results for profile 1
       let!(:r1){ FactoryGirl.create(:hmm_result, 

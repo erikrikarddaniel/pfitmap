@@ -1,33 +1,26 @@
 FactoryGirl.define do
   factory :hmm_profile do
     sequence(:name){ |n| "Example Class #{n}" }
-    sequence(:protein_name) { |n| "NrdX #{n}" }
-    sequence(:hierarchy) { |n| "00#{n+1}" }
+    sequence(:protein_name) { |n| "NrdX#{n}" }
     sequence(:version) { |n| "version #{n}" }
   end
   
-  factory :hmm_profile_001, class: HmmProfile do
+  factory :hmm_profile_nrdbr2lox, class: HmmProfile do
     name "RNR R2 and R2lox"
-    hierarchy "001"
+    protein_name "NrdB:R2lox"
     version "20120401"
   end
-
-  factory :hmm_profile_001_with_children, class: HmmProfile do |p|
-    p.name "RNR R2 and R2lox"
-    p.hierarchy "001"
-    p.version "20120401"
-  end
   
-  factory :hmm_profile_00101, class: HmmProfile do
+  factory :hmm_profile_nrdb, class: HmmProfile do
     name "R2lox"
-    hierarchy "001.01"
+    protein_name "NrdB"
     version "20120401"
-    association :parent, factory: :hmm_profile_001
+    association :parent, factory: :hmm_profile_nrdbr2lox
   end
   
-  factory :hmm_profile_000, class: HmmProfile do
+  factory :hmm_profile_nrdapfl, class: HmmProfile do
     name "RNR R1 and PFL"
-    hierarchy "000"
+    protein_name "NrdA:PFL"
     version "20120401"
   end
   

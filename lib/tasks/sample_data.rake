@@ -14,54 +14,46 @@ namespace :db do
     # RNR R2
     @hmm_profile_nrdbr2lox = HmmProfile.create!(
       name: "RNR R2 and R2lox",
-      protein_name: "NrdB:R2lox",
+      protein_name: "NrdB-R2lox",
       version: "20120402",
-      hierarchy: "001"
     )
     @hmm_profile_nrdb = HmmProfile.create!(name: "RNR R2",
       protein_name: "NrdB",
       version: "20120402",
-      hierarchy: "001.00",
       parent_id: @hmm_profile_nrdbr2lox.id
     )
     @hmm_profile_nrdf = HmmProfile.create!(name: "RNR R2 subclass Ib",
       protein_name: "NrdF",
       version: "20120402",
-      hierarchy: "001.00.00",
       parent_id: @hmm_profile_nrdb.id
     )
     @hmm_profile_nrdben = HmmProfile.create!(name: "RNR R2,
       Eukaryotes and sister group",
       protein_name: "NrdBen",
       version: "20120402",
-      hierarchy: "001.00.01",
       parent_id: @hmm_profile_nrdb.id
     )
     @hmm_profile_nrdbe = HmmProfile.create!(name: "RNR R2,
       Eukaryotes",
       protein_name: "NrdBe",
       version: "20120402",
-      hierarchy: "001.00.01.00",
       parent_id: @hmm_profile_nrdben.id
     )
     @hmm_profile_r2lox = HmmProfile.create!(name: "R2lox",
       version: "20120402",
-      hierarchy: "001.01",
       parent_id: @hmm_profile_nrdbr2lox.id
     )
 
     # RNR R1
     @hmm_profile_nrdapfl = HmmProfile.create!(
       name: "RNR R1 and PFL",
-      protein_name: "NrdA:PFL",
+      protein_name: "NrdA-PFL",
       version: "20120402",
-      hierarchy: "000"
     )
     @hmm_profile_nrda = HmmProfile.create!(
       name: "RNR R1",
       protein_name: "NrdA",
       version: "20120402",
-      hierarchy: "000.00",
       parent_id: @hmm_profile_nrdapfl.id
     )
   end
@@ -98,9 +90,9 @@ namespace :db do
   end
 
   def make_hmm_score_criteria
-    HmmScoreCriterion.create!(hmm_profile_id: HmmProfile.find_by_hierarchy("001.00").id, min_fullseq_score: 20)
-    HmmScoreCriterion.create!(hmm_profile_id: HmmProfile.find_by_hierarchy("001.00.00").id, min_fullseq_score: 30)
-    HmmScoreCriterion.create!(hmm_profile_id: HmmProfile.find_by_hierarchy("001.00.01").id, min_fullseq_score: 50)
+    HmmScoreCriterion.create!(hmm_profile_id: @hmm_profile_nrdb.id, min_fullseq_score: 400)
+    HmmScoreCriterion.create!(hmm_profile_id: @hmm_profile_nrdf.id, min_fullseq_score: 400)
+    HmmScoreCriterion.create!(hmm_profile_id: @hmm_profile_nrdben.id, min_fullseq_score: 400)
   end
 
   def make_sequence_sources
