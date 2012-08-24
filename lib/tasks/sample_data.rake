@@ -4,10 +4,27 @@ namespace :db do
     Rake::Task['db:truncate'].invoke
     @dbsequences = {}	# Object hash indexed by acc number
     @hmm_db_hits = {} 	# Object hash indexed by acc number
+    make_users
     make_hmm_profiles
     make_sequence_sources
     make_hmm_results
     make_hmm_score_criteria
+  end
+
+  def make_users
+    ActiveRecord::Base.connection.execute(<<SQL
+INSERT INTO users(provider, uid, name, email, role, created_at, updated_at)
+VALUES(
+  'open_id',
+  'https://www.google.com/accounts/o8/id?id=AItOawn2s8yf5g5eR7cFzieJrUKsHoR4uEt5ILo',
+  'Daniel Lundin',
+  'daniel.lundin@scilifelab.se',
+  'admin',
+  now(),
+  now()
+)
+SQL
+    )
   end
 
   def make_hmm_profiles
