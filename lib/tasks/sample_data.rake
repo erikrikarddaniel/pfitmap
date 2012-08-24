@@ -134,9 +134,7 @@ namespace :db do
       db_sequence_id:	@dbsequences[tfields[3]].id
     )
     "#{fields[0]}#{fields[18..-1].join(" ")}".split(/\001/).each_with_index do |hmm_db_hit, j|
-      puts "#{__LINE__}:#{i}:#{j}: hmm_db_hit: #{hmm_db_hit}" if i and i < 3 and j < 3
       hfields = hmm_db_hit.split('|')
-      puts "#{__LINE__}:#{i}:#{j}: @dbsequences[#{tfields[3]}]: #{@dbsequences[tfields[3]].id}, hfields: #{hfields}" if i and i < 3 and j < 3
       @hmm_db_hits[hfields[3]] = HmmDbHit.create!(
 	gi:		hfields[1],
 	db:		hfields[2],
