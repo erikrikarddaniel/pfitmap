@@ -1,4 +1,5 @@
 sessionname pfitmap
+setenv ROOT $PWD
 screen -t pfitmap
 screen -t server
 screen -t autotest
@@ -15,14 +16,16 @@ chdir ../controllers
 screen -t controllers
 chdir ../views
 screen -t views
-chdir ../..
+chdir $ROOT
 chdir config
 screen -t config
-chdir ../app/assets/stylesheets
+chdir $ROOT/app/assets/stylesheets
 screen -t stylesheets
-chdir ../../../log
+chdir $ROOT/log
 screen -t log
-chdir ..
+chdir $ROOT/db/migrate
+screen -t migrate
+chdir $ROOT
 screen -t man
 screen -t console
 screen -t root

@@ -1,6 +1,7 @@
 namespace :db do
   desc "Fill database with sample data"
   task populate: :environment do
+    Rake::Task['db:reset'].invoke
     make_hmm_profiles
     make_sequence_sources
     make_hmm_score_criteria
