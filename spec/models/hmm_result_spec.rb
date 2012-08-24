@@ -32,11 +32,6 @@ describe HmmResult do
     it { should_not be_valid }
   end
 
-  describe "should not be valid when sequence_source_id is not present" do
-    before { @result.sequence_source_id = nil }
-    it { should_not be_valid }
-  end
-
   describe "should be valid after test" do
     it { should be_valid }
   end
