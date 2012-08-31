@@ -48,11 +48,6 @@
 	none
 	<% end %>
       </p>
-
-      <p>
-	<b>HMM Logo:</b>
-	<a href='<%= @hmm_profile.hmm_logo.url %>'><%= image_tag @hmm_profile.hmm_logo.url %></a>
-      </p>
       
       <%= link_to 'Delete', { :action => :destroy, :id => @hmm_profile.id }, :method => :delete, data: { :confirm => 'Are you sure you whant to delete this HMM Profile and all its related results?'}, :class => "btn" %>
       
@@ -62,6 +57,11 @@
     </section>
   </aside>
   <div class="main-content span8">
+
+      <p>
+	<b>HMM Logo:</b>
+	<a href='<%= @hmm_profile.hmm_logo.url %>'><%= image_tag @hmm_profile.hmm_logo.url %></a>
+      </p>
     <% if @hmm_results != [] %>
     <h3>Results registered(<%= @hmm_results.count %>)</h3>
     <table>
