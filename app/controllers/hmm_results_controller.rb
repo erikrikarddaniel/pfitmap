@@ -109,12 +109,12 @@ class HmmResultsController < ApplicationController
             exact_db_hits = HmmDbHit.where("gi = ? AND db = ? AND acc = ?", entry_fields[1].to_i, entry_fields[2], entry_fields[3])
             if exact_db_hits == []
               exact_db_hit = HmmDbHit.create!(
-                                              :gi => entry_fields[1].to_i,
-                                              :db => entry_fields[2],
-                                              :acc => entry_fields[3],
-                                              :desc => entry_fields[4],
-                                              :db_sequence_id => present_sequence.id
-                                              )
+		:gi => entry_fields[1].to_i,
+		:db => entry_fields[2],
+		:acc => entry_fields[3],
+		:desc => entry_fields[4],
+		:db_sequence_id => present_sequence.id
+	      )
             end
           end
           hmm_result_row = add_hmm_result_row(fields,result,present_sequence)

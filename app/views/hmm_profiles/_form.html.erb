@@ -14,10 +14,6 @@
   <%= f.text_field :version %>
 </div>
 <div class="control-group span4">
-  <%= f.label :hierarchy %>
-  <%= f.text_field :hierarchy %>
-</div>
-<div class="control-group span4">
   <%= f.label :parent_id %>
   <%= collection_select(:hmm_profile, :parent_id, @parent_candidates, :id, :name, {:include_blank => :true}) %>
 </div>

@@ -26,7 +26,7 @@ describe HmmResultsController do
     @bulk_tblout = fixture_file_upload('/sample.tblout')
     @hmm_profile = HmmProfile.create!(name: 'exclass',
                                       version: '20120621',
-                                      hierarchy: '999')
+                                      protein_name: 'exclass0')
   end
   # This should return the minimal set of attributes required to create a valid
   # HmmResult. As you add validations to HmmResult, be sure to

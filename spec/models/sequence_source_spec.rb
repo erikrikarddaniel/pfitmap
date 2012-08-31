@@ -51,7 +51,7 @@ describe SequenceSource do
   
   describe "associations" do
     let!(:hmm_profile1) { FactoryGirl.create(:hmm_profile) }
-    let!(:hmm_profile2) { FactoryGirl.create(:hmm_profile_001) }
+    let!(:hmm_profile2) { FactoryGirl.create(:hmm_profile_nrdbr2lox) }
     let!(:sequence_source) { FactoryGirl.create(:sequence_source) }
     let!(:hmm_result1) { FactoryGirl.create(:hmm_result, hmm_profile: hmm_profile1, sequence_source: sequence_source) }
     let!(:db_sequence1) { FactoryGirl.create(:db_sequence) }
@@ -85,7 +85,7 @@ describe SequenceSource do
     let!(:db_sequence1) { FactoryGirl.create(:db_sequence) }
     let!(:db_sequence2) { FactoryGirl.create(:db_sequence) }
     #Profile with higher score
-    let!(:hmm_profile1) { FactoryGirl.create(:hmm_profile_001) }
+    let!(:hmm_profile1) { FactoryGirl.create(:hmm_profile_nrdbr2lox) }
     let!(:hmm_result1) { FactoryGirl.create(:hmm_result, 
                                             hmm_profile: hmm_profile1, 
                                             sequence_source: sequence_source) }

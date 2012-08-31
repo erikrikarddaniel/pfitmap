@@ -30,7 +30,7 @@ describe HmmProfilesController do
     {
       :name => "testing_profile1",
       :version => "20120401",
-      :hierarchy => "009"
+      :protein_name => "test1"
     }
   end
   
@@ -167,5 +167,4 @@ describe HmmProfilesController do
       response.should redirect_to(hmm_profiles_url)
     end
   end
-
 end

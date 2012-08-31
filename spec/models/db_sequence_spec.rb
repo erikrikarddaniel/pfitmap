@@ -10,7 +10,7 @@
 require 'spec_helper'
 
 describe DbSequence do
-  let!(:hmm_profile) { FactoryGirl.create(:hmm_profile_001) }
+  let!(:hmm_profile) { FactoryGirl.create(:hmm_profile_nrdbr2lox) }
   let!(:hmm_profile2) { FactoryGirl.create(:hmm_profile) }
   let!(:sequence_source) { FactoryGirl.create(:sequence_source) }
   let!(:hmm_result) { FactoryGirl.create(:hmm_result, hmm_profile: hmm_profile, sequence_source: sequence_source, executed: 100.years.ago) }

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120726095541) do
+ActiveRecord::Schema.define(:version => 20120824114553) do
 
   create_table "hmm_result_rows", :force => true do |t|
     t.string   "target_name"
@@ -101,7 +101,6 @@ ActiveRecord::Schema.define(:version => 20120726095541) do
   create_table "hmm_profiles", :force => true do |t|
     t.string   "name"
     t.string   "version"
-    t.string   "hierarchy"
     t.integer  "parent_id"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false

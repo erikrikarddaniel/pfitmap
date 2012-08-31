@@ -35,7 +35,7 @@ describe HmmResultRow do
   let!(:result) { FactoryGirl.create(:hmm_result, hmm_profile: profile) }
   let!(:db_sequence) { FactoryGirl.create(:db_sequence) }
   let!(:db_hit) { FactoryGirl.create(:hmm_db_hit, db_sequence: db_sequence) }
-  let(:hmmp001) { FactoryGirl.create(:hmm_profile_001) }
+  let(:hmmp001) { FactoryGirl.create(:hmm_profile_nrdbr2lox) }
   let(:hmmp00100) { FactoryGirl.create(:hmm_profile, parent: hmmp001) }
   let!(:result1) { FactoryGirl.create(:hmm_result, hmm_profile: hmmp001, sequence_source: sequence_source) }
   let!(:result2) { FactoryGirl.create(:hmm_result, hmm_profile: hmmp00100, sequence_source: sequence_source) }
