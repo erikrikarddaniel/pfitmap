@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120824114553) do
+ActiveRecord::Schema.define(:version => 20120831135614) do
 
   create_table "hmm_result_rows", :force => true do |t|
     t.string   "target_name"
@@ -105,6 +105,7 @@ ActiveRecord::Schema.define(:version => 20120824114553) do
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
     t.string   "protein_name"
+    t.string   "hmm_logo"
   end
 
   create_table "hmm_score_criteria", :force => true do |t|

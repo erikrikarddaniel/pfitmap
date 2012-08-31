@@ -9,6 +9,7 @@
 #  created_at   :datetime        not null
 #  updated_at   :datetime        not null
 #  protein_name :string(255)
+#  hmm_logo     :string(255)
 #
 
 require 'spec_helper'

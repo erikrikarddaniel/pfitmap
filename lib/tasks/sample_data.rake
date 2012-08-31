@@ -50,13 +50,15 @@ SQL
       version: "20120402",
       parent_id: @hmm_profile_nrdb.id
     )
-    @hmm_profile_nrdbe = HmmProfile.create!(name: "RNR R2,
-      Eukaryotes",
+    @hmm_profile_nrdbe = HmmProfile.create!(
+      name: "RNR R2, Eukaryotes",
       protein_name: "NrdBe",
       version: "20120402",
       parent_id: @hmm_profile_nrdben.id
     )
-    @hmm_profile_r2lox = HmmProfile.create!(name: "R2lox",
+    @hmm_profile_r2lox = HmmProfile.create!(
+      name: "R2lox",
+      protein_name: "R2lox",
       version: "20120402",
       parent_id: @hmm_profile_nrdbr2lox.id
     )
