@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120831135614) do
+ActiveRecord::Schema.define(:version => 20120831144720) do
 
   create_table "hmm_result_rows", :force => true do |t|
     t.string   "target_name"
@@ -102,10 +102,13 @@ ActiveRecord::Schema.define(:version => 20120831135614) do
     t.string   "name"
     t.string   "version"
     t.integer  "parent_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",            :null => false
+    t.datetime "updated_at",            :null => false
     t.string   "protein_name"
-    t.string   "hmm_logo"
+    t.string   "hmm_logo_file_name"
+    t.string   "hmm_logo_content_type"
+    t.integer  "hmm_logo_file_size"
+    t.datetime "hmm_logo_updated_at"
   end
 
   create_table "hmm_score_criteria", :force => true do |t|

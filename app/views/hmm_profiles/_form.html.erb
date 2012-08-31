@@ -1,4 +1,4 @@
-<%= form_for(@hmm_profile, :html => {:class => "well"}) do |f| %>
+<%= form_for(@hmm_profile, :html => {:class => "well", :multipart => true}) do |f| %>
 <%= render :partial => 'shared/error_messages', :locals => { :error_subject => @hmm_profile} %>
 <div class="row">
 <div class="control-group span4">
@@ -19,7 +19,7 @@
 </div>
 <div class="control-group span4">
   <%= f.label :hmm_logo %>
-  <%= f.file_field :hmm_log %>
+  <%= f.file_field :hmm_logo %>
 </div>
 </div>
 <%= f.submit "Create Profile", :class => "btn btn-large btn-primary"%>

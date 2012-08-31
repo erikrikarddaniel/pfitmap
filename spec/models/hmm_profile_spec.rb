@@ -2,14 +2,17 @@
 #
 # Table name: hmm_profiles
 #
-#  id           :integer         not null, primary key
-#  name         :string(255)
-#  version      :string(255)
-#  parent_id    :integer
-#  created_at   :datetime        not null
-#  updated_at   :datetime        not null
-#  protein_name :string(255)
-#  hmm_logo     :string(255)
+#  id                    :integer         not null, primary key
+#  name                  :string(255)
+#  version               :string(255)
+#  parent_id             :integer
+#  created_at            :datetime        not null
+#  updated_at            :datetime        not null
+#  protein_name          :string(255)
+#  hmm_logo_file_name    :string(255)
+#  hmm_logo_content_type :string(255)
+#  hmm_logo_file_size    :integer
+#  hmm_logo_updated_at   :datetime
 #
 
 require 'spec_helper'

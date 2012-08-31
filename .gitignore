@@ -22,3 +22,6 @@
 
 # Ignore database settings file
 /config/database.yml
+
+# Ignore also directory structure where Paperclip stores files
+/public/system

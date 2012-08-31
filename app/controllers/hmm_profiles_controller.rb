@@ -18,6 +18,7 @@ class HmmProfilesController < ApplicationController
   # GET /hmm_profiles/1
   # GET /hmm_profiles/1.json
   def show
+    logger.debug "Showing hmm_profile #{params[:id]}"
     @hmm_profile = HmmProfile.find(params[:id])
     @hmm_result = @hmm_profile.hmm_results.build()
     @hmm_results = @hmm_profile.hmm_results.paginate(page: params[:hmm_results_page], per_page: 10)
