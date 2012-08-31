@@ -45,6 +45,11 @@ describe HmmProfile do
     before { @hmm_profile.version = "" }
     it { should_not be_valid }
   end
+  
+  describe "Should not be valid when protein_name is not present" do
+    before { @hmm_profile.protein_name = "" }
+    it { should_not be_valid }
+  end
 
   describe "One should be able to create a child profile from a profile" do
     subject do

@@ -26,7 +26,7 @@ describe HmmResultsController do
     @bulk_tblout = fixture_file_upload('/sample.tblout')
     @hmm_profile = HmmProfile.create!(name: 'exclass',
                                       version: '20120621',
-                                      hierarchy: '999')
+                                      protein_name: 'exclass0')
   end
   # This should return the minimal set of attributes required to create a valid
   # HmmResult. As you add validations to HmmResult, be sure to
@@ -45,78 +45,78 @@ describe HmmResultsController do
     {user_id: @user.id}
   end
 
-#  describe "GET index" do
-#    it "assigns all hmm_results as @hmm_results" do
-#      hmm_result = @hmm_profile.hmm_results.create! valid_attributes
-#      get :index, {}, valid_session
-#      assigns(:hmm_results).should eq([hmm_result])
-#    end
-#  end
-#
-#  describe "GET show" do
-#    it "assigns the requested hmm_result as @hmm_result" do
-#      hmm_result = @hmm_profile.hmm_results.create! valid_attributes
-#      get :show, {:id => hmm_result.to_param}, valid_session
-#      assigns(:hmm_result).should eq(hmm_result)
-#    end
-#  end
-#
-#  describe "POST create" do
-#    describe "with valid params" do
-#      it "creates new HmmResult object from a tblout-line from a hmmer run" do
-#        expect {
-#          post :create, {:hmm_result => valid_attributes.merge( :file => @bulk_tblout), :hmm_profile_id => @hmm_profile.id }, valid_session
-#        }.to change(HmmResult, :count).by(1)
-#      end
-#
-#      it "does not work for guests" do
-#        post :create, {:hmm_result => valid_attributes.merge( :file => @bulk_tblout), :hmm_profile_id => @hmm_profile.id }, {}
-#        response.should redirect_to(root_path)
-#      end
-#      
-#      it "assigns a newly created hmm_result as @hmm_result" do
-#        post :create, {:hmm_result => valid_attributes.merge(:file => @bulk_tblout), :hmm_profile_id => @hmm_profile.id }, valid_session
-#        assigns(:hmm_result).should be_a(HmmResult)
-#        assigns(:hmm_result).should be_persisted
-#      end
-#
-#      it "redirects to the created hmm_result" do
-#        post :create, {:hmm_result => valid_attributes.merge(:file => @bulk_tblout), :hmm_profile_id => @hmm_profile.id}, valid_session
-#        response.should redirect_to(HmmResult.last)
-#      end
-#    end
-#
-#    describe "with invalid params" do
-#      it "assigns a newly created but unsaved hmm_result as @hmm_result" do
-#        # Trigger the behavior that occurs when invalid params are submitted
-#        HmmResult.any_instance.stub(:save).and_return(false)
-#        post :create, {:hmm_result => {}, :hmm_profile_id => @hmm_profile.id }, valid_session
-#        assigns(:hmm_result).should be_a_new(HmmResult)
-#      end
-#
-#      it "re-renders the 'new' template" do
-#        # Trigger the behavior that occurs when invalid params are submitted
-#        HmmResult.any_instance.stub(:save).and_return(false)
-#        post :create, {:hmm_result => valid_attributes, :hmm_profile_id => @hmm_profile.id }, valid_session
-#        flash.should_not be_empty
-#        #response.should render_template("hmm_profiles/show")
-#      end
-#    end
-#  end
-#
-#  describe "DELETE destroy" do
-#    it "destroys the requested hmm_result" do
-#      hmm_result = @hmm_profile.hmm_results.create! valid_attributes
-#      expect {
-#        delete :destroy, {:id => hmm_result.to_param}, valid_session
-#      }.to change(HmmResult, :count).by(-1)
-#    end
-#
-#    it "redirects to the hmm_results list" do
-#      hmm_result = @hmm_profile.hmm_results.create! valid_attributes
-#      delete :destroy, {:id => hmm_result.to_param}, valid_session
-#      response.should redirect_to(hmm_results_url)
-#    end
-#  end
+  describe "GET index" do
+    it "assigns all hmm_results as @hmm_results" do
+      hmm_result = @hmm_profile.hmm_results.create! valid_attributes
+      get :index, {}, valid_session
+      assigns(:hmm_results).should eq([hmm_result])
+    end
+  end
+
+  describe "GET show" do
+    it "assigns the requested hmm_result as @hmm_result" do
+      hmm_result = @hmm_profile.hmm_results.create! valid_attributes
+      get :show, {:id => hmm_result.to_param}, valid_session
+      assigns(:hmm_result).should eq(hmm_result)
+    end
+  end
+
+  describe "POST create" do
+    describe "with valid params" do
+      it "creates new HmmResult object from a tblout-line from a hmmer run" do
+        expect {
+          post :create, {:hmm_result => valid_attributes.merge( :file => @bulk_tblout), :hmm_profile_id => @hmm_profile.id }, valid_session
+        }.to change(HmmResult, :count).by(1)
+      end
+
+      it "does not work for guests" do
+        post :create, {:hmm_result => valid_attributes.merge( :file => @bulk_tblout), :hmm_profile_id => @hmm_profile.id }, {}
+        response.should redirect_to(root_path)
+      end
+      
+      it "assigns a newly created hmm_result as @hmm_result" do
+        post :create, {:hmm_result => valid_attributes.merge(:file => @bulk_tblout), :hmm_profile_id => @hmm_profile.id }, valid_session
+        assigns(:hmm_result).should be_a(HmmResult)
+        assigns(:hmm_result).should be_persisted
+      end
+
+      it "redirects to the created hmm_result" do
+        post :create, {:hmm_result => valid_attributes.merge(:file => @bulk_tblout), :hmm_profile_id => @hmm_profile.id}, valid_session
+        response.should redirect_to(HmmResult.last)
+      end
+    end
+
+    describe "with invalid params" do
+      it "assigns a newly created but unsaved hmm_result as @hmm_result" do
+        # Trigger the behavior that occurs when invalid params are submitted
+        HmmResult.any_instance.stub(:save).and_return(false)
+        post :create, {:hmm_result => {}, :hmm_profile_id => @hmm_profile.id }, valid_session
+        assigns(:hmm_result).should be_a_new(HmmResult)
+      end
+
+      it "re-renders the 'new' template" do
+        # Trigger the behavior that occurs when invalid params are submitted
+        HmmResult.any_instance.stub(:save).and_return(false)
+        post :create, {:hmm_result => valid_attributes, :hmm_profile_id => @hmm_profile.id }, valid_session
+        flash.should_not be_empty
+        #response.should render_template("hmm_profiles/show")
+      end
+    end
+  end
+
+  describe "DELETE destroy" do
+    it "destroys the requested hmm_result" do
+      hmm_result = @hmm_profile.hmm_results.create! valid_attributes
+      expect {
+        delete :destroy, {:id => hmm_result.to_param}, valid_session
+      }.to change(HmmResult, :count).by(-1)
+    end
+
+    it "redirects to the hmm_results list" do
+      hmm_result = @hmm_profile.hmm_results.create! valid_attributes
+      delete :destroy, {:id => hmm_result.to_param}, valid_session
+      response.should redirect_to(hmm_results_url)
+    end
+  end
 
 end

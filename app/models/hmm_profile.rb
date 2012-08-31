@@ -28,6 +28,7 @@ class HmmProfile < ActiveRecord::Base
 
   validates :name, presence: true
   validates :version, presence: true
+  validates :protein_name, presence: true
 
   def hierarchy
     if parent

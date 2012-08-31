@@ -132,10 +132,10 @@ describe "Hmm Profile Pages" do
       before do
         visit new_hmm_profile_path()
       end
-#      it "can handle invalid parameters" do
-#        click_button "Create Profile"
-#        page.should have_content("The form contains 3 errors")
-#      end
+      it "can handle invalid parameters" do
+        click_button "Create Profile"
+        page.should have_content("The form contains 3 errors")
+      end
       
       it "can handle valid parameters" do
         page.fill_in 'Name', :with => "Bobs' enzyme"
