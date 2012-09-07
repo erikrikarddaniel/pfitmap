@@ -1,5 +1,5 @@
 Pfitmap
--------
+=======
 
 Pfitmap, the protein fitness map database aims to represent relationsships
 within and between protein families in a novel, visual way.
@@ -9,6 +9,7 @@ The application is implemented in Ruby on Rails.
 Releases
 --------
 
-0.1, July 2012: Much of the basic data representation present.
+0.1, July 2012: 
+  Much of the basic data representation present.
   Interfaces still at a very early stage.
   Poor performance in certain evaluation steps.
