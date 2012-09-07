@@ -1,10 +1,10 @@
 Pfitmap
-=======
 
-Pfitmap, the protein fitness map database aims to represent relationsships
+Pfitmap, the protein fitness map database, aims to represent relationsships
 within and between protein families in a novel, visual way.
 
-The application is implemented in Ruby on Rails.
+The application is implemented in Ruby on Rails. Our first aim is to replace
+the old ribonucleotide database (RNRdb).
 
 Releases
 --------
