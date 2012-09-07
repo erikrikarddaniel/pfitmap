@@ -12,8 +12,36 @@ FactoryGirl.define do
   end
   
   factory :hmm_profile_nrdb, class: HmmProfile do
-    name "R2lox"
+    name "Class I RNR radical generating subunit"
     protein_name "NrdB"
+    version "20120401"
+    association :parent, factory: :hmm_profile_nrdbr2lox
+  end
+  
+  factory :hmm_profile_nrdben, class: HmmProfile do
+    name "Class I RNR radical generating subunit, eukaryotes and sister group"
+    protein_name "NrdBen"
+    version "20120401"
+    association :parent, factory: :hmm_profile_nrdb
+  end
+  
+  factory :hmm_profile_nrdbe, class: HmmProfile do
+    name "Class I RNR radical generating subunit, eukaryotes"
+    protein_name "NrdBe"
+    version "20120401"
+    association :parent, factory: :hmm_profile_nrdben
+  end
+  
+  factory :hmm_profile_nrdbn, class: HmmProfile do
+    name "Class I RNR radical generating subunit, eukaryotic sister-group"
+    protein_name "NrdBn"
+    version "20120401"
+    association :parent, factory: :hmm_profile_nrdben
+  end
+  
+  factory :hmm_profile_r2lox, class: HmmProfile do
+    name "R2lox protein"
+    protein_name "R2lox"
     version "20120401"
     association :parent, factory: :hmm_profile_nrdbr2lox
   end
