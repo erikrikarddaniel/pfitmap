@@ -1,2 +1,12 @@
-Use this README file to introduce your application and point to useful places in the API for learning more.
-Run "rake doc:app" to generate API documentation for your models, controllers, helpers, and libraries.
+Pfitmap
+-------
+
+The protein fitness map database aims to represent relationsships within and
+between protein families in a novel, visual way.
+
+Releases
+--------
+
+0.1, July 2012: Much of the basic data representation present.
+  Interfaces still at a very early stage.
+  Poor performance in certain evaluation steps.

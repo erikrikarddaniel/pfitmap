@@ -11,6 +11,8 @@ Discussion points
 
 Things to fix
 -------------
+* Test cases for release calculation (see discussion point above).
+
 * Tests that are not yet implemented:
   - Hierarchy of taxon
   - The dry run initialization
