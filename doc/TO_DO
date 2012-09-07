@@ -20,8 +20,10 @@ Things to fix
   - protein_counts_by_hierarchy
 
 * Set up system to enable links from accession numbers to target database. See
-  doc/sequence_inclusion.dia (SequenceDatabase model). Note the comments
-  regarding the accession_url field.
+  doc/pfitmap.dia (SequenceDatabase model). The accession_url should contain
+  Ruby string interpolations like #{field_name} to allow dynamic construction of
+  urls. (I just refrained from coupling this model with the SequenceSource
+  model; wouldn't simplify anything.)
 
 * Replace only HMMProfile.name on its own in lists with HMMProfile.description
   (which includes the protein name).
