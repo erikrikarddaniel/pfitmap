@@ -16,7 +16,7 @@
     <h3>Click on plus-sign to expand</h3>
     <div id="listContainer">
       <ul id="expList">
-	<%= list_children @hmm_profiles_last_parents %>
+	<%= list_children @hmm_profiles_last_parents.sort_by { |a| a.hierarchy } %>
       </ul>
     </div>
   </div>
