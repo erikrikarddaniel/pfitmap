@@ -73,6 +73,30 @@ FactoryGirl.define do
     sequence_source
   end
   
+  factory :hmm_result_nrdb, class: HmmResult do
+    sequence(:executed) { |n| "#{n}"}
+    association :hmm_profile, factory: :hmm_profile_nrdb
+    sequence_source
+  end
+  
+  factory :hmm_result_nrdben, class: HmmResult do
+    sequence(:executed) { |n| "#{n}"}
+    association :hmm_profile, factory: :hmm_profile_nrdben
+    sequence_source
+  end
+  
+  factory :hmm_result_nrdbe, class: HmmResult do
+    sequence(:executed) { |n| "#{n}"}
+    association :hmm_profile, factory: :hmm_profile_nrdbe
+    sequence_source
+  end
+  
+  factory :hmm_result_nrdbn, class: HmmResult do
+    sequence(:executed) { |n| "#{n}"}
+    association :hmm_profile, factory: :hmm_profile_nrdbn
+    sequence_source
+  end
+  
   factory :hmm_db_hit do
     sequence(:gi){|n| n}
     db "ref"
