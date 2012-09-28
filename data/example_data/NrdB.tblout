@@ -1,3 +1,7 @@
+
+#                                                                                 --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----
+# target name                          accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target
+#                  ------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------
 gi|291295355|ref|YP_003506753.1|       -          NrdB                 -             8e-139  472.4   0.0  9.5e-139  472.2   0.0   1.1   1   0   0   1   1   1   1 unnamed protein product [Meiothermus ruber DSM 1279]gi|290470314|gb|ADD27733.1| Ribonucleoside-diphosphate reductase [Meiothermus ruber DSM 1279]
 gi|158341282|ref|YP_001522354.1|       -          NrdB                 -             1e-126  432.6   0.1  1.2e-126  432.4   0.0   1.0   1   0   0   1   1   1   1 ribonucleotide-diphosphate reductase subunit beta [Acaryochloris marina MBIC11017]gi|158311523|gb|ABW33134.1| ribonucleoside-diphosphate reductase, beta subunit [Acaryochloris marina MBIC11017]
 gi|371452892|gb|EHN65917.1|            -          NrdB                 -           1.8e-126  431.8   1.1  2.1e-126  431.5   0.8   1.0   1   0   0   1   1   1   1 ribonucleotide-diphosphate reductase subunit beta [Comamonas testosteroni ATCC 11996]

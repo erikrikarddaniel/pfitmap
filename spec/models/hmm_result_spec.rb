@@ -11,6 +11,9 @@
 #
 
 require 'spec_helper'
+require 'file_parsers'
+
+include FileParsers
 
 describe HmmResult do
   let(:hmm_profile) { FactoryGirl.create(:hmm_profile) }
@@ -57,41 +60,15 @@ describe HmmResult do
   describe "More complex hmm_result" do
     before(:each) do
       @hmm_result_nrdb = FactoryGirl.create(:hmm_result_nrdb)
-      # Read a real data file to create rows (this duplicates implementation code...)
-      File.open("#{Rails.root}/data/example_data/NrdB.tblout").each do |hmmline|
-	fields = hmmline.chomp.split(/\s+/)
-	dbhit = "#{fields[0]} #{fields[17..-1].join(" ")}".split(/\001/).find do |dbs|
-	  gifields = dbs.split("|")
-          HmmDbHit.find_by_gi(gifields[1].to_i) 
-	end
-	db_sequence = ( dbhit ? dbhit.db_sequence : DbSequence.create() )
-	row = @hmm_result_nrdb.hmm_result_rows.create!(
-	  target_name:		fields[0],
-	  target_acc:		fields[0].split('|')[2..3].join(':'),
-	  query_name:		fields[2],
-	  query_acc:		fields[3],
-	  fullseq_evalue:	fields[4].to_f,
-	  fullseq_score:	fields[5].to_f,
-	  fullseq_bias:		fields[6].to_f,
-	  bestdom_evalue:	fields[7].to_f,
-	  bestdom_score:	fields[8].to_f,
-	  bestdom_bias:		fields[9].to_f,
-	  domnumest_exp:	fields[10].to_f,
-	  domnumest_reg:	fields[11].to_i,
-	  domnumest_clu:	fields[12].to_i,
-	  domnumest_ov:		fields[13].to_i,
-	  domnumest_env:	fields[14].to_i,
-	  domnumest_dom:	fields[15].to_i,
-	  domnumest_rep:	fields[16].to_i,
-	  domnumest_inc:	fields[17].to_i,
-	  db_sequence:		db_sequence
-	)
-      end
+      parse_hmm_tblout(@hmm_result_nrdb, fixture_file_upload("/NrdB.tblout"))
     end
 
     it 'should have the correct hmm_profile' do
       @hmm_result_nrdb.hmm_profile.name.should == 'Class I RNR radical generating subunit'
     end
-  end
 
+    it 'should have the correct number of hmm_result_rows' do
+      @hmm_result_nrdb.hmm_result_rows.length.should == 241
+    end
+  end
 end
