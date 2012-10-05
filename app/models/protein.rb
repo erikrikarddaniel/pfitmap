@@ -16,7 +16,6 @@ class Protein < ActiveRecord::Base
   belongs_to :hmm_profile
   belongs_to :enzyme
 
-
   def self.initialize_proteins
     profiles = HmmProfile.all
     profiles.each do |profile|
@@ -28,6 +27,10 @@ class Protein < ActiveRecord::Base
         add_if_not_existing(nil,profile)
       end
     end
+  end
+
+  def to_s
+    "#{name} (#{rank})"
   end
 
   private

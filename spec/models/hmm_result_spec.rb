@@ -70,5 +70,13 @@ describe HmmResult do
     it 'should have the correct number of hmm_result_rows' do
       @hmm_result_nrdb.hmm_result_rows.length.should == 241
     end
+
+    it 'should have the correct number of hmm_db_hits' do
+      hmm_db_hits = @hmm_result_nrdb.hmm_result_rows.map { |hrr| hrr.db_sequence.hmm_db_hits }.flatten
+      #File.open("/tmp/gis", "w").print "#{__FILE__}:#{__LINE__}: hmm_db_hits: #{hmm_db_hits.map { |h| h.gi }.join(", ")}"
+      hmm_db_hits.map { |h| h.gi }.should include(95109514)
+      #hmm_db_hits.map { |h| h.gi }.should include(15619738)
+      hmm_db_hits.length.should == 709
+    end
   end
 end
