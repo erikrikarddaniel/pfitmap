@@ -104,8 +104,6 @@ class PfitmapRelease < ActiveRecord::Base
     gi_taxon_for_included_hits = HmmDbHit.all_taxons_for(@pfitmap_release, db_string)
     m = "Got all taxa for #{self}: #{gi_taxon_for_included_hits}"
 
-    warn "#{__FILE__}:#{__LINE__}: #{m}"
-    
     # Build a hash with gi as keys and ncbi_taxon_id as values 
     ncbi_gi_taxon_hash = @pfitmap_release.build_gi_ncbi_taxon_hash(gi_taxon_for_included_hits)
     

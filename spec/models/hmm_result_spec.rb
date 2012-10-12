@@ -57,6 +57,20 @@ describe HmmResult do
     it { should_not be_valid }
   end
 
+  describe "Simple import cases" do
+    before(:each) do
+      @hmm_result_nrdb = FactoryGirl.create(:hmm_result_nrdb)
+    end
+
+    it "should correctly import a file with embedded '#':s on one row" do
+      parse_hmm_tblout(@hmm_result_nrdb, fixture_file_upload("/problematic_rows00.tblout"))
+      hmm_db_hits = @hmm_result_nrdb.hmm_result_rows.map { |hrr| hrr.db_sequence.hmm_db_hits }.flatten
+      hmm_db_hits.length.should == 27
+      hmm_db_hits.map { |h| h.gi }.should include(15619738)
+    end
+  end
+
+
   describe "More complex hmm_result" do
     before(:each) do
       @hmm_result_nrdb = FactoryGirl.create(:hmm_result_nrdb)
@@ -73,9 +87,7 @@ describe HmmResult do
 
     it 'should have the correct number of hmm_db_hits' do
       hmm_db_hits = @hmm_result_nrdb.hmm_result_rows.map { |hrr| hrr.db_sequence.hmm_db_hits }.flatten
-      #File.open("/tmp/gis", "w").print "#{__FILE__}:#{__LINE__}: hmm_db_hits: #{hmm_db_hits.map { |h| h.gi }.join(", ")}"
       hmm_db_hits.map { |h| h.gi }.should include(95109514)
-      #hmm_db_hits.map { |h| h.gi }.should include(15619738)
       hmm_db_hits.length.should == 709
     end
   end
