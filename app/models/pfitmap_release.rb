@@ -86,6 +86,63 @@ class PfitmapRelease < ActiveRecord::Base
     return gi_ncbi_taxon_hash
   end
 
+  def calculate_main2(user)
+    @pfitmap_release = self
+    db_string = "ref"
+
+    # Destroy old protein counts rows for this release
+    @protein_counts = @pfitmap_release.protein_counts
+    @protein_counts.destroy_all
+
+    # Make sure the protein table is filled
+    Protein.initialize_proteins
+
+    # Retrieve all whole genome sequenced organisms id
+    wgs_ids = BiosqlWeb.wgs_ids
+
+    # Initialize dry run, count genomes
+    wgs_ids.each do |wgs_id|
+      # First iterate over whole genome sequenced organisms
+      taxons = BiosqlWeb.full_taxa_for_wgs_id(wgs_id)
+      first_taxon, second_taxon, *rest = *taxons
+      first_taxon_in_db = taxon_in_db_lookup(first_taxon)
+      
+      # Make sure this taxon exists and has wgs=true
+      taxon = dry_taxon_first(first_taxon, first_taxon_in_db, second_taxon)
+          
+      # For each protein, initialize protein_count and/or add 1 to no_genomes
+      protein_count_init_or_add(taxon)
+          
+      # Rename variable before loop over taxon hiearchy
+      current_taxon = second_taxon 
+      rest.each do |next_taxon|
+        taxon_in_db = taxon_in_db_lookup(current_taxon)
+        
+        #Make sure this taxon exist but let wgs be as before
+        taxon = dry_taxon(current_taxon, taxon_in_db, next_taxon)
+        protein_count_init_or_add(taxon)
+        current_taxon = next_taxon
+      end
+          
+      # The last taxon should also be added:
+      taxon_in_db = taxon_in_db_lookup(current_taxon)
+      taxon = dry_taxon(current_taxon, taxon_in_db, nil)
+      protein_count_init_or_add(taxon)
+    end
+    
+    # Second iteration, count proteins
+      @pfitmap_release.hmm_db_hits.where("db = ?", db_string).select(:gi).each do |hit|
+        taxons = BiosqlWeb.get_taxons_by_gi(hit.gi)
+        taxons.each do |taxon|
+        # !!!!! CONTINUE HERE
+    end
+
+    @pfitmap_release.pfitmap_sequence(:include => :hmm_profile).each do |p_seq|
+      
+    end
+
+  end
+
   def calculate_main(user)
     @pfitmap_release = self
     @pfitmap_sequences = @pfitmap_release.pfitmap_sequences(:include => :hmm_profile )
@@ -129,25 +186,29 @@ class PfitmapRelease < ActiveRecord::Base
   def init_taxons_and_protein_count(hierarchy)
     first_taxon, second_taxon, *rest = *hierarchy
     first_taxon_in_db = taxon_in_db_lookup(first_taxon)
+
     # Make sure this taxon exists and has wgs=true
     taxon = dry_taxon_first(first_taxon, first_taxon_in_db, second_taxon)
+
     # For each protein, initialize protein_count and/or add 1 to no_genomes
     protein_count_init_or_add(taxon)
+
     # Rename variable before loop
     current_taxon = second_taxon 
     rest.each do |next_taxon|
       taxon_in_db = taxon_in_db_lookup(current_taxon)
+
       #Make sure this taxon exist but let wgs be as before
       taxon = dry_taxon(current_taxon, taxon_in_db, next_taxon)
       protein_count_init_or_add(taxon)
       current_taxon = next_taxon
     end
+
     # The last taxon should also be added:
     taxon_in_db = taxon_in_db_lookup(current_taxon)
     taxon = dry_taxon(current_taxon, taxon_in_db, nil)
     protein_count_init_or_add(taxon)
   end
-
 
 
   def protein_count_init_or_add(taxon)
