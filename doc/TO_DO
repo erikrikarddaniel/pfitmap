@@ -19,6 +19,10 @@ Things to fix
   - protein_counts_by_rank
   - protein_counts_by_hierarchy
 
+* From pfitmap_release show, link from a row to the not_included db_sequences
+  from there, make it possible to include a db_sequence, previously not included
+  the first task needs a custom controller method and route for db_sequences
+
 * Set up system to enable links from accession numbers to target database. See
   doc/pfitmap.dia (SequenceDatabase model). The accession_url should contain
   Ruby string interpolations like #{field_name} to allow dynamic construction of
@@ -29,14 +33,12 @@ Things to fix
   (which includes the protein name).
 
 * When AJAX expandable table/list is implemented for the ProteinCount, 
-  use it for the pfitmap_release show page as well. 
+  use it for the pfitmap_release show page as well. May solve the 
+  current performance problem.
 
 * Enable sorting on columns as a default feature for all tables.
 
 * Test visual performance in all major browsers
-
-* Make the taxon name in the expandable list an ajax link for
-  updating a protein_counts summary table
 
 * Search function for hmm_db_hits/db_sequences
 
@@ -45,17 +47,13 @@ Things to fix
 
 * Add possibility to 'remove as current' for pfitmap releases
 
-* From pfitmap_release show, link from a row to the not_included db_sequences
-  from there, make it possible to include a db_sequence, previously not included
-  the first task needs a custom controller method and route for db_sequences
-
 * Sequence source show page does not have a good overview
   of which proteins that have results registered, when there are many 
   hmm_profiles.
 
-* Delayed job does not operate currently on server since smtp-settings are
-  not fixed for action mailer. Could disable action mailer temporarily in order
-  to execute calculation for the release.
+* Set smtp-settings for action mailer. Delayed job does not operate currently
+  on server since smtp-settings are not fixed for action mailer. Action mailer 
+  is disabled in order to execute calculation for the release.
 
 * Ajax loading of the pfitmap_release show
 
@@ -70,6 +68,7 @@ Things to fix
 * There's an array in protein_counts_controller that specifies which proteins to show -- fix.
 
 * On Enzymes form, indent the profiles, so easier to choose
+
 
 PfitmapRelease.calculate_main
 -----------------------------
