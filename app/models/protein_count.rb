@@ -59,9 +59,7 @@ class ProteinCount < ActiveRecord::Base
   end
   
   def self.add_hit(protein, taxons, pr)
-    # Check if the genome refferred to have got a hit from before.
-    # If not, then this is the first out of possibly many proteins
-    # to hit this protein_count.
+    # Check if the genome refferred to have got a hit from before, meaning the number of genomes with proteins should be incremented. If not, then this is the first out of possibly many proteins to hit this protein_count.
     first_taxon = taxons.first
     first_protein_count = self.find(:first, :conditions => ["protein_id = ? AND taxon_id = ? AND pfitmap_release_id = ?", protein.id, first_taxon.id, pr.id])
     first_protein = !(first_protein_count.obs_as_genome)

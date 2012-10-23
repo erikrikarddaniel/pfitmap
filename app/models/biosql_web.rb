@@ -13,14 +13,14 @@ class BiosqlWeb < ActiveRecord::Base
     wgs_taxons = response.parsed_response
   end
 
-  def self.wgs_ids
-    response = HTTParty.get(BASE_URL + '/wgs_ids.json')
+  def self.wgs_ncbi_ids
+    response = HTTParty.get(BASE_URL + '/wgs_ncbi_ids.json')
     wgs_ids = response.parsed_response
   end
 
-  def self.full_taxa_for_wgs_id(wgs_id)
+  def self.full_taxa_for_ncbi_id(wgs_id)
     options = {:headers => { 'Content-Type' => 'application/json', 'Accepts' => 'application/json'}, :body => {:id => wgs_id}.to_json}
-    response = HTTParty.get(BASE_URL + '/full_taxa_for_wgs_id.json', options)
+    response = HTTParty.get(BASE_URL + '/full_taxa_for_ncbi_id.json', options)
     taxons = response.parsed_response
   end
 end

@@ -58,36 +58,15 @@ class PfitmapRelease < ActiveRecord::Base
     end
   end
   
-  # The "dry run", creates all rows that is needed
-  # for a specified pfitmap_release by retrieving 
-  # all whole genome sequenced genomes and their full
-  # taxonomic hierarchy.
-  def protein_counts_initialize_dry
-    if Rails.env == "test"
-      taxons = BiosqlWeb.all_wgs_with_full_taxa_test
-    else
-      taxons = BiosqlWeb.all_wgs_with_full_taxa
-    end
-    taxons.each do |hierarchy|
-      init_taxons_and_protein_count(hierarchy)
-    end
-  end
 
   def protein_count_for(taxon, protein)
     ProteinCount.where(["pfitmap_release_id = ? AND taxon_id = ? AND protein_id = ?", self.id, taxon.id, protein.id])
   end
 
-  def build_gi_ncbi_taxon_hash(gi_taxon_for_all_hits)
-    gi_ncbi_taxon_hash = {}
-    gi_taxon_for_all_hits.each do |gi_hash|
-      ncbi_taxon_id = gi_hash["taxon_with_name"]["ncbi_taxon_id"]
-      gi_ncbi_taxon_hash[gi_hash["protein_gi"]] = ncbi_taxon_id
-    end
-    return gi_ncbi_taxon_hash
-  end
-
-  def calculate_main2(user)
-    @pfitmap_release = self
+  def calculate_main(user)
+    # Resets the protein_counts table for the release and 
+    # fills it with new values.
+    pfitmap_release = self
     db_string = "ref"
 
     # Destroy old protein counts rows for this release
@@ -98,28 +77,35 @@ class PfitmapRelease < ActiveRecord::Base
     Protein.initialize_proteins
 
     # Retrieve all whole genome sequenced organisms id
-    wgs_ids = BiosqlWeb.wgs_ids
+    wgs_ncbi_ids = BiosqlWeb.wgs_ncbi_ids
 
     # Initialize dry run, count genomes
-    wgs_ids.each do |wgs_id|
-      # First iterate over whole genome sequenced organisms
-      taxons = BiosqlWeb.full_taxa_for_wgs_id(wgs_id)
+    dry_run(wgs_ncbi_ids, pfitmap_release)
+    
+    # Second iteration, count hits
+    second_run_count_hits(pfitmap_release)
+  end
+
+  private
+  def dry_run(wgs_ncbi_ids, pfitmap_release)
+    # First iterate over whole genome sequenced organisms
+    wgs_ncbi_ids.each do |wgs_ncbi_id|
+      taxons = BiosqlWeb.full_taxa_for_ncbi_id(wgs_ncbi_id)
       first_taxon, second_taxon, *rest = *taxons
+
+      # Special case for the leaf node
       first_taxon_in_db = taxon_in_db_lookup(first_taxon)
-      
       # Make sure this taxon exists and has wgs=true
-      taxon = dry_taxon_first(first_taxon, first_taxon_in_db, second_taxon)
-          
+      taxon = init_taxon_first(first_taxon, first_taxon_in_db, second_taxon)
       # For each protein, initialize protein_count and/or add 1 to no_genomes
       protein_count_init_or_add(taxon)
           
-      # Rename variable before loop over taxon hiearchy
       current_taxon = second_taxon 
+      
+      # Go from leaf to root, in taxonomy tree.
       rest.each do |next_taxon|
         taxon_in_db = taxon_in_db_lookup(current_taxon)
-        
-        #Make sure this taxon exist but let wgs be as before
-        taxon = dry_taxon(current_taxon, taxon_in_db, next_taxon)
+        taxon = init_taxon(current_taxon, taxon_in_db, next_taxon)
         protein_count_init_or_add(taxon)
         current_taxon = next_taxon
       end
@@ -129,87 +115,32 @@ class PfitmapRelease < ActiveRecord::Base
       taxon = dry_taxon(current_taxon, taxon_in_db, nil)
       protein_count_init_or_add(taxon)
     end
-    
-    # Second iteration, count proteins
-      @pfitmap_release.hmm_db_hits.where("db = ?", db_string).select(:gi).each do |hit|
-        taxons = BiosqlWeb.get_taxons_by_gi(hit.gi)
-        taxons.each do |taxon|
-        # !!!!! CONTINUE HERE
-    end
-
-    @pfitmap_release.pfitmap_sequence(:include => :hmm_profile).each do |p_seq|
-      
-    end
-
   end
 
-  def calculate_main(user)
-    @pfitmap_release = self
-    @pfitmap_sequences = @pfitmap_release.pfitmap_sequences(:include => :hmm_profile )
-
-    db_string = "ref"
-    
-    # Get all hmm_db_hits and its taxons
-    gi_taxon_for_included_hits = HmmDbHit.all_taxons_for(@pfitmap_release, db_string)
-    
-    # Build a hash with gi as keys and ncbi_taxon_id as values 
-    ncbi_gi_taxon_hash = @pfitmap_release.build_gi_ncbi_taxon_hash(gi_taxon_for_included_hits)
-    
-    # Destroy old protein counts rows for this release
-    @protein_counts = @pfitmap_release.protein_counts
-    @protein_counts.destroy_all
-    
-    # Make sure the protein table is filled
-    Protein.initialize_proteins
-    
-    # Fill the taxon table and dry run for the protein_counts
-    @pfitmap_release.protein_counts_initialize_dry
-    
-    # Iterate over the sequences and populate protein counts for each
-    # protein and taxon. 
-    @pfitmap_sequences.each do |seq|
-      seq.calculate_counts(@pfitmap_release, ncbi_gi_taxon_hash, db_string)
+  def second_run_count_hits(pfitmap_release)
+    # The protein counts table is assumed to be initiated
+    # with zeroes and the number of genomes calculated.
+    pfitmap_release.pfitmap_sequences do |p_sequence|
+      best_profile = p_sequence.hmm_profile
+      proteins = best_profile.all_proteins_including_parents
+      p_sequence.hmm_db_hits.where("db = ?", db_string).select(:gi).each do |hit|
+        taxon_leaves = BiosqlWeb.get_taxons_ncbi_id_by_gi(hit.gi)
+        taxon_leaves.each do |taxon_leaf|
+          genome_taxon = Taxon.find_by_ncbi_taxon_id(ncbi_taxon_id)
+          # CHECK THAT ITS GOLD
+          unless genome_taxon.nil? || not genome_taxon.wgs
+            taxons = genome_taxon.self_and_ancestors
+            proteins.each do |protein|
+              ProteinCount.add_hit(protein,taxons,@pfitmap_release)
+            end
+          end
+        end
+      end
     end
-    #    logger.info "Calculate pfitmap release ended with an error!" 
-    #    logger.info " This is the error message: #{$!}"
-    # UserMailer.calculate_failure_email(user, @pfitmap_release, $!).deliver
-    logger.info "Calculate pfitmap release was successful!"
-    # UserMailer.calculate_success_email(user,@pfitmap_release).deliver
-  end
-
   
-  private
   def taxon_in_db_lookup(taxon_hash)
     Taxon.find(:first, :conditions => ["ncbi_taxon_id = ?", taxon_hash["ncbi_taxon_id"]])
   end
-
-  def init_taxons_and_protein_count(hierarchy)
-    first_taxon, second_taxon, *rest = *hierarchy
-    first_taxon_in_db = taxon_in_db_lookup(first_taxon)
-
-    # Make sure this taxon exists and has wgs=true
-    taxon = dry_taxon_first(first_taxon, first_taxon_in_db, second_taxon)
-
-    # For each protein, initialize protein_count and/or add 1 to no_genomes
-    protein_count_init_or_add(taxon)
-
-    # Rename variable before loop
-    current_taxon = second_taxon 
-    rest.each do |next_taxon|
-      taxon_in_db = taxon_in_db_lookup(current_taxon)
-
-      #Make sure this taxon exist but let wgs be as before
-      taxon = dry_taxon(current_taxon, taxon_in_db, next_taxon)
-      protein_count_init_or_add(taxon)
-      current_taxon = next_taxon
-    end
-
-    # The last taxon should also be added:
-    taxon_in_db = taxon_in_db_lookup(current_taxon)
-    taxon = dry_taxon(current_taxon, taxon_in_db, nil)
-    protein_count_init_or_add(taxon)
-  end
-
 
   def protein_count_init_or_add(taxon)
     proteins = Protein.all
@@ -227,7 +158,7 @@ class PfitmapRelease < ActiveRecord::Base
   end
   
 
-  def dry_taxon(taxon_hash,taxon_in_db,next_taxon)
+  def init_taxon(taxon_hash,taxon_in_db,next_taxon)
     if not taxon_in_db
       taxon_in_db = Taxon.new
       taxon_in_db.ncbi_taxon_id = taxon_hash["ncbi_taxon_id"]
@@ -244,7 +175,7 @@ class PfitmapRelease < ActiveRecord::Base
   end
 
 
-  def dry_taxon_first(first_taxon_hash,taxon_in_db, next_taxon)
+  def init_taxon_first(first_taxon_hash,taxon_in_db, next_taxon)
     if taxon_in_db
       taxon_in_db.wgs = "true"
       taxon_in_db.rank = first_taxon_hash["node_rank"]
