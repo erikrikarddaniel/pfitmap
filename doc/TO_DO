@@ -23,6 +23,9 @@ Things to fix
   from there, make it possible to include a db_sequence, previously not included
   the first task needs a custom controller method and route for db_sequences
 
+* Restrict what views are showing un-authorized users:
+  - Button for deleting profile on show page
+
 * Set up system to enable links from accession numbers to target database. See
   doc/pfitmap.dia (SequenceDatabase model). The accession_url should contain
   Ruby string interpolations like #{field_name} to allow dynamic construction of
