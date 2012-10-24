@@ -168,19 +168,22 @@ describe PfitmapRelease do
   describe "calculating a release" do
     before(:each) do
       @hmm_result_nrdb = FactoryGirl.create(:hmm_result_nrdb)
-      @hmm_result_nrdbe = FactoryGirl.create(:hmm_result_nrdbe, sequence_source_id: @hmm_result_nrdb.sequence_source.id)
-      @pfitmap_release = PfitmapRelease.new(release: "0.1", release_date: "2001-04-20", sequence_source_id: @hmm_result_nrdb.sequence_source.id)
+      @sequence_source = @hmm_result_nrdb.sequence_source
+      @hmm_result_nrdbe = FactoryGirl.create(:hmm_result_nrdbe, sequence_source: @sequence_source)
+      @pfitmap_release = FactoryGirl.create(:pfitmap_release, sequence_source: @sequence_source)
       parse_hmm_tblout(@hmm_result_nrdb, fixture_file_upload("/NrdB-20rows.tblout"))
       parse_hmm_tblout(@hmm_result_nrdbe, fixture_file_upload("/NrdBe-20rows.tblout"))
+      @sequence_source.evaluate(@pfitmap_release,nil)
     end
-
+    
     it "should have 2 hmm results via the sequence_source" do
       @pfitmap_release.sequence_source.hmm_results.length.should == 2
     end
     
     it "should be succesful to call calculate_main" do
       @pfitmap_release.calculate_main(FactoryGirl.create(:user_admin))
-      #warn "#{__FILE__}:#{__LINE__}: ProteinCount.all:\n\t#{ProteinCount.all.map { |pc| "#{pc}" }.join("\n\t")}"
+#      warn "#{__FILE__}:#{__LINE__}: ProteinCount.all:\n\t#{ProteinCount.all.map { |pc| "#{pc}" }.join("\n\t")}"
+      ProteinCount.maximum("no_proteins").should_not == 0
     end
   end
 end
