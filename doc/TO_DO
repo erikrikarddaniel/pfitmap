@@ -32,6 +32,9 @@ Things to fix
   urls. (I just refrained from coupling this model with the SequenceSource
   model; wouldn't simplify anything.)
 
+* Sorting the children in hmm_profiles/index.html.erb by hierarchy didn't work
+  -- fix.
+
 * Replace only HMMProfile.name on its own in lists with HMMProfile.description
   (which includes the protein name).
 

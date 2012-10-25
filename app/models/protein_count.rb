@@ -15,6 +15,14 @@
 #
 
 
+## no_genomes is the number of genomes in the current taxon, not taking into 
+## account observations of this particular protein.
+
+## no_proteins is the number of the current type of protein in the current taxon
+
+## no_genomes_with_proteins is the number of genomes in the current taxon where
+## the current protein has been observed.
+
 ## obs_as_genome is a flag indicating that the taxon has been observed 
 ## as a genome together with a protein.
   
@@ -51,6 +59,10 @@ class ProteinCount < ActiveRecord::Base
       protein_counts_hash[taxon.id] = column_hash
     end
     return protein_counts_hash
+  end
+
+  def to_s
+    "ProteinCount #{taxon} #{protein} n. genomes: #{no_genomes}, n. proteins: #{no_proteins}, n. genomes w. proteins: #{no_genomes_with_proteins}, obs. as genome: #{obs_as_genome}"
   end
 
   def add_genome

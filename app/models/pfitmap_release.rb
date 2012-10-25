@@ -25,6 +25,10 @@ class PfitmapRelease < ActiveRecord::Base
   validates_inclusion_of :current, :in => [true, false]
   validates :sequence_source_id, :presence => :true, :uniqueness => :true
 
+  def to_s
+    "PfitmapRelease: #{release}"
+  end
+
   def make_current(current_release)
     if current_release != self
       if current_release

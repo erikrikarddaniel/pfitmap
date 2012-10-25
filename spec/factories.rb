@@ -1,4 +1,10 @@
 FactoryGirl.define do
+
+  factory :hmm_score_criterion do
+    hmm_profile
+    min_fullseq_score 15.0
+  end
+
   factory :hmm_profile do
     sequence(:name){ |n| "Example Class #{n}" }
     sequence(:protein_name) { |n| "NrdX#{n}" }
@@ -12,8 +18,57 @@ FactoryGirl.define do
   end
   
   factory :hmm_profile_nrdb, class: HmmProfile do
-    name "R2lox"
+    name "Class I RNR radical generating subunit"
     protein_name "NrdB"
+    version "20120401"
+    association :parent, factory: :hmm_profile_nrdbr2lox
+    after_create do |profile|
+          FactoryGirl.create(:hmm_score_criterion, 
+                             :hmm_profile => profile,
+                             :min_fullseq_score => 400.0)
+    end
+        
+  end
+  
+  factory :hmm_profile_nrdben, class: HmmProfile do
+    name "Class I RNR radical generating subunit, eukaryotes and sister group"
+    protein_name "NrdBen"
+    version "20120401"
+    association :parent, factory: :hmm_profile_nrdb
+    after_create do |profile|
+          FactoryGirl.create(:hmm_score_criterion, 
+                             :hmm_profile => profile,
+                             :min_fullseq_score => 400.0)
+    end
+  end
+  
+  factory :hmm_profile_nrdbe, class: HmmProfile do
+    name "Class I RNR radical generating subunit, eukaryotes"
+    protein_name "NrdBe"
+    version "20120401"
+    association :parent, factory: :hmm_profile_nrdben
+    after_create do |profile|
+          FactoryGirl.create(:hmm_score_criterion, 
+                             :hmm_profile => profile,
+                             :min_fullseq_score => 400.0)
+    end
+  end
+  
+  factory :hmm_profile_nrdbn, class: HmmProfile do
+    name "Class I RNR radical generating subunit, eukaryotic sister-group"
+    protein_name "NrdBn"
+    version "20120401"
+    association :parent, factory: :hmm_profile_nrdben
+    after_create do |profile|
+          FactoryGirl.create(:hmm_score_criterion, 
+                             :hmm_profile => profile,
+                             :min_fullseq_score => 400.0)
+    end
+  end
+  
+  factory :hmm_profile_r2lox, class: HmmProfile do
+    name "R2lox protein"
+    protein_name "R2lox"
     version "20120401"
     association :parent, factory: :hmm_profile_nrdbr2lox
   end
@@ -42,6 +97,30 @@ FactoryGirl.define do
   factory :hmm_result do
     sequence(:executed) { |n| "#{n}"}
     hmm_profile
+    sequence_source
+  end
+  
+  factory :hmm_result_nrdb, class: HmmResult do
+    sequence(:executed) { |n| "#{n}"}
+    association :hmm_profile, factory: :hmm_profile_nrdb
+    sequence_source
+  end
+  
+  factory :hmm_result_nrdben, class: HmmResult do
+    sequence(:executed) { |n| "#{n}"}
+    association :hmm_profile, factory: :hmm_profile_nrdben
+    sequence_source
+  end
+  
+  factory :hmm_result_nrdbe, class: HmmResult do
+    sequence(:executed) { |n| "#{n}"}
+    association :hmm_profile, factory: :hmm_profile_nrdbe
+    sequence_source
+  end
+  
+  factory :hmm_result_nrdbn, class: HmmResult do
+    sequence(:executed) { |n| "#{n}"}
+    association :hmm_profile, factory: :hmm_profile_nrdbn
     sequence_source
   end
   
@@ -82,13 +161,8 @@ FactoryGirl.define do
     hmm_profile
   end
 
-  factory :hmm_score_criterion do
-    hmm_profile
-    min_fullseq_score 15.0
-  end
-
   factory :pfitmap_release do
-    sequence(:release) { |n|  (0.0 + 0.1*n).to_s }
+    sequence(:release) { |n|  (0.0 + 0.1*n - 0.01*n).to_s }
     sequence(:release_date) { |n| (Date.new(2012,01,01) + n.days).to_s }
     current "false"
     sequence_source

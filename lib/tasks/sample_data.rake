@@ -109,9 +109,11 @@ SQL
   end
 
   def make_hmm_score_criteria
+    HmmScoreCriterion.create!(hmm_profile_id: @hmm_profile_nrda.id, min_fullseq_score: 1000)
     HmmScoreCriterion.create!(hmm_profile_id: @hmm_profile_nrdb.id, min_fullseq_score: 400)
     HmmScoreCriterion.create!(hmm_profile_id: @hmm_profile_nrdf.id, min_fullseq_score: 400)
     HmmScoreCriterion.create!(hmm_profile_id: @hmm_profile_nrdben.id, min_fullseq_score: 400)
+    HmmScoreCriterion.create!(hmm_profile_id: @hmm_profile_r2lox.id, min_fullseq_score: 350)
   end
 
   def make_sequence_sources

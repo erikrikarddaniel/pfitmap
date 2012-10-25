@@ -190,4 +190,14 @@ describe HmmProfile do
       end
     end
   end
+  describe "big factory" do
+    before do
+      @hmm_result_nrdbe = FactoryGirl.create(:hmm_result_nrdbe)
+      @hmm_profile = @hmm_result_nrdbe.hmm_profile
+    end
+    it "should have a criterion" do
+      @hmm_profile.hmm_score_criteria.first.min_fullseq_score.should == 400.0
+      @hmm_profile.hmm_score_criteria.length.should == 1
+    end
+  end
 end

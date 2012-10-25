@@ -44,8 +44,6 @@ describe PfitmapRelease do
     end
   end
 
-  
-
   it { should respond_to(:release) }
   it { should respond_to(:release_date) }
   it { should respond_to(:pfitmap_sequences) }
@@ -71,9 +69,9 @@ describe PfitmapRelease do
   describe "find all after current" do
     let!(:sequence_source3) { FactoryGirl.create(:sequence_source) }
     let!(:pfitmap_release) { FactoryGirl.create(:pfitmap_release, current: true, sequence_source: sequence_source3) }
-let!(:sequence_source4) { FactoryGirl.create(:sequence_source) }
+    let!(:sequence_source4) { FactoryGirl.create(:sequence_source) }
     let!(:pfitmap_release1) { FactoryGirl.create(:pfitmap_release, sequence_source: sequence_source4) }
-let!(:sequence_source5) { FactoryGirl.create(:sequence_source) }
+    let!(:sequence_source5) { FactoryGirl.create(:sequence_source) }
     let!(:pfitmap_release2) { FactoryGirl.create(:pfitmap_release, sequence_source: sequence_source5) }
 
     it "returns the correct releases" do
@@ -141,7 +139,6 @@ let!(:sequence_source5) { FactoryGirl.create(:sequence_source) }
     end
   end
 
-  
   describe "build hash" do
     let!(:db_sequence1) { FactoryGirl.create(:db_sequence) }
     let!(:hmm_db_hit1) { FactoryGirl.create(:hmm_db_hit, gi: 297089704, db: "ref", db_sequence: db_sequence1) }
@@ -166,8 +163,27 @@ let!(:sequence_source5) { FactoryGirl.create(:sequence_source) }
       hash[297089654].should_not == 767985
       hash[297089654].should == 767981
     end
-    
   end
 
-
+  describe "calculating a release" do
+    before(:each) do
+      @hmm_result_nrdb = FactoryGirl.create(:hmm_result_nrdb)
+      @sequence_source = @hmm_result_nrdb.sequence_source
+      @hmm_result_nrdbe = FactoryGirl.create(:hmm_result_nrdbe, sequence_source: @sequence_source)
+      @pfitmap_release = FactoryGirl.create(:pfitmap_release, sequence_source: @sequence_source)
+      parse_hmm_tblout(@hmm_result_nrdb, fixture_file_upload("/NrdB-20rows.tblout"))
+      parse_hmm_tblout(@hmm_result_nrdbe, fixture_file_upload("/NrdBe-20rows.tblout"))
+      @sequence_source.evaluate(@pfitmap_release,nil)
+    end
+    
+    it "should have 2 hmm results via the sequence_source" do
+      @pfitmap_release.sequence_source.hmm_results.length.should == 2
+    end
+    
+    it "should be succesful to call calculate_main" do
+      @pfitmap_release.calculate_main(FactoryGirl.create(:user_admin))
+#      warn "#{__FILE__}:#{__LINE__}: ProteinCount.all:\n\t#{ProteinCount.all.map { |pc| "#{pc}" }.join("\n\t")}"
+      ProteinCount.maximum("no_proteins").should_not == 0
+    end
+  end
 end
