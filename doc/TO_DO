@@ -12,6 +12,9 @@ Discussion points
 Things to fix
 -------------
 * Test cases for release calculation (see discussion point above).
+  Including reference implementation of evaluation code.
+
+* "Main table" GUI
 
 * Tests that are not yet implemented:
   - Hierarchy of taxon
@@ -31,6 +34,9 @@ Things to fix
   Ruby string interpolations like #{field_name} to allow dynamic construction of
   urls. (I just refrained from coupling this model with the SequenceSource
   model; wouldn't simplify anything.)
+
+* Sorting the children in hmm_profiles/index.html.erb by hierarchy didn't work
+  -- fix.
 
 * Replace only HMMProfile.name on its own in lists with HMMProfile.description
   (which includes the protein name).

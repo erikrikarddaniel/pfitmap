@@ -34,6 +34,10 @@ class Taxon < ActiveRecord::Base
     self.where('rank = ?', taxon_rank)
   end
 
+  def to_s
+    "#{rank} #{name}"
+  end
+
   private
   
   def all_up_to_root_rec(t, ancestors)
