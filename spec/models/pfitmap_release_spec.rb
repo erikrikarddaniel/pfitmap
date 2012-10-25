@@ -148,6 +148,7 @@ describe PfitmapRelease do
     let!(:pfitmap_release) {FactoryGirl.create(:pfitmap_release) }
     let!(:pfitmap_sequence) {FactoryGirl.create(:pfitmap_sequence, pfitmap_release: pfitmap_release, db_sequence: db_sequence1) }
     it "should give the correct taxons back for ref" do
+      wgs_ncbi_ids = BiosqlWeb.wgs_ncbi_ids
       gi_taxons = HmmDbHit.all_taxons_for(pfitmap_release, "ref")
       hash = pfitmap_release.build_gi_ncbi_taxon_hash(gi_taxons)
       hash[297089704].should == 767985

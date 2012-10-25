@@ -53,7 +53,7 @@ class PfitmapRelease < ActiveRecord::Base
     return self.find_by_current('true', limit: 1)
   end
 
-  def self.find__after_current
+  def self.find_all_after_current
     current = self.find_current_release
     if current
       self.all(conditions: ["release >?", current.release])
