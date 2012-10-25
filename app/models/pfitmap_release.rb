@@ -128,7 +128,7 @@ class PfitmapRelease < ActiveRecord::Base
         taxon_leaves.each do |taxon_leaf|
           genome_taxon = Taxon.find_by_ncbi_taxon_id(ncbi_taxon_id)
           # CHECK THAT ITS GOLD
-          unless genome_taxon.nil? || not genome_taxon.wgs
+          unless genome_taxon.nil? || (not genome_taxon.wgs)
             taxons = genome_taxon.self_and_ancestors
             proteins.each do |protein|
               ProteinCount.add_hit(protein,taxons,@pfitmap_release)
@@ -137,6 +137,7 @@ class PfitmapRelease < ActiveRecord::Base
         end
       end
     end
+  end
   
   def taxon_in_db_lookup(taxon_hash)
     Taxon.find(:first, :conditions => ["ncbi_taxon_id = ?", taxon_hash["ncbi_taxon_id"]])
