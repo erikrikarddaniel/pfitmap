@@ -9,12 +9,18 @@ Discussion points
   it could be due to caching, although most caching is now turned off, 
   (I believe). 
 
-Things to fix
--------------
+Big Items
+---------
 * Test cases for release calculation (see discussion point above).
   Including reference implementation of evaluation code.
 
 * "Main table" GUI
+
+Things to fix
+-------------
+* Factories with associations does not work
+
+* Explanation of how the calculate-method works
 
 * Tests that are not yet implemented:
   - Hierarchy of taxon
