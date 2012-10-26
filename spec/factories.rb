@@ -21,7 +21,7 @@ FactoryGirl.define do
     name "Class I RNR radical generating subunit"
     protein_name "NrdB"
     version "20120401"
-    association :parent, factory: :hmm_profile_nrdbr2lox
+    # association :parent, factory: :hmm_profile_nrdbr2lox
     after_create do |profile|
           FactoryGirl.create(:hmm_score_criterion, 
                              :hmm_profile => profile,
@@ -34,11 +34,11 @@ FactoryGirl.define do
     name "Class I RNR radical generating subunit, eukaryotes and sister group"
     protein_name "NrdBen"
     version "20120401"
-    association :parent, factory: :hmm_profile_nrdb
+    # association :parent, factory: :hmm_profile_nrdb
     after_create do |profile|
-          FactoryGirl.create(:hmm_score_criterion, 
-                             :hmm_profile => profile,
-                             :min_fullseq_score => 400.0)
+      FactoryGirl.create(:hmm_score_criterion, 
+                         :hmm_profile => profile,
+                         :min_fullseq_score => 400.0)
     end
   end
   
@@ -46,7 +46,7 @@ FactoryGirl.define do
     name "Class I RNR radical generating subunit, eukaryotes"
     protein_name "NrdBe"
     version "20120401"
-    association :parent, factory: :hmm_profile_nrdben
+    # association :parent, factory: :hmm_profile_nrdben
     after_create do |profile|
           FactoryGirl.create(:hmm_score_criterion, 
                              :hmm_profile => profile,
@@ -58,7 +58,7 @@ FactoryGirl.define do
     name "Class I RNR radical generating subunit, eukaryotic sister-group"
     protein_name "NrdBn"
     version "20120401"
-    association :parent, factory: :hmm_profile_nrdben
+    # association :parent, factory: :hmm_profile_nrdben
     after_create do |profile|
           FactoryGirl.create(:hmm_score_criterion, 
                              :hmm_profile => profile,
@@ -70,7 +70,7 @@ FactoryGirl.define do
     name "R2lox protein"
     protein_name "R2lox"
     version "20120401"
-    association :parent, factory: :hmm_profile_nrdbr2lox
+    # association :parent, factory: :hmm_profile_nrdbr2lox
   end
   
   factory :hmm_profile_nrdapfl, class: HmmProfile do
