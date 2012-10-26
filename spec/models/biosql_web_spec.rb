@@ -4,9 +4,9 @@ describe BiosqlWeb do
   describe "gi2ncbi_taxon_id" do
     before do
       #Top three from NrdBe-20rows.tblout fixture
-      @taxons_ncbi_id1 = BiosqlWeb.gi2ncbi_taxon_id(291295355)
-      @taxons_ncbi_id2 = BiosqlWeb.gi2ncbi_taxon_id(158341282)
-      @taxons_ncbi_id3 = BiosqlWeb.gi2ncbi_taxon_id(340905392)
+      @taxon_ncbi_id1 = BiosqlWeb.gi2ncbi_taxon_id(291295355)
+      @taxon_ncbi_id2 = BiosqlWeb.gi2ncbi_taxon_id(158341282)
+      @taxon_ncbi_id3 = BiosqlWeb.gi2ncbi_taxon_id(340905392)
     end
     
     it "works" do
@@ -17,25 +17,27 @@ describe BiosqlWeb do
     end
   end
 
-  describe "organism_group_taxon_ncbi_ids" do
+  describe "organism_group2ncbi_taxon_ids" do
     before do
-      @wgs_ids = BiosqlWeb.organism_group_taxon_ncbi_ids("GOLDWGStest")
+      @wgs_ids = BiosqlWeb.organism_group2ncbi_taxon_ids("GOLDWGStest10")
     end
 
     it "works" do
       @wgs_ids.should include(1000565)
+      @wgs_ids.length.should == 10
     end
   end
 
   describe "ncbi_taxon_id2full_taxon_hierarchy" do
     before do
-      @taxons1 = BiosqlWeb.ncbi_taxon_id2full_taxon_hierarch(504728)
-      @taxons2 = BiosqlWeb.ncbi_taxon_id2full_taxon_hierarch(329726)
-      @taxons3 = BiosqlWeb.ncbi_taxon_id2full_taxon_hierarch(759272)
+      @taxons1 = BiosqlWeb.ncbi_taxon_id2full_taxon_hierarchy(504728)
+      @taxons2 = BiosqlWeb.ncbi_taxon_id2full_taxon_hierarchy(329726)
+      @taxons3 = BiosqlWeb.ncbi_taxon_id2full_taxon_hierarchy(759272)
     end
     
     it "works" do
-      @taxons1.first["taxon_id"].should == 504728
+      @taxons1.first["ncbi_taxon_id"].should == 504728
+      @taxons1.last["scientific_name"].should == "root"
     end
   end
 end

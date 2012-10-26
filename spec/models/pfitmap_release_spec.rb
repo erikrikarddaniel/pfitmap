@@ -139,33 +139,6 @@ describe PfitmapRelease do
     end
   end
 
-  describe "build hash" do
-    let!(:db_sequence1) { FactoryGirl.create(:db_sequence) }
-    let!(:hmm_db_hit1) { FactoryGirl.create(:hmm_db_hit, gi: 297089704, db: "ref", db_sequence: db_sequence1) }
-    let!(:hmm_db_hit2) { FactoryGirl.create(:hmm_db_hit, gi: 297089710, db: "pdb", db_sequence: db_sequence1) }
-    let!(:hmm_db_hit3) { FactoryGirl.create(:hmm_db_hit, gi: 297089654, db: "pdb", db_sequence: db_sequence1) }
-    
-    let!(:pfitmap_release) {FactoryGirl.create(:pfitmap_release) }
-    let!(:pfitmap_sequence) {FactoryGirl.create(:pfitmap_sequence, pfitmap_release: pfitmap_release, db_sequence: db_sequence1) }
-    it "should give the correct taxons back for ref" do
-      wgs_ncbi_ids = BiosqlWeb.wgs_ncbi_ids
-      gi_taxons = HmmDbHit.all_taxons_for(pfitmap_release, "ref")
-      hash = pfitmap_release.build_gi_ncbi_taxon_hash(gi_taxons)
-      hash[297089704].should == 767985
-      hash[297089710].should == nil
-      hash[297089654].should == nil
-    end
-
-    it "should give the correct taxons back for pdb" do
-      gi_taxons = HmmDbHit.all_taxons_for(pfitmap_release, "pdb")
-      hash = pfitmap_release.build_gi_ncbi_taxon_hash(gi_taxons)
-      hash[297089704].should == nil
-      hash[297089710].should == 767985
-      hash[297089654].should_not == 767985
-      hash[297089654].should == 767981
-    end
-  end
-
   describe "calculating a release" do
     before(:each) do
       @hmm_result_nrdb = FactoryGirl.create(:hmm_result_nrdb)
@@ -182,8 +155,11 @@ describe PfitmapRelease do
     end
     
     it "should be succesful to call calculate_main" do
-      @pfitmap_release.calculate_main(FactoryGirl.create(:user_admin))
-#      warn "#{__FILE__}:#{__LINE__}: ProteinCount.all:\n\t#{ProteinCount.all.map { |pc| "#{pc}" }.join("\n\t")}"
+      @pfitmap_release.calculate_main("GOLDWGStest10",FactoryGirl.create(:user_admin))
+      warn "#{__FILE__}:#{__LINE__}: Protein.all:\n\t#{Protein.all.map { |pc| "#{pc}" }.join("\n\t")}"
+      Taxon.find_all_by_wgs(true).length.should == 10
+      Protein.all.length.should == 4
+      ProteinCount.find_all_by_obs_as_genome(true).length.should == 40
       ProteinCount.maximum("no_proteins").should_not == 0
     end
   end
