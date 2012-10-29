@@ -20,6 +20,8 @@ Things to fix
 -------------
 * Factories with associations does not work
 
+* Only include taxonomic classes: superkingdom, phylum, class, order, family, genus, species.
+
 * Explanation of how the calculate-method works
 
 * Tests that are not yet implemented:
