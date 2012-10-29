@@ -7,13 +7,15 @@ describe BiosqlWeb do
       @taxon_ncbi_id1 = BiosqlWeb.gi2ncbi_taxon_id(291295355)
       @taxon_ncbi_id2 = BiosqlWeb.gi2ncbi_taxon_id(158341282)
       @taxon_ncbi_id3 = BiosqlWeb.gi2ncbi_taxon_id(340905392)
+      @taxon_ncbi_id4 = BiosqlWeb.gi2ncbi_taxon_id(4557845)
     end
-    
+
     it "works" do
       # From the ncbi web
       @taxon_ncbi_id1.should == 504728
       @taxon_ncbi_id2.should == 329726
       @taxon_ncbi_id3.should == 759272
+      @taxon_ncbi_id4.should == 9606
     end
   end
 

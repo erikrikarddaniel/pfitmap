@@ -139,7 +139,30 @@ describe PfitmapRelease do
     end
   end
 
-  describe "calculating a release" do
+  describe "calculating a release for one result (easy)" do
+    before(:each) do
+      @hmm_result_nrdb = FactoryGirl.create(:hmm_result_nrdb)
+      @sequence_source = @hmm_result_nrdb.sequence_source
+      @pfitmap_release = FactoryGirl.create(:pfitmap_release, sequence_source: @sequence_source)
+      parse_hmm_tblout(@hmm_result_nrdb, fixture_file_upload("/NrdB-20rows.tblout"))
+      @sequence_source.evaluate(@pfitmap_release, nil)
+    end
+
+    it "should have a single hmm result registered" do
+      @pfitmap_release.sequence_source.hmm_results.length.should == 1
+    end
+
+    it "should be successful to call calculate_main" do
+      @pfitmap_release.calculate_main("GOLDWGStest10", FactoryGirl.create(:user_admin))
+      Taxon.find_all_by_wgs(true).length.should == 10
+      Protein.all.length.should == 2
+      ProteinCount.find_all_by_obs_as_genome(true).length.should == 6
+      ProteinCount.maximum("no_proteins").should == 4
+      ProteinCount.maximum("no_genomes_with_proteins").should == 3
+    end
+  end
+
+  describe "calculating a release for two results (medium)" do
     before(:each) do
       @hmm_result_nrdb = FactoryGirl.create(:hmm_result_nrdb)
       @sequence_source = @hmm_result_nrdb.sequence_source
@@ -153,14 +176,33 @@ describe PfitmapRelease do
     it "should have 2 hmm results via the sequence_source" do
       @pfitmap_release.sequence_source.hmm_results.length.should == 2
     end
+
+    it "should have pfitmap_sequences" do
+      @pfitmap_release.pfitmap_sequences.length.should_not == 0
+    end
     
     it "should be succesful to call calculate_main" do
       @pfitmap_release.calculate_main("GOLDWGStest10",FactoryGirl.create(:user_admin))
-      warn "#{__FILE__}:#{__LINE__}: Protein.all:\n\t#{Protein.all.map { |pc| "#{pc}" }.join("\n\t")}"
       Taxon.find_all_by_wgs(true).length.should == 10
+      HmmProfile.all.length.should == 4
       Protein.all.length.should == 4
-      ProteinCount.find_all_by_obs_as_genome(true).length.should == 40
-      ProteinCount.maximum("no_proteins").should_not == 0
+      ProteinCount.find_all_by_obs_as_genome(true).length.should == 10
+
+      # Check specific values (human nrdb)
+      nrdb_protein = Protein.find_by_name('NrdB')
+      human_taxon = Taxon.find_by_name('Homo sapiens')
+      human_nrdb_protein_count = ProteinCount.find(:first, :conditions => ["protein_id = ? AND taxon_id = ? AND pfitmap_release_id = ?", nrdb_protein.id, human_taxon.id, @pfitmap_release.id])
+      human_nrdb_protein_count.no_proteins.should == 2
+      human_nrdb_protein_count.no_genomes.should == 1
+      human_nrdb_protein_count.no_genomes_with_proteins.should == 1
+      human_nrdb_protein_count.obs_as_genome.should == true
+      
+      ProteinCount.maximum("no_proteins").should == 6
+      ProteinCount.maximum("no_genomes_with_proteins").should == 4
+      #warn "#{__FILE__}:#{__LINE__}: ProteinCount.all:\n\t#{ProteinCount.all.map { |pc| "#{pc}" }.join("\n\t")}"
     end
+
+  
   end
+
 end
