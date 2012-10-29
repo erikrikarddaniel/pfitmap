@@ -11,7 +11,14 @@ Discussion points
 
 Things to fix
 -------------
+
 * Test cases for release calculation (see discussion point above).
+
+* Factories with associations does not work
+
+* Only include taxonomic classes: superkingdom, phylum, class, order, family, genus, species.
+
+* Explanation of how the calculate-method works
 
 * Tests that are not yet implemented:
   - Hierarchy of taxon
