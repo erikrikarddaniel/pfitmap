@@ -124,7 +124,7 @@ class PfitmapRelease < ActiveRecord::Base
   def second_run_count_hits(pfitmap_release, db_string)
     # The protein counts table is assumed to be initiated
     # with zeroes and the number of genomes calculated.
-    pfitmap_release.pfitmap_sequences do |p_sequence|
+    pfitmap_release.pfitmap_sequences.each do |p_sequence|
       best_profile = p_sequence.hmm_profile
       proteins = best_profile.all_proteins_including_parents
       p_sequence.hmm_db_hits.where("db = ?", db_string).select(:gi).each do |hit|
@@ -134,7 +134,7 @@ class PfitmapRelease < ActiveRecord::Base
         unless genome_taxon.nil? || (not genome_taxon.wgs)
           taxons = genome_taxon.self_and_ancestors
           proteins.each do |protein|
-            ProteinCount.add_hit(protein,taxons,@pfitmap_release)
+            ProteinCount.add_hit(protein,taxons, pfitmap_release)
           end
         end
       end
@@ -155,10 +155,6 @@ class PfitmapRelease < ActiveRecord::Base
         protein_count.protein_id = protein.id
         protein_count.taxon_id = taxon.id
         protein_count.obs_as_genome = false
-        protein_count.save
-      end
-      if taxon.wgs
-        protein_count.obs_as_genome = true
         protein_count.save
       end
         
