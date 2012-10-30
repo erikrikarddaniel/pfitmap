@@ -11,16 +11,16 @@ Discussion points
 
 Big Items
 ---------
-* Test cases for release calculation (see discussion point above).
-  Including reference implementation of evaluation code.
+* Test cases for release calculation 
+	including reference implementation of evaluation code.
+		-- I don't understand this anymore... / Johannes
 
 * "Main table" GUI
 
 Things to fix
 -------------
-* Factories with associations does not work
-
 * Only include taxonomic classes: superkingdom, phylum, class, order, family, genus, species.
+	sort on hierarchy
 
 * Explanation of how the calculate-method works
 
@@ -34,8 +34,14 @@ Things to fix
   from there, make it possible to include a db_sequence, previously not included
   the first task needs a custom controller method and route for db_sequences
 
-* Restrict what views are showing un-authorized users:
-  - Button for deleting profile on show page
+* Redo Calculate-functionality from "wgs" to "organism group"
+    - Before pressing "Calculate", should be able to choose organism group
+    - WGS is a database column?
+    - organism-group representation in the protein-count table.
+
+* Test views from a not signed-in perspective:
+  - Restrict what views are showing un-authorized users:
+  	x Button for deleting profile on show page
 
 * Set up system to enable links from accession numbers to target database. See
   doc/pfitmap.dia (SequenceDatabase model). The accession_url should contain
