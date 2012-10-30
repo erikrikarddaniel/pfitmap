@@ -14,34 +14,25 @@ Big Items
 * Test cases for release calculation 
 	including reference implementation of evaluation code.
 		-- I don't understand this anymore... / Johannes
+		-- The test cases are done
 
 * "Main table" GUI
     - Sort on hierarchy
+    - To begin with: fixed table
+    - Heat map color coding
+    - Multiple choices for the ranks
 
 Things to fix
 -------------
-* Explanation of how the calculate-method works
-
-* Factories with associations does not work
-
-* Only include taxonomic classes: superkingdom, phylum, class, order, family, genus, species.
-
-* Explanation of how the calculate-method works
-
-* Tests that are not yet implemented:
-  - Hierarchy of taxon
-  - The dry run initialization
-  - protein_counts_by_rank
-  - protein_counts_by_hierarchy
-
 * From pfitmap_release show, link from a row to the not_included db_sequences
   from there, make it possible to include a db_sequence, previously not included
   the first task needs a custom controller method and route for db_sequences
 
 * Redo Calculate-functionality from "wgs" to "organism group"
     - Before pressing "Calculate", should be able to choose organism group
-    - WGS is a database column?
+    - WGS is a database column? (Use "leaf" instead?)
     - organism-group representation in the protein-count table.
+    - protein_count_for(taxon,protein) is used in protein_count_init_or_add
 
 * Test views from a not signed-in perspective:
   - Restrict what views are showing un-authorized users:
@@ -96,6 +87,10 @@ Things to fix
 
 * On Enzymes form, indent the profiles, so easier to choose
 
+* Tests that are not yet implemented:
+  - protein_counts_by_rank view
+  - protein_counts_by_hierarchy view
+
 
 PfitmapRelease.calculate_main
 -----------------------------
@@ -112,3 +107,19 @@ PfitmapRelease.calculate_main
 DONE
 ----
 * Only include taxonomic classes: superkingdom, phylum, class, order, family, genus, species.
+
+* "Integration" tests for calculate
+
+* nested loop implementation
+
+* Explanation of how the calculate-method works
+
+* Factories with associations does not work
+
+* Check that there are no "loose branches" in the taxon tree, aka that the only node
+  without parent is "root".
+
+Tests:
+  - Hierarchy of taxon
+
+
