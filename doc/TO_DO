@@ -16,11 +16,11 @@ Big Items
 		-- I don't understand this anymore... / Johannes
 
 * "Main table" GUI
+    - Sort on hierarchy
 
 Things to fix
 -------------
 * Only include taxonomic classes: superkingdom, phylum, class, order, family, genus, species.
-	sort on hierarchy
 
 * Explanation of how the calculate-method works
 
