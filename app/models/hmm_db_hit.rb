@@ -27,13 +27,4 @@ class HmmDbHit < ActiveRecord::Base
     gi_taxons = BiosqlWeb.get_taxons_by_gis(gi_list)
     
   end
-
-  def self.all_taxons_for(pr, db_string)
-    gi_list = []
-    pr.hmm_db_hits.where("db = ?", db_string).select(:gi).each do |hit|
-      gi_list << hit.gi
-    end
-    gi_taxons = BiosqlWeb.get_taxons_by_gis(gi_list)
-  end
- 
 end

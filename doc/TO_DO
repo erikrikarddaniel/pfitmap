@@ -9,10 +9,18 @@ Discussion points
   it could be due to caching, although most caching is now turned off, 
   (I believe). 
 
+Big Items
+---------
+* Test cases for release calculation 
+	including reference implementation of evaluation code.
+		-- I don't understand this anymore... / Johannes
+
+* "Main table" GUI
+    - Sort on hierarchy
+
 Things to fix
 -------------
-
-* Test cases for release calculation (see discussion point above).
+* Explanation of how the calculate-method works
 
 * Factories with associations does not work
 
@@ -30,14 +38,23 @@ Things to fix
   from there, make it possible to include a db_sequence, previously not included
   the first task needs a custom controller method and route for db_sequences
 
-* Restrict what views are showing un-authorized users:
-  - Button for deleting profile on show page
+* Redo Calculate-functionality from "wgs" to "organism group"
+    - Before pressing "Calculate", should be able to choose organism group
+    - WGS is a database column?
+    - organism-group representation in the protein-count table.
+
+* Test views from a not signed-in perspective:
+  - Restrict what views are showing un-authorized users:
+  	x Button for deleting profile on show page
 
 * Set up system to enable links from accession numbers to target database. See
   doc/pfitmap.dia (SequenceDatabase model). The accession_url should contain
   Ruby string interpolations like #{field_name} to allow dynamic construction of
   urls. (I just refrained from coupling this model with the SequenceSource
   model; wouldn't simplify anything.)
+
+* Sorting the children in hmm_profiles/index.html.erb by hierarchy didn't work
+  -- fix.
 
 * Replace only HMMProfile.name on its own in lists with HMMProfile.description
   (which includes the protein name).
@@ -91,3 +108,7 @@ PfitmapRelease.calculate_main
 
 3. Look at nested loop implementation 
 
+
+DONE
+----
+* Only include taxonomic classes: superkingdom, phylum, class, order, family, genus, species.
