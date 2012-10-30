@@ -166,7 +166,9 @@ describe PfitmapRelease do
       Taxon.all.length.should be < 70
       root_taxon = Taxon.find_by_name("root")
       root_taxon.should_not be_nil
-      
+      # no loose branches in the tree of life:
+      root_taxons = Taxon.find_all_by_parent_ncbi_id(nil)
+      root_taxons.length.should == 1
     end
   end
 
@@ -208,6 +210,9 @@ describe PfitmapRelease do
       ProteinCount.maximum("no_proteins").should == 6
       ProteinCount.maximum("no_genomes_with_proteins").should == 4
       #warn "#{__FILE__}:#{__LINE__}: ProteinCount.all:\n\t#{ProteinCount.all.map { |pc| "#{pc}" }.join("\n\t")}"
+      # no loose branches in the tree of life:
+      root_taxons = Taxon.find_all_by_parent_ncbi_id(nil)
+      root_taxons.length.should == 1
     end
 
   
@@ -250,6 +255,9 @@ describe PfitmapRelease do
       root_nrdb_pc.no_proteins.should == 8
       root_nrdb_pc.no_genomes.should == 100
       root_nrdb_pc.no_genomes_with_proteins.should == 4
+      # no loose branches in the tree of life:
+      root_taxons = Taxon.find_all_by_parent_ncbi_id(nil)
+      root_taxons.length.should == 1
     end
   end
 end
