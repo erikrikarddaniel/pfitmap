@@ -68,6 +68,11 @@ class PfitmapRelease < ActiveRecord::Base
   end
 
   def calculate_main(organism_group, user)
+    ## Calculate_main populates the protein_counts table with statistics:
+    #  There exists one row in protein_counts table for each combination of
+    #  taxon, protein and pfitmap_release that has been calculated
+
+
     # Resets the protein_counts table for the release and 
     # fills it with new values.
     pfitmap_release = self
@@ -92,32 +97,39 @@ class PfitmapRelease < ActiveRecord::Base
 
   private
   def dry_run(taxon_ncbi_ids, pfitmap_release)
+    # Accepted ranks
+    rank_hash = {"superkingdom" => true, "phylum" => true, 
+      "class" => true, "order" => true, "family" => true,
+      "genus" => true, "species" => true }
     # First iterate over whole genome sequenced organisms
     taxon_ncbi_ids.each do |taxon_ncbi_id|
-      taxons = BiosqlWeb.ncbi_taxon_id2full_taxon_hierarchy(taxon_ncbi_id)
-      first_taxon, second_taxon, *rest = *taxons
+      taxons = BiosqlWeb.ncbi_taxon_id2full_taxon_hierarchy(taxon_ncbi_id)         
 
       # Special case for the leaf node
-      first_taxon_in_db = taxon_in_db_lookup(first_taxon)
-      # Make sure this taxon exists and has wgs=true
-      taxon = init_taxon_first(first_taxon, first_taxon_in_db, second_taxon)
-      # For each protein, initialize protein_count and/or add 1 to no_genomes
-      protein_count_init_or_add(taxon)
-          
-      current_taxon = second_taxon 
-      
-      # Go from leaf to root, in taxonomy tree.
+      first = true
+      current_taxon, *rest = *taxons
+      # Go from leaf to root, in taxonomy tree, save taxons with accepted ranks.
       rest.each do |next_taxon|
+        major_rank = rank_hash[next_taxon["node_rank"]]
+        if not major_rank
+          if not next_taxon["scientific_name"] == "root"
+            next
+          end
+        end
         taxon_in_db = taxon_in_db_lookup(current_taxon)
-        taxon = init_taxon(current_taxon, taxon_in_db, next_taxon)
+        taxon = init_taxon(current_taxon, taxon_in_db, next_taxon, first)
+        first = false
+        # For each protein, initialize protein_count and/or add 1 to no_genomes
         protein_count_init_or_add(taxon)
         current_taxon = next_taxon
       end
           
       # The last taxon should also be added:
-      taxon_in_db = taxon_in_db_lookup(current_taxon)
-      taxon = init_taxon(current_taxon, taxon_in_db, nil)
-      protein_count_init_or_add(taxon)
+      if current_taxon["scientific_name"] == "root"
+        taxon_in_db = taxon_in_db_lookup(current_taxon)
+        taxon = init_taxon(current_taxon, taxon_in_db, nil, false)
+        protein_count_init_or_add(taxon)
+      end
     end
   end
 
@@ -162,8 +174,7 @@ class PfitmapRelease < ActiveRecord::Base
     end
   end
   
-
-  def init_taxon(taxon_hash,taxon_in_db,next_taxon)
+  def init_taxon(taxon_hash, taxon_in_db, next_taxon, first)
     if not taxon_in_db
       taxon_in_db = Taxon.new
       taxon_in_db.ncbi_taxon_id = taxon_hash["ncbi_taxon_id"]
@@ -172,24 +183,8 @@ class PfitmapRelease < ActiveRecord::Base
       if next_taxon
         taxon_in_db.parent_ncbi_id = next_taxon["ncbi_taxon_id"]
       end
-    else
-      taxon_in_db.rank = taxon_hash["node_rank"]
     end
-    taxon_in_db.save
-    return taxon_in_db
-  end
-
-
-  def init_taxon_first(first_taxon_hash,taxon_in_db, next_taxon)
-    if taxon_in_db
-      taxon_in_db.wgs = "true"
-      taxon_in_db.rank = first_taxon_hash["node_rank"]
-    else
-      taxon_in_db = Taxon.new
-      taxon_in_db.ncbi_taxon_id = first_taxon_hash["ncbi_taxon_id"]
-      taxon_in_db.name = first_taxon_hash["scientific_name"]
-      taxon_in_db.rank = first_taxon_hash["node_rank"]
-      taxon_in_db.parent_ncbi_id = next_taxon["ncbi_taxon_id"]
+    if first
       taxon_in_db.wgs = "true"
     end
     taxon_in_db.save

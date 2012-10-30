@@ -164,6 +164,9 @@ describe PfitmapRelease do
     it "should not include all taxon-levels" do
       @pfitmap_release.calculate_main("GOLDWGStest10", FactoryGirl.create(:user_admin))
       Taxon.all.length.should be < 70
+      root_taxon = Taxon.find_by_name("root")
+      root_taxon.should_not be_nil
+      
     end
   end
 
@@ -238,7 +241,7 @@ describe PfitmapRelease do
       human_nrdb_protein_count.obs_as_genome.should == true
       
 
-      ProteinCount.all.length.should == 1660
+      ProteinCount.all.length.should == 1372
       # Check the root
       root_taxon = Taxon.find_by_name('root')
       root_nrdb_pc = ProteinCount.find(:first, :conditions => ["protein_id = ? AND taxon_id = ? AND pfitmap_release_id = ?", nrdb_protein.id, root_taxon.id, @pfitmap_release.id])
