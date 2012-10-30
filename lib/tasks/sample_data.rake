@@ -25,6 +25,20 @@ VALUES(
 )
 SQL
     )
+
+    ActiveRecord::Base.connection.execute(<<SQL
+INSERT INTO users(provider, uid, name, email, role, created_at, updated_at)
+VALUES(
+  'open_id', 
+  'https://www.google.com/accounts/o8/id?id=AItOawm1xNC-6Yy1MPDIIPvX_KrmZ1NNZQKcNgM',
+  'Johannes Alneberg',
+  'johannesalneberg@gmail.com',
+  'admin',
+  now(),
+  now()
+)
+SQL
+    )
   end
 
   def make_hmm_profiles
