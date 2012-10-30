@@ -18,12 +18,17 @@ Big Items
 
 * "Main table" GUI
     - Sort on hierarchy
-    - To begin with: fixed table
+    - change default values for proteins
+    - avoid changing other tables at the same time
     - Heat map color coding
     - Multiple choices for the ranks
 
 Things to fix
 -------------
+* NoMethodError in Protein_counts#by_rank when there is no pfitmap_release calculated
+   - <h2>Taxon rank: <%=@taxon_rank ? @taxon_rank : "All" %>, pfitmap_release: <%= @pfitmap_release.release %></h2>
+
+	
 * From pfitmap_release show, link from a row to the not_included db_sequences
   from there, make it possible to include a db_sequence, previously not included
   the first task needs a custom controller method and route for db_sequences
@@ -35,8 +40,25 @@ Things to fix
     - protein_count_for(taxon,protein) is used in protein_count_init_or_add
 
 * Test views from a not signed-in perspective:
+  - protein statistics is not available.
+  
   - Restrict what views are showing un-authorized users:
   	x Button for deleting profile on show page
+	x create new hmm profile on hmm_profiles index
+	x add new source on sequence sources index
+	x edit on sequence source show
+	x destroy on hmm_results index (also bad design)
+	x delete on hmm_results show
+	x edit on hmm_result_rows show
+	x db_sequences index
+	x db_sequence show
+	x hmm_db_hits index
+	x hmm_db_hits show
+	x hmm score criteria index + show
+	x enzymes index 
+	x pfitmap_releases index
+	x pfitmap_release show
+	
 
 * Set up system to enable links from accession numbers to target database. See
   doc/pfitmap.dia (SequenceDatabase model). The accession_url should contain
