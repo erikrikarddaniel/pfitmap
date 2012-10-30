@@ -160,6 +160,11 @@ describe PfitmapRelease do
       ProteinCount.maximum("no_proteins").should == 4
       ProteinCount.maximum("no_genomes_with_proteins").should == 3
     end
+
+    it "should not include all taxon-levels" do
+      @pfitmap_release.calculate_main("GOLDWGStest10", FactoryGirl.create(:user_admin))
+      Taxon.all.length.should be < 70
+    end
   end
 
   describe "calculating a release for two results (medium)" do
@@ -181,7 +186,7 @@ describe PfitmapRelease do
       @pfitmap_release.pfitmap_sequences.length.should_not == 0
     end
     
-    it "should be succesful to call calculate_main" do
+    it "should be succesful to call calculate_main", :heavy => true do
       @pfitmap_release.calculate_main("GOLDWGStest10",FactoryGirl.create(:user_admin))
       Taxon.find_all_by_wgs(true).length.should == 10
       HmmProfile.all.length.should == 4
@@ -205,4 +210,43 @@ describe PfitmapRelease do
   
   end
 
+
+  describe "calculating a release for two results (hard)", :heavy => true  do
+    before(:each) do
+      @hmm_result_nrdb = FactoryGirl.create(:hmm_result_nrdb)
+      @sequence_source = @hmm_result_nrdb.sequence_source
+      @hmm_result_nrdbe = FactoryGirl.create(:hmm_result_nrdbe, sequence_source: @sequence_source)
+      @hmm_result_nrdben = FactoryGirl.create(:hmm_result_nrdben, sequence_source: @sequence_source)
+      @pfitmap_release = FactoryGirl.create(:pfitmap_release, sequence_source: @sequence_source)
+      parse_hmm_tblout(@hmm_result_nrdb, fixture_file_upload("/NrdB-100rows.tblout"))
+      parse_hmm_tblout(@hmm_result_nrdbe, fixture_file_upload("/NrdBe-100rows.tblout"))
+      parse_hmm_tblout(@hmm_result_nrdben, fixture_file_upload("/NrdBen-100rows.tblout"))
+      @sequence_source.evaluate(@pfitmap_release,nil)
+    end
+
+    it "should succesfuly calculate the release" do
+      @pfitmap_release.calculate_main("GOLDWGStest100", FactoryGirl.create(:user_admin))
+      Protein.all.length.should == 4
+
+      # Check specific values (human nrdb)
+      nrdb_protein = Protein.find_by_name('NrdB')
+      human_taxon = Taxon.find_by_name('Homo sapiens')
+      human_nrdb_protein_count = ProteinCount.find(:first, :conditions => ["protein_id = ? AND taxon_id = ? AND pfitmap_release_id = ?", nrdb_protein.id, human_taxon.id, @pfitmap_release.id])
+      human_nrdb_protein_count.no_proteins.should == 4
+      human_nrdb_protein_count.no_genomes.should == 1
+      human_nrdb_protein_count.no_genomes_with_proteins.should == 1
+      human_nrdb_protein_count.obs_as_genome.should == true
+      
+
+      ProteinCount.all.length.should == 1660
+      # Check the root
+      root_taxon = Taxon.find_by_name('root')
+      root_nrdb_pc = ProteinCount.find(:first, :conditions => ["protein_id = ? AND taxon_id = ? AND pfitmap_release_id = ?", nrdb_protein.id, root_taxon.id, @pfitmap_release.id])
+
+      # These values are not checked and may change
+      root_nrdb_pc.no_proteins.should == 8
+      root_nrdb_pc.no_genomes.should == 100
+      root_nrdb_pc.no_genomes_with_proteins.should == 4
+    end
+  end
 end
