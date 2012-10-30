@@ -70,8 +70,15 @@ class PfitmapRelease < ActiveRecord::Base
   def calculate_main(organism_group, user)
     ## Calculate_main populates the protein_counts table with statistics:
     #  There exists one row in protein_counts table for each combination of
-    #  taxon, protein and pfitmap_release that has been calculated
-
+    #  taxon, protein and pfitmap_release (if it has been "calculated").
+    #  protein_counts row contains three values and one boolean:
+    #    - no_genomes
+    #    - no_proteins
+    #    - no_genomes_with_proteins
+    #    - obs_as_genome
+    #  See app/model/protein_count.rb for further information
+    #  
+    # The steps of the algorithm are explained below.
 
     # Resets the protein_counts table for the release and 
     # fills it with new values.
@@ -97,6 +104,17 @@ class PfitmapRelease < ActiveRecord::Base
 
   private
   def dry_run(taxon_ncbi_ids, pfitmap_release)
+    ## Dry run of the calculate_main method
+    #  Pulls one taxon hierarchy from biosqlweb at a time and iteratively
+    #  adds taxons that are either 
+    #      a) from ranks in rank_hash
+    #      b) The leaf for that hierarchy
+    #      c) The node named "root"
+    #  If the taxon is the leaf node for that hieararchy, it also makes sure 
+    #  that it is marked with wgs = true. 
+    #  For all taxons, it visits (or initializes) all its protein_counts and 
+    #  adds 1 to the no_genomes attribute.
+
     # Accepted ranks
     rank_hash = {"superkingdom" => true, "phylum" => true, 
       "class" => true, "order" => true, "family" => true,
@@ -134,8 +152,13 @@ class PfitmapRelease < ActiveRecord::Base
   end
 
   def second_run_count_hits(pfitmap_release, db_string)
-    # The protein counts table is assumed to be initiated
-    # with zeroes and the number of genomes calculated.
+    # To be called after the dry_run method. 
+    # Iterates over all pfitmap_sequences and collects the corresponding
+    # taxon through biosqlweb. It thereby iterates upwards through
+    # the taxon hierarchy and adds 1 to the no_proteins for all.
+    # If the taxon leaf has no protein hit before, then also adds
+    # 1 to no_genomes_with_proteins to all taxons up to root.
+
     pfitmap_release.pfitmap_sequences.each do |p_sequence|
       best_profile = p_sequence.hmm_profile
       proteins = best_profile.all_proteins_including_parents
