@@ -57,6 +57,11 @@
     </section>
   </aside>
   <div class="main-content span8">
+
+      <p>
+	<b>HMM Logo:</b>
+	<a href='<%= @hmm_profile.hmm_logo.url %>'><%= image_tag @hmm_profile.hmm_logo.url %></a>
+      </p>
     <% if @hmm_results != [] %>
     <h3>Results registered(<%= @hmm_results.count %>)</h3>
     <table>

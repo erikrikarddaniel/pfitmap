@@ -2,19 +2,22 @@
 #
 # Table name: hmm_profiles
 #
-#  id           :integer         not null, primary key
-#  name         :string(255)
-#  version      :string(255)
-#  hierarchy    :string(255)
-#  parent_id    :integer
-#  created_at   :datetime        not null
-#  updated_at   :datetime        not null
-#  protein_name :string(255)
+#  id                    :integer         not null, primary key
+#  name                  :string(255)
+#  version               :string(255)
+#  parent_id             :integer
+#  created_at            :datetime        not null
+#  updated_at            :datetime        not null
+#  protein_name          :string(255)
+#  hmm_logo_file_name    :string(255)
+#  hmm_logo_content_type :string(255)
+#  hmm_logo_file_size    :integer
+#  hmm_logo_updated_at   :datetime
 #
 
 class HmmProfile < ActiveRecord::Base
   # Could be a reason to remove parent_id from accessible attributes
-  attr_accessible :name, :protein_name, :version, :hierarchy, :parent_id
+  attr_accessible :name, :protein_name, :version, :parent_id, :hmm_logo
   attr_accessor :release_statistics
   has_many :children, :class_name => "HmmProfile", :foreign_key => "parent_id", :dependent => :destroy
   belongs_to :parent, :class_name => "HmmProfile", :foreign_key => "parent_id"
@@ -27,9 +30,20 @@ class HmmProfile < ActiveRecord::Base
   has_many :best_profile_sequences, through: :db_sequence_best_profiles, source: :db_sequence
   has_many :pfitmap_sequences
 
+  has_attached_file :hmm_logo, :styles => { :medium => "40000x400>", :thumb => "10000x100>" }
+
   validates :name, presence: true
   validates :version, presence: true
-  validates :hierarchy, presence: true, :uniqueness => :true
+  validates :protein_name, presence: true
+
+  def hierarchy
+    if parent
+      "#{parent.hierarchy}:#{protein_name}"
+    else
+      protein_name
+    end
+  end
+
   # A method to pick up all criterias independent of type
   def inclusion_criteria
     self.hmm_score_criteria

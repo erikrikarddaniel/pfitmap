@@ -1,3 +1,4 @@
+<% if @pfitmap_release %>
 <div class="pageheader1">
   <div>
     <h1>Listing Protein Counts</h1>
@@ -21,3 +22,11 @@
 <div id="protein_counts_table">
   <%= render partial: 'protein_counts_table' %>
 </div>
+<% else %>
+<div class="pageheader1">
+  <div>
+    <h1> Listing Protein Counts </h1>
+    <h2> Unfortunately, this statistic is not yet available </h1>
+</div>
+</div>
+<% end %>

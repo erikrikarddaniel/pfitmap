@@ -17,6 +17,7 @@ class HmmResultRowsController < ApplicationController
     @hmm_result_row = HmmResultRow.find(params[:id])
     @hmm_db_hits = @hmm_result_row.hmm_db_hits.paginate(page: params[:page])
     @db_sequence = @hmm_result_row.db_sequence
+
     sequence_source = @hmm_result_row.hmm_result.sequence_source
     @best_hmm_profiles = @db_sequence.best_hmm_profiles_for(sequence_source)
 

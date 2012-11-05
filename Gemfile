@@ -11,6 +11,9 @@ gem 'schema_plus'
 gem 'omniauth-openid'
 gem 'cancan'
 
+# Uploading image files
+gem "paperclip", "~> 3.0"
+
 # Talking with biosql at scilifelab.se
 gem 'httparty'
 gem 'json'

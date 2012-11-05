@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+
+<title>class DbSequence - Rails Application Documentation</title>
+
+<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="./index.html">Home</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>app/models/db_sequence.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">ActiveRecord::Base
+  
+</nav>
+
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li><a href="#method-i-all_hits">#all_hits</a>
+    
+    <li><a href="#method-i-best_hmm_profiles_for">#best_hmm_profiles_for</a>
+    
+    <li><a href="#method-i-best_hmm_result_row">#best_hmm_result_row</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="./doc/README_FOR_APP.html">README_FOR_APP</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./Ability.html">Ability</a>
+  
+    <li><a href="./ApplicationController.html">ApplicationController</a>
+  
+    <li><a href="./ApplicationHelper.html">ApplicationHelper</a>
+  
+    <li><a href="./BiosqlWeb.html">BiosqlWeb</a>
+  
+    <li><a href="./DbSequence.html">DbSequence</a>
+  
+    <li><a href="./DbSequenceBestProfile.html">DbSequenceBestProfile</a>
+  
+    <li><a href="./DbSequenceHelper.html">DbSequenceHelper</a>
+  
+    <li><a href="./DbSequencesController.html">DbSequencesController</a>
+  
+    <li><a href="./Enzyme.html">Enzyme</a>
+  
+    <li><a href="./EnzymeProfile.html">EnzymeProfile</a>
+  
+    <li><a href="./EnzymesController.html">EnzymesController</a>
+  
+    <li><a href="./EnzymesHelper.html">EnzymesHelper</a>
+  
+    <li><a href="./HmmDbHit.html">HmmDbHit</a>
+  
+    <li><a href="./HmmDbHitsController.html">HmmDbHitsController</a>
+  
+    <li><a href="./HmmDbHitsHelper.html">HmmDbHitsHelper</a>
+  
+    <li><a href="./HmmProfile.html">HmmProfile</a>
+  
+    <li><a href="./HmmProfilesController.html">HmmProfilesController</a>
+  
+    <li><a href="./HmmProfilesHelper.html">HmmProfilesHelper</a>
+  
+    <li><a href="./HmmResult.html">HmmResult</a>
+  
+    <li><a href="./HmmResultRow.html">HmmResultRow</a>
+  
+    <li><a href="./HmmResultRowsController.html">HmmResultRowsController</a>
+  
+    <li><a href="./HmmResultRowsHelper.html">HmmResultRowsHelper</a>
+  
+    <li><a href="./HmmResultRowsHmmDbHitsHelper.html">HmmResultRowsHmmDbHitsHelper</a>
+  
+    <li><a href="./HmmResultsController.html">HmmResultsController</a>
+  
+    <li><a href="./HmmResultsHelper.html">HmmResultsHelper</a>
+  
+    <li><a href="./HmmScoreCriteriaController.html">HmmScoreCriteriaController</a>
+  
+    <li><a href="./HmmScoreCriteriaHelper.html">HmmScoreCriteriaHelper</a>
+  
+    <li><a href="./HmmScoreCriterion.html">HmmScoreCriterion</a>
+  
+    <li><a href="./HomeController.html">HomeController</a>
+  
+    <li><a href="./HomeHelper.html">HomeHelper</a>
+  
+    <li><a href="./InclusionCriterion.html">InclusionCriterion</a>
+  
+    <li><a href="./Object.html">Object</a>
+  
+    <li><a href="./PfitmapRelease.html">PfitmapRelease</a>
+  
+    <li><a href="./PfitmapReleasesController.html">PfitmapReleasesController</a>
+  
+    <li><a href="./PfitmapReleasesHelper.html">PfitmapReleasesHelper</a>
+  
+    <li><a href="./PfitmapSequence.html">PfitmapSequence</a>
+  
+    <li><a href="./ProfilesHelper.html">ProfilesHelper</a>
+  
+    <li><a href="./Protein.html">Protein</a>
+  
+    <li><a href="./ProteinCount.html">ProteinCount</a>
+  
+    <li><a href="./ProteinCountsController.html">ProteinCountsController</a>
+  
+    <li><a href="./ProteinCountsHelper.html">ProteinCountsHelper</a>
+  
+    <li><a href="./ProteinsController.html">ProteinsController</a>
+  
+    <li><a href="./ProteinsHelper.html">ProteinsHelper</a>
+  
+    <li><a href="./ResultRowsHelper.html">ResultRowsHelper</a>
+  
+    <li><a href="./ResultsHelper.html">ResultsHelper</a>
+  
+    <li><a href="./SequenceDbsHelper.html">SequenceDbsHelper</a>
+  
+    <li><a href="./SequenceSource.html">SequenceSource</a>
+  
+    <li><a href="./SequenceSourcesController.html">SequenceSourcesController</a>
+  
+    <li><a href="./SequencesHelper.html">SequencesHelper</a>
+  
+    <li><a href="./SessionsController.html">SessionsController</a>
+  
+    <li><a href="./SessionsHelper.html">SessionsHelper</a>
+  
+    <li><a href="./StaticPagesController.html">StaticPagesController</a>
+  
+    <li><a href="./StaticPagesHelper.html">StaticPagesHelper</a>
+  
+    <li><a href="./Taxon.html">Taxon</a>
+  
+    <li><a href="./TaxonsController.html">TaxonsController</a>
+  
+    <li><a href="./TaxonsHelper.html">TaxonsHelper</a>
+  
+    <li><a href="./User.html">User</a>
+  
+    <li><a href="./UserMailer.html">UserMailer</a>
+  
+    <li><a href="./UsersController.html">UsersController</a>
+  
+    <li><a href="./UsersHelper.html">UsersHelper</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class DbSequence</h1>
+
+  <div id="description" class="description">
+    
+<h2 id="label-Schema+Information">Schema Information</h2>
+
+<p>Table name: db_sequences</p>
+
+<pre>id         :integer         not null, primary key
+created_at :datetime        not null
+updated_at :datetime        not null</pre>
+
+<p>This model represents a unique sequence record in a database, to which
+multiple identifiers (in the poorly named hmm_db_hit model) can be
+connected.</p>
+
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+    <!-- Attributes -->
+    <section id="attribute-method-details" class="method-section section">
+      <h3 class="section-header">Attributes</h3>
+
+      
+      <div id="attribute-i-hmm_profile" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">hmm_profile</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>virtual attributes used in controllers</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-hmm_profiles" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">hmm_profiles</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>virtual attributes used in controllers</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-score" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">score</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>virtual attributes used in controllers</p>
+        
+        </div>
+      </div>
+      
+    </section><!-- attribute-method-details -->
+    
+
+    <!-- Methods -->
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-all_hits" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">all_hits</span><span
+            class="method-args">(sequence_source)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Given a source, it will browse through all profiles in order to find all
+hits.</p>
+
+<p>All result rows that share sequence_source.id</p>
+          
+
+          
+          <div class="method-source-code" id="all_hits-source">
+            <pre><span class="ruby-comment"># File app/models/db_sequence.rb, line 26</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">all_hits</span>(<span class="ruby-identifier">sequence_source</span>)
+  <span class="ruby-identifier">hmm_results</span> = <span class="ruby-constant">HmmResult</span>.<span class="ruby-identifier">where</span>(<span class="ruby-string">&quot;sequence_source_id = ?&quot;</span>, <span class="ruby-identifier">sequence_source</span>.<span class="ruby-identifier">id</span>)
+  <span class="ruby-identifier">hmm_result_rows</span> = []
+  <span class="ruby-identifier">hmm_results</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">rows_temp</span> = <span class="ruby-constant">HmmResultRow</span>.<span class="ruby-identifier">where</span>(<span class="ruby-string">&quot;db_sequence_id = ?&quot;</span>, <span class="ruby-keyword">self</span>.<span class="ruby-identifier">id</span>)
+    <span class="ruby-identifier">hmm_result_rows</span>.<span class="ruby-identifier">concat</span>(<span class="ruby-identifier">rows_temp</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">hmm_result_rows</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- all_hits-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- all_hits-method -->
+
+    
+      <div id="method-i-best_hmm_profiles_for" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">best_hmm_profiles_for</span><span
+            class="method-args">(sequence_source)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>A method that returns the best hmm profile object</p>
+          
+
+          
+          <div class="method-source-code" id="best_hmm_profiles_for-source">
+            <pre><span class="ruby-comment"># File app/models/db_sequence.rb, line 37</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">best_hmm_profiles_for</span>(<span class="ruby-identifier">sequence_source</span>)
+  <span class="ruby-comment">#begin</span>
+  <span class="ruby-identifier">dsbps</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">db_sequence_best_profiles</span>.     <span class="ruby-identifier">find_all_by_sequence_source_id</span>(<span class="ruby-identifier">sequence_source</span>.<span class="ruby-identifier">id</span>, 
+                                 <span class="ruby-value">:include</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">hmm_profile</span>)
+  <span class="ruby-identifier">dsbps</span>.<span class="ruby-identifier">map</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">dsbp</span><span class="ruby-operator">|</span> <span class="ruby-identifier">dsbp</span>.<span class="ruby-identifier">hmm_profile</span> }
+  <span class="ruby-comment">#rescue NoMethodError</span>
+  <span class="ruby-comment">#  nil</span>
+  <span class="ruby-comment">#end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- best_hmm_profiles_for-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- best_hmm_profiles_for-method -->
+
+    
+      <div id="method-i-best_hmm_result_row" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">best_hmm_result_row</span><span
+            class="method-args">(sequence_source)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>The result row having the highest fullseq_score.</p>
+          
+
+          
+          <div class="method-source-code" id="best_hmm_result_row-source">
+            <pre><span class="ruby-comment"># File app/models/db_sequence.rb, line 49</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">best_hmm_result_row</span>(<span class="ruby-identifier">sequence_source</span>)
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">db_sequence_best_profiles</span>.<span class="ruby-identifier">find_by_sequence_source_id</span>(<span class="ruby-identifier">sequence_source</span>.<span class="ruby-identifier">id</span>).<span class="ruby-identifier">hmm_result_row</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- best_hmm_result_row-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- best_hmm_result_row-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.12.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

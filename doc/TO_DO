@@ -1,12 +1,6 @@
 Discussion points
 -----------------
 
-* Should we drop the hierarchy field in HMMProfile? Could be replaced by a --
-  rather cheap I think since the hierarchy is shallow -- orderstring method on 
-  objects that calculates a concatenated string of ids: 00001:00002:00003 for an
-  object with id 3 at level three of the hierarchy (perhaps we need more than
-  five digits).
-
 * The server has shown some significant weaknesses with memory leak, 
   it allocates allmost all available memory, and this has led to at least
   one crash. This is possibly caused by delayed_job and/or its dependencies
@@ -15,30 +9,76 @@ Discussion points
   it could be due to caching, although most caching is now turned off, 
   (I believe). 
 
+Big Items
+---------
+* Test cases for release calculation 
+	including reference implementation of evaluation code.
+		-- I don't understand this anymore... / Johannes
+		-- The test cases are done
+
+* "Main table" GUI
+    - Sort on hierarchy
+    - change default values for proteins
+    - avoid changing other tables at the same time
+    - Heat map color coding
+    - Multiple choices for the ranks
+
 Things to fix
 -------------
-* Tests that are not yet implemented:
-  - Hierarchy of taxon
-  - The dry run initialization
-  - protein_counts_by_rank
-  - protein_counts_by_hierarchy
+* NoMethodError in Protein_counts#by_rank when there is no pfitmap_release calculated
+   - <h2>Taxon rank: <%=@taxon_rank ? @taxon_rank : "All" %>, pfitmap_release: <%= @pfitmap_release.release %></h2>
+
+	
+* From pfitmap_release show, link from a row to the not_included db_sequences
+  from there, make it possible to include a db_sequence, previously not included
+  the first task needs a custom controller method and route for db_sequences
+
+* Redo Calculate-functionality from "wgs" to "organism group"
+    - Before pressing "Calculate", should be able to choose organism group
+    - WGS is a database column? (Use "leaf" instead?)
+    - organism-group representation in the protein-count table.
+    - protein_count_for(taxon,protein) is used in protein_count_init_or_add
+
+* Test views from a not signed-in perspective:
+  - protein statistics is not available.
+  
+  - Restrict what views are showing un-authorized users:
+  	x Button for deleting profile on show page
+	x create new hmm profile on hmm_profiles index
+	x add new source on sequence sources index
+	x edit on sequence source show
+	x destroy on hmm_results index (also bad design)
+	x delete on hmm_results show
+	x edit on hmm_result_rows show
+	x db_sequences index
+	x db_sequence show
+	x hmm_db_hits index
+	x hmm_db_hits show
+	x hmm score criteria index + show
+	x enzymes index 
+	x pfitmap_releases index
+	x pfitmap_release show
+	
 
 * Set up system to enable links from accession numbers to target database. See
-  doc/sequence_inclusion.dia (SequenceDatabase model). Note the comments
-  regarding the accession_url field.
+  doc/pfitmap.dia (SequenceDatabase model). The accession_url should contain
+  Ruby string interpolations like #{field_name} to allow dynamic construction of
+  urls. (I just refrained from coupling this model with the SequenceSource
+  model; wouldn't simplify anything.)
+
+* Sorting the children in hmm_profiles/index.html.erb by hierarchy didn't work
+  -- fix.
 
 * Replace only HMMProfile.name on its own in lists with HMMProfile.description
   (which includes the protein name).
 
 * When AJAX expandable table/list is implemented for the ProteinCount, 
-  use it for the pfitmap_release show page as well. 
+  use it for the pfitmap_release show page as well. May solve the 
+  current performance problem.
 
 * Enable sorting on columns as a default feature for all tables.
 
 * Test visual performance in all major browsers
-
-* Make the taxon name in the expandable list an ajax link for
-  updating a protein_counts summary table
 
 * Search function for hmm_db_hits/db_sequences
 
@@ -47,17 +87,13 @@ Things to fix
 
 * Add possibility to 'remove as current' for pfitmap releases
 
-* From pfitmap_release show, link from a row to the not_included db_sequences
-  from there, make it possible to include a db_sequence, previously not included
-  the first task needs a custom controller method and route for db_sequences
-
 * Sequence source show page does not have a good overview
   of which proteins that have results registered, when there are many 
   hmm_profiles.
 
-* Delayed job does not operate currently on server since smtp-settings are
-  not fixed for action mailer. Could disable action mailer temporarily in order
-  to execute calculation for the release.
+* Set smtp-settings for action mailer. Delayed job does not operate currently
+  on server since smtp-settings are not fixed for action mailer. Action mailer 
+  is disabled in order to execute calculation for the release.
 
 * Ajax loading of the pfitmap_release show
 
@@ -67,13 +103,16 @@ Things to fix
 
 * Add HMMDBHit.database link to counts table.
 
-* Add taxon hierarchy sort key to Taxon
-
 * Subset ranks in GUI
 
 * There's an array in protein_counts_controller that specifies which proteins to show -- fix.
 
 * On Enzymes form, indent the profiles, so easier to choose
+
+* Tests that are not yet implemented:
+  - protein_counts_by_rank view
+  - protein_counts_by_hierarchy view
+
 
 PfitmapRelease.calculate_main
 -----------------------------
@@ -85,4 +124,24 @@ PfitmapRelease.calculate_main
 2. Handle different sequence databases
 
 3. Look at nested loop implementation 
+
+
+DONE
+----
+* Only include taxonomic classes: superkingdom, phylum, class, order, family, genus, species.
+
+* "Integration" tests for calculate
+
+* nested loop implementation
+
+* Explanation of how the calculate-method works
+
+* Factories with associations does not work
+
+* Check that there are no "loose branches" in the taxon tree, aka that the only node
+  without parent is "root".
+
+Tests:
+  - Hierarchy of taxon
+
 

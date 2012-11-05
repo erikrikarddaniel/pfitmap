@@ -1,24 +1,25 @@
-<table class="table table-striped table-condensed">
+<table class="table heat-map">
+  <thead>
   <tr>
     <th>Taxon</th>
     <% @chosen_proteins.each do |protein| %>
     <th colspan="3"><%= protein.name %> </th>
     <th></th>
-    <th></th>
     <% end %>
   </tr>
-  
+  </thead>
+  <tbody>
   <% @taxons.each do |taxon| %>
-  
   <tr>
     <td><%= taxon.name %></td>
     <% @chosen_proteins.each do |protein| %>
     <% protein_count = @protein_counts_hash[taxon.id][protein.id] %>
     <% if protein_count %>
-    <td><%= protein_count.no_genomes.to_s %></td>
-    <td><%= protein_count.no_proteins.to_s %></td>
-    <td><%= protein_count.no_genomes_with_proteins.to_s %></td>
-    <td></td>
+    <% color = pc_col(protein_count) %>
+    <td bgcolor= "<%= color %>" class="no_genomes"><%= protein_count.no_genomes.to_s %></td>
+    <td bgcolor= "<%= color %>" class="no_proteins"><%= protein_count.no_proteins.to_s %></td>
+    <td bgcolor= "<%= color %>" class="no_genomes_with_proteins"><%= protein_count.no_genomes_with_proteins.to_s %></td>
+    </div>
     <td></td>
     <% else %>
     <td colspan="3">none</td>
@@ -28,6 +29,7 @@
     <% end %>
   </tr>
   <% end %>
+</tbody>
 </table>
 <%= will_paginate @taxons %>
 <br />

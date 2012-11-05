@@ -137,9 +137,9 @@ class PfitmapReleasesController < ApplicationController
     @pfitmap_release = PfitmapRelease.find(params[:pfitmap_release_id])
     user = current_user
     if Rails.env == "test" 
-      @pfitmap_release.calculate_main(user)
+      @pfitmap_release.calculate_main("GOLDWGStest10", user)
     else
-      @pfitmap_release.delay.calculate_main(user)
+      @pfitmap_release.delay.calculate_main("GOLDWGS", user)
     end
     
     respond_to do |format|

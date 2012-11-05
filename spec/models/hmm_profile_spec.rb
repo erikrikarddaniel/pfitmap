@@ -2,23 +2,26 @@
 #
 # Table name: hmm_profiles
 #
-#  id           :integer         not null, primary key
-#  name         :string(255)
-#  version      :string(255)
-#  hierarchy    :string(255)
-#  parent_id    :integer
-#  created_at   :datetime        not null
-#  updated_at   :datetime        not null
-#  protein_name :string(255)
+#  id                    :integer         not null, primary key
+#  name                  :string(255)
+#  version               :string(255)
+#  parent_id             :integer
+#  created_at            :datetime        not null
+#  updated_at            :datetime        not null
+#  protein_name          :string(255)
+#  hmm_logo_file_name    :string(255)
+#  hmm_logo_content_type :string(255)
+#  hmm_logo_file_size    :integer
+#  hmm_logo_updated_at   :datetime
 #
 
 require 'spec_helper'
 
 describe HmmProfile do
   let(:hmm_profile) { FactoryGirl.create(:hmm_profile) }
-  let(:hmm_profile_00101) { FactoryGirl.create(:hmm_profile_00101) }
+  let(:hmm_profile_nrdbr2lox) { FactoryGirl.create(:hmm_profile_nrdbr2lox) }
   before do
-    @hmm_profile = HmmProfile.create!(name: "Root HMM Profile", version: "20120328", hierarchy: "000")
+    @hmm_profile = HmmProfile.create!(name: "Root HMM Profile", version: "20120328", protein_name: "all_proteins")
   end
 
   subject { @hmm_profile }
@@ -46,9 +49,9 @@ describe HmmProfile do
     before { @hmm_profile.version = "" }
     it { should_not be_valid }
   end
-
-  describe "Should not be valid when hierarchy is not present" do
-    before { @hmm_profile.hierarchy = "" }
+  
+  describe "Should not be valid when protein_name is not present" do
+    before { @hmm_profile.protein_name = "" }
     it { should_not be_valid }
   end
 
@@ -57,8 +60,7 @@ describe HmmProfile do
       @child = @hmm_profile.children.create(
 	name: "1st gen. child HMM profile",
 	protein_name: 'NrdA',
-	version: "20120328",
-	hierarchy: "000.00"
+	version: "20120328"
       )
     end
     it { should be_valid }
@@ -83,9 +85,9 @@ describe HmmProfile do
                                                 hmm_result: hmm_result1, 
                                                 db_sequence: db_sequence1) }
     #Profile with lower score
-    let!(:hmm_score_criterion2) { FactoryGirl.create(:hmm_score_criterion, hmm_profile: hmm_profile_00101) }
+    let!(:hmm_score_criterion2) { FactoryGirl.create(:hmm_score_criterion, hmm_profile: hmm_profile_nrdbr2lox) }
     let!(:hmm_result2) { FactoryGirl.create(:hmm_result, 
-                                            hmm_profile: hmm_profile_00101, 
+                                            hmm_profile: hmm_profile_nrdbr2lox, 
                                             sequence_source: sequence_source) }
     # A row for the first sequence, with low score to compare against profile1
     let!(:hmm_result_row2) { FactoryGirl.create(:hmm_result_row2, 
@@ -108,7 +110,7 @@ describe HmmProfile do
     end
     
     it "evaluates the best profile with score below threshold" do
-      hmm_profile_00101.evaluate?(db_sequence2,sequence_source).should be_false
+      hmm_profile_nrdbr2lox.evaluate?(db_sequence2,sequence_source).should be_false
     end
     describe "Evaluates a profile that is not the best" do
       let!(:hmm_profile3) { FactoryGirl.create(:hmm_profile) }
@@ -123,7 +125,7 @@ describe HmmProfile do
         hmm_profile3.evaluate?(db_sequence1,sequence_source).should be_false
       end
       it "with score below threshold" do
-        hmm_profile_00101.evaluate?(db_sequence1,sequence_source).should be_false
+        hmm_profile_nrdbr2lox.evaluate?(db_sequence1,sequence_source).should be_false
       end
     end
     describe "evaluates a profile without a criterion" do
@@ -153,12 +155,12 @@ describe HmmProfile do
     let!(:hmm_profile) { FactoryGirl.create(:hmm_profile) }
     let!(:db_sequence) { FactoryGirl.create(:db_sequence) }
     let!(:sequence_source) { FactoryGirl.create(:sequence_source) }
-    let!(:hmm_result) { FactoryGirl.create(:hmm_result, 
-                                            hmm_profile: hmm_profile, 
-                                            sequence_source: sequence_source) }
-    let!(:hmm_result_row) { FactoryGirl.create(:hmm_result_row2, 
-                                               hmm_result: hmm_result, 
-                                               db_sequence: db_sequence) }
+    let!(:hmm_result) do
+      FactoryGirl.create(:hmm_result, hmm_profile: hmm_profile, sequence_source: sequence_source) 
+    end
+    let!(:hmm_result_row) do 
+      FactoryGirl.create(:hmm_result_row2, hmm_result: hmm_result, db_sequence: db_sequence) 
+    end
 
     it "has correct db_sequence association" do
       hmm_profile.best_profile_sequences(sequence_source).should include(db_sequence)
@@ -166,7 +168,7 @@ describe HmmProfile do
 
   end
 
-  describe "hierarchy" do
+  describe "object's hierarchy" do
     let!(:hmm_profile1) { FactoryGirl.create(:hmm_profile) }
     let!(:hmm_profile2) { FactoryGirl.create(:hmm_profile) }
     let!(:hmm_profile11) { FactoryGirl.create(:hmm_profile, parent: hmm_profile1) }
@@ -186,6 +188,16 @@ describe HmmProfile do
       it "includes exactly what it should" do
         HmmProfile.last_parents.should == [@hmm_profile, hmm_profile1, hmm_profile2]
       end
+    end
+  end
+  describe "big factory" do
+    before do
+      @hmm_result_nrdbe = FactoryGirl.create(:hmm_result_nrdbe)
+      @hmm_profile = @hmm_result_nrdbe.hmm_profile
+    end
+    it "should have a criterion" do
+      @hmm_profile.hmm_score_criteria.first.min_fullseq_score.should == 400.0
+      @hmm_profile.hmm_score_criteria.length.should == 1
     end
   end
 end

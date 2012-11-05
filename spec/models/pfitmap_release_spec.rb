@@ -44,8 +44,6 @@ describe PfitmapRelease do
     end
   end
 
-  
-
   it { should respond_to(:release) }
   it { should respond_to(:release_date) }
   it { should respond_to(:pfitmap_sequences) }
@@ -71,9 +69,9 @@ describe PfitmapRelease do
   describe "find all after current" do
     let!(:sequence_source3) { FactoryGirl.create(:sequence_source) }
     let!(:pfitmap_release) { FactoryGirl.create(:pfitmap_release, current: true, sequence_source: sequence_source3) }
-let!(:sequence_source4) { FactoryGirl.create(:sequence_source) }
+    let!(:sequence_source4) { FactoryGirl.create(:sequence_source) }
     let!(:pfitmap_release1) { FactoryGirl.create(:pfitmap_release, sequence_source: sequence_source4) }
-let!(:sequence_source5) { FactoryGirl.create(:sequence_source) }
+    let!(:sequence_source5) { FactoryGirl.create(:sequence_source) }
     let!(:pfitmap_release2) { FactoryGirl.create(:pfitmap_release, sequence_source: sequence_source5) }
 
     it "returns the correct releases" do
@@ -141,33 +139,125 @@ let!(:sequence_source5) { FactoryGirl.create(:sequence_source) }
     end
   end
 
-  
-  describe "build hash" do
-    let!(:db_sequence1) { FactoryGirl.create(:db_sequence) }
-    let!(:hmm_db_hit1) { FactoryGirl.create(:hmm_db_hit, gi: 297089704, db: "ref", db_sequence: db_sequence1) }
-    let!(:hmm_db_hit2) { FactoryGirl.create(:hmm_db_hit, gi: 297089710, db: "pdb", db_sequence: db_sequence1) }
-    let!(:hmm_db_hit3) { FactoryGirl.create(:hmm_db_hit, gi: 297089654, db: "pdb", db_sequence: db_sequence1) }
-    
-    let!(:pfitmap_release) {FactoryGirl.create(:pfitmap_release) }
-    let!(:pfitmap_sequence) {FactoryGirl.create(:pfitmap_sequence, pfitmap_release: pfitmap_release, db_sequence: db_sequence1) }
-    it "should give the correct taxons back for ref" do
-      gi_taxons = HmmDbHit.all_taxons_for(pfitmap_release, "ref")
-      hash = pfitmap_release.build_gi_ncbi_taxon_hash(gi_taxons)
-      hash[297089704].should == 767985
-      hash[297089710].should == nil
-      hash[297089654].should == nil
+  describe "calculating a release for one result (easy)" do
+    before(:each) do
+      @hmm_result_nrdb = FactoryGirl.create(:hmm_result_nrdb)
+      @sequence_source = @hmm_result_nrdb.sequence_source
+      @pfitmap_release = FactoryGirl.create(:pfitmap_release, sequence_source: @sequence_source)
+      parse_hmm_tblout(@hmm_result_nrdb, fixture_file_upload("/NrdB-20rows.tblout"))
+      @sequence_source.evaluate(@pfitmap_release, nil)
     end
 
-    it "should give the correct taxons back for pdb" do
-      gi_taxons = HmmDbHit.all_taxons_for(pfitmap_release, "pdb")
-      hash = pfitmap_release.build_gi_ncbi_taxon_hash(gi_taxons)
-      hash[297089704].should == nil
-      hash[297089710].should == 767985
-      hash[297089654].should_not == 767985
-      hash[297089654].should == 767981
+    it "should have a single hmm result registered" do
+      @pfitmap_release.sequence_source.hmm_results.length.should == 1
+    end
+
+    it "should be successful to call calculate_main" do
+      @pfitmap_release.calculate_main("GOLDWGStest10", FactoryGirl.create(:user_admin))
+      Taxon.find_all_by_wgs(true).length.should == 10
+      Protein.all.length.should == 2
+      ProteinCount.find_all_by_obs_as_genome(true).length.should == 6
+      ProteinCount.maximum("no_proteins").should == 4
+      ProteinCount.maximum("no_genomes_with_proteins").should == 3
+    end
+
+    it "should not include all taxon-levels" do
+      @pfitmap_release.calculate_main("GOLDWGStest10", FactoryGirl.create(:user_admin))
+      Taxon.all.length.should be < 70
+      root_taxon = Taxon.find_by_name("root")
+      root_taxon.should_not be_nil
+      # no loose branches in the tree of life:
+      root_taxons = Taxon.find_all_by_parent_ncbi_id(nil)
+      root_taxons.length.should == 1
+    end
+  end
+
+  describe "calculating a release for two results (medium)" do
+    before(:each) do
+      @hmm_result_nrdb = FactoryGirl.create(:hmm_result_nrdb)
+      @sequence_source = @hmm_result_nrdb.sequence_source
+      @hmm_result_nrdbe = FactoryGirl.create(:hmm_result_nrdbe, sequence_source: @sequence_source)
+      @pfitmap_release = FactoryGirl.create(:pfitmap_release, sequence_source: @sequence_source)
+      parse_hmm_tblout(@hmm_result_nrdb, fixture_file_upload("/NrdB-20rows.tblout"))
+      parse_hmm_tblout(@hmm_result_nrdbe, fixture_file_upload("/NrdBe-20rows.tblout"))
+      @sequence_source.evaluate(@pfitmap_release,nil)
     end
     
+    it "should have 2 hmm results via the sequence_source" do
+      @pfitmap_release.sequence_source.hmm_results.length.should == 2
+    end
+
+    it "should have pfitmap_sequences" do
+      @pfitmap_release.pfitmap_sequences.length.should_not == 0
+    end
+    
+    it "should be succesful to call calculate_main", :heavy => true do
+      @pfitmap_release.calculate_main("GOLDWGStest10",FactoryGirl.create(:user_admin))
+      Taxon.find_all_by_wgs(true).length.should == 10
+      HmmProfile.all.length.should == 4
+      Protein.all.length.should == 4
+      ProteinCount.find_all_by_obs_as_genome(true).length.should == 10
+
+      # Check specific values (human nrdb)
+      nrdb_protein = Protein.find_by_name('NrdB')
+      human_taxon = Taxon.find_by_name('Homo sapiens')
+      human_nrdb_protein_count = ProteinCount.find(:first, :conditions => ["protein_id = ? AND taxon_id = ? AND pfitmap_release_id = ?", nrdb_protein.id, human_taxon.id, @pfitmap_release.id])
+      human_nrdb_protein_count.no_proteins.should == 2
+      human_nrdb_protein_count.no_genomes.should == 1
+      human_nrdb_protein_count.no_genomes_with_proteins.should == 1
+      human_nrdb_protein_count.obs_as_genome.should == true
+      
+      ProteinCount.maximum("no_proteins").should == 6
+      ProteinCount.maximum("no_genomes_with_proteins").should == 4
+      #warn "#{__FILE__}:#{__LINE__}: ProteinCount.all:\n\t#{ProteinCount.all.map { |pc| "#{pc}" }.join("\n\t")}"
+      # no loose branches in the tree of life:
+      root_taxons = Taxon.find_all_by_parent_ncbi_id(nil)
+      root_taxons.length.should == 1
+    end
+
+  
   end
 
 
+  describe "calculating a release for two results (hard)", :heavy => true  do
+    before(:each) do
+      @hmm_result_nrdb = FactoryGirl.create(:hmm_result_nrdb)
+      @sequence_source = @hmm_result_nrdb.sequence_source
+      @hmm_result_nrdbe = FactoryGirl.create(:hmm_result_nrdbe, sequence_source: @sequence_source)
+      @hmm_result_nrdben = FactoryGirl.create(:hmm_result_nrdben, sequence_source: @sequence_source)
+      @pfitmap_release = FactoryGirl.create(:pfitmap_release, sequence_source: @sequence_source)
+      parse_hmm_tblout(@hmm_result_nrdb, fixture_file_upload("/NrdB-100rows.tblout"))
+      parse_hmm_tblout(@hmm_result_nrdbe, fixture_file_upload("/NrdBe-100rows.tblout"))
+      parse_hmm_tblout(@hmm_result_nrdben, fixture_file_upload("/NrdBen-100rows.tblout"))
+      @sequence_source.evaluate(@pfitmap_release,nil)
+    end
+
+    it "should succesfuly calculate the release" do
+      @pfitmap_release.calculate_main("GOLDWGStest100", FactoryGirl.create(:user_admin))
+      Protein.all.length.should == 4
+
+      # Check specific values (human nrdb)
+      nrdb_protein = Protein.find_by_name('NrdB')
+      human_taxon = Taxon.find_by_name('Homo sapiens')
+      human_nrdb_protein_count = ProteinCount.find(:first, :conditions => ["protein_id = ? AND taxon_id = ? AND pfitmap_release_id = ?", nrdb_protein.id, human_taxon.id, @pfitmap_release.id])
+      human_nrdb_protein_count.no_proteins.should == 4
+      human_nrdb_protein_count.no_genomes.should == 1
+      human_nrdb_protein_count.no_genomes_with_proteins.should == 1
+      human_nrdb_protein_count.obs_as_genome.should == true
+      
+
+      ProteinCount.all.length.should == 1372
+      # Check the root
+      root_taxon = Taxon.find_by_name('root')
+      root_nrdb_pc = ProteinCount.find(:first, :conditions => ["protein_id = ? AND taxon_id = ? AND pfitmap_release_id = ?", nrdb_protein.id, root_taxon.id, @pfitmap_release.id])
+
+      # These values are not checked and may change
+      root_nrdb_pc.no_proteins.should == 8
+      root_nrdb_pc.no_genomes.should == 100
+      root_nrdb_pc.no_genomes_with_proteins.should == 4
+      # no loose branches in the tree of life:
+      root_taxons = Taxon.find_all_by_parent_ncbi_id(nil)
+      root_taxons.length.should == 1
+    end
+  end
 end

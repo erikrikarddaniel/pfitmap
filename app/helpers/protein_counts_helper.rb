@@ -32,4 +32,29 @@ module ProteinCountsHelper
     end
     return before_params
   end
+  
+  def pc_col(pc)
+    #max = 255
+    n=100
+
+    a = pc.no_genomes_with_proteins
+    b = pc.no_genomes
+    color_int = (a*255)/b    
+
+    # Define the ending colour, which is white
+    xr = 255
+    xg = 255
+    xb = 255
+ 
+    # Define the starting colour #f32075
+    yr = 243
+    yg = 32
+    yb = 117
+
+    red =   xr + (color_int * (yr-xr))/(n-1)
+    green = xb + (color_int * (yb-xb))/(n-1)
+    blue =  xg + (color_int * (yg-xg))/(n-1)
+    
+    "rgb(#{red},#{green},#{blue})"
+  end
 end
