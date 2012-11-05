@@ -138,9 +138,12 @@ class PfitmapReleasesController < ApplicationController
     user = current_user
     if Rails.env == "test" 
       @pfitmap_release.calculate_main("GOLDWGStest10", user)
+    elsif Rails.env == "development"
+      @pfitmap_release.delay.calculate_main("GOLDWGStest100", user)
     else
-      @pfitmap_release.delay.calculate_main("GOLDWGS", user)
+      @pfitmap_release.delay.calculate_main("GOLDWGS",user)
     end
+
     
     respond_to do |format|
       flash[:success] = "The Protein Counts will now be calculated! An email will be sent when it is finished (approx 24h)."
