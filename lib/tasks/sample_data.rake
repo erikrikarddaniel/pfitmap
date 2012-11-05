@@ -1,14 +1,10 @@
 namespace :db do
   desc "Fill database with sample data"
   task populate: :environment do
-<<<<<<< HEAD
-    Rake::Task['db:reset'].invoke
-=======
     Rake::Task['db:truncate'].invoke
     @dbsequences = {}	# Object hash indexed by acc number
     @hmm_db_hits = {} 	# Object hash indexed by acc number
     make_users
->>>>>>> 8d14a50969d6eb01a88aef6aca5cfe923c37910a
     make_hmm_profiles
     make_sequence_sources
     make_hmm_results
