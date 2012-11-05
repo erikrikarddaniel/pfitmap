@@ -41,15 +41,15 @@ module ProteinCountsHelper
     b = pc.no_genomes
     color_int = (a*255)/b    
 
-    # Define the ending colour, which is white
-    xr = 255
+    # Define the ending colour
+    xr = 0
     xg = 255
     xb = 255
  
-    # Define the starting colour #f32075
-    yr = 243
-    yg = 32
-    yb = 117
+    # Define the starting colour 
+    yr = 255
+    yg = 255
+    yb = 0
 
     red =   xr + (color_int * (yr-xr))/(n-1)
     green = xb + (color_int * (yb-xb))/(n-1)
