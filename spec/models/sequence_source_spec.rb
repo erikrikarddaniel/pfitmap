@@ -52,17 +52,24 @@ describe SequenceSource do
   describe "associations" do
     let!(:hmm_profile1) { FactoryGirl.create(:hmm_profile) }
     let!(:hmm_profile2) { FactoryGirl.create(:hmm_profile_nrdbr2lox) }
+    let!(:hmm_profile3) { FactoryGirl.create(:hmm_profile_nrdb) }
     let!(:sequence_source) { FactoryGirl.create(:sequence_source) }
     let!(:hmm_result1) { FactoryGirl.create(:hmm_result, hmm_profile: hmm_profile1, sequence_source: sequence_source) }
+    let!(:hmm_result3) { FactoryGirl.create(:hmm_result, hmm_profile: hmm_profile3, sequence_source: sequence_source) }
     let!(:db_sequence1) { FactoryGirl.create(:db_sequence) }
     let!(:hmm_result_row1) { FactoryGirl.create(:hmm_result_row, hmm_result: hmm_result1, db_sequence: db_sequence1) }
+
     subject{sequence_source}
+
     describe "all profiles available in results" do 
       its(:hmm_profiles) { should include(hmm_profile1) }
       its(:hmm_profiles) { should_not include(hmm_profile2) }
+      its(:hmm_profiles) { should include(hmm_profile3) }
     end
+
     describe "all results" do
       its(:hmm_results) { should include(hmm_result1) }
+      its(:hmm_results) { should include(hmm_result3) }
     end
     
     describe "all result rows available in results" do
