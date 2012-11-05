@@ -27,7 +27,9 @@ class Taxon < ActiveRecord::Base
   end
 
   def self.all_ranks
-    self.uniq.pluck(:rank)
+    hierarchy = {"superkingdom" => 1, "phylum" => 2, "class" => 3, "order" => 4, "family" => 5, "genus" => 6, "species" => 7}
+    ranks = self.uniq.pluck(:rank)
+    ranks.sort_by{ |r| hierarchy[r] ? hierarchy[r] : 10}
   end
 
   def self.from_rank(taxon_rank)
