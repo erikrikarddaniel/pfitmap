@@ -65,4 +65,41 @@ class ProteinCountsController < ApplicationController
     end
   end
 
+  # GET /protein_counts_by_rank
+  # GET /protein_counts_by_rank.json
+  def with_enzymes
+    @taxon_ranks = Taxon.all_ranks
+    @proteins = Protein.all
+    if session[:release_id]
+      @pfitmap_release = PfitmapRelease.find(session[:release_id])
+    else
+      @pfitmap_release = PfitmapRelease.find_current_release
+    end
+
+    @enzymes = []
+    name_array = ['Klass I RNR', 'Klass II', 'Klass III']
+    name_array.each do |name|
+      enz = Enzyme.find_by_name(name)
+      if enz
+        @enzymes << enz
+      end
+    end
+
+    
+    if params[:taxon_rank]
+      @taxon_rank = params[:taxon_rank]
+      @taxons = Taxon.from_rank(params[:taxon_rank]).paginate(:page => params[:page])
+    else
+      @taxon_rank = nil
+      @taxons = Taxon.paginate(:page => params[:page])
+    end
+
+    @protein_counts_hash = ProteinCount.protein_counts_hash_for(@taxons, Protein.all, @pfitmap_release)
+    respond_to do |format|
+      format.html { render 'with_enzymes' }
+      format.json { render json: @protein_counts }
+      format.js { render partial: 'protein_counts/protein_counts_table', :locals => {:protein_counts => @protein_counts}, :content_type => 'text/html'}
+    end
+  end
+
 end
