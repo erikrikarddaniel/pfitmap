@@ -163,13 +163,22 @@ aside {
   }
 }
 
-.main-content {
-   table {
-      @extend .table;
-      @extend .table-striped;
-}
+table.standard {
+	       @extend .table;
+	       @extend .table-striped;
+	       }
 
+table.heat-map {
+  width: 100%;
+  background-color: white;
+  td.taxon {
+    width: 180px;
+  } 
+  td.heat {
+    color: white;
+    text-align: center;
 }
+}	       
 
 /* forms */
 

@@ -34,27 +34,10 @@ module ProteinCountsHelper
   end
   
   def pc_col(pc)
-    #max = 255
-    n=100
-
+    # Defines a color intensity in the interval (0,100)
     a = pc.no_genomes_with_proteins
     b = pc.no_genomes
-    color_int = (a*255)/b    
-
-    # Define the ending colour
-    xr = 0
-    xg = 255
-    xb = 255
- 
-    # Define the starting colour 
-    yr = 255
-    yg = 255
-    yb = 0
-
-    red =   xr + (color_int * (yr-xr))/(n-1)
-    green = xb + (color_int * (yb-xb))/(n-1)
-    blue =  xg + (color_int * (yg-xg))/(n-1)
-    
-    "rgb(#{red},#{green},#{blue})"
+    color_ratio = Float(a)/b
+    color_int = Integer(100*color_ratio)
   end
 end
