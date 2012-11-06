@@ -128,7 +128,7 @@
 
     <%  if @hmm_result_row.db_sequence.hmm_result_rows.any? %>
     <h3>All rows for this Database Sequence </h3>
-    <table>
+    <table class="standard">
       <thead>
 	<tr>
 	  <th>HMM Profile</th>
@@ -153,7 +153,7 @@
     <% end %>
     <%  if @hmm_result_row.hmm_db_hits.any? %>
     <h3> Listing HMM database hits </h3>
-    <table>
+    <table class="standard">
       <thead>
 	<tr>
 	  <th>Database</th>

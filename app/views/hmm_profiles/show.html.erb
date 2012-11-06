@@ -64,7 +64,7 @@
       </p>
     <% if @hmm_results != [] %>
     <h3>Results registered(<%= @hmm_results.count %>)</h3>
-    <table>
+    <table class="standard">
       <thead>
 	<tr>
 	  <th>Source</th>
@@ -85,7 +85,7 @@
 
     <% if @enzymes.any? %>
     <h3>Enzymes containing this profile</h3>
-    <table>
+    <table class="standard">
       <thead>
 	<tr>
 	  <th>Name</th>
