@@ -69,7 +69,6 @@ class ProteinCountsController < ApplicationController
   # GET /protein_counts_by_rank.json
   def with_enzymes
     @taxon_ranks = Taxon.all_ranks
-    @proteins = Protein.all
     if session[:release_id]
       @pfitmap_release = PfitmapRelease.find(session[:release_id])
     else
@@ -102,4 +101,29 @@ class ProteinCountsController < ApplicationController
     end
   end
 
+
+  def add_row
+    if session[:release_id]
+      @pfitmap_release = PfitmapRelease.find(session[:release_id])
+    else
+      @pfitmap_release = PfitmapRelease.find_current_release
+    end
+    @parent_taxon = Taxon.find(params[:parent_id]) 
+    @taxons = @parent_taxon.children
+    
+    @enzymes = []
+    name_array = ['Klass I RNR', 'Klass II', 'Klass III']
+    name_array.each do |name|
+      enz = Enzyme.find_by_name(name)
+      if enz
+        @enzymes << enz
+      end
+    end
+
+    @protein_counts_hash = ProteinCount.protein_counts_hash_for(@taxons, Protein.all, @pfitmap_release)
+    @html_row = "<tr> <td> 'taxonname' </td> <td> 'P1' </td> <td> 'P2' </td> </tr>"
+    respond_to do |format|
+      format.js
+    end
+  end
 end

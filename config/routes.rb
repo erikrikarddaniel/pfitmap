@@ -3,6 +3,7 @@ Pfitmap::Application.routes.draw do
   get 'protein_counts_by_rank', to: 'protein_counts#by_rank'
   get 'protein_counts_with_enzymes', to: 'protein_counts#with_enzymes'
   get 'protein_counts_by_hierarchy', to: 'protein_counts#by_hierarchy'
+  get 'add_row', to: 'protein_counts#add_row'
   
   resources :proteins
 
