@@ -147,11 +147,11 @@ describe PfitmapRelease do
       parse_hmm_tblout(@hmm_result_nrdb, fixture_file_upload("/NrdB-20rows.tblout"))
       @sequence_source.evaluate(@pfitmap_release, nil)
     end
-
+    
     it "should have a single hmm result registered" do
       @pfitmap_release.sequence_source.hmm_results.length.should == 1
     end
-
+    
     it "should be successful to call calculate_main" do
       @pfitmap_release.calculate_main("GOLDWGStest10", FactoryGirl.create(:user_admin))
       Taxon.find_all_by_wgs(true).length.should == 10
@@ -160,7 +160,7 @@ describe PfitmapRelease do
       ProteinCount.maximum("no_proteins").should == 4
       ProteinCount.maximum("no_genomes_with_proteins").should == 3
     end
-
+    
     it "should not include all taxon-levels" do
       @pfitmap_release.calculate_main("GOLDWGStest10", FactoryGirl.create(:user_admin))
       Taxon.all.length.should be < 70
@@ -215,7 +215,11 @@ describe PfitmapRelease do
       root_taxons.length.should == 1
     end
 
-  
+    profile :min_percent => 0.1, :printer => :flat do
+      it "calculates fast" do
+        @pfitmap_release.calculate_main("GOLDWGStest10",FactoryGirl.create(:user_admin))
+      end
+    end
   end
 
 

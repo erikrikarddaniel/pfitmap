@@ -40,6 +40,7 @@ group :development, :test do
 end
 
 group :test do
+  gem 'rspec-prof'
   gem 'capybara', '1.1.2'
   gem 'factory_girl_rails', '1.4.0'
   gem 'autotest-standalone', :require => 'autotest'
