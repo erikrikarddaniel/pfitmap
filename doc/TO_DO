@@ -25,6 +25,8 @@ Big Items
 
 Things to fix
 -------------
+* unauthorized users should still have the right to visit protein_counts statistic pages
+
 * NoMethodError in Protein_counts#by_rank when there is no pfitmap_release calculated
    - <h2>Taxon rank: <%=@taxon_rank ? @taxon_rank : "All" %>, pfitmap_release: <%= @pfitmap_release.release %></h2>
 
