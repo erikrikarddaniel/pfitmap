@@ -214,10 +214,11 @@ describe PfitmapRelease do
       root_taxons = Taxon.find_all_by_parent_ncbi_id(nil)
       root_taxons.length.should == 1
     end
-
-    profile :min_percent => 0.1, :printer => :flat do
-      it "calculates fast" do
-        @pfitmap_release.calculate_main("GOLDWGStest10",FactoryGirl.create(:user_admin))
+    describe "performance", :performance => true do
+      profile do
+        it "calculates fast" do
+          @pfitmap_release.calculate_main("GOLDWGStest10",FactoryGirl.create(:user_admin))
+        end
       end
     end
   end
