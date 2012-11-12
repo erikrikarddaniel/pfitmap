@@ -9,6 +9,7 @@ namespace :db do
     make_sequence_sources
     make_hmm_results
     make_hmm_score_criteria
+    make_enzymes
   end
 
   def make_users
@@ -48,18 +49,20 @@ SQL
       protein_name: "NrdB-R2lox",
       version: "20120402",
     )
-    @hmm_profile_nrdb = HmmProfile.create!(name: "RNR R2",
+    @hmm_profile_nrdb = HmmProfile.create!(
+      name: "RNR R2",
       protein_name: "NrdB",
       version: "20120402",
       parent_id: @hmm_profile_nrdbr2lox.id
     )
-    @hmm_profile_nrdf = HmmProfile.create!(name: "RNR R2 subclass Ib",
+    @hmm_profile_nrdf = HmmProfile.create!(
+      name: "RNR R2 subclass Ib",
       protein_name: "NrdF",
       version: "20120402",
       parent_id: @hmm_profile_nrdb.id
     )
-    @hmm_profile_nrdben = HmmProfile.create!(name: "RNR R2,
-      Eukaryotes and sister group",
+    @hmm_profile_nrdben = HmmProfile.create!(
+      name: "RNR R2, Eukaryotes and sister group",
       protein_name: "NrdBen",
       version: "20120402",
       parent_id: @hmm_profile_nrdb.id
@@ -83,11 +86,54 @@ SQL
       protein_name: "NrdA-PFL",
       version: "20120402",
     )
-    @hmm_profile_nrda = HmmProfile.create!(
-      name: "RNR R1",
-      protein_name: "NrdA",
+    @hmm_profile_nrdaj = HmmProfile.create!(
+      name: "RNR class I R1 and class II",
+      protein_name: "NrdAJ",
       version: "20120402",
       parent_id: @hmm_profile_nrdapfl.id
+    )
+    @hmm_profile_nrda = HmmProfile.create!(
+      name: "RNR class I R1",
+      protein_name: "NrdA",
+      version: "20120402",
+      parent_id: @hmm_profile_nrdaj.id
+    )
+    @hmm_profile_nrdj = HmmProfile.create!(
+      name: "RNR class II",
+      protein_name: "NrdJ",
+      version: "20120402",
+      parent_id: @hmm_profile_nrdaj.id
+    )
+    @hmm_profile_nrdd = HmmProfile.create!(
+      name: "RNR class III enzyme",
+      protein_name: "NrdD",
+      version: "20120402",
+      parent_id: @hmm_profile_nrdapfl.id
+    )
+    @hmm_profile_pfl = HmmProfile.create!(
+      name: "PFL",
+      protein_name: "PFL",
+      version: "20120402",
+      parent_id: @hmm_profile_nrdapfl.id
+    )
+
+    # NrdG m.fl.
+    @hmm_profile_nrdg_pfl_activase = HmmProfile.create!(
+      name: "RNR class III and PFL activase",
+      protein_name: "NrdG-PFLactivase",
+      version: "20120402",
+    )
+    @hmm_profile_nrdg = HmmProfile.create!(
+      name: "RNR class III activase",
+      protein_name: "NrdG",
+      version: "20120402",
+      parent_id: @hmm_profile_nrdg_pfl_activase.id
+    )
+    @hmm_profile_nrdg = HmmProfile.create!(
+      name: "PFL activase",
+      protein_name: "PFLact",
+      version: "20120402",
+      parent_id: @hmm_profile_nrdg_pfl_activase.id
     )
   end
 
@@ -170,6 +216,33 @@ SQL
 	db_sequence_id:	@dbsequences[tfields[3]].id
       ) unless @hmm_db_hits[hfields[3]]
     end
+  end
+
+  def make_enzymes
+    @enzyme_class_i_rnr = Enzyme.create!(
+      name: 'RNR class I enzyme'
+    )
+    ep = @hmm_profile_nrdb.enzyme_profiles.create!
+    ep.enzyme_id = @enzyme_class_i_rnr.id
+    ep.save
+    ep = @hmm_profile_nrda.enzyme_profiles.create!
+    ep.enzyme_id = @enzyme_class_i_rnr.id
+    ep.save
+    @enzyme_class_ii_rnr = Enzyme.create!(
+      name: 'RNR class II enzyme'
+    )
+    ep = @hmm_profile_nrdj.enzyme_profiles.create!
+    ep.enzyme_id = @enzyme_class_ii_rnr.id
+    ep.save
+    @enzyme_class_iii_rnr = Enzyme.create!(
+      name: 'RNR class III enzyme'
+    )
+    ep = @hmm_profile_nrdd.enzyme_profiles.create!
+    ep.enzyme_id = @enzyme_class_iii_rnr.id
+    ep.save
+    ep = @hmm_profile_nrdg.enzyme_profiles.create!
+    ep.enzyme_id = @enzyme_class_iii_rnr.id
+    ep.save
   end
 
   def nrdb_hmmer_tblout
