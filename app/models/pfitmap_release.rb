@@ -80,30 +80,41 @@ class PfitmapRelease < ActiveRecord::Base
     #  
     # The steps of the algorithm are explained below.
 
+    require "matrix"
+
     # Resets the protein_counts table for the release and 
     # fills it with new values.
     pfitmap_release = self
     db_string = "ref"
 
+    # Accepted ranks
+    rank_hash = {"superkingdom" => true, "phylum" => true, 
+      "class" => true, "order" => true, "family" => true,
+      "genus" => true, "species" => true }
+    
     # Destroy old protein counts rows for this release
     @protein_counts = pfitmap_release.protein_counts
     @protein_counts.destroy_all
 
     # Make sure the protein table is filled
     Protein.initialize_proteins
+    proteins = Protein.all
 
     # Retrieve all whole genome sequenced organisms id
     taxon_ncbi_ids = BiosqlWeb.organism_group2ncbi_taxon_ids(organism_group)
 
     # Initialize dry run, count genomes
-    dry_run(taxon_ncbi_ids, pfitmap_release)
+    dry_run(taxon_ncbi_ids, pfitmap_release, proteins, rank_hash)
     
     # Second iteration, count hits
-    second_run_count_hits(pfitmap_release,db_string)
+    second_run_count_hits(pfitmap_release,db_string, proteins)
+
+    # Save tree to database
+    save_to_db(tree)
   end
 
   private
-  def dry_run(taxon_ncbi_ids, pfitmap_release)
+  def dry_run(taxon_ncbi_ids, pfitmap_release, proteins, rank_hash)
     ## Dry run of the calculate_main method
     #  Pulls one taxon hierarchy from biosqlweb at a time and iteratively
     #  adds taxons that are either 
@@ -115,18 +126,17 @@ class PfitmapRelease < ActiveRecord::Base
     #  For all taxons, it visits (or initializes) all its protein_counts and 
     #  adds 1 to the no_genomes attribute.
 
-    # Accepted ranks
-    rank_hash = {"superkingdom" => true, "phylum" => true, 
-      "class" => true, "order" => true, "family" => true,
-      "genus" => true, "species" => true }
+    # Tree structure for protein_counts
+    # {taxon_ncbi_id => [parent_ncbi_id, taxon_hash, {protein_id => protein_count_vector}]}
+    tree = {}
     # First iterate over whole genome sequenced organisms
     taxon_ncbi_ids.each do |taxon_ncbi_id|
-      taxons = BiosqlWeb.ncbi_taxon_id2full_taxon_hierarchy(taxon_ncbi_id)         
+      taxons = BiosqlWeb.ncbi_taxon_id2full_taxon_hierarchy(taxon_ncbi_id)
 
       # Special case for the leaf node
       first = true
       current_taxon, *rest = *taxons
-      # Go from leaf to root, in taxonomy tree, save taxons with accepted ranks.
+      
       rest.each do |next_taxon|
         major_rank = rank_hash[next_taxon["node_rank"]]
         if not major_rank
@@ -134,83 +144,117 @@ class PfitmapRelease < ActiveRecord::Base
             next
           end
         end
-        taxon_in_db = taxon_in_db_lookup(current_taxon)
-        taxon = init_taxon(current_taxon, taxon_in_db, next_taxon, first)
-        first = false
-        # For each protein, initialize protein_count and/or add 1 to no_genomes
-        protein_count_init_or_add(taxon)
+        
+        if tree[current_taxon["ncbi_taxon_id"]]
+          pv_hash = proteins.each { |p| pv_hash[p.id] = Vector[1,0,0] }
+          add_pc_recursively_all_proteins(tree, current_taxon["ncbi_taxon_id"], pv_hash, first)
+          break
+        end
+        new_taxon_to_tree(tree, current_taxon, next_taxon, proteins, first)
         current_taxon = next_taxon
-      end
-          
-      # The last taxon should also be added:
-      if current_taxon["scientific_name"] == "root"
-        taxon_in_db = taxon_in_db_lookup(current_taxon)
-        taxon = init_taxon(current_taxon, taxon_in_db, nil, false)
-        protein_count_init_or_add(taxon)
+        first = false
       end
     end
+    return tree
   end
+      
 
-  def second_run_count_hits(pfitmap_release, db_string)
+
+  def second_run_count_hits(tree, pfitmap_release, db_string)
     # To be called after the dry_run method. 
     # Iterates over all pfitmap_sequences and collects the corresponding
     # taxon through biosqlweb. It thereby iterates upwards through
     # the taxon hierarchy and adds 1 to the no_proteins for all.
     # If the taxon leaf has no protein hit before, then also adds
     # 1 to no_genomes_with_proteins to all taxons up to root.
-
+    
+    # Add combinations of taxons and proteins where it has been observed
+    # {taxon_id => { protein_id => true }}
+    obs_as_genome = {}
     pfitmap_release.pfitmap_sequences.each do |p_sequence|
       best_profile = p_sequence.hmm_profile
       proteins = best_profile.all_proteins_including_parents
       p_sequence.hmm_db_hits.where("db = ?", db_string).select(:gi).each do |hit|
         ncbi_taxon_id = BiosqlWeb.gi2ncbi_taxon_id(hit.gi)
-        genome_taxon = Taxon.find_by_ncbi_taxon_id(ncbi_taxon_id)
-        # CHECK THAT ITS GOLD
-        unless genome_taxon.nil? || (not genome_taxon.wgs)
-          taxons = genome_taxon.self_and_ancestors
-          proteins.each do |protein|
-            ProteinCount.add_hit(protein,taxons, pfitmap_release)
+        tree_item = tree[ncbi_taxon_id]
+
+        unless tree_item.nil? || (not tree_item.last) # Valid taxon to hit?
+          protein_vector_hash = {}
+          proteins.each do |p|
+            # Is this protein-taxon combo observed as genome before?
+            if obs_as_genome[ncbi_taxon_id] && obs_as_genome[ncbi_taxon_id][p.id]
+              protein_vector_hash[p.id] = Vector[0,1,0]
+            else
+              protein_vector_hash[p.id] = Vector[0,1,1]
+            end
           end
+          add_pc_recursively(tree, ncbi_taxon_id, protein_vector_hash, false)
         end
       end
     end
   end
-  
-  def taxon_in_db_lookup(taxon_hash)
-    Taxon.find(:first, :conditions => ["ncbi_taxon_id = ?", taxon_hash["ncbi_taxon_id"]])
+
+  def save_to_db(tree)
+    tree.each do |ncbi_id, value_list|
+      parent_ncbi_id = value_list[0]
+      taxon = value_list[1]
+      protein_pc_hash = value_list[2]
+      save_taxon(taxon,parent_ncbi_id)
+      protein_pc_hash.each do |protein, vec|
+        save_protein_count(protein, taxon, vec)
+      end
+    end 
   end
 
-  def protein_count_init_or_add(taxon)
-    proteins = Protein.all
-    proteins.each do |protein|
-      protein_count = protein_count_for(taxon,protein).first
-      if not protein_count
-        protein_count = ProteinCount.new(no_genomes: 0, no_proteins: 0, no_genomes_with_proteins: 0)
-        protein_count.pfitmap_release_id = self.id
-        protein_count.protein_id = protein.id
-        protein_count.taxon_id = taxon.id
-        protein_count.obs_as_genome = false
-        protein_count.save
+  def add_pc_recursively(tree, ncbi_id, pv_hash, first)
+    if tree[nbci_id]
+      # Checkbox for taxons included in organism group
+      if first and (not tree[ncbi_id][3])
+        tree[ncbi_id][3] == true
       end
-        
-      protein_count.add_genome
+
+      protein_hash = tree[ncbi_id][2]
+      pv_hash.each do |p,v|
+        protein_hash[p] += v
+      end
+      add_pc_recursively_all_proteins(tree, tree[ncbi_id].first, pv_hash, false)
+    else
+      return tree
     end
   end
-  
-  def init_taxon(taxon_hash, taxon_in_db, next_taxon, first)
-    if not taxon_in_db
-      taxon_in_db = Taxon.new
-      taxon_in_db.ncbi_taxon_id = taxon_hash["ncbi_taxon_id"]
-      taxon_in_db.name = taxon_hash["scientific_name"]
-      taxon_in_db.rank = taxon_hash["node_rank"]
-      if next_taxon
-        taxon_in_db.parent_ncbi_id = next_taxon["ncbi_taxon_id"]
-      end
+
+  def new_taxon_to_tree(tree, taxon_hash, parent_taxon_hash, proteins, obs_as_genome)
+    p_hash = {}
+    proteins.each do |p|
+      p_hash[p.id] = Vector[1,0,0]
     end
-    if first
-      taxon_in_db.wgs = "true"
+    taxon_id = taxon_hash["ncbi_taxon_id"]
+    parent_id = parent_taxon_hash["ncbi_taxon_id"]
+    tree[taxon_id] = [parent_id, taxon_hash, p_hash, obs_as_genome]
+  end
+
+
+  def save_taxon(taxon_hash, parent_taxon_id)
+    taxon_in_db = Taxon.find_by_ncbi_taxon_id(taxon_hash["ncbi_taxon_id"])
+    if taxon_in_db
+      taxon = taxon_in_db
+    else
+      taxon = Taxon.new
     end
-    taxon_in_db.save
-    return taxon_in_db
+    taxon.ncbi_taxon_id = taxon_hash["ncbi_taxon_id"]
+    taxon.name = taxon_hash["scientific_name"]
+    taxon.rank = taxon_hash["node_rank"]
+    taxon.parent_ncbi_id = parent_taxon_id
+    taxon.save
+  end
+
+  def save_protein_count(protein, taxon, vec)
+    protein_count = ProteinCount.new(no_genomes: vec[0], 
+                                     no_proteins: vec[1], 
+                                     no_genomes_with_proteins: vec[2])
+    protein_count.pfitmap_release_id = self.id
+    protein_count.protein_id = protein.id
+    protein_count.taxon_id = taxon.id
+    protein_count.save
   end
 end
