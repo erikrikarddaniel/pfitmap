@@ -154,9 +154,10 @@ describe PfitmapRelease do
 
     it "should be successful to call calculate_main" do
       @pfitmap_release.calculate_main("GOLDWGStest10", FactoryGirl.create(:user_admin))
-      Taxon.find_all_by_wgs(true).length.should == 10
+      taxons = Taxon.all
+      Taxon.all.length.should == 50
       Protein.all.length.should == 2
-      ProteinCount.find_all_by_obs_as_genome(true).length.should == 6
+      ProteinCount.all.length.should == 100
       ProteinCount.maximum("no_proteins").should == 4
       ProteinCount.maximum("no_genomes_with_proteins").should == 3
     end
