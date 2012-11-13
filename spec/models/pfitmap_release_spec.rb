@@ -16,7 +16,7 @@ require 'spec_helper'
 describe PfitmapRelease do
   let!(:sequence_source) { FactoryGirl.create(:sequence_source) }
   before do
-    @pfitmap_release = PfitmapRelease.new(release: "0.1", release_date: "2001-04-20", sequence_source_id: sequence_source)
+    @pfitmap_release = PfitmapRelease.new(release: "0.1", release_date: "2001-04-20", sequence_source_id: sequence_source.id)
     @pfitmap_release.current = false
   end
   subject{ @pfitmap_release }
