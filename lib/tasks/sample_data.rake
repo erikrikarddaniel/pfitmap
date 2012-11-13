@@ -98,6 +98,12 @@ SQL
       version: "20120402",
       parent_id: @hmm_profile_nrdaj.id
     )
+    @hmm_profile_nrde = HmmProfile.create!(
+      name: "RNR class Ib R1",
+      protein_name: "NrdE",
+      version: "20120402",
+      parent_id: @hmm_profile_nrda.id
+    )
     @hmm_profile_nrdj = HmmProfile.create!(
       name: "RNR class II",
       protein_name: "NrdJ",
@@ -166,6 +172,13 @@ SQL
     nrdf_hmmer_tblout.split("\n").each_with_index do |tbloutline, i|
       _create_hmm_rows(@hmm_result_nrdf_nr_april, tbloutline)
     end
+    @hmm_result_nrda_nr_april = @hmm_profile_nrda.hmm_results.create!(
+      executed: "2012-08-01 12:00",
+      sequence_source_id: @sequence_source_nr_june.id
+    )
+    nrda_hmmer_tblout.split("\n").each_with_index do |tbloutline, i|
+      _create_hmm_rows(@hmm_result_nrda_nr_april, tbloutline, i)
+    end
   end
 
   def make_hmm_score_criteria
@@ -228,6 +241,15 @@ SQL
     ep = @hmm_profile_nrda.enzyme_profiles.create!
     ep.enzyme_id = @enzyme_class_i_rnr.id
     ep.save
+    @enzyme_class_ib_rnr = Enzyme.create!(
+      name: 'RNR class Ib enzyme'
+    )
+    ep = @hmm_profile_nrdf.enzyme_profiles.create!
+    ep.enzyme_id = @enzyme_class_ib_rnr.id
+    ep.save
+    ep = @hmm_profile_nrde.enzyme_profiles.create!
+    ep.enzyme_id = @enzyme_class_ib_rnr.id
+    ep.save
     @enzyme_class_ii_rnr = Enzyme.create!(
       name: 'RNR class II enzyme'
     )
@@ -243,6 +265,12 @@ SQL
     ep = @hmm_profile_nrdg.enzyme_profiles.create!
     ep.enzyme_id = @enzyme_class_iii_rnr.id
     ep.save
+  end
+
+  # Not done here yet -- have to rush
+  def nrda_hmmer_tblout
+    <<TBLOUT
+TBLOUT
   end
 
   def nrdb_hmmer_tblout
