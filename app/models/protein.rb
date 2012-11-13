@@ -23,8 +23,6 @@ class Protein < ActiveRecord::Base
         profile.enzymes.each do |enzyme|
           add_if_not_existing(enzyme,profile)
         end
-      else
-        add_if_not_existing(nil,profile)
       end
     end
   end
