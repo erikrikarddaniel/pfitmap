@@ -182,7 +182,7 @@ class PfitmapRelease < ActiveRecord::Base
           protein_vector_hash = {}
           proteins.each do |p|
             # Is this protein-taxon combo observed as genome before?
-            if obs_as_genome[ncbi_taxon_id] && obs_as_genome[ncbi_taxon_id][p.id]
+            if obs_as_genome[ncbi_taxon_id] and obs_as_genome[ncbi_taxon_id][p.id]
               protein_vector_hash[p.id] = Vector[0,1,0]
             else
               protein_vector_hash[p.id] = Vector[0,1,1]
