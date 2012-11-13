@@ -15,7 +15,7 @@ require 'spec_helper'
 
 describe Protein do
   let!(:hmm_profile1) { FactoryGirl.create(:hmm_profile) }
-  let!(:hmm_profile2) { FactoryGirl.create(:hmm_profile) }
+  let!(:hmm_profile2) { FactoryGirl.create(:hmm_profile_nrdb) }
 
   describe "initialization" do
     before do
@@ -23,6 +23,7 @@ describe Protein do
     end
     it "should have created some proteins" do
       Protein.all.should_not == []
+      Protein.count.should == 1
     end
   end
 end

@@ -59,8 +59,8 @@ describe "SequenceSources" do
         before { visit sequence_source_path(source1) }
         subject { page }
         it "displays the correct results" do
-          should have_tag('td', :text => r1.hmm_profile.name, :count => 1)
-          should have_tag('td', :text => r2.hmm_profile.name, :count => 1)
+          should have_content(r1.hmm_profile.name)
+          should have_content(r2.hmm_profile.name)
         end
         
         it "does not display results for other sources" do
