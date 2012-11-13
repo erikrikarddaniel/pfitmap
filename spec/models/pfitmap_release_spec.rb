@@ -156,8 +156,10 @@ describe PfitmapRelease do
       @pfitmap_release.calculate_main("GOLDWGStest10", FactoryGirl.create(:user_admin))
       taxons = Taxon.all
       Taxon.all.length.should == 50
-      Protein.all.length.should == 2
-      ProteinCount.all.length.should == 100
+      Enzyme.all.length.should == 1
+      Protein.all.length.should == 1
+      ProteinCount.all.length.should == 50
+      ProteinCount.sum("no_proteins").should == 34 # 34 for new implementation
       ProteinCount.maximum("no_proteins").should == 4
       ProteinCount.maximum("no_genomes_with_proteins").should == 3
     end
@@ -196,9 +198,9 @@ describe PfitmapRelease do
       @pfitmap_release.calculate_main("GOLDWGStest10",FactoryGirl.create(:user_admin))
       Taxon.find_all_by_wgs(true).length.should == 10
       HmmProfile.all.length.should == 4
-      Protein.all.length.should == 4
-      ProteinCount.find_all_by_obs_as_genome(true).length.should == 10
-
+      Protein.all.length.should == 1 # used to say 4
+      ProteinCount.find_all_by_obs_as_genome(true).length.should == 4
+# Used to say 10
       # Check specific values (human nrdb)
       nrdb_protein = Protein.find_by_name('NrdB')
       human_taxon = Taxon.find_by_name('Homo sapiens')
@@ -235,7 +237,7 @@ describe PfitmapRelease do
 
     it "should succesfuly calculate the release" do
       @pfitmap_release.calculate_main("GOLDWGStest100", FactoryGirl.create(:user_admin))
-      Protein.all.length.should == 4
+      Protein.all.length.should == 1 # used to say 4
 
       # Check specific values (human nrdb)
       nrdb_protein = Protein.find_by_name('NrdB')
@@ -247,7 +249,7 @@ describe PfitmapRelease do
       human_nrdb_protein_count.obs_as_genome.should == true
       
 
-      ProteinCount.all.length.should == 1372
+      ProteinCount.all.length.should == 343 # Used to say 1372
       # Check the root
       root_taxon = Taxon.find_by_name('root')
       root_nrdb_pc = ProteinCount.find(:first, :conditions => ["protein_id = ? AND taxon_id = ? AND pfitmap_release_id = ?", nrdb_protein.id, root_taxon.id, @pfitmap_release.id])
