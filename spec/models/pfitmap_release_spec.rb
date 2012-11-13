@@ -159,7 +159,7 @@ describe PfitmapRelease do
       Enzyme.all.length.should == 1
       Protein.all.length.should == 2
       ProteinCount.all.length.should == 100
-      ProteinCount.sum("no_proteins").should == 34 # 34 for new implementation
+      ProteinCount.sum("no_proteins").should == 68
       ProteinCount.maximum("no_proteins").should == 4
       ProteinCount.maximum("no_genomes_with_proteins").should == 3 # New implementation gives 4
     end
