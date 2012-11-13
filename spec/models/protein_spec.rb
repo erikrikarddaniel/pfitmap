@@ -23,6 +23,7 @@ describe Protein do
     end
     it "should have created some proteins" do
       Protein.all.should_not == []
+      Protein.count.should == 3
     end
   end
 end
