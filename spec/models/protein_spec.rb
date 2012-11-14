@@ -15,7 +15,7 @@ require 'spec_helper'
 
 describe Protein do
   let!(:hmm_profile1) { FactoryGirl.create(:hmm_profile) }
-  let!(:hmm_profile2) { FactoryGirl.create(:hmm_profile) }
+  let!(:hmm_profile2) { FactoryGirl.create(:hmm_profile_nrdb) }
 
   describe "initialization" do
     before do
