@@ -93,22 +93,25 @@ class PfitmapRelease < ActiveRecord::Base
       "genus" => true, "species" => true }
     
     # Destroy old protein counts rows for this release
-    @protein_counts = pfitmap_release.protein_counts
-    @protein_counts.destroy_all
+    protein_counts = pfitmap_release.protein_counts
+    protein_counts.destroy_all
 
     # Make sure the protein table is filled
     Protein.initialize_proteins
     proteins = Protein.all
 
+    logger.info "blablablabla lets get em"
     # Retrieve all whole genome sequenced organisms id
     taxon_ncbi_ids = BiosqlWeb.organism_group2ncbi_taxon_ids(organism_group)
-
+    logger.info "blablablabla we got em"
     # Initialize dry run, count genomes
     tree = dry_run(taxon_ncbi_ids, pfitmap_release, proteins, rank_hash)
+    logger.info "blablablabla dried up"
 
     
     # Second iteration, count hits
     second_run_count_hits(tree, pfitmap_release,db_string)
+    logger.debug "blablablabla all counted"
 
     # Save tree to database
     save_to_db(tree)
@@ -133,7 +136,7 @@ class PfitmapRelease < ActiveRecord::Base
     # First iterate over whole genome sequenced organisms
     taxon_ncbi_ids.each do |taxon_ncbi_id|
       taxons = BiosqlWeb.ncbi_taxon_id2full_taxon_hierarchy(taxon_ncbi_id)
-
+      logger.info "Taxons keep on comin' #{taxon_ncbi_id}"
       # Special case for the leaf node
       first = true
       current_taxon, *rest = *taxons
@@ -204,15 +207,15 @@ class PfitmapRelease < ActiveRecord::Base
       parent_ncbi_id = value_list ? value_list[0] : nil
       taxon = value_list[1]
       protein_pc_hash = value_list[2]
-      save_taxon(taxon,parent_ncbi_id)
+      taxon_id = save_taxon(taxon,parent_ncbi_id)
       protein_pc_hash.each do |protein, vec|
-        save_protein_count(protein, taxon["ncbi_taxon_id"], vec)
+        save_protein_count(protein, taxon_id, vec)
       end
     end 
   end
 
   def add_pc_recursively(tree, ncbi_id, pv_hash, first)
-    if tree[ncbi_id]
+    if tree[ncbi_id] and ncbi_id
       # Checkbox for taxons included in organism group
       if first and (not tree[ncbi_id][3])
         tree[ncbi_id][3] == true
@@ -229,13 +232,15 @@ class PfitmapRelease < ActiveRecord::Base
   end
 
   def new_taxon_to_tree(tree, taxon_hash, parent_taxon_hash, proteins, first)
-    p_hash = {}
-    proteins.each do |p|
-      p_hash[p.id] = Vector[1,0,0]
+    if taxon_hash["ncbi_taxon_id"]
+      p_hash = {}
+      proteins.each do |p|
+        p_hash[p.id] = Vector[1,0,0]
+      end
+      taxon_id = taxon_hash["ncbi_taxon_id"]
+      parent_id = parent_taxon_hash ? parent_taxon_hash["ncbi_taxon_id"] : nil
+      tree[taxon_id] = [parent_id, taxon_hash, p_hash, first]
     end
-    taxon_id = taxon_hash["ncbi_taxon_id"]
-    parent_id = parent_taxon_hash ? parent_taxon_hash["ncbi_taxon_id"] : nil
-    tree[taxon_id] = [parent_id, taxon_hash, p_hash, first]
   end
 
 
@@ -251,6 +256,7 @@ class PfitmapRelease < ActiveRecord::Base
     taxon.rank = taxon_hash["node_rank"]
     taxon.parent_ncbi_id = parent_taxon_id
     taxon.save
+    return taxon.id
   end
 
   def save_protein_count(protein_id, taxon_id, vec)
@@ -259,7 +265,7 @@ class PfitmapRelease < ActiveRecord::Base
                                      no_genomes_with_proteins: vec[2])
     protein_count.pfitmap_release_id = self.id
     protein_count.protein_id = protein_id
-    protein_count.taxon_id = Taxon.find_by_ncbi_taxon_id(taxon_id).id
+    protein_count.taxon_id = taxon_id
     protein_count.save
   end
 end
