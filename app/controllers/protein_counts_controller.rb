@@ -76,7 +76,7 @@ class ProteinCountsController < ApplicationController
     end
 
     @enzymes = []
-    name_array = ['Klass I RNR', 'Klass II', 'Klass III']
+    name_array = ['RNR class I enzyme', 'RNR class Ib enzyme', 'RNR class II enzyme', 'RNR class III enzyme']
     name_array.each do |name|
       enz = Enzyme.find_by_name(name)
       if enz
