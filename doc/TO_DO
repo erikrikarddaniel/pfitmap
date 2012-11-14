@@ -25,6 +25,8 @@ Big Items
 
 Things to fix
 -------------
+* Can remove wgs attribute from taxon with a migration
+
 * unauthorized users should still have the right to visit protein_counts statistic pages
 
 * NoMethodError in Protein_counts#by_rank when there is no pfitmap_release calculated
