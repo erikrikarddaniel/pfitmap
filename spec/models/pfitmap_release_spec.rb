@@ -239,6 +239,9 @@ describe PfitmapRelease do
       @pfitmap_release.calculate_main("GOLDWGStest100", FactoryGirl.create(:user_admin))
       Protein.all.length.should == 4
 
+      ProteinCount.sum("no_proteins").should == 180 # first was 180 or 162
+      ProteinCount.sum("no_genomes").should ==  3508  #first was 3436 or 3472 or 3476
+      ProteinCount.sum("no_genomes_with_proteins").should == 82
       # Check specific values (human nrdb)
       nrdb_protein = Protein.find_by_name('NrdB')
       human_taxon = Taxon.find_by_name('Homo sapiens')
