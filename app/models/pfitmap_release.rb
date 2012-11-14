@@ -105,6 +105,7 @@ class PfitmapRelease < ActiveRecord::Base
 
     # Initialize dry run, count genomes
     tree = dry_run(taxon_ncbi_ids, pfitmap_release, proteins, rank_hash)
+
     
     # Second iteration, count hits
     second_run_count_hits(tree, pfitmap_release,db_string)
@@ -184,8 +185,12 @@ class PfitmapRelease < ActiveRecord::Base
             # Is this protein-taxon combo observed as genome before?
             if obs_as_genome[ncbi_taxon_id] and obs_as_genome[ncbi_taxon_id][p.id]
               protein_vector_hash[p.id] = Vector[0,1,0]
-            else
+            else 
+              if (not obs_as_genome[ncbi_taxon_id])
+                obs_as_genome[ncbi_taxon_id] = {}
+              end
               protein_vector_hash[p.id] = Vector[0,1,1]
+              obs_as_genome[ncbi_taxon_id][p.id] = true
             end
           end
           add_pc_recursively(tree, ncbi_taxon_id, protein_vector_hash, false)

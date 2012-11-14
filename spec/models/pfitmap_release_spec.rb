@@ -209,7 +209,6 @@ describe PfitmapRelease do
       human_nrdb_protein_count.no_proteins.should == 2
       human_nrdb_protein_count.no_genomes.should == 1
       human_nrdb_protein_count.no_genomes_with_proteins.should == 1
-      human_nrdb_protein_count.obs_as_genome.should == true
       
       ProteinCount.maximum("no_proteins").should == 6
       ProteinCount.maximum("no_genomes_with_proteins").should == 4
@@ -247,7 +246,6 @@ describe PfitmapRelease do
       human_nrdb_protein_count.no_proteins.should == 4
       human_nrdb_protein_count.no_genomes.should == 1
       human_nrdb_protein_count.no_genomes_with_proteins.should == 1
-      human_nrdb_protein_count.obs_as_genome.should == true
       
 
       ProteinCount.all.length.should == 1372
