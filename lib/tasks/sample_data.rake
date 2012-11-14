@@ -10,6 +10,7 @@ namespace :db do
     make_hmm_results
     make_hmm_score_criteria
     make_enzymes
+    make_release
   end
 
   def make_users
@@ -265,6 +266,17 @@ SQL
     ep = @hmm_profile_nrdg.enzyme_profiles.create!
     ep.enzyme_id = @enzyme_class_iii_rnr.id
     ep.save
+  end
+
+  def make_release 
+     pr = PfitmapRelease.new(
+     	sequence_source_id: @sequence_source_nr_june.id,
+     	release: "0.1",
+     	release_date: "2012-06-13"
+	)
+	
+     pr.current = false
+     pr.save
   end
 
   # Not done here yet -- have to rush
