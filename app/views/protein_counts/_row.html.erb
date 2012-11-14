@@ -1,6 +1,6 @@
 <tr id=<%=taxon.name + taxon.id.to_s %>>
-<td class="taxon">
-<%= link_to taxon.name, { :controller => "protein_counts", :action => "add_row", :parent_id => taxon.id}, :remote => true %>
+<td class="taxon" data-indent=<%=level%>>
+<%= link_to taxon.name, { :controller => "protein_counts", :action => "add_row", :parent_id => taxon.id, :level => level}, :remote => true %>
 </td>
 <% @enzymes.each do |enzyme| %>
 <% enzyme.proteins.each do |protein| %>

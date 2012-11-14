@@ -19,28 +19,7 @@
   </thead>
   <tbody>
     <% @taxons.each do |taxon| %>
-    <tr id=<%=taxon.name + taxon.id.to_s %>>
-      <td class="taxon">
-	<%= link_to taxon.name, { :controller => "protein_counts", :action => "add_row", :parent_id => taxon.id}, :remote => true %>
-      </td>
-      <% @enzymes.each do |enzyme| %>
-      <% enzyme.proteins.each do |protein| %>
-      <% protein_count = @protein_counts_hash[taxon.id][protein.id] %>
-      <% if protein_count %>
-      <% color_int = pc_col(protein_count) %>
-      <td class="heat" data-color= "<%= color_int %>">
-	<%= protein_count.no_genomes.to_s %> |
-	<%= protein_count.no_proteins.to_s %> |
-	<%= protein_count.no_genomes_with_proteins.to_s %>
-      </td>
-      <% else %>
-      <td colspan="3">none</td>
-      <td></td>
-      <td></td>
-      <% end %>
-      <% end %>
-      <% end %>
-    </tr>
+    <%= render :partial => 'row', :locals => {taxon: taxon, level: @level} %>
     <% end %>
   </tbody>
   <% end %>

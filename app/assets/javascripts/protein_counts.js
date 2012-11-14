@@ -2,15 +2,31 @@ jQuery(function($) {
     $('#protein_menu').bind("ajax:success", function(xhr, data, status) {
 	$("#protein_counts_table").html(data);
     });
-
+    
     $('#expListAjaxProteinCountTable').bind("ajax:success", function(xhr, data, status) {
 	$("#protein_counts_table").html(data);
     });
 
     $('#explanations a').tooltip()
 })
+// Following two functions are taken from 
+// http://www.linuxtopia.org/online_books/javascript_guides/javascript_faq/rgbtohex.htm
+// copyright Alexei Kourbatov
+function RGBtoHex(R,G,B) {return toHex(R)+toHex(G)+toHex(B)}
+function toHex(N) {
+    if (N==null) return "00";
+    N=parseInt(N); if (N==0 || isNaN(N)) return "00";
+    N=Math.max(0,N); N=Math.min(N,255); N=Math.round(N);
+    return "0123456789ABCDEF".charAt((N-N%16)/16)
+	+ "0123456789ABCDEF".charAt(N%16);
+}
 
 $(document).ready(function(){
+    colorHeatmap();
+    IndentTaxons();
+});
+
+function colorHeatmap(){
     // Original from:
     // jQuery Tutorial – Create a Flexible Data Heat Map
     // http://www.designchemical.com/blog/index.php/jquery/
@@ -21,23 +37,36 @@ $(document).ready(function(){
     n = 100;
 
     // Define the starting colour (ratio = 0)
-    xr = 0;
+    xr = 30;
     xg = 0;
-    xb = 255;
+    xb = 30;
  
     // Define the ending colour (ratio = 1)
-    yr = 0;
-    yg = 255;
-    yb = 0;
+    yr = 255;
+    yg = 0;
+    yb = 255;
 
     $('.heat-map tbody td.heat').each(function(){
 	var color_int = this.getAttribute('data-color');
-
-	red =  parseInt((xr + ((color_int * (yr-xr))/(n-1))).toFixed(0));
-	green = parseInt((xg + ((color_int * (yg-xg))/(n-1))).toFixed(0));
-	blue =  parseInt((xb + ((color_int * (yb-xb))/(n-1))).toFixed(0));
-	clr = 'rgb('+red+','+green+','+blue+')';
-	$(this).css({backgroundColor:clr});
+	if (color_int == 0){
+	    hex_clr = RGBtoHex(142,142,142);
+	}
+	else {
+	    red =  parseInt((xr + ((color_int * (yr-xr))/(n-1))).toFixed(0));
+	    green = parseInt((xg + ((color_int * (yg-xg))/(n-1))).toFixed(0));
+	    blue =  parseInt((xb + ((color_int * (yb-xb))/(n-1))).toFixed(0));
+	    hex_clr = RGBtoHex(red,green,blue);
+	}
+	hex_clr2 = '#' + hex_clr;
+	$(this).css({backgroundColor: hex_clr2});
     });
 
-});
+};
+
+function IndentTaxons() {
+    $('.heat-map tbody td.taxon').each(function(){
+	var indent_int = this.getAttribute('data-indent');
+	var indent_magnitude = indent_int*10
+	$(this).css({textIndent: indent_magnitude});
+    });
+}

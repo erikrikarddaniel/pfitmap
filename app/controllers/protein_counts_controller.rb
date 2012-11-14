@@ -74,16 +74,8 @@ class ProteinCountsController < ApplicationController
     else
       @pfitmap_release = PfitmapRelease.find_current_release
     end
-
-    @enzymes = []
-    name_array = ['RNR class I enzyme', 'RNR class Ib enzyme', 'RNR class II enzyme', 'RNR class III enzyme']
-    name_array.each do |name|
-      enz = Enzyme.find_by_name(name)
-      if enz
-        @enzymes << enz
-      end
-    end
-
+    @enzymes = find_standard_enzymes
+    @level = 0
     
     if params[:taxon_rank]
       @taxon_rank = params[:taxon_rank]
@@ -108,22 +100,28 @@ class ProteinCountsController < ApplicationController
     else
       @pfitmap_release = PfitmapRelease.find_current_release
     end
-    @parent_taxon = Taxon.find(params[:parent_id]) 
+    @parent_taxon = Taxon.find(params[:parent_id])
+    parent_level = params[:level]
+    @level = Integer(parent_level) + 1
     @taxons = @parent_taxon.children
-    
-    @enzymes = []
-    name_array = ['Klass I RNR', 'Klass II', 'Klass III']
-    name_array.each do |name|
-      enz = Enzyme.find_by_name(name)
-      if enz
-        @enzymes << enz
-      end
-    end
+    @enzymes = find_standard_enzymes
 
     @protein_counts_hash = ProteinCount.protein_counts_hash_for(@taxons, Protein.all, @pfitmap_release)
     @html_row = "<tr> <td> 'taxonname' </td> <td> 'P1' </td> <td> 'P2' </td> </tr>"
     respond_to do |format|
       format.js
     end
+  end
+private
+  def find_standard_enzymes
+    enzymes = []
+    name_array = ['RNR class I enzyme', 'RNR class Ib enzyme', 'RNR class II enzyme', 'RNR class III enzyme']
+    name_array.each do |name|
+      enz = Enzyme.find_by_name(name)
+      if enz
+        enzymes << enz
+      end
+    end
+    return enzymes
   end
 end
