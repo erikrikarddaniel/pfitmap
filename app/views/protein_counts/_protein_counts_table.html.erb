@@ -1,11 +1,11 @@
 <table class="heat-map">
   <thead>
-  <tr>
-    <th>Taxon</th>
-    <% @chosen_proteins.each do |protein| %>
-    <th><%= protein.name %> </th>
-    <% end %>
-  </tr>
+    <tr>
+      <th>Taxon</th>
+      <% @chosen_proteins.each do |protein| %>
+      <th><%= protein.name %> </th>
+      <% end %>
+    </tr>
   </thead>
   <tbody>
   <% @taxons.each do |taxon| %>
