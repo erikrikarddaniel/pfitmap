@@ -1,7 +1,7 @@
 var el = $(<%=@parent_taxon.name + @parent_taxon.id.to_s%>);
-el.children('.taxon').html(<%= link_to @parent_taxon.name, { :controller => "protein_counts", :action => "collapse_rows", :parent_id => @parent_taxon.id, :level => (@level - 1)}, :remote => true %>);
 <% @taxons.each do |taxon| %>	
    el.after("<%=(j render(:partial => 'row', :locals => {taxon: taxon, level: @level})).html_safe %>)");
 <% end %>
 colorHeatmap();
 IndentTaxons();
+el.children('.taxon').html("<%= (j link_to @parent_taxon.name, { :controller => "protein_counts", :action => "collapse_rows", :parent_id => @parent_taxon.id, :level => (@level-1)}, :remote => true)%>");
