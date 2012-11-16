@@ -22,6 +22,9 @@ GEM
       activesupport (= 3.2.9)
       arel (~> 3.0.2)
       tzinfo (~> 0.3.29)
+    activerecord-import (0.2.11)
+      activerecord (~> 3.0)
+      activerecord (~> 3.0)
     activeresource (3.2.9)
       activemodel (= 3.2.9)
       activesupport (= 3.2.9)
@@ -218,6 +221,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activerecord-import
   annotate (~> 2.4.1.beta)
   autotest-rails-pure
   autotest-standalone
