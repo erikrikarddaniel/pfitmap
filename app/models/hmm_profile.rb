@@ -44,6 +44,10 @@ class HmmProfile < ActiveRecord::Base
     end
   end
 
+  def to_s
+    "HmmProfile: #{protein_name} #{parent}"
+  end
+
   # A method to pick up all criterias independent of type
   def inclusion_criteria
     self.hmm_score_criteria
