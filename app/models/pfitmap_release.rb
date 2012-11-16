@@ -94,7 +94,7 @@ class PfitmapRelease < ActiveRecord::Base
     
     # Destroy old protein counts rows for this release
     protein_counts = pfitmap_release.protein_counts
-    protein_counts.destroy_all
+    protein_counts.delete_all
 
     # Make sure the protein table is filled
     Protein.initialize_proteins
@@ -208,9 +208,11 @@ class PfitmapRelease < ActiveRecord::Base
       taxon = value_list[1]
       protein_pc_hash = value_list[2]
       taxon_id = save_taxon(taxon,parent_ncbi_id)
+      protein_counts = []
       protein_pc_hash.each do |protein, vec|
-        save_protein_count(protein, taxon_id, vec)
+        protein_counts << save_protein_count(protein, taxon_id, vec)
       end
+      ProteinCount.import protein_counts
     end 
   end
 
@@ -270,6 +272,6 @@ class PfitmapRelease < ActiveRecord::Base
     protein_count.pfitmap_release_id = self.id
     protein_count.protein_id = protein_id
     protein_count.taxon_id = taxon_id
-    protein_count.save
+    return protein_count
   end
 end
