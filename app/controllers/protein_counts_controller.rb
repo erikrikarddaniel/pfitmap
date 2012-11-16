@@ -107,12 +107,28 @@ class ProteinCountsController < ApplicationController
     @enzymes = find_standard_enzymes
 
     @protein_counts_hash = ProteinCount.protein_counts_hash_for(@taxons, Protein.all, @pfitmap_release)
-    @html_row = "<tr> <td> 'taxonname' </td> <td> 'P1' </td> <td> 'P2' </td> </tr>"
     respond_to do |format|
       format.js
     end
   end
-private
+
+  def collapse_rows
+    if session[:release_id]
+      @pfitmap_release = PfitmapRelease.find(session[:release_id])
+    else
+      @pfitmap_release = PfitmapRelease.find_current_release
+    end
+    @level = Integer(params[:level])
+    @taxons = @parent_taxon.children
+    @enzymes = find_standard_enzymes
+    
+    @protein_counts_hash = ProteinCount.protein_counts_hash_for(@taxons, Protein.all, @pfitmap_release)
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  private
   def find_standard_enzymes
     enzymes = []
     name_array = ['RNR class I enzyme', 'RNR class Ib enzyme', 'RNR class II enzyme', 'RNR class III enzyme']
