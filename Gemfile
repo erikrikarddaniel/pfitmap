@@ -33,7 +33,7 @@ gem 'rvm-capistrano'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 # profiling
-gem 'newrelic_rpm'
+#gem 'newrelic_rpm'
 
 gem 'pg'
 
