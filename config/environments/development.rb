@@ -37,8 +37,8 @@ Pfitmap::Application.configure do
 
   Paperclip.options[:command_path] = "/usr/bin"
 
-  # Newrelic monitoring
-  require 'new_relic/rack/developer_mode'
-  config.middleware.use NewRelic::Rack::DeveloperMode
-  ENV['NEWRELIC_ENABLE'] = 'true'
+#  # Newrelic monitoring
+#  require 'new_relic/rack/developer_mode'
+#  config.middleware.use NewRelic::Rack::DeveloperMode
+#  ENV['NEWRELIC_ENABLE'] = 'true'
 end

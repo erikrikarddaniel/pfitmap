@@ -18,4 +18,8 @@ class HmmResult < ActiveRecord::Base
   validates :hmm_profile_id, presence: true
   validates :sequence_source_id, presence: true
   validates :hmm_profile_id, :uniqueness => { :scope => :sequence_source_id, :message => "Only one result per combination of HMM Profile and Sequence database!" }
+
+  def to_s
+    "HmmResult: #{hmm_profile}-#{sequence_source} #{executed}"
+  end
 end
