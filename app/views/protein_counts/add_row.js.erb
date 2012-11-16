@@ -1,4 +1,4 @@
-var el = $(<%=@parent_taxon.name + @parent_taxon.id.to_s%>);
+var el = $(<%= row_id(@parent_taxon)%>);
 <% @taxons.each do |taxon| %>	
    el.after("<%=(j render(:partial => 'row', :locals => {taxon: taxon, level: @level})).html_safe %>)");
 <% end %>
