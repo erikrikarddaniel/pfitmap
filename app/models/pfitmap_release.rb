@@ -100,24 +100,25 @@ class PfitmapRelease < ActiveRecord::Base
     Protein.initialize_proteins
     proteins = Protein.all
 
-    logger.info "blablablabla lets get em"
     # Retrieve all whole genome sequenced organisms id
     taxon_ncbi_ids = BiosqlWeb.organism_group2ncbi_taxon_ids(organism_group)
-    logger.info "blablablabla we got em"
+
     # Initialize dry run, count genomes
     tree = dry_run(taxon_ncbi_ids, pfitmap_release, proteins, rank_hash)
-    logger.info "blablablabla dried up"
 
     
     # Second iteration, count hits
     second_run_count_hits(tree, pfitmap_release,db_string)
-    logger.debug "blablablabla all counted"
 
     # Save tree to database
     save_to_db(tree)
   end
 
   private
+  def calculate_error_log
+    @@calculate_error_log ||= Logger.new("#{Rails.root}/log/calculate.log")
+  end
+
   def dry_run(taxon_ncbi_ids, pfitmap_release, proteins, rank_hash)
     ## Dry run of the calculate_main method
     #  Pulls one taxon hierarchy from biosqlweb at a time and iteratively
@@ -136,7 +137,6 @@ class PfitmapRelease < ActiveRecord::Base
     # First iterate over whole genome sequenced organisms
     taxon_ncbi_ids.each do |taxon_ncbi_id|
       taxons = BiosqlWeb.ncbi_taxon_id2full_taxon_hierarchy(taxon_ncbi_id)
-      logger.info "Taxons keep on comin' #{taxon_ncbi_id}"
       # Special case for the leaf node
       first = true
       current_taxon, *rest = *taxons
@@ -240,6 +240,10 @@ class PfitmapRelease < ActiveRecord::Base
       taxon_id = taxon_hash["ncbi_taxon_id"]
       parent_id = parent_taxon_hash ? parent_taxon_hash["ncbi_taxon_id"] : nil
       tree[taxon_id] = [parent_id, taxon_hash, p_hash, first]
+    else
+      calculate_error_log.info("#{Time.now} Something went wrong with taxon_hash['ncbi_taxon_id']")
+      calculate_error_log.info("The ncbi_taxon_id was: #{ncbi_taxon_id}")
+      calculate_error_log.info("The taxon_hash was: #{taxon_hash}")
     end
   end
 
