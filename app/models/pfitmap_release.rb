@@ -80,6 +80,8 @@ class PfitmapRelease < ActiveRecord::Base
     #  
     # The steps of the algorithm are explained below.
 
+    calculate_logger.info "#{Time.now} Started calculate_main."
+
     require "matrix"
 
     # Resets the protein_counts table for the release and 
@@ -93,32 +95,36 @@ class PfitmapRelease < ActiveRecord::Base
       "genus" => true, "species" => true }
     
     # Destroy old protein counts rows for this release
-    protein_counts = pfitmap_release.protein_counts
-    protein_counts.destroy_all
+    ProteinCount.delete_all(["pfitmap_release_id = ?",pfitmap_release.id])
+    calculate_logger.info "#{Time.now} Deleted old protein_counts for this release."
 
     # Make sure the protein table is filled
     Protein.initialize_proteins
     proteins = Protein.all
+    calculate_logger.info "#{Time.now} Initialized proteins."
 
     # Retrieve all whole genome sequenced organisms id
     taxon_ncbi_ids = BiosqlWeb.organism_group2ncbi_taxon_ids(organism_group)
+    calculate_logger.info "#{Time.now} Collected organism groups' NCBI taxon ids from biosql."
 
     # Initialize dry run, count genomes
     tree = dry_run(taxon_ncbi_ids, pfitmap_release, proteins, rank_hash)
-
+    calculate_logger.info "#{Time.now} Dry run finished."
     
     # Second iteration, count hits
     second_run_count_hits(tree, pfitmap_release,db_string)
+    calculate_logger.info "#{Time.now} Second_run_count_hits finished."
 
     # Save tree to database
     save_to_db(tree)
+    calculate_logger.info "#{Time.now} Everything finished, saved protein counts to db.\n"
+  end
+
+  def calculate_logger
+    @@calculate_logger ||= ActiveSupport::BufferedLogger.new(Rails.root.join('log/calculate.log'))
   end
 
   private
-  def calculate_error_log
-    @@calculate_error_log ||= Logger.new("#{Rails.root}/log/calculate.log")
-  end
-
   def dry_run(taxon_ncbi_ids, pfitmap_release, proteins, rank_hash)
     ## Dry run of the calculate_main method
     #  Pulls one taxon hierarchy from biosqlweb at a time and iteratively
@@ -135,8 +141,8 @@ class PfitmapRelease < ActiveRecord::Base
     # {taxon_ncbi_id => [parent_ncbi_id, taxon_hash, {protein_id => protein_count_vector}]}
     tree = {}
     # First iterate over whole genome sequenced organisms
-    taxon_ncbi_ids.each do |taxon_ncbi_id|
-      taxons = BiosqlWeb.ncbi_taxon_id2full_taxon_hierarchy(taxon_ncbi_id)
+    taxon_ncbi_ids.each do |ncbi_taxon_id|
+      taxons = BiosqlWeb.ncbi_taxon_id2full_taxon_hierarchy(ncbi_taxon_id)
       # Special case for the leaf node
       first = true
       current_taxon, *rest = *taxons
@@ -153,10 +159,13 @@ class PfitmapRelease < ActiveRecord::Base
           proteins.each { |p| pv_hash[p.id] = Vector[1,0,0] }
           add_pc_recursively(tree, current_taxon["ncbi_taxon_id"], pv_hash, first)
           break
+        elsif current_taxon["ncbi_taxon_id"]
+          new_taxon_to_tree(tree, current_taxon, next_taxon, proteins, first)
+          current_taxon = next_taxon
+          first = false
+        else
+          calculate_logger.error "#{Time.now} Error, could not add taxon with taxon_ncbi_id: #{ncbi_taxon_id}"
         end
-        new_taxon_to_tree(tree, current_taxon, next_taxon, proteins, first)
-        current_taxon = next_taxon
-        first = false
       end
     end
     return tree
@@ -208,9 +217,11 @@ class PfitmapRelease < ActiveRecord::Base
       taxon = value_list[1]
       protein_pc_hash = value_list[2]
       taxon_id = save_taxon(taxon,parent_ncbi_id)
+      protein_counts = []
       protein_pc_hash.each do |protein, vec|
-        save_protein_count(protein, taxon_id, vec)
+        protein_counts << save_protein_count(protein, taxon_id, vec)
       end
+      ProteinCount.import protein_counts
     end 
   end
 
@@ -232,19 +243,14 @@ class PfitmapRelease < ActiveRecord::Base
   end
 
   def new_taxon_to_tree(tree, taxon_hash, parent_taxon_hash, proteins, first)
-    if taxon_hash["ncbi_taxon_id"]
-      p_hash = {}
-      proteins.each do |p|
-        p_hash[p.id] = Vector[1,0,0]
-      end
-      taxon_id = taxon_hash["ncbi_taxon_id"]
-      parent_id = parent_taxon_hash ? parent_taxon_hash["ncbi_taxon_id"] : nil
-      tree[taxon_id] = [parent_id, taxon_hash, p_hash, first]
-    else
-      calculate_error_log.info("#{Time.now} Something went wrong with taxon_hash['ncbi_taxon_id']")
-      calculate_error_log.info("The ncbi_taxon_id was: #{ncbi_taxon_id}")
-      calculate_error_log.info("The taxon_hash was: #{taxon_hash}")
+    p_hash = {}
+    proteins.each do |p|
+      p_hash[p.id] = Vector[1,0,0]
     end
+    taxon_id = taxon_hash["ncbi_taxon_id"]
+    parent_id = parent_taxon_hash ? parent_taxon_hash["ncbi_taxon_id"] : nil
+    tree[taxon_id] = [parent_id, taxon_hash, p_hash, first]
+    
   end
 
 
@@ -270,6 +276,6 @@ class PfitmapRelease < ActiveRecord::Base
     protein_count.pfitmap_release_id = self.id
     protein_count.protein_id = protein_id
     protein_count.taxon_id = taxon_id
-    protein_count.save
+    return protein_count
   end
 end

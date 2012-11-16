@@ -25,6 +25,8 @@ Big Items
 
 Things to fix
 -------------
+* Route to "With Enzymes" gives error if no release in session
+
 *Heatmap:
  -  Toggle heatmap rows instead of only adding
 

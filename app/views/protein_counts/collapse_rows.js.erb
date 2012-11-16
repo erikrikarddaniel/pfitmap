@@ -1,0 +1,4 @@
+var el = $(<%=@parent_taxon.name + @parent_taxon.id.to_s%>);
+el.html("<%=(j render(:partial => 'row', :locals => {taxon: @parent_taxon, level: @level})).html_safe %>)");
+colorHeatmap();
+IndentTaxons();
