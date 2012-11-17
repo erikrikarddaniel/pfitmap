@@ -40,4 +40,9 @@ module ProteinCountsHelper
     color_ratio = Float(a)/b
     color_int = Integer(100*color_ratio)
   end
+
+  def row_id(taxon)
+    base="taxon#{taxon.id}"
+  end
+
 end

@@ -78,11 +78,16 @@ class ProteinCountsController < ApplicationController
     @level = 0
     
     if params[:taxon_rank]
-      @taxon_rank = params[:taxon_rank]
-      @taxons = Taxon.from_rank(params[:taxon_rank]).paginate(:page => params[:page])
+      if not (params[:taxon_rank] == "All") 
+        @taxon_rank = params[:taxon_rank]
+        @taxons = Taxon.from_rank(params[:taxon_rank]).paginate(:page => params[:page])
+      else
+        @taxon_rank = nil
+        @taxons = Taxon.paginate(:page => params[:page])
+      end
     else
-      @taxon_rank = nil
-      @taxons = Taxon.paginate(:page => params[:page])
+      @taxon_rank = "superkingdom"
+      @taxons = Taxon.from_rank("superkingdom").paginate(:page => params[:page])
     end
 
     @protein_counts_hash = ProteinCount.protein_counts_hash_for(@taxons, Protein.all, @pfitmap_release)
@@ -119,10 +124,9 @@ class ProteinCountsController < ApplicationController
       @pfitmap_release = PfitmapRelease.find_current_release
     end
     @level = Integer(params[:level])
+    @parent_taxon = Taxon.find(params[:parent_id])
     @taxons = @parent_taxon.children
-    @enzymes = find_standard_enzymes
     
-    @protein_counts_hash = ProteinCount.protein_counts_hash_for(@taxons, Protein.all, @pfitmap_release)
     respond_to do |format|
       format.js
     end
