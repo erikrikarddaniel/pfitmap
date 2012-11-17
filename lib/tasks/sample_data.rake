@@ -335,20 +335,21 @@ SQL
 private
 
   def _import_hmmer_tblout(file, hmm_result)
-    puts ">>> #{Date.now()}: Importing #{file} for HMM result #{hmm_result} <<<"
+    puts ">>> #{Time.now()}: Importing #{file} for HMM result #{hmm_result} <<<"
     File.open(file).each_with_index do |tbloutline, i|
       tbloutline.chomp!
       tbloutline.sub!(/^#.*/, '')
       next if tbloutline == ''
       _create_hmm_rows(hmm_result, tbloutline, i)
     end
+    hmm_result.save
   end
 
   def _create_hmm_rows(hmm_profile, tbloutline, i=nil)
     fields = tbloutline.split(/\s+/)
     tfields = fields[0].split('|')
-    @dbsequences[tfields[3]] = DbSequence.create! unless @dbsequences[tfields[3]]
-    hmm_profile.hmm_result_rows.create!(
+    @dbsequences[tfields[3]] = DbSequence.create unless @dbsequences[tfields[3]]
+    hmm_profile.hmm_result_rows.create(
       target_name:	fields[0],
       target_acc:	"#{tfields[2]}:#{tfields[3]}",
       query_name:	fields[2],
@@ -371,7 +372,7 @@ private
     )
     "#{fields[0]}#{fields[18..-1].join(" ")}".split(/\001/).each_with_index do |hmm_db_hit, j|
       hfields = hmm_db_hit.split('|')
-      @hmm_db_hits[hfields[3]] = HmmDbHit.create!(
+      @hmm_db_hits[hfields[3]] = HmmDbHit.create(
 	gi:		hfields[1],
 	db:		hfields[2],
 	acc:		hfields[3],
