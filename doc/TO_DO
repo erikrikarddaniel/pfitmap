@@ -13,15 +13,13 @@ Big Items
 ---------
 * Calculate protein_counts
     - Still interaction with db that consumes time
-    - maybe have a look at gem: activerecord-import
-    - if performance is still lacking.
+    - May be possible to use the import gem even more extensively
+
+    - Evaluate consumes almost as much time as calculate with
+    - the new sample dataset.
 
 * "Main table" GUI
     - Sort on hierarchy (I think we mixed this up with the profiles)
-    - change default values for proteins
-    - avoid changing other tables at the same time
-    - Heat map color coding
-    - Multiple choices for the ranks
 
 Things to fix
 -------------
