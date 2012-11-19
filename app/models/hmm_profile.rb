@@ -78,7 +78,8 @@ class HmmProfile < ActiveRecord::Base
     end
     return bool
   end
-
+  # Evaluates under the assumption that the profile is the best_profile for 
+  # that db_sequence and sequence_source
   def evaluate_for_best?(db_sequence, sequence_source)
     has_criteria = self.inclusion_criteria != []
     bool = self.inclusion_criteria.inject(has_criteria) { |result, element| result && element.evaluate?(db_sequence,sequence_source) }
