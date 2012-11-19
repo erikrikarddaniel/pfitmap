@@ -177,6 +177,23 @@ SQL
       version: "20120402",
       parent_id: @hmm_profile_nrdj.id
     )
+    @hmm_profile_nrdg_pfla = HmmProfile.create!(
+      name: "NrdG and PFL activase",
+      protein_name: "NrdG-PFLa",
+      version: "20120402",
+    )
+    @hmm_profile_nrdg = HmmProfile.create!(
+      name: "NrdG",
+      protein_name: "NrdG",
+      version: "20120402",
+      parent_id: @hmm_profile_nrdg_pfla.id
+    )
+    @hmm_profile_pfla = HmmProfile.create!(
+      name: "PFL activase",
+      protein_name: "PFLa",
+      version: "20120402",
+      parent_id: @hmm_profile_nrdg_pfla.id
+    )
   end
 
   def make_hmm_results
