@@ -72,8 +72,9 @@ class EnzymesController < ApplicationController
   # PUT /enzymes/1.json
   def update
     @enzyme = Enzyme.find(params[:id])
-    @hmm_profiles = HmmProfile.find_by_id(params[:hmm_profile_ids])
+    @hmm_profiles = HmmProfile.find_all_by_id(params[:hmm_profile_ids])
     
+    @enzyme.hmm_profiles.destroy_all
     respond_to do |format|
       if @enzyme.update_attributes(params[:enzyme])
         if @hmm_profiles
