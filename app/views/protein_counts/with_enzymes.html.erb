@@ -1,32 +1,32 @@
 <% if @pfitmap_release %>
-<div class="pageheader1">
-  <div>
-    <h1>Listing Protein Counts</h1>
-    <h2>Taxon rank: <%=@taxon_rank ? @taxon_rank : "superkingdom" %>, pfitmap_release: <%= @pfitmap_release.release %></h2>
+  <div class="pageheader1">
+    <div>
+      <h1>Listing Protein Counts</h1>
+      <h2>Taxon rank: <%=@taxon_rank ? @taxon_rank : "superkingdom" %>, pfitmap_release: <%= @pfitmap_release.release %></h2>
+    </div>
+    <div>
+      <%= render :partial => 'filter_bar_with_enzymes' %>
+    </div>
+    <div>
+      <h3> Instructions: </h3>
+      Choose what taxon rank you wish to browse statistics for, or click a taxon name to expand a given taxon and view statistics for the corresponding children.
+    </div>
+    <div id="explanations">
+      Explanations of the numbers:
+      (<a href="#" rel="tooltip" title="The number of wholy sequenced genomes">GEN</a>|
+      <a href="#" rel="tooltip" title="The number of proteins in total for all genomes included">PRO</a>|
+      <a href="#" rel="tooltip" title="The number of genomes with at least one of the specified protein present.">GP</a>)
+    </div>
   </div>
-  <div>
-    <%= render :partial => 'filter_bar_with_enzymes' %>
+  
+  <div id="protein_counts_table">
+    <%= render partial: 'protein_counts_table_with_enzymes' %>
   </div>
-  <div>
-    <h3> Instructions: </h3>
-    Choose what taxon rank and proteins you wish to browse statistics for.
-  </div>
-  <div id="explanations">
-    Explanations of the numbers:
-    (<a href="#" rel="tooltip" title="The number of wholy sequenced genomes">GEN</a>|
-    <a href="#" rel="tooltip" title="The number of proteins in total for all genomes included">PRO</a>|
-    <a href="#" rel="tooltip" title="The number of genomes with at least one of the specified protein present.">GP</a>)
-  </div>
-</div>
-
-<div id="protein_counts_table">
-  <%= render partial: 'protein_counts_table_with_enzymes' %>
-</div>
 <% else %>
-<div class="pageheader1">
-  <div>
-    <h1> Listing Protein Counts </h1>
-    <h2> Unfortunately, this statistic is not yet available </h1>
-</div>
-</div>
+  <div class="pageheader1">
+    <div>
+      <h1> Listing Protein Counts </h1>
+      <h2> You have not chosen what Pfitmap release you wish to browse.</h1>
+    </div>
+  </div>
 <% end %>

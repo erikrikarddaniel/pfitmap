@@ -108,10 +108,19 @@ describe HmmProfile do
     it "evaluates the best profile with high enough score" do
       hmm_profile.evaluate?(db_sequence1,sequence_source).should be_true
     end
+
+    it "evaluates the best profile with high enough score with best_profile method" do
+      hmm_profile.evaluate_for_best?(db_sequence1,sequence_source).should be_true
+    end
     
     it "evaluates the best profile with score below threshold" do
       hmm_profile_nrdbr2lox.evaluate?(db_sequence2,sequence_source).should be_false
     end
+    
+    it "evaluates the best profile with score below threshold with best_profile method" do
+      hmm_profile.evaluate_for_best?(db_sequence2, sequence_source).should be_false
+    end
+
     describe "Evaluates a profile that is not the best" do
       let!(:hmm_profile3) { FactoryGirl.create(:hmm_profile) }
       let!(:hmm_result3) { FactoryGirl.create(:hmm_result, 
@@ -137,8 +146,12 @@ describe HmmProfile do
       let!(:hmm_result_row4) { FactoryGirl.create(:hmm_result_row, 
                                                   hmm_result: hmm_result4, 
                                                   db_sequence: db_sequence4) }
-      it "should be false" do
+      it "should be false for evaluate?" do
         hmm_profile4.evaluate?(db_sequence4, sequence_source).should be_false
+      end
+      
+      it "should be false for evaluate_for_best?" do
+        hmm_profile4.evaluate_for_best?(db_sequence4, sequence_source).should be_false
       end
     end
     
