@@ -47,4 +47,8 @@ class DbSequenceBestProfile < ActiveRecord::Base
       nil
     end
   end
+
+  def self.include_profile?(db_sequence, sequence_source, hmm_profile)
+    self.where("db_sequence_id = ? AND sequence_source_id = ? AND hmm_profile_id = ?", db_sequence.id, sequence_source.id, hmm_profile.id).exists?
+  end
 end

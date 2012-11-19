@@ -1,0 +1,28 @@
+<table class="heat-map" id="heatmap">
+  <% if @enzymes %>
+  <thead>
+    <tr>
+      <th></th>
+      <% @enzymes.each do |enzyme| %>
+      <% no_proteins = enzyme.proteins.length %>
+      <th colspan=<%= (no_proteins).to_s %> > <%= enzyme.name %> </th>
+      <% end %>
+    </tr>
+    <tr>
+      <th>Taxon</th>
+      <% @enzymes.each do |enzyme| %>
+        <% enzyme.proteins.each do |protein| %>
+          <th><%= protein.name %> </th>
+        <% end %>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% @taxons.each do |taxon| %>
+    <%= render :partial => 'row', :locals => {taxon: taxon, level: @level} %>
+    <% end %>
+  </tbody>
+  <% end %>
+</table>
+<%= will_paginate @taxons %>
+<br />

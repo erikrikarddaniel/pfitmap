@@ -16,7 +16,7 @@ require 'spec_helper'
 describe PfitmapRelease do
   let!(:sequence_source) { FactoryGirl.create(:sequence_source) }
   before do
-    @pfitmap_release = PfitmapRelease.new(release: "0.1", release_date: "2001-04-20", sequence_source_id: sequence_source)
+    @pfitmap_release = PfitmapRelease.new(release: "0.1", release_date: "2001-04-20", sequence_source_id: sequence_source.id)
     @pfitmap_release.current = false
   end
   subject{ @pfitmap_release }
@@ -154,11 +154,15 @@ describe PfitmapRelease do
 
     it "should be successful to call calculate_main" do
       @pfitmap_release.calculate_main("GOLDWGStest10", FactoryGirl.create(:user_admin))
-      Taxon.find_all_by_wgs(true).length.should == 10
+      # warn "#{__FILE__}:#{__LINE__}: ProteinCount.all:\n\t#{ProteinCount.all.map { |pc| "#{pc}" }.join("\n\t")}"
+      taxons = Taxon.all
+      Taxon.all.length.should == 50
+      Enzyme.all.length.should == 1
       Protein.all.length.should == 2
-      ProteinCount.find_all_by_obs_as_genome(true).length.should == 6
+      ProteinCount.all.length.should == 100
+      ProteinCount.sum("no_proteins").should == 68
       ProteinCount.maximum("no_proteins").should == 4
-      ProteinCount.maximum("no_genomes_with_proteins").should == 3
+      ProteinCount.maximum("no_genomes_with_proteins").should == 3 # New implementation gives 4
     end
 
     it "should not include all taxon-levels" do
@@ -193,11 +197,11 @@ describe PfitmapRelease do
     
     it "should be succesful to call calculate_main", :heavy => true do
       @pfitmap_release.calculate_main("GOLDWGStest10",FactoryGirl.create(:user_admin))
-      Taxon.find_all_by_wgs(true).length.should == 10
+      Taxon.all.length.should == 50
       HmmProfile.all.length.should == 4
       Protein.all.length.should == 4
-      ProteinCount.find_all_by_obs_as_genome(true).length.should == 10
-
+      ProteinCount.count.should == 200
+# Used to say 10
       # Check specific values (human nrdb)
       nrdb_protein = Protein.find_by_name('NrdB')
       human_taxon = Taxon.find_by_name('Homo sapiens')
@@ -205,7 +209,6 @@ describe PfitmapRelease do
       human_nrdb_protein_count.no_proteins.should == 2
       human_nrdb_protein_count.no_genomes.should == 1
       human_nrdb_protein_count.no_genomes_with_proteins.should == 1
-      human_nrdb_protein_count.obs_as_genome.should == true
       
       ProteinCount.maximum("no_proteins").should == 6
       ProteinCount.maximum("no_genomes_with_proteins").should == 4
@@ -236,6 +239,9 @@ describe PfitmapRelease do
       @pfitmap_release.calculate_main("GOLDWGStest100", FactoryGirl.create(:user_admin))
       Protein.all.length.should == 4
 
+      ProteinCount.sum("no_proteins").should == 180 # first was 180 or 162
+      ProteinCount.sum("no_genomes").should ==  3508  #first was 3436 or 3472 or 3476
+      ProteinCount.sum("no_genomes_with_proteins").should == 82
       # Check specific values (human nrdb)
       nrdb_protein = Protein.find_by_name('NrdB')
       human_taxon = Taxon.find_by_name('Homo sapiens')
@@ -243,7 +249,6 @@ describe PfitmapRelease do
       human_nrdb_protein_count.no_proteins.should == 4
       human_nrdb_protein_count.no_genomes.should == 1
       human_nrdb_protein_count.no_genomes_with_proteins.should == 1
-      human_nrdb_protein_count.obs_as_genome.should == true
       
 
       ProteinCount.all.length.should == 1372

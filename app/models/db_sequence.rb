@@ -35,14 +35,10 @@ class DbSequence < ActiveRecord::Base
 
   # A method that returns the best hmm profile object
   def best_hmm_profiles_for(sequence_source)
-    #begin
     dsbps = self.db_sequence_best_profiles.\
     find_all_by_sequence_source_id(sequence_source.id, 
                                    :include => hmm_profile)
     dsbps.map{ |dsbp| dsbp.hmm_profile }
-    #rescue NoMethodError
-    #  nil
-    #end
   end
 
   # The result row having the highest fullseq_score.

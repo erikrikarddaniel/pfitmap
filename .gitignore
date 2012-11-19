@@ -23,5 +23,8 @@
 # Ignore database settings file
 /config/database.yml
 
+# Ignore new relic monitoring settings file
+/config/newrelic.yml
+
 # Ignore also directory structure where Paperclip stores files
 /public/system

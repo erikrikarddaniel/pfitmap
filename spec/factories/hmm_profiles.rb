@@ -17,6 +17,7 @@ FactoryGirl.define do
     version "20120401"
     parent { |hmm_profile| get_hmm_profile_named(:hmm_profile_nrdbr2lox) }
     after_create do |profile|
+          create_enzymes_for_profile(:hmm_profile_nrdb)
           FactoryGirl.create(:hmm_score_criterion, 
                              :hmm_profile => profile,
                              :min_fullseq_score => 400.0)

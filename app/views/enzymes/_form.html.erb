@@ -8,7 +8,7 @@
   
   <div class="field">
     <%= f.label :hmm_profile %>
-    <%= select_tag("hmm_profile_ids[]", options_for_select(@hmm_profiles.collect { |profile| [profile.name, profile.id] }, @enzyme.hmm_profiles.collect { |profile| profile.id}), {:multiple=> true})%>
+    <%= select_tag("hmm_profile_ids[]", options_for_select(@hmm_profiles.collect { |profile| [profile.description, profile.id] }, @enzyme.hmm_profiles.collect { |profile| profile.id}), {:multiple=> true})%>
   </div>
   <div class="actions">
     <%= f.submit %>

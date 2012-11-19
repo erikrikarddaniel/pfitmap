@@ -84,11 +84,6 @@ FactoryGirl.define do
     name "Example ENZ"
   end
 
-  factory :enzyme_profile do
-    enzyme
-    hmm_profile
-  end
-
   factory :taxon do
     sequence(:name) { |n|  "example_taxon_name " + n.to_s }
     sequence(:ncbi_taxon_id) { |n| n} 

@@ -7,6 +7,8 @@ gem 'will_paginate', '3.0.3'
 gem 'bootstrap-will_paginate', '0.0.5'
 gem 'bio'
 gem 'schema_plus'
+gem 'activerecord-import'
+
 # Authentication and Authorization
 gem 'omniauth-openid'
 gem 'cancan'
@@ -31,6 +33,9 @@ gem 'rvm-capistrano'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
+
+# profiling
+#gem 'newrelic_rpm'
 
 gem 'pg'
 

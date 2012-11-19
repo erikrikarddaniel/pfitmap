@@ -139,7 +139,7 @@ class PfitmapReleasesController < ApplicationController
     if Rails.env == "test" 
       @pfitmap_release.calculate_main("GOLDWGStest10", user)
     elsif Rails.env == "development"
-      @pfitmap_release.delay.calculate_main("GOLDWGStest100", user)
+      @pfitmap_release.delay.calculate_main("GOLDWGS", user)
     else
       @pfitmap_release.delay.calculate_main("GOLDWGS",user)
     end

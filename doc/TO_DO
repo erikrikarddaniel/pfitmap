@@ -11,21 +11,30 @@ Discussion points
 
 Big Items
 ---------
-* Test cases for release calculation 
-	including reference implementation of evaluation code.
-		-- I don't understand this anymore... / Johannes
-		-- The test cases are done
+* Calculate protein_counts
+    - Still interaction with db that consumes time
+    - May be possible to use the import gem even more extensively
+
+    - Evaluate consumes almost as much time as calculate with
+    - the new sample dataset.
 
 * "Main table" GUI
-    - Sort on hierarchy
-    - change default values for proteins
-    - avoid changing other tables at the same time
-    - Heat map color coding
-    - Multiple choices for the ranks
+    - Sort on hierarchy (I think we mixed this up with the profiles)
 
 Things to fix
 -------------
+* Route to "With Enzymes" gives error if no release in session
+
+*Heatmap:
+ -  Toggle heatmap rows instead of only adding
+
+* Can remove wgs attribute from taxon with a migration
+
+* Can remove obs_as_genome attribute from protein_counts
+
 * unauthorized users should still have the right to visit protein_counts statistic pages
+
+* Routing error looks bad.
 
 * NoMethodError in Protein_counts#by_rank when there is no pfitmap_release calculated
    - <h2>Taxon rank: <%=@taxon_rank ? @taxon_rank : "All" %>, pfitmap_release: <%= @pfitmap_release.release %></h2>
