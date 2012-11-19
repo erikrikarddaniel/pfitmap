@@ -79,6 +79,11 @@ class HmmProfile < ActiveRecord::Base
     return bool
   end
 
+  def evaluate_for_best?(db_sequence, sequence_source)
+    has_criteria = self.inclusion_criteria != []
+    bool = self.inclusion_criteria.inject(has_criteria) { |result, element| result && element.evaluate?(db_sequence,sequence_source) }
+  end
+
   # Provides a concatenation of name and protein name useful for display
   def description
     "#{name}#{protein_name ? " (#{protein_name})" : ""}"
