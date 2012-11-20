@@ -87,48 +87,47 @@ describe SequenceSource do
  
 
   describe "evaluate" do
-    #common sequence source
-    let!(:sequence_source) { FactoryGirl.create(:sequence_source) }
-    let!(:db_sequence1) { FactoryGirl.create(:db_sequence) }
-    let!(:db_sequence2) { FactoryGirl.create(:db_sequence) }
-    #Profile with higher score
-    let!(:hmm_profile1) { FactoryGirl.create(:hmm_profile_nrdbr2lox) }
-    let!(:hmm_result1) { FactoryGirl.create(:hmm_result, 
-                                            hmm_profile: hmm_profile1, 
-                                            sequence_source: sequence_source) }
-    
-    let!(:hmm_result_row1) { FactoryGirl.create(:hmm_result_row, 
-                                                hmm_result: hmm_result1, 
-                                                db_sequence: db_sequence1) }
-    let!(:hmm_score_criterion1) { FactoryGirl.create(:hmm_score_criterion,
-                                                     hmm_profile: hmm_profile1) }
-    
-    #Profile with lower score
-    let!(:hmm_profile2) { FactoryGirl.create(:hmm_profile) }
-    let!(:hmm_result2) { FactoryGirl.create(:hmm_result, 
-                                            hmm_profile: hmm_profile2, 
-                                            sequence_source: sequence_source) }
-    
-    let!(:hmm_result_row2) { FactoryGirl.create(:hmm_result_row2, 
-                                                hmm_result: hmm_result2, 
-                                                db_sequence: db_sequence1) }
-    
-    let!(:hmm_result_row3) { FactoryGirl.create(:hmm_result_row2, 
-                                                hmm_result: hmm_result2, 
-                                                db_sequence: db_sequence2) }
-    let!(:hmm_score_criterion2) { FactoryGirl.create(:hmm_score_criterion,
-                                                     hmm_profile: hmm_profile2) }
-    # Pfitmap Release
-    let!(:pfitmap_release) { FactoryGirl.create(:pfitmap_release, sequence_source: sequence_source) }
-    let!(:user) { FactoryGirl.create(:user_admin) }
-    before do
-      sequence_source.evaluate(pfitmap_release, user)
+    describe "with a single complex factory" do
+      before(:each) do
+        @hmm_result_nrdbe = FactoryGirl.create(:hmm_result_nrdbe)
+        @sequence_source = @hmm_result_nrdbe.sequence_source
+        @pfitmap_release = FactoryGirl.create(:pfitmap_release, sequence_source: @sequence_source)
+        parse_hmm_tblout(@hmm_result_nrdbe, fixture_file_upload("/NrdBe-20rows.tblout"))
+        @sequence_source.evaluate(@pfitmap_release,nil)
+      end
+
+      it "should have imported all rows from the table" do
+        HmmResultRow.all.length.should == 23
+        DbSequence.all.length.should == 23
+      end
+   
+      it "should not add rows with score lower than 400 to pfitmap" do
+        PfitmapSequence.all.length.should == 21
+        @pfitmap_release.pfitmap_sequences.length.should == 21
+      end
     end
-    it "adds pfitmap sequences" do
-      pfitmap_release.db_sequences.should_not == []
-    end
-    it "receives an association" do
-      sequence_source.pfitmap_release.should == pfitmap_release
+
+    describe "with two complex factories" do
+      before(:each) do
+        @hmm_result_nrdb = FactoryGirl.create(:hmm_result_nrdb)
+        @sequence_source = @hmm_result_nrdb.sequence_source
+        @hmm_result_nrdbe = FactoryGirl.create(:hmm_result_nrdbe, sequence_source: @sequence_source)
+        @pfitmap_release = FactoryGirl.create(:pfitmap_release, sequence_source: @sequence_source)
+        parse_hmm_tblout(@hmm_result_nrdb, fixture_file_upload("/NrdB-20rows.tblout"))
+        parse_hmm_tblout(@hmm_result_nrdbe, fixture_file_upload("/NrdBe-20rows.tblout"))
+        @sequence_source.evaluate(@pfitmap_release,nil)
+      end
+      
+      it "should have imported all rows from the tables" do
+        @hmm_result_nrdb.hmm_result_rows.length.should == 19
+        @hmm_result_nrdbe.hmm_result_rows.length.should == 23
+        DbSequence.all.length.should == 39
+      end
+
+      it "should add all db_sequences to pfitmap" do
+        PfitmapSequence.all.length.should == 39
+        @pfitmap_release.pfitmap_sequences.length.should == 39
+      end
     end
   end
 end
