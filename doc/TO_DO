@@ -13,22 +13,17 @@ Big Items
 ---------
 * Calculate protein_counts
     - Still interaction with db that consumes time
-    - maybe have a look at gem: activerecord-import
-    - if performance is still lacking.
+    - May be possible to use the import gem even more extensively
+
+    - Evaluate consumes almost as much time as calculate with
+    - the new sample dataset.
 
 * "Main table" GUI
     - Sort on hierarchy (I think we mixed this up with the profiles)
-    - change default values for proteins
-    - avoid changing other tables at the same time
-    - Heat map color coding
-    - Multiple choices for the ranks
 
 Things to fix
 -------------
-* Route to "With Enzymes" gives error if no release in session
-
-*Heatmap:
- -  Toggle heatmap rows instead of only adding
+* Controller error gives full error page... like in development mode
 
 * Can remove wgs attribute from taxon with a migration
 
@@ -126,11 +121,14 @@ Things to fix
   - protein_counts_by_rank view
   - protein_counts_by_hierarchy view
 
-
+* If protein is missing, cripples the with_enzyme protein_count table.
+     - The protein exists but it gets no protein_counts because of 
+     - the missing hmm_score_criterion.
+     - Low priority, only occurs if data entered by developer is missing
 PfitmapRelease.calculate_main
 -----------------------------
 
-0. Implement model unit test
+p0. Implement model unit test
 
 1. Handle timeouts in current implementation
 
@@ -141,6 +139,11 @@ PfitmapRelease.calculate_main
 
 DONE
 ----
+* Route to "With Enzymes" gives error if no release in session
+
+*Heatmap:
+ -  Toggle heatmap rows instead of only adding
+
 * Only include taxonomic classes: superkingdom, phylum, class, order, family, genus, species.
 
 * "Integration" tests for calculate
@@ -153,6 +156,9 @@ DONE
 
 * Check that there are no "loose branches" in the taxon tree, aka that the only node
   without parent is "root".
+
+* Enzyme controller update does not work
+
 
 Tests:
   - Hierarchy of taxon

@@ -33,11 +33,10 @@ class SequenceSource < ActiveRecord::Base
   def evaluate(head_release, user)
     begin
       db_sequences =  self.db_sequences
-      logger.info "Evaluating..."
       db_sequences.each_with_index do |seq, index|
         hmm_profiles = seq.best_hmm_profiles_for(self)
         hmm_profiles.each do |hmm_profile|
-          if hmm_profile.evaluate?(seq,self)
+          if hmm_profile.evaluate_for_best?(seq,self)
             head_release.add_seq(seq, hmm_profile)
           end
         end

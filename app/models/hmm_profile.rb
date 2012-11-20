@@ -64,11 +64,25 @@ class HmmProfile < ActiveRecord::Base
     HmmProfile.where("parent_id IS NULL")
   end
 
+  # Finds out if the profile is a perfect match for the given db_sequence
   def evaluate?(db_sequence, sequence_source)
-    best_profile = db_sequence.best_hmm_profiles(sequence_source).include?(self)
-    has_criteria = self.inclusion_criteria != []
-    bool = self.inclusion_criteria.inject(best_profile && has_criteria) { |result, element| result && element.evaluate?(db_sequence,sequence_source) } 
+    best_profile = DbSequenceBestProfile.include_profile?(db_sequence,
+                                                          sequence_source,
+                                                          self)
+    # best_profile = db_sequence.best_hmm_profiles(sequence_source).include?(self)
+    if best_profile
+      has_criteria = self.inclusion_criteria != []
+      bool = self.inclusion_criteria.inject(best_profile && has_criteria) { |result, element| result && element.evaluate?(db_sequence,sequence_source) }
+    else
+      bool = false
+    end
     return bool
+  end
+  # Evaluates under the assumption that the profile is the best_profile for 
+  # that db_sequence and sequence_source
+  def evaluate_for_best?(db_sequence, sequence_source)
+    has_criteria = self.inclusion_criteria != []
+    bool = self.inclusion_criteria.inject(has_criteria) { |result, element| result && element.evaluate?(db_sequence,sequence_source) }
   end
 
   # Provides a concatenation of name and protein name useful for display
