@@ -291,9 +291,27 @@ SQL
 
   def make_hmm_score_criteria
     HmmScoreCriterion.create!(hmm_profile_id: @hmm_profile_nrda.id, min_fullseq_score: 1000)
+    HmmScoreCriterion.create!(hmm_profile_id: @hmm_profile_nrdac.id, min_fullseq_score: 1000)
+    HmmScoreCriterion.create!(hmm_profile_id: @hmm_profile_nrdae.id, min_fullseq_score: 1000)
+    HmmScoreCriterion.create!(hmm_profile_id: @hmm_profile_nrde.id, min_fullseq_score: 1000)
     HmmScoreCriterion.create!(hmm_profile_id: @hmm_profile_nrdb.id, min_fullseq_score: 400)
-    HmmScoreCriterion.create!(hmm_profile_id: @hmm_profile_nrdf.id, min_fullseq_score: 400)
+    HmmScoreCriterion.create!(hmm_profile_id: @hmm_profile_nrdbe.id, min_fullseq_score: 400)
     HmmScoreCriterion.create!(hmm_profile_id: @hmm_profile_nrdben.id, min_fullseq_score: 400)
+    HmmScoreCriterion.create!(hmm_profile_id: @hmm_profile_nrdben.id, min_fullseq_score: 400)
+    HmmScoreCriterion.create!(hmm_profile_id: @hmm_profile_nrdd.id, min_fullseq_score: 1000)
+    HmmScoreCriterion.create!(hmm_profile_id: @hmm_profile_nrdda.id, min_fullseq_score: 1000)
+    HmmScoreCriterion.create!(hmm_profile_id: @hmm_profile_nrddb.id, min_fullseq_score: 1000)
+    HmmScoreCriterion.create!(hmm_profile_id: @hmm_profile_nrddc.id, min_fullseq_score: 1000)
+    HmmScoreCriterion.create!(hmm_profile_id: @hmm_profile_nrddd.id, min_fullseq_score: 1000)
+    HmmScoreCriterion.create!(hmm_profile_id: @hmm_profile_nrdf.id, min_fullseq_score: 400)
+    HmmScoreCriterion.create!(hmm_profile_id: @hmm_profile_nrdg.id, min_fullseq_score: 200)
+    HmmScoreCriterion.create!(hmm_profile_id: @hmm_profile_nrdj.id, min_fullseq_score: 800)
+    HmmScoreCriterion.create!(hmm_profile_id: @hmm_profile_nrdja.id, min_fullseq_score: 800)
+    HmmScoreCriterion.create!(hmm_profile_id: @hmm_profile_nrdjc.id, min_fullseq_score: 800)
+    HmmScoreCriterion.create!(hmm_profile_id: @hmm_profile_nrdjd.id, min_fullseq_score: 800)
+    HmmScoreCriterion.create!(hmm_profile_id: @hmm_profile_nrdjm.id, min_fullseq_score: 800)
+    HmmScoreCriterion.create!(hmm_profile_id: @hmm_profile_nrdpfl.id, min_fullseq_score: 1000)
+    HmmScoreCriterion.create!(hmm_profile_id: @hmm_profile_pfla.id, min_fullseq_score: 200)
     HmmScoreCriterion.create!(hmm_profile_id: @hmm_profile_r2lox.id, min_fullseq_score: 350)
   end
 
