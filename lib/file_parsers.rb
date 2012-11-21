@@ -23,6 +23,7 @@ module FileParsers
 	end
 
 	present_sequence = ( seqgi ? @dbs_cache[@db_hit_cache[seqgi].db_sequence_id] : DbSequence.create )	# How does the .db_sequence method call work? Does it do a select always? Can we do that in preparation?
+        # -- You can use the HmmDbHit.find(:all, :include => db_sequence) / Johannes
 	
 	@db_hits << []
 	individual_db_entries.each do |entry|
@@ -45,7 +46,7 @@ module FileParsers
       end
       HmmDbHit.import @db_hits.flatten
       HmmResultRow.import @hmm_result_rows
-      result.hmm_result_rows = @hmm_result_rows
+      #result.hmm_result_rows = @hmm_result_rows
     end
   end
   
@@ -69,7 +70,8 @@ module FileParsers
      :domnumest_dom => fields[15].to_i,
      :domnumest_rep => fields[16].to_i,
      :domnumest_inc => fields[17].to_i,
-     :db_sequence_id => present_sequence.id
+     :db_sequence_id => present_sequence.id,
+     :hmm_result_id => result.id
     )
   end
 end
