@@ -204,109 +204,109 @@ SQL
       executed: "2012-08-01 12:00",
       sequence_source_id: @sequence_source_nr_june.id
     )
-    puts ">>> #{Time.now()}: Importing HMM result <<<"
+    puts ">>> #{Time.now()}: NrdAc: Importing HMM result <<<"
     parse_hmm_tblout(@hmm_result_nrdac_nr_april, File.new('data/example_data/NrdAc.tblout'))
     @hmm_result_nrdae_nr_april = @hmm_profile_nrdae.hmm_results.create!(
       executed: "2012-08-01 12:00",
       sequence_source_id: @sequence_source_nr_june.id
     )
-    puts ">>> #{Time.now()}: Importing HMM result <<<"
+    puts ">>> #{Time.now()}: NrdAe: Importing HMM result <<<"
     parse_hmm_tblout(@hmm_result_nrdae_nr_april, File.new('data/example_data/NrdAe.tblout'))
     @hmm_result_nrda_nr_april = @hmm_profile_nrda.hmm_results.create!(
       executed: "2012-08-01 12:00",
       sequence_source_id: @sequence_source_nr_june.id
     )
-    puts ">>> #{Time.now()}: Importing HMM result <<<"
+    puts ">>> #{Time.now()}: NrdA: Importing HMM result <<<"
     parse_hmm_tblout(@hmm_result_nrda_nr_april, File.new('data/example_data/NrdA.tblout'))
     @hmm_result_nrdben_nr_april = @hmm_profile_nrdben.hmm_results.create!(
       executed: "2012-08-01 12:00",
       sequence_source_id: @sequence_source_nr_june.id
     )
-    puts ">>> #{Time.now()}: Importing HMM result <<<"
+    puts ">>> #{Time.now()}: NrdBen: Importing HMM result <<<"
     parse_hmm_tblout(@hmm_result_nrdben_nr_april, File.new('data/example_data/NrdBen.tblout'))
     @hmm_result_nrdbe_nr_april = @hmm_profile_nrdbe.hmm_results.create!(
       executed: "2012-08-01 12:00",
       sequence_source_id: @sequence_source_nr_june.id
     )
-    puts ">>> #{Time.now()}: Importing HMM result <<<"
+    puts ">>> #{Time.now()}: NrdBe: Importing HMM result <<<"
     parse_hmm_tblout(@hmm_result_nrdbe_nr_april, File.new('data/example_data/NrdBe.tblout'))
     @hmm_result_nrdb_nr_april = @hmm_profile_nrdb.hmm_results.create!(
       executed: "2012-08-01 12:00",
       sequence_source_id: @sequence_source_nr_june.id
     )
-    puts ">>> #{Time.now()}: Importing HMM result <<<"
+    puts ">>> #{Time.now()}: NrdB: Importing HMM result <<<"
     parse_hmm_tblout(@hmm_result_nrdb_nr_april, File.new('data/example_data/NrdB.tblout'))
     @hmm_result_nrdda_nr_april = @hmm_profile_nrdda.hmm_results.create!(
       executed: "2012-08-01 12:00",
       sequence_source_id: @sequence_source_nr_june.id
     )
-    puts ">>> #{Time.now()}: Importing HMM result <<<"
+    puts ">>> #{Time.now()}: NrdDa: Importing HMM result <<<"
     parse_hmm_tblout(@hmm_result_nrdda_nr_april, File.new('data/example_data/NrdDa.tblout'))
     @hmm_result_nrddb_nr_april = @hmm_profile_nrddb.hmm_results.create!(
       executed: "2012-08-01 12:00",
       sequence_source_id: @sequence_source_nr_june.id
     )
-    puts ">>> #{Time.now()}: Importing HMM result <<<"
+    puts ">>> #{Time.now()}: NrdDb: Importing HMM result <<<"
     parse_hmm_tblout(@hmm_result_nrddb_nr_april, File.new('data/example_data/NrdDb.tblout'))
     @hmm_result_nrddc_nr_april = @hmm_profile_nrddc.hmm_results.create!(
       executed: "2012-08-01 12:00",
       sequence_source_id: @sequence_source_nr_june.id
     )
-    puts ">>> #{Time.now()}: Importing HMM result <<<"
+    puts ">>> #{Time.now()}: NrdDc: Importing HMM result <<<"
     parse_hmm_tblout(@hmm_result_nrddc_nr_april, File.new('data/example_data/NrdDc.tblout'))
     @hmm_result_nrddd_nr_april = @hmm_profile_nrddd.hmm_results.create!(
       executed: "2012-08-01 12:00",
       sequence_source_id: @sequence_source_nr_june.id
     )
-    puts ">>> #{Time.now()}: Importing HMM result <<<"
+    puts ">>> #{Time.now()}: NrdDd: Importing HMM result <<<"
     parse_hmm_tblout(@hmm_result_nrddd_nr_april, File.new('data/example_data/NrdDd.tblout'))
     @hmm_result_nrdd_nr_april = @hmm_profile_nrdd.hmm_results.create!(
       executed: "2012-08-01 12:00",
       sequence_source_id: @sequence_source_nr_june.id
     )
-    puts ">>> #{Time.now()}: Importing HMM result <<<"
+    puts ">>> #{Time.now()}: NrdD: Importing HMM result <<<"
     parse_hmm_tblout(@hmm_result_nrdd_nr_april, File.new('data/example_data/NrdD.tblout'))
     @hmm_result_nrde_nr_april = @hmm_profile_nrde.hmm_results.create!(
       executed: "2012-08-01 12:00",
       sequence_source_id: @sequence_source_nr_june.id
     )
-    puts ">>> #{Time.now()}: Importing HMM result <<<"
+    puts ">>> #{Time.now()}: NrdE: Importing HMM result <<<"
     parse_hmm_tblout(@hmm_result_nrde_nr_april, File.new('data/example_data/NrdE.tblout'))
     @hmm_result_nrdf_nr_april = @hmm_profile_nrdf.hmm_results.create!(
       executed: "2012-08-01 12:00",
       sequence_source_id: @sequence_source_nr_june.id
     )
-    puts ">>> #{Time.now()}: Importing HMM result <<<"
+    puts ">>> #{Time.now()}: NrdF: Importing HMM result <<<"
     parse_hmm_tblout(@hmm_result_nrdf_nr_april, File.new('data/example_data/NrdF.tblout'))
     @hmm_result_nrdja_nr_april = @hmm_profile_nrdja.hmm_results.create!(
       executed: "2012-08-01 12:00",
       sequence_source_id: @sequence_source_nr_june.id
     )
-    puts ">>> #{Time.now()}: Importing HMM result <<<"
+    puts ">>> #{Time.now()}: NrdJa: Importing HMM result <<<"
     parse_hmm_tblout(@hmm_result_nrdja_nr_april, File.new('data/example_data/NrdJa.tblout'))
     @hmm_result_nrdjc_nr_april = @hmm_profile_nrdjc.hmm_results.create!(
       executed: "2012-08-01 12:00",
       sequence_source_id: @sequence_source_nr_june.id
     )
-    puts ">>> #{Time.now()}: Importing HMM result <<<"
+    puts ">>> #{Time.now()}: NrdJc: Importing HMM result <<<"
     parse_hmm_tblout(@hmm_result_nrdjc_nr_april, File.new('data/example_data/NrdJc.tblout'))
     @hmm_result_nrdjd_nr_april = @hmm_profile_nrdjd.hmm_results.create!(
       executed: "2012-08-01 12:00",
       sequence_source_id: @sequence_source_nr_june.id
     )
-    puts ">>> #{Time.now()}: Importing HMM result <<<"
+    puts ">>> #{Time.now()}: NrdJd: Importing HMM result <<<"
     parse_hmm_tblout(@hmm_result_nrdjd_nr_april, File.new('data/example_data/NrdJd.tblout'))
     @hmm_result_nrdjm_nr_april = @hmm_profile_nrdjm.hmm_results.create!(
       executed: "2012-08-01 12:00",
       sequence_source_id: @sequence_source_nr_june.id
     )
-    puts ">>> #{Time.now()}: Importing HMM result <<<"
+    puts ">>> #{Time.now()}: NrdJm: Importing HMM result <<<"
     parse_hmm_tblout(@hmm_result_nrdjm_nr_april, File.new('data/example_data/NrdJm.tblout'))
     @hmm_result_nrdj_nr_april = @hmm_profile_nrdj.hmm_results.create!(
       executed: "2012-08-01 12:00",
       sequence_source_id: @sequence_source_nr_june.id
     )
-    puts ">>> #{Time.now()}: Importing HMM result <<<"
+    puts ">>> #{Time.now()}: NrdJ: Importing HMM result <<<"
     parse_hmm_tblout(@hmm_result_nrdj_nr_april, File.new('data/example_data/NrdJ.tblout'))
   end
 
