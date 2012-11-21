@@ -1,6 +1,7 @@
 module FileParsers
   def parse_hmm_tblout(result, io)
     HmmResult.transaction do
+      @hmm_result_rows = []
       File.open("#{io.path}", "r").each_with_index do |line, index|
 	line.chomp!
 	line.sub!(/^#.*/, '')
@@ -16,26 +17,15 @@ module FileParsers
 
 	present_sequence = ( seqgi ? HmmDbHit.find_by_gi(seqgi).db_sequence : DbSequence.create )
 	
+	@db_hits = []
 	individual_db_entries.each do |entry|
 	  entry_fields = entry.split("|")
 	  #If any db_hit with the same gi exists, then they share sequence.
 	  present_db_hit = HmmDbHit.find_by_gi(entry_fields[1].to_i)
 	  
-	  # I think this incorrect as it may find a DbSequence object later in the line.
-	  # Moving that logic to before this loop, but letting the code stay until I have
-	  # a test case.
-#	  if present_db_hit
-#	    present_sequence = present_db_hit.db_sequence
-#	  end
-#	  
-#	  if not present_sequence
-#	    present_sequence = DbSequence.new()
-#	    present_sequence.save
-#	  end
-	  
 	  exact_db_hits = HmmDbHit.where("gi = ? AND db = ? AND acc = ?", entry_fields[1].to_i, entry_fields[2], entry_fields[3])
 	  if exact_db_hits == []
-	    exact_db_hit = HmmDbHit.create!(
+	    @db_hits << HmmDbHit.new(
 	      :gi => entry_fields[1].to_i,
 	      :db => entry_fields[2],
 	      :acc => entry_fields[3],
@@ -44,13 +34,16 @@ module FileParsers
 	    )
 	  end
 	end
-	hmm_result_row = add_hmm_result_row(fields,result,present_sequence)
+	HmmDbHit.import @db_hits
+	@hmm_result_rows << add_hmm_result_row(fields,result,present_sequence)
       end
+      HmmResultRow.import @hmm_result_rows
+      result.hmm_result_rows = @hmm_result_rows
     end
   end
   
   def add_hmm_result_row(fields,result, present_sequence)
-    hmm_result_row = result.hmm_result_rows.create(
+    hmm_result_row = HmmResultRow.new(
      :target_name => fields[0],
      :target_acc => ( fields[1] == '-' ? fields[0].split('|')[2..3].join(':') : fields[1] ),
      :query_name => fields[2],
