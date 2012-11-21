@@ -318,7 +318,6 @@ SQL
     HmmScoreCriterion.create!(hmm_profile_id: @hmm_profile_nrdb.id, min_fullseq_score: 400)
     HmmScoreCriterion.create!(hmm_profile_id: @hmm_profile_nrdbe.id, min_fullseq_score: 400)
     HmmScoreCriterion.create!(hmm_profile_id: @hmm_profile_nrdben.id, min_fullseq_score: 400)
-    HmmScoreCriterion.create!(hmm_profile_id: @hmm_profile_nrdben.id, min_fullseq_score: 400)
     HmmScoreCriterion.create!(hmm_profile_id: @hmm_profile_nrdd.id, min_fullseq_score: 1000)
     HmmScoreCriterion.create!(hmm_profile_id: @hmm_profile_nrdda.id, min_fullseq_score: 1000)
     HmmScoreCriterion.create!(hmm_profile_id: @hmm_profile_nrddb.id, min_fullseq_score: 1000)
