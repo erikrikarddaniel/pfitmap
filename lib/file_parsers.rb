@@ -3,6 +3,10 @@ module FileParsers
     HmmResult.transaction do
       @hmm_result_rows = []
       @db_hits = []
+      @db_hit_cache = {}
+      HmmDbHit.all.each do |dbh|
+	@db_hit_cache[dbh.gi] = dbh
+      end
       File.open("#{io.path}", "r").each_with_index do |line, index|
 	line.chomp!
 	line.sub!(/^#.*/, '')
@@ -13,19 +17,19 @@ module FileParsers
 
 	# Try to find an old sequence object that's connected to any gi in this line
 	seqgi = individual_db_entries.map { |e| e.split("|")[1].to_i }.detect do |gi| 
-	  HmmDbHit.find_by_gi(gi) ? true : false
+	  @db_hit_cache[gi] ? true : false
 	end
 
-	present_sequence = ( seqgi ? HmmDbHit.find_by_gi(seqgi).db_sequence : DbSequence.create )
+	present_sequence = ( seqgi ? @db_hit_cache[seqgi].db_sequence : DbSequence.create )
 	
 	@db_hits << []
 	individual_db_entries.each do |entry|
 	  entry_fields = entry.split("|")
 	  #If any db_hit with the same gi exists, then they share sequence.
-	  present_db_hit = HmmDbHit.find_by_gi(entry_fields[1].to_i)
+	  present_db_hit = @db_hit_cache[entry_fields[1].to_i]
 	  
-	  exact_db_hits = HmmDbHit.where("gi = ? AND db = ? AND acc = ?", entry_fields[1].to_i, entry_fields[2], entry_fields[3])
-	  if exact_db_hits == []
+	  #exact_db_hits = HmmDbHit.where("gi = ? AND db = ? AND acc = ?", entry_fields[1].to_i, entry_fields[2], entry_fields[3])
+	  unless present_db_hit
 	    @db_hits << HmmDbHit.new(
 	      :gi => entry_fields[1].to_i,
 	      :db => entry_fields[2],
