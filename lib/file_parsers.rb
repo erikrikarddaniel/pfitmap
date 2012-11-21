@@ -2,11 +2,13 @@ module FileParsers
   def parse_hmm_tblout(result, io)
     HmmResult.transaction do
       @hmm_result_rows = []
-      @db_hits = []
+      @db_hits = []	# This will become an array of array, with one array per hmm_result_row (i.e. infile row). This is in preparation for a smart way of updating all objects with db_sequence.id...
       @db_hit_cache = {}
       HmmDbHit.all.each do |dbh|
 	@db_hit_cache[dbh.gi] = dbh
       end
+      @dbs_cache = {}
+      DbSequence.all.each { |dbs| @dbs_cache[dbs.id] = dbs }	# Get these into Rails (seems slightly faster (10 %?))
       File.open("#{io.path}", "r").each_with_index do |line, index|
 	line.chomp!
 	line.sub!(/^#.*/, '')
@@ -20,7 +22,7 @@ module FileParsers
 	  @db_hit_cache[gi] ? true : false
 	end
 
-	present_sequence = ( seqgi ? @db_hit_cache[seqgi].db_sequence : DbSequence.create )
+	present_sequence = ( seqgi ? @dbs_cache[@db_hit_cache[seqgi].db_sequence_id] : DbSequence.create )	# How does the .db_sequence method call work? Does it do a select always? Can we do that in preparation?
 	
 	@db_hits << []
 	individual_db_entries.each do |entry|
