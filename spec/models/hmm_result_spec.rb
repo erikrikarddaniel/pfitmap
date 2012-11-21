@@ -70,7 +70,6 @@ describe HmmResult do
     end
   end
 
-
   describe "More complex hmm_result" do
     before(:each) do
       @hmm_result_nrdb = FactoryGirl.create(:hmm_result_nrdb)

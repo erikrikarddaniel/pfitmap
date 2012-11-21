@@ -2,6 +2,7 @@ module FileParsers
   def parse_hmm_tblout(result, io)
     HmmResult.transaction do
       @hmm_result_rows = []
+      @db_hits = []
       File.open("#{io.path}", "r").each_with_index do |line, index|
 	line.chomp!
 	line.sub!(/^#.*/, '')
@@ -17,7 +18,7 @@ module FileParsers
 
 	present_sequence = ( seqgi ? HmmDbHit.find_by_gi(seqgi).db_sequence : DbSequence.create )
 	
-	@db_hits = []
+	@db_hits << []
 	individual_db_entries.each do |entry|
 	  entry_fields = entry.split("|")
 	  #If any db_hit with the same gi exists, then they share sequence.
@@ -34,9 +35,9 @@ module FileParsers
 	    )
 	  end
 	end
-	HmmDbHit.import @db_hits
 	@hmm_result_rows << add_hmm_result_row(fields,result,present_sequence)
       end
+      HmmDbHit.import @db_hits.flatten
       HmmResultRow.import @hmm_result_rows
       result.hmm_result_rows = @hmm_result_rows
     end
