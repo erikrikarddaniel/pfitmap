@@ -29,6 +29,9 @@ Things to fix
 
 * Can remove obs_as_genome attribute from protein_counts
 
+* Inclusion Criteria is not implemented, it is just bypassed to get to
+  hmm_score_criteria
+
 * unauthorized users should still have the right to visit protein_counts statistic pages
 
 * Routing error looks bad.
