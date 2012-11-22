@@ -11,13 +11,6 @@ Discussion points
 
 Big Items
 ---------
-* Calculate protein_counts
-    - Still interaction with db that consumes time
-    - May be possible to use the import gem even more extensively
-
-    - Evaluate consumes almost as much time as calculate with
-    - the new sample dataset.
-
 * "Main table" GUI
     - Sort on hierarchy (I think we mixed this up with the profiles)
 
@@ -142,6 +135,13 @@ p0. Implement model unit test
 
 DONE
 ----
+* Calculate protein_counts
+    - Still interaction with db that consumes time
+    - May be possible to use the import gem even more extensively
+
+    - Evaluate consumes almost as much time as calculate with
+    - the new sample dataset.
+
 * Route to "With Enzymes" gives error if no release in session
 
 *Heatmap:
