@@ -1,0 +1,18 @@
+<thead>
+  <tr>
+    <th>HMM Profile</th>
+    <th>Count</th>
+    <th>Min Score</th>
+    <th>Max Score</th>
+  </tr>
+</thead>
+<tbody>
+  <% @hmm_profiles.each do |profile|%>
+  <tr>
+    <td><%= profile.description %></td>
+    <td><%= profile.release_statistics[:not_included][:count] %></td>
+    <td><%= profile.release_statistics[:not_included][:min_score] %></td>
+    <td><%= profile.release_statistics[:not_included][:max_score] %></td>
+  </tr>
+  <% end %>
+</tbody>
