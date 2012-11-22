@@ -15,6 +15,7 @@ class DbSequence < ActiveRecord::Base
   has_many :pfitmap_sequences
   has_many :db_sequence_best_profiles
   has_many :best_hmm_profiles, :through => :db_sequence_best_profiles, :source => :hmm_profile
+  has_many :hmm_score_criteria, :through => :best_hmm_profiles
 
   #virtual attributes used in controllers
   attr_accessor :hmm_profile, :hmm_profiles, :score

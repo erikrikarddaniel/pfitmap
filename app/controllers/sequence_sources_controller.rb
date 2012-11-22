@@ -97,7 +97,7 @@ class SequenceSourcesController < ApplicationController
     
     if (@head_release and @sequence_source)
       logger.info "Found the sequence_source and the head_release"
-      @head_release.pfitmap_sequences.delete_all
+      PfitmapSequence.delete_all(["pfitmap_release_id = ?", @head_release.id])
       logger.info "Destroyed all related pfitmap_sequences"
 
       @head_release.sequence_source_id = @sequence_source.id
