@@ -7,8 +7,6 @@ module FileParsers
       HmmDbHit.all.each do |dbh|
 	@db_hit_cache[dbh.gi] = dbh
       end
-      @dbs_cache = {}
-      DbSequence.all.each { |dbs| @dbs_cache[dbs.id] = dbs }	# Get these into Rails (seems slightly faster (10 %?))
       File.open("#{io.path}", "r").each_with_index do |line, index|
 	line.chomp!
 	line.sub!(/^#.*/, '')
@@ -22,35 +20,33 @@ module FileParsers
 	  @db_hit_cache[gi] ? true : false
 	end
 
-	present_sequence = ( seqgi ? @dbs_cache[@db_hit_cache[seqgi].db_sequence_id] : DbSequence.create )	# How does the .db_sequence method call work? Does it do a select always? Can we do that in preparation?
-        # -- You can use the HmmDbHit.find(:all, :include => db_sequence) / Johannes
+	present_sequence_id = ( seqgi ? @db_hit_cache[seqgi].db_sequence_id : DbSequence.create.id )	# How does the .db_sequence method call work? Does it do a select always? Can we do that in preparation?
 	
 	@db_hits << []
 	individual_db_entries.each do |entry|
 	  entry_fields = entry.split("|")
+
 	  #If any db_hit with the same gi exists, then they share sequence.
 	  present_db_hit = @db_hit_cache[entry_fields[1].to_i]
 	  
-	  #exact_db_hits = HmmDbHit.where("gi = ? AND db = ? AND acc = ?", entry_fields[1].to_i, entry_fields[2], entry_fields[3])
 	  unless present_db_hit
 	    @db_hits << HmmDbHit.new(
 	      :gi => entry_fields[1].to_i,
 	      :db => entry_fields[2],
 	      :acc => entry_fields[3],
 	      :desc => entry_fields[4],
-	      :db_sequence_id => present_sequence.id
+	      :db_sequence_id => present_sequence_id
 	    )
 	  end
 	end
-	@hmm_result_rows << add_hmm_result_row(fields,result,present_sequence)
+	@hmm_result_rows << add_hmm_result_row(fields,result,present_sequence_id)
       end
       HmmDbHit.import @db_hits.flatten
       HmmResultRow.import @hmm_result_rows
-      #result.hmm_result_rows = @hmm_result_rows
     end
   end
   
-  def add_hmm_result_row(fields,result, present_sequence)
+  def add_hmm_result_row(fields,result, present_sequence_id)
     hmm_result_row = HmmResultRow.new(
      :target_name => fields[0],
      :target_acc => ( fields[1] == '-' ? fields[0].split('|')[2..3].join(':') : fields[1] ),
@@ -70,7 +66,7 @@ module FileParsers
      :domnumest_dom => fields[15].to_i,
      :domnumest_rep => fields[16].to_i,
      :domnumest_inc => fields[17].to_i,
-     :db_sequence_id => present_sequence.id,
+     :db_sequence_id => present_sequence_id,
      :hmm_result_id => result.id
     )
   end
