@@ -2,7 +2,7 @@ module FileParsers
   def parse_hmm_tblout(result, io)
     HmmResult.transaction do
       @hmm_result_rows = []
-      @db_hits = []	# This will become an array of array, with one array per hmm_result_row (i.e. infile row). This is in preparation for a smart way of updating all objects with db_sequence.id...
+      @db_hits = []	# This will become an array of arrays, with one array per hmm_result_row (i.e. infile row). This is in preparation for a smart way of updating all objects with db_sequence.id...
       @db_hit_cache = {}
       HmmDbHit.all.each do |dbh|
 	@db_hit_cache[dbh.gi] = dbh
