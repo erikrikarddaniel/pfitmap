@@ -40,6 +40,12 @@ module FileParsers
 	  end
 	end
 	@hmm_result_rows << add_hmm_result_row(fields,result,present_sequence_id)
+        if index % 1000 == 0
+          HmmDbHit.import @db_hits.flatten
+          HmmResultRow.import @hmm_result_rows
+          @db_hits = []
+          @hmm_result_rows = []
+        end
       end
       HmmDbHit.import @db_hits.flatten
       HmmResultRow.import @hmm_result_rows
