@@ -173,6 +173,9 @@ describe PfitmapRelease do
       # no loose branches in the tree of life:
       root_taxons = Taxon.find_all_by_parent_ncbi_id(nil)
       root_taxons.length.should == 1
+      root_taxons.first.hierarchy.should == "root"
+      root_taxons.first.children.first.hierarchy.should == "root:Bacteria"
+      Taxon.find_all_by_hierarchy(nil).should == []
     end
   end
 

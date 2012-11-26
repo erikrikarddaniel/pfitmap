@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120831144720) do
+ActiveRecord::Schema.define(:version => 20121126123226) do
 
   create_table "hmm_result_rows", :force => true do |t|
     t.string   "target_name"
@@ -171,6 +171,8 @@ ActiveRecord::Schema.define(:version => 20120831144720) do
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
     t.integer  "parent_ncbi_id"
+    t.text     "hierarchy"
+    t.index ["hierarchy"], :name => "index_taxons_on_hierarchy"
     t.index ["ncbi_taxon_id"], :name => "index_taxons_on_ncbi_taxon_id", :unique => true
   end
 

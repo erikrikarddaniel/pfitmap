@@ -10,6 +10,7 @@
 #  created_at     :datetime        not null
 #  updated_at     :datetime        not null
 #  parent_ncbi_id :integer
+#  hierarchy      :text
 #
 
 class Taxon < ActiveRecord::Base
@@ -33,7 +34,7 @@ class Taxon < ActiveRecord::Base
   end
 
   def self.from_rank(taxon_rank)
-    self.where('rank = ?', taxon_rank)
+    self.where('rank = ?', taxon_rank).order(:hierarchy)
   end
 
   def to_s
