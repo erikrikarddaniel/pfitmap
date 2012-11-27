@@ -24,7 +24,7 @@ describe "ProteinCounts" do
 
 
   before do
-    make_mock_admino
+    make_mock_admin
     login_with_oauth
     50.times do
       FactoryGirl.create(:taxon, rank: "superkingdom")
