@@ -24,7 +24,7 @@ describe "ProteinCounts" do
 
 
   before do
-    make_mock_admin
+    make_mock_admino
     login_with_oauth
     50.times do
       FactoryGirl.create(:taxon, rank: "superkingdom")
@@ -42,11 +42,16 @@ describe "ProteinCounts" do
   end
 
   describe "with enzymes" do
-    it "displays awesomeness" do
+    it "works with the sign in", :js => true do
+      visit users_path
+      save_and_open_page
+    end
+    it "displays awesomeness", :js => true do
       warn "proteins: #{class3.proteins}"
       class3.proteins.length.should_not == []
       visit protein_counts_with_enzymes_path
-#      click_on "#{@parent_taxon.name}"
+      click_link "#{@parent_taxon.name}"
+#      sleep 5
 #      page.should have_content(@first_child.name)
       save_and_open_page
     end
