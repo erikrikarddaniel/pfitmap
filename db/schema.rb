@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121126123226) do
+ActiveRecord::Schema.define(:version => 20121127093719) do
 
   create_table "hmm_result_rows", :force => true do |t|
     t.string   "target_name"
@@ -85,19 +85,6 @@ ActiveRecord::Schema.define(:version => 20121126123226) do
     t.datetime "updated_at", :null => false
   end
 
-  create_table "hmm_db_hits", :force => true do |t|
-    t.integer  "gi"
-    t.string   "db"
-    t.string   "acc"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
-    t.integer  "db_sequence_id"
-    t.text     "desc"
-    t.index ["db", "acc"], :name => "index_hmm_db_hits_on_db_and_acc"
-    t.index ["db_sequence_id"], :name => "index_hmm_db_hits_on_db_sequence_id"
-    t.index ["gi"], :name => "index_hmm_db_hits_on_gi"
-  end
-
   create_table "hmm_profiles", :force => true do |t|
     t.string   "name"
     t.string   "version"
@@ -111,12 +98,60 @@ ActiveRecord::Schema.define(:version => 20121126123226) do
     t.datetime "hmm_logo_updated_at"
   end
 
+  create_table "proteins", :force => true do |t|
+    t.string   "name"
+    t.string   "rank"
+    t.integer  "hmm_profile_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.index ["hmm_profile_id"], :name => "index_proteins_on_hmm_profile_id"
+    t.foreign_key ["hmm_profile_id"], "hmm_profiles", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "proteins_hmm_profile_id_fkey"
+  end
+
+  create_table "enzyme_proteins", :force => true do |t|
+    t.integer  "enzyme_id"
+    t.integer  "protein_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.index ["enzyme_id"], :name => "index_enzyme_proteins_on_enzyme_id"
+    t.index ["protein_id"], :name => "index_enzyme_proteins_on_protein_id"
+    t.foreign_key ["enzyme_id"], "enzymes", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "enzyme_proteins_enzyme_id_fkey"
+    t.foreign_key ["protein_id"], "proteins", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "enzyme_proteins_protein_id_fkey"
+  end
+
+  create_table "hmm_db_hits", :force => true do |t|
+    t.integer  "gi"
+    t.string   "db"
+    t.string   "acc"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.integer  "db_sequence_id"
+    t.text     "desc"
+    t.index ["db", "acc"], :name => "index_hmm_db_hits_on_db_and_acc"
+    t.index ["db_sequence_id"], :name => "index_hmm_db_hits_on_db_sequence_id"
+    t.index ["gi"], :name => "index_hmm_db_hits_on_gi"
+  end
+
   create_table "hmm_score_criteria", :force => true do |t|
     t.float    "min_fullseq_score"
     t.integer  "hmm_profile_id"
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
     t.index ["hmm_profile_id"], :name => "index_hmm_score_criterions_on_hmm_profile_id"
+  end
+
+  create_table "hmm_score_criterions", :force => true do |t|
+    t.float    "min_fullseq_score"
+    t.integer  "inclusion_criterion_id"
+    t.datetime "created_at",             :null => false
+    t.datetime "updated_at",             :null => false
+  end
+
+  create_table "inclusion_criterions", :force => true do |t|
+    t.integer  "hmm_profile_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.index ["hmm_profile_id"], :name => "index_inclusion_criterions_on_hmm_profile_id"
   end
 
   create_table "sequence_sources", :force => true do |t|
@@ -148,19 +183,6 @@ ActiveRecord::Schema.define(:version => 20121126123226) do
     t.index ["hmm_profile_id"], :name => "index_pfitmap_sequences_on_hmm_profile_id"
     t.index ["pfitmap_release_id"], :name => "index_pfitmap_sequences_on_pfitmap_release_id"
     t.foreign_key ["hmm_profile_id"], "hmm_profiles", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "pfitmap_sequences_hmm_profile_id_fkey"
-  end
-
-  create_table "proteins", :force => true do |t|
-    t.string   "name"
-    t.string   "rank"
-    t.integer  "hmm_profile_id"
-    t.integer  "enzyme_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
-    t.index ["enzyme_id"], :name => "index_proteins_on_enzyme_id"
-    t.index ["hmm_profile_id"], :name => "index_proteins_on_hmm_profile_id"
-    t.foreign_key ["hmm_profile_id"], "hmm_profiles", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "proteins_hmm_profile_id_fkey"
-    t.foreign_key ["enzyme_id"], "enzymes", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "proteins_enzyme_id_fkey"
   end
 
   create_table "taxons", :force => true do |t|

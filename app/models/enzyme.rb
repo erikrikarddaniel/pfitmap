@@ -12,6 +12,7 @@ class Enzyme < ActiveRecord::Base
   attr_accessible :name
   has_many :enzyme_profiles, dependent: :destroy
   has_many :hmm_profiles, through: :enzyme_profiles
-  has_many :proteins, through: :hmm_profiles
+  has_many :enzyme_proteins
+  has_many :proteins, through: :enzyme_proteins
   validates :name, :presence => :true
 end
