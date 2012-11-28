@@ -24,7 +24,7 @@ describe "Authorization" do
 
     it "can log out" do
       login_with_oauth
-      click_on 'Sign Out Bob Example'
+      click_on 'Sign Out Bob Guest'
       page.should have_content('You are now signed out!')
     end
 
@@ -49,7 +49,6 @@ describe "Authorization" do
         login_with_oauth
       end
       it "can visit new hmm profile page" do
-        warn "users: #{User.all}"
         visit new_hmm_profile_path
         page.should have_content('New HMM Profile')
       end

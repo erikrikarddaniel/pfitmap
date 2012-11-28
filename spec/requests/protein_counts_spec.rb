@@ -24,10 +24,10 @@ describe "ProteinCounts" do
 
 
   before do
-    50.times do
-      FactoryGirl.create(:taxon, rank: "superkingdom")
+    50.times do |n|
+      FactoryGirl.create(:taxon, rank: "superkingdom", hierarchy: "root:qwerty#{n}")
     end
-    @parent_taxon = Taxon.first 
+    @parent_taxon = Taxon.order('hierarchy').first
     20.times do
       FactoryGirl.create(:taxon, rank: "phylum", parent_ncbi_id: @parent_taxon.ncbi_taxon_id)
     end
@@ -44,18 +44,11 @@ describe "ProteinCounts" do
       make_mock_admin
       login_with_oauth
     end
-    it "works with the sign in", :js => true do
-      visit users_path
-      save_and_open_page
+    it "can expand by clicking on name", :js => true do
+      visit protein_counts_with_enzymes_path
+      page.should have_content(@parent_taxon.name)
+      click_link "#{@parent_taxon.name}"
+      page.should have_content(@first_child.name)
     end
-#    it "displays awesomeness", :js => true do
-#      warn "proteins: #{class3.proteins}"
-#      class3.proteins.length.should_not == []
-#      visit protein_counts_with_enzymes_path
-#      click_link "#{@parent_taxon.name}"
-#      sleep 5
-#      page.should have_content(@first_child.name)
-#      save_and_open_page
-#    end
   end
 end
