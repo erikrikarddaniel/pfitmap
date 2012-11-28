@@ -49,7 +49,7 @@ describe "Authorization" do
         login_with_oauth
       end
       it "can visit new hmm profile page" do
-#        warn "users: #{User.all}"
+        warn "users: #{User.all}"
         visit new_hmm_profile_path
         page.should have_content('New HMM Profile')
       end

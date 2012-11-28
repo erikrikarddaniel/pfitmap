@@ -44,7 +44,12 @@ end
 Capybara.default_host = 'http://example.org'
 
 OmniAuth.config.test_mode = true
-OmniAuth.config.add_mock(:open_id, {
-  :uid => '12345',
-  :nickname => 'zapnap'
-})
+OmniAuth.config.mock_auth[:open_id] = 
+  OmniAuth::AuthHash.new({
+                           :provider => 'open_id',
+                           :uid => '12345',
+                           :info => {
+                             :name => 'Bob Guest',
+                             :email => 'bob@example.com'
+                           },
+                         })

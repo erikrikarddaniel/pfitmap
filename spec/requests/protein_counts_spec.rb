@@ -24,8 +24,6 @@ describe "ProteinCounts" do
 
 
   before do
-    make_mock_admin
-    login_with_oauth
     50.times do
       FactoryGirl.create(:taxon, rank: "superkingdom")
     end
@@ -42,9 +40,12 @@ describe "ProteinCounts" do
   end
 
   describe "with enzymes" do
-    before { make_mock_admin }
+    before do 
+      make_mock_admin
+      login_with_oauth
+    end
     it "works with the sign in", :js => true do
-      warn "users: #{User.all}"
+      visit users_path
       save_and_open_page
     end
 #    it "displays awesomeness", :js => true do
