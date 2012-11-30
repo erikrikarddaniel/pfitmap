@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121127093719) do
+ActiveRecord::Schema.define(:version => 20121130083423) do
 
   create_table "hmm_result_rows", :force => true do |t|
     t.string   "target_name"
@@ -132,6 +132,19 @@ ActiveRecord::Schema.define(:version => 20121127093719) do
     t.index ["gi"], :name => "index_hmm_db_hits_on_gi"
   end
 
+  create_table "pfitmap_sequences", :force => true do |t|
+    t.integer  "db_sequence_id"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+    t.integer  "pfitmap_release_id"
+    t.integer  "hmm_profile_id"
+    t.index ["db_sequence_id"], :name => "index_pfitmap_sequences_on_db_sequence_id"
+    t.index ["hmm_profile_id"], :name => "index_pfitmap_sequences_on_hmm_profile_id"
+    t.index ["pfitmap_release_id"], :name => "index_pfitmap_sequences_on_pfitmap_release_id"
+    t.foreign_key ["hmm_profile_id"], "hmm_profiles", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "pfitmap_sequences_hmm_profile_id_fkey"
+  end
+
+  create_view "hmm_profile_release_statistics", "SELECT dbbp.hmm_profile_id, dbbp.sequence_source_id, ps.pfitmap_release_id, count(*) AS count, min(dbbp.fullseq_score) AS min, max(dbbp.fullseq_score) AS max FROM (db_sequence_best_profiles dbbp LEFT JOIN pfitmap_sequences ps ON (((dbbp.db_sequence_id = ps.db_sequence_id) AND (dbbp.hmm_profile_id = ps.hmm_profile_id)))) GROUP BY dbbp.hmm_profile_id, dbbp.sequence_source_id, ps.pfitmap_release_id", :force => true
   create_table "hmm_score_criteria", :force => true do |t|
     t.float    "min_fullseq_score"
     t.integer  "hmm_profile_id"
@@ -157,18 +170,6 @@ ActiveRecord::Schema.define(:version => 20121127093719) do
     t.integer  "sequence_source_id"
     t.index ["sequence_source_id"], :name => "index_pfitmap_releases_on_sequence_source_id"
     t.foreign_key ["sequence_source_id"], "sequence_sources", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "pfitmap_releases_sequence_source_id_fkey"
-  end
-
-  create_table "pfitmap_sequences", :force => true do |t|
-    t.integer  "db_sequence_id"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
-    t.integer  "pfitmap_release_id"
-    t.integer  "hmm_profile_id"
-    t.index ["db_sequence_id"], :name => "index_pfitmap_sequences_on_db_sequence_id"
-    t.index ["hmm_profile_id"], :name => "index_pfitmap_sequences_on_hmm_profile_id"
-    t.index ["pfitmap_release_id"], :name => "index_pfitmap_sequences_on_pfitmap_release_id"
-    t.foreign_key ["hmm_profile_id"], "hmm_profiles", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "pfitmap_sequences_hmm_profile_id_fkey"
   end
 
   create_table "taxons", :force => true do |t|
