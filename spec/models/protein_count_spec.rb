@@ -25,7 +25,7 @@ describe ProteinCount do
   let!(:protein_count1) { FactoryGirl.create(:protein_count, taxon: taxon, protein: protein, pfitmap_release: pfitmap_release) }
   it "add a genome" do 
     protein_count1.add_genome
-    protein_count1.no_genomes.should == 1
+    protein_count1.no_genomes.should == 2
     protein_count1.no_proteins.should == 0
   end
   
@@ -34,7 +34,7 @@ describe ProteinCount do
     protein_count1.add_genome
     ProteinCount.add_hit(protein, [taxon], pfitmap_release)
     protein_count = ProteinCount.find(protein_count1.id)
-    protein_count.no_genomes.should == 1
+    protein_count.no_genomes.should == 2
     protein_count.no_proteins.should == 1
     protein_count.no_genomes_with_proteins == 1
     protein_count.obs_as_genome.should be(true)

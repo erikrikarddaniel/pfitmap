@@ -18,7 +18,7 @@ describe "Static pages" do
       it "has the right link" do
         login_with_oauth
         visit root_path    
-        page.should have_content("Sign Out Bob Example")  
+        page.should have_content("Sign Out Bob Guest")  
       end
     end
 

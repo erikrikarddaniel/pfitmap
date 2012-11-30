@@ -146,7 +146,7 @@ class PfitmapReleasesController < ApplicationController
 
     
     respond_to do |format|
-      flash[:success] = "The Protein Counts will now be calculated! An email will be sent when it is finished (approx 24h)."
+      flash[:success] = "The Protein Counts will now be calculated! This will take approx 30 min."
       format.html { redirect_to pfitmap_release_path(@pfitmap_release) }
     end
   end
