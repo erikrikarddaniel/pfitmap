@@ -17,22 +17,26 @@ class PfitmapReleasesController < ApplicationController
   def show
     @pfitmap_release = PfitmapRelease.find(params[:id])
     @sequence_source = @pfitmap_release.sequence_source
-    @hmm_profiles = HmmProfile.all
+    @hmm_profiles = HmmProfile.all.sort! { |p1,p2| p1.hierarchy <=> p2.hierarchy }
+    @releases_for_same_source = PfitmapRelease.find_all_by_sequence_source_id(@sequence_source.id)
     @hmm_profiles.each do |profile|
-      included_count, included_min, included_max = 
-        DbSequenceBestProfile.included_stats(profile, @sequence_source)
-      not_inc_count, not_inc_min, not_inc_max = 
-        DbSequenceBestProfile.not_included_stats(profile, @sequence_source)
+      profile.release_statistics = []
+      @releases_for_same_source.each do |release|
+        included_count, included_min, included_max = 
+          HmmProfileReleaseStatistic.stats_for(profile, @sequence_source, release)
+        profile.release_statistics << { :release => release,
+          :count => included_count,
+          :min_score => included_min,
+          :max_score => included_max}
+      end
 
-      profile.release_statistics = {
-        :included => 
-        {:count => included_count, 
-          :min_score => included_min, 
-          :max_score => included_max},
-        :not_included =>
-        {:count => not_inc_count,
-          :min_score => not_inc_min,
-          :max_score => not_inc_max}
+      not_inc_count, not_inc_min, not_inc_max = 
+        HmmProfileReleaseStatistic.stats_for(profile, @sequence_source, nil)
+      profile.release_statistics << {
+        :release => nil, 
+        :count => not_inc_count, 
+        :min_score => not_inc_min, 
+        :max_score => not_inc_max
       }
     end
     

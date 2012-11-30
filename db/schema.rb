@@ -144,7 +144,7 @@ ActiveRecord::Schema.define(:version => 20121130083423) do
     t.foreign_key ["hmm_profile_id"], "hmm_profiles", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "pfitmap_sequences_hmm_profile_id_fkey"
   end
 
-  create_view "hmm_profile_release_statistics", "SELECT dbbp.hmm_profile_id, dbbp.sequence_source_id, ps.pfitmap_release_id, count(*) AS count, min(dbbp.fullseq_score) AS min, max(dbbp.fullseq_score) AS max FROM (db_sequence_best_profiles dbbp LEFT JOIN pfitmap_sequences ps ON (((dbbp.db_sequence_id = ps.db_sequence_id) AND (dbbp.hmm_profile_id = ps.hmm_profile_id)))) GROUP BY dbbp.hmm_profile_id, dbbp.sequence_source_id, ps.pfitmap_release_id", :force => true
+  create_view "hmm_profile_release_statistics", "SELECT dbbp.hmm_profile_id, dbbp.sequence_source_id, ps.pfitmap_release_id, count(*) AS n, min(dbbp.fullseq_score) AS min_fullseq_score, max(dbbp.fullseq_score) AS max_fullseq_score FROM (db_sequence_best_profiles dbbp LEFT JOIN pfitmap_sequences ps ON (((dbbp.db_sequence_id = ps.db_sequence_id) AND (dbbp.hmm_profile_id = ps.hmm_profile_id)))) GROUP BY dbbp.hmm_profile_id, dbbp.sequence_source_id, ps.pfitmap_release_id", :force => true
   create_table "hmm_score_criteria", :force => true do |t|
     t.float    "min_fullseq_score"
     t.integer  "hmm_profile_id"

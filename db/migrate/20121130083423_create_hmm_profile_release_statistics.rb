@@ -6,9 +6,9 @@ SELECT
   dbbp.hmm_profile_id, 
   dbbp.sequence_source_id, 
   ps.pfitmap_release_id, 
-  COUNT(*), 
-  MIN(fullseq_score), 
-  MAX(fullseq_score)
+  COUNT(*) AS n, 
+  MIN(fullseq_score) AS min_fullseq_score, 
+  MAX(fullseq_score) AS max_fullseq_score
 FROM
   db_sequence_best_profiles dbbp LEFT JOIN 
   pfitmap_sequences ps ON 

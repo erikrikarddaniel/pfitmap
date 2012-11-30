@@ -202,9 +202,9 @@ describe DbSequenceBestProfile do
 
     it "gives the correct not included numbers for source1 profile2" do
       count, min, max  = DbSequenceBestProfile.not_included_stats(hmm_profile2, sequence_source1)
-      count.should == 1
-      min.should == 15.0
-      max.should == 15.0
+      count.should == 0
+      min.should == nil
+      max.should == nil
     end
   end
 end
