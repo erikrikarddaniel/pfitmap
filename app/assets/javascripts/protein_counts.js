@@ -48,15 +48,10 @@ function colorHeatmap(){
 
     $('.heat-map tbody td.heat').each(function(){
 	var color_int = this.getAttribute('data-color');
-	if (color_int == 0){
-	    hex_clr = RGBtoHex(142,142,142);
-	}
-	else {
-	    red =  parseInt((xr + ((color_int * (yr-xr))/(n-1))).toFixed(0));
-	    green = parseInt((xg + ((color_int * (yg-xg))/(n-1))).toFixed(0));
-	    blue =  parseInt((xb + ((color_int * (yb-xb))/(n-1))).toFixed(0));
-	    hex_clr = RGBtoHex(red,green,blue);
-	}
+	red =  parseInt((xr + ((color_int * (yr-xr))/(n-1))).toFixed(0));
+	green = parseInt((xg + ((color_int * (yg-xg))/(n-1))).toFixed(0));
+	blue =  parseInt((xb + ((color_int * (yb-xb))/(n-1))).toFixed(0));
+	hex_clr = RGBtoHex(red,green,blue);
 	hex_clr2 = '#' + hex_clr;
 	$(this).css({backgroundColor: hex_clr2});
     });

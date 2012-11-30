@@ -31,7 +31,7 @@ class SequenceSource < ActiveRecord::Base
   end
 
   def evaluate_logger
-    @@evaluate_logger ||= ActiveSupport::BufferedLogger.new(Rails.root.join('log/calculate.log'))
+    @@evaluate_logger ||= ActiveSupport::BufferedLogger.new(Rails.root.join('log/evaluate.log'))
   end
 
   def evaluate(head_release, user)

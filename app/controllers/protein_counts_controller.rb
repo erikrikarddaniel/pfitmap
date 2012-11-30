@@ -83,7 +83,7 @@ class ProteinCountsController < ApplicationController
         @taxons = Taxon.from_rank(params[:taxon_rank]).paginate(:page => params[:page])
       else
         @taxon_rank = nil
-        @taxons = Taxon.paginate(:page => params[:page])
+        @taxons = Taxon.order(:hierarchy).paginate(:page => params[:page])
       end
     else
       @taxon_rank = "superkingdom"
@@ -108,7 +108,7 @@ class ProteinCountsController < ApplicationController
     @parent_taxon = Taxon.find(params[:parent_id])
     parent_level = params[:level]
     @level = Integer(parent_level) + 1
-    @taxons = @parent_taxon.children
+    @taxons = @parent_taxon.children.order('hierarchy DESC')
     @enzymes = find_standard_enzymes
 
     @protein_counts_hash = ProteinCount.protein_counts_hash_for(@taxons, Protein.all, @pfitmap_release)
