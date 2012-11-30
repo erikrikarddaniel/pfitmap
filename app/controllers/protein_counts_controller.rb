@@ -74,27 +74,33 @@ class ProteinCountsController < ApplicationController
     else
       @pfitmap_release = PfitmapRelease.find_current_release
     end
-    @enzymes = find_standard_enzymes
-    @level = 0
-    
-    if params[:taxon_rank]
-      if not (params[:taxon_rank] == "All") 
-        @taxon_rank = params[:taxon_rank]
-        @taxons = Taxon.from_rank(params[:taxon_rank]).paginate(:page => params[:page])
+    if @pfitmap_release
+      @enzymes = find_standard_enzymes
+      @level = 0
+      
+      if params[:taxon_rank]
+        if not (params[:taxon_rank] == "All") 
+          @taxon_rank = params[:taxon_rank]
+          @taxons = Taxon.from_rank(params[:taxon_rank]).paginate(:page => params[:page])
+        else
+          @taxon_rank = nil
+          @taxons = Taxon.order(:hierarchy).paginate(:page => params[:page])
+        end
       else
-        @taxon_rank = nil
-        @taxons = Taxon.order(:hierarchy).paginate(:page => params[:page])
+        @taxon_rank = "superkingdom"
+        @taxons = Taxon.from_rank("superkingdom").paginate(:page => params[:page])
+      end
+
+      @protein_counts_hash = ProteinCount.protein_counts_hash_for(@taxons, Protein.all, @pfitmap_release)
+      respond_to do |format|
+        format.html { render 'with_enzymes' }
+        format.json { render json: @protein_counts }
+        format.js { render partial: 'protein_counts/protein_counts_table', :locals => {:protein_counts => @protein_counts}, :content_type => 'text/html'}
       end
     else
-      @taxon_rank = "superkingdom"
-      @taxons = Taxon.from_rank("superkingdom").paginate(:page => params[:page])
-    end
-
-    @protein_counts_hash = ProteinCount.protein_counts_hash_for(@taxons, Protein.all, @pfitmap_release)
-    respond_to do |format|
-      format.html { render 'with_enzymes' }
-      format.json { render json: @protein_counts }
-      format.js { render partial: 'protein_counts/protein_counts_table', :locals => {:protein_counts => @protein_counts}, :content_type => 'text/html'}
+      respond_to do |format|
+        format.html { render 'with_enzymes' }
+      end
     end
   end
 
