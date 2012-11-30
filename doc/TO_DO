@@ -19,6 +19,8 @@ Big Items
 * Export of sequences and PDB-ids
 Things to fix
 -------------
+*hmm_profile view directory contains unused files e.g. _new_hmm_result.html.erb
+
 * pfitmap_release show page is too slow, load with ajax
 
 * Controller error gives full error page... like in development mode
