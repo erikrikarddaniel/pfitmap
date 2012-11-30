@@ -3,7 +3,6 @@ setenv ROOT $PWD
 screen -t pfitmap
 screen -t server
 screen -t autotest
-screen -t jobserver
 chdir db
 screen -t psql 
 chdir ..
