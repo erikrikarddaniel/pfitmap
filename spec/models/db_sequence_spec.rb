@@ -5,9 +5,13 @@
 #  id         :integer         not null, primary key
 #  created_at :datetime        not null
 #  updated_at :datetime        not null
+#  sequence   :text
 #
 
 require 'spec_helper'
+require 'file_parsers'
+
+include FileParsers
 
 describe DbSequence do
   let!(:hmm_profile) { FactoryGirl.create(:hmm_profile_nrdbr2lox) }
@@ -149,5 +153,21 @@ describe DbSequence do
       let!(:pfitmap_sequence) { FactoryGirl.create(:pfitmap_sequence, db_sequence: db_sequence) }
       its(:pfitmap_sequences) { should include(pfitmap_sequence) }
     end
+  end
+
+  describe "fasta import" do
+    it "will update sequence on all db_sequence objects" do
+      hmm_result_nrdb = FactoryGirl.create(:hmm_result_nrdb)
+      parse_hmm_tblout(hmm_result_nrdb, fixture_file_upload("/NrdB.test.tblout"))
+      parse_fasta(fixture_file_upload("/NrdB.test.fasta"))
+      DbSequence.where("sequence IS NULL").length.should == 0
+    end
+
+#    it "will update sequence on all db_sequence objects also for large files" do
+#      hmm_result_nrdb = FactoryGirl.create(:hmm_result_nrdb)
+#      parse_hmm_tblout(hmm_result_nrdb, fixture_file_upload("/NrdB.tblout"))
+#      parse_fasta(fixture_file_upload("/NrdB.fasta"))
+#      DbSequence.where("sequence IS NULL").length.should == 0
+#    end
   end
 end

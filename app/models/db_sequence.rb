@@ -5,9 +5,8 @@
 #  id         :integer         not null, primary key
 #  created_at :datetime        not null
 #  updated_at :datetime        not null
+#  sequence   :text
 #
-# This model represents a unique sequence record in a database, to which
-# multiple identifiers (in the poorly named hmm_db_hit model) can be connected.
 
 class DbSequence < ActiveRecord::Base
   has_many :hmm_result_rows
