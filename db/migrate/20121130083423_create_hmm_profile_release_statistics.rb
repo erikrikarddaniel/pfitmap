@@ -23,7 +23,7 @@ GROUP BY
 
   def down
     execute '
-DROP VIEW hmm_profile_release_statistcs
+DROP VIEW hmm_profile_release_statistics
 '
   end
 end
