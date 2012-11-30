@@ -16,10 +16,6 @@ describe "DbSequences" do
     before do
       visit db_sequences_path
     end
-    it "shows the correct content" do
-      page.should have_content("New Db sequence")
-      page.should have_content("Listing")
-    end
   end
 
   describe "Show page" do

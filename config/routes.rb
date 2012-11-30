@@ -24,7 +24,9 @@ Pfitmap::Application.routes.draw do
     post 'calculate', :as => :calculate
   end
 
-  resources :db_sequences
+  resources :db_sequences do
+  end
+  post 'import_fasta', controller: 'db_sequences', action: 'import_fasta'
 
   resources :hmm_db_hits
 

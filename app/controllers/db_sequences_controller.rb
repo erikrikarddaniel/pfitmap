@@ -1,15 +1,24 @@
+require 'file_parsers'
+
+include FileParsers
+
 class DbSequencesController < ApplicationController
   load_and_authorize_resource
   # GET /db_sequences
   # GET /db_sequences.json
   def index
-    @db_sequences = DbSequence.paginate(page: params[:page])
-    @db_sequences.each do |seq|
-      seq.hmm_profiles = seq.best_hmm_profiles.map{|profile| profile.name }.join(", ")
-    end
+    @count_without_sequence = DbSequence.where("sequence IS NULL").count
 
     respond_to do |format|
       format.html # index.html.erb
+      format.json { render json: @db_sequences }
+    end
+  end
+
+  def import_fasta
+    updated = parse_fasta(params[:fasta_file])
+    respond_to do |format|
+      format.html { redirect_to db_sequences_url, notice: "Updated #{updated} DbSequence objects" }
       format.json { render json: @db_sequences }
     end
   end

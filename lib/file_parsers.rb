@@ -1,8 +1,9 @@
 module FileParsers
   def parse_fasta(io)
+    updated = 0
     DbSequence.transaction do
       @db_seq_to_update = {}
-      DbSequence.where("sequence IS NULL", include: :hmm_db_hits).each do |dbs|
+      DbSequence.includes(:hmm_db_hits).where("sequence IS NULL").each do |dbs|
 	dbs.hmm_db_hits.each do |hdb|
 	  @db_seq_to_update[hdb.gi] = dbs
 	end
@@ -16,6 +17,7 @@ module FileParsers
 	    @db_seq_to_update[gi].sequence = seq
 	    @db_seq_to_update[gi].save
 	    seq = ''
+	    updated += 1
 	  end
 	  gi = line.split('|')[1].to_i
 	  gi = nil unless @db_seq_to_update[gi]
@@ -24,6 +26,7 @@ module FileParsers
 	end
       end
     end
+    updated
   end
 
   def parse_hmm_tblout(result, io)

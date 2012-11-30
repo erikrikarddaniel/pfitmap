@@ -163,7 +163,7 @@ describe DbSequence do
       DbSequence.where("sequence IS NULL").length.should == 0
     end
 
-#    it "will update sequence on all db_sequence objects also for large files" do
+#    it "will update sequence on all db_sequence objects also for large files without taking too long" do
 #      hmm_result_nrdb = FactoryGirl.create(:hmm_result_nrdb)
 #      parse_hmm_tblout(hmm_result_nrdb, fixture_file_upload("/NrdB.tblout"))
 #      parse_fasta(fixture_file_upload("/NrdB.fasta"))
