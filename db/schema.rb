@@ -153,6 +153,20 @@ ActiveRecord::Schema.define(:version => 20121130083423) do
     t.index ["hmm_profile_id"], :name => "index_hmm_score_criterions_on_hmm_profile_id"
   end
 
+  create_table "hmm_score_criterions", :force => true do |t|
+    t.float    "min_fullseq_score"
+    t.integer  "inclusion_criterion_id"
+    t.datetime "created_at",             :null => false
+    t.datetime "updated_at",             :null => false
+  end
+
+  create_table "inclusion_criterions", :force => true do |t|
+    t.integer  "hmm_profile_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.index ["hmm_profile_id"], :name => "index_inclusion_criterions_on_hmm_profile_id"
+  end
+
   create_table "sequence_sources", :force => true do |t|
     t.string   "source"
     t.string   "name"
