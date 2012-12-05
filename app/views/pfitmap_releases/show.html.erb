@@ -28,18 +28,10 @@
   </aside>
   <div class="main-content span8">
     <div>
-      <h3>Included</h3>
+      <h3>Statistics per profile:</h3>
       <% if @hmm_profiles.any? %>
       <table class="standard">
 	<%= render 'included_stats' %> 
-      </table>
-      <% end %>
-    </div>
-    <div>
-      <h3>Not Included</h3>
-      <% if @hmm_profiles.any? %>
-      <table class="standard">
-	<%= render 'not_included_stats' %>
       </table>
       <% end %>
     </div>

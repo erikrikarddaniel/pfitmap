@@ -19,6 +19,7 @@ class PfitmapRelease < ActiveRecord::Base
   has_many :hmm_db_hits, :through => :db_sequences
   has_many :taxons
   has_many :protein_counts
+  has_many :hmm_profile_release_statistics
   belongs_to :sequence_source
   validates :release, :presence => :true
   validates :release_date, :presence => :true

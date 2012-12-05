@@ -29,6 +29,7 @@ class HmmProfile < ActiveRecord::Base
   has_many :db_sequence_best_profiles
   has_many :best_profile_sequences, through: :db_sequence_best_profiles, source: :db_sequence
   has_many :pfitmap_sequences
+  has_many :hmm_profile_release_statistics
 
   has_attached_file :hmm_logo, :styles => { :medium => "40000x400>", :thumb => "10000x100>" }
 

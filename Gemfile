@@ -45,7 +45,8 @@ group :development, :test do
 end
 
 group :test do
-  gem 'capybara', '1.1.2'
+  gem 'capybara-webkit'
+  gem 'database_cleaner' # Added to enable js testing
   gem 'factory_girl_rails', '1.4.0'
   gem 'autotest-standalone', :require => 'autotest'
   gem 'autotest-rails-pure'
@@ -61,7 +62,7 @@ group :assets do
   gem 'coffee-rails', '~> 3.2.1'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  gem 'therubyracer'
+  gem 'therubyracer', '0.10.1'
 
   gem 'uglifier', '>= 1.0.3'
 end
@@ -82,5 +83,4 @@ gem 'jquery-rails'
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
-gem 'therubyracer'
 gem 'bio'
