@@ -36,10 +36,13 @@ class Protein < ActiveRecord::Base
   def self.add_if_not_existing(enzymes, profile)
     protein =  find_by_belongs_to(profile).first
     if not protein
-      protein = new(name: profile.protein_name)
+      protein = new()
       protein.hmm_profile_id = profile.id
-      protein.save
     end
+    # Update eventual changes in protein_name
+    protein.name = profile.protein_name
+    protein.save
+    
     if enzymes
       enzymes.each do |e|
         EnzymeProtein.find_or_create_by_enzyme_id_and_protein_id(e.id, protein.id)
