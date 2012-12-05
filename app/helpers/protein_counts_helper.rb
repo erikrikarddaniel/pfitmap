@@ -45,4 +45,11 @@ module ProteinCountsHelper
     base="taxon#{taxon.id}"
   end
 
+  def taxon_sign(taxon)
+    if taxon.children.count == 0
+      "-"
+    else
+      "+"
+    end
+  end
 end

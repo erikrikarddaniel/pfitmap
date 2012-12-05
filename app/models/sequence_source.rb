@@ -18,6 +18,7 @@ class SequenceSource < ActiveRecord::Base
   has_many :db_sequences, :through => :hmm_result_rows
   has_many :view_db_sequence_best_profiles
   has_one :pfitmap_release
+  has_many :hmm_profile_release_statistics
   validates :source, presence: true
   validates :name, presence: true
   validates :version, presence: true
@@ -30,25 +31,30 @@ class SequenceSource < ActiveRecord::Base
     "#{source}:#{name}:#{version}"
   end
 
+  def evaluate_logger
+    @@evaluate_logger ||= ActiveSupport::BufferedLogger.new(Rails.root.join('log/evaluate.log'))
+  end
+
   def evaluate(head_release, user)
-    begin
-      db_sequences =  self.db_sequences
-      db_sequences.each_with_index do |seq, index|
-        hmm_profiles = seq.best_hmm_profiles_for(self)
-        hmm_profiles.each do |hmm_profile|
-          if hmm_profile.evaluate_for_best?(seq,self)
+    evaluate_logger.info "#{Time.now} Start evaluating sequence source: #{self.name}"
+    @sequences = []
+    profile_hash = {}
+    HmmProfile.find(:all, :include => :hmm_score_criteria).each do |profile|
+      profile_hash[profile.id] = profile
+    end
+
+    DbSequence.find_each(:include => :db_sequence_best_profiles) do |seq|
+      seq.db_sequence_best_profiles.each do |view_row|
+        if view_row.sequence_source_id == self.id
+          hmm_profile = profile_hash[view_row.hmm_profile_id]
+          
+          if hmm_profile.evaluate_no_sql(seq,self, hmm_profile.hmm_score_criteria, view_row.fullseq_score)
             head_release.add_seq(seq, hmm_profile)
           end
         end
       end
-    rescue
-      logger.info "Evaluation of sequence source ended with an error!"
-      logger.info " This is the error message: #{$!}"
-#      UserMailer.evaluate_failure_email(user, self, $!).deliver
-    else
-      logger.info "Evaluation of sequence source was successful!"
-#      UserMailer.evaluate_success_email(user, self).deliver
-    end      
+    end
+  evaluate_logger.info "#{Time.now} Evaluation of sequence source was successful!"
   end
 end
 

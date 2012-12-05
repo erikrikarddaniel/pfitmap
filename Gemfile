@@ -45,7 +45,8 @@ group :development, :test do
 end
 
 group :test do
-  gem 'capybara', '1.1.2'
+  gem 'capybara-webkit'
+  gem 'database_cleaner' # Added to enable js testing
   gem 'factory_girl_rails', '1.4.0'
   gem 'autotest-standalone', :require => 'autotest'
   gem 'autotest-rails-pure'

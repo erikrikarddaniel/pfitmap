@@ -19,6 +19,7 @@ class PfitmapRelease < ActiveRecord::Base
   has_many :hmm_db_hits, :through => :db_sequences
   has_many :taxons
   has_many :protein_counts
+  has_many :hmm_profile_release_statistics
   belongs_to :sequence_source
   validates :release, :presence => :true
   validates :release_date, :presence => :true
@@ -45,7 +46,7 @@ class PfitmapRelease < ActiveRecord::Base
   def add_seq(db_seq, hmm_profile)
     existing = PfitmapSequence.find(:first, conditions: ["db_sequence_id = ? AND hmm_profile_id = ? AND pfitmap_release_id = ?", db_seq.id, hmm_profile.id, self.id])
     if not existing
-      PfitmapSequence.create!(db_sequence_id: db_seq.id, pfitmap_release_id: self.id, hmm_profile_id: hmm_profile.id)
+      PfitmapSequence.create(db_sequence_id: db_seq.id, pfitmap_release_id: self.id, hmm_profile_id: hmm_profile.id)
     end
   end
 
@@ -143,6 +144,7 @@ class PfitmapRelease < ActiveRecord::Base
     # First iterate over whole genome sequenced organisms
     taxon_ncbi_ids.each do |ncbi_taxon_id|
       taxons = BiosqlWeb.ncbi_taxon_id2full_taxon_hierarchy(ncbi_taxon_id)
+      hierarchy_name_list = hierarchy_names(taxons, rank_hash)
       # Special case for the leaf node
       first = true
       current_taxon, *rest = *taxons
@@ -160,7 +162,8 @@ class PfitmapRelease < ActiveRecord::Base
           add_pc_recursively(tree, current_taxon["ncbi_taxon_id"], pv_hash, first)
           break
         elsif current_taxon["ncbi_taxon_id"]
-          new_taxon_to_tree(tree, current_taxon, next_taxon, proteins, first)
+          new_taxon_to_tree(tree, current_taxon, next_taxon, proteins, first, hierarchy_name_list)
+          hierarchy_name_list.pop
           current_taxon = next_taxon
           first = false
         else
@@ -242,17 +245,35 @@ class PfitmapRelease < ActiveRecord::Base
     end
   end
 
-  def new_taxon_to_tree(tree, taxon_hash, parent_taxon_hash, proteins, first)
+  def new_taxon_to_tree(tree, taxon_hash, parent_taxon_hash, proteins, first, hierarchy)
     p_hash = {}
     proteins.each do |p|
       p_hash[p.id] = Vector[1,0,0]
     end
     taxon_id = taxon_hash["ncbi_taxon_id"]
+    hierarchy_string = hierarchy.join(":").gsub(/\s+/, "")
+    taxon_hash["hierarchy"] = hierarchy_string
     parent_id = parent_taxon_hash ? parent_taxon_hash["ncbi_taxon_id"] : nil
     tree[taxon_id] = [parent_id, taxon_hash, p_hash, first]
     
   end
 
+  def hierarchy_names(taxons, rank_hash)
+    # Some taxons-lists will be an html-error page
+    begin
+      # Filter on accepted ranks, re-add first and root
+      accepted_taxons = taxons.select {|taxon_hash| rank_hash[taxon_hash["node_rank"]]}
+      if not rank_hash[taxons.first["node_rank"]]
+        accepted_taxons.unshift(taxons.first)
+      end
+      accepted_taxons << taxons.last
+      # Pick out the names
+      name_list = accepted_taxons.map { |taxon_hash| taxon_hash["scientific_name"] }
+      return name_list.reverse
+    rescue
+      []
+    end
+  end
 
   def save_taxon(taxon_hash, parent_taxon_id)
     taxon_in_db = Taxon.find_by_ncbi_taxon_id(taxon_hash["ncbi_taxon_id"])
@@ -264,6 +285,7 @@ class PfitmapRelease < ActiveRecord::Base
     taxon.ncbi_taxon_id = taxon_hash["ncbi_taxon_id"]
     taxon.name = taxon_hash["scientific_name"]
     taxon.rank = taxon_hash["node_rank"]
+    taxon.hierarchy = taxon_hash["hierarchy"]
     taxon.parent_ncbi_id = parent_taxon_id
     taxon.save
     return taxon.id

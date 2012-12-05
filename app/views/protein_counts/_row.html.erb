@@ -1,9 +1,9 @@
 <tr id=<%=row_id(taxon)%>>
 <td class="taxon" data-indent=<%=level%>>
-<%= link_to taxon.name, { :controller => "protein_counts", :action => "add_row", :parent_id => taxon.id, :level => level}, :remote => true %>
+<%= link_to taxon_sign(taxon), { :controller => "protein_counts", :action => "add_row", :parent_id => taxon.id, :level => level}, :remote => true %> <%= taxon.name%>
 </td>
 <% @enzymes.each do |enzyme| %>
-<% enzyme.proteins.each do |protein| %>
+<% enzyme.proteins.order("name").each do |protein| %>
 <% protein_count = @protein_counts_hash[taxon.id][protein.id] %>
 <% if protein_count %>
 <% color_int = pc_col(protein_count) %>

@@ -110,15 +110,17 @@ describe HmmProfile do
     end
 
     it "evaluates the best profile with high enough score with best_profile method" do
-      hmm_profile.evaluate_for_best?(db_sequence1,sequence_source).should be_true
+      fullseq_score = hmm_profile.db_sequence_best_profiles.where(:sequence_source_id => sequence_source.id, :db_sequence_id => db_sequence1.id).first.fullseq_score
+      hmm_profile.evaluate_no_sql(db_sequence1,sequence_source, hmm_profile.inclusion_criteria, fullseq_score).should be_true
     end
     
     it "evaluates the best profile with score below threshold" do
       hmm_profile_nrdbr2lox.evaluate?(db_sequence2,sequence_source).should be_false
     end
     
-    it "evaluates the best profile with score below threshold with best_profile method" do
-      hmm_profile.evaluate_for_best?(db_sequence2, sequence_source).should be_false
+    it "evaluates the best profile with score below threshold with no_sql method" do
+      fullseq_score = hmm_profile_nrdbr2lox.db_sequence_best_profiles.where(:sequence_source_id => sequence_source.id, :db_sequence_id => db_sequence2.id).first.fullseq_score
+      hmm_profile_nrdbr2lox.evaluate_no_sql(db_sequence2, sequence_source, hmm_profile.inclusion_criteria, fullseq_score).should be_false
     end
 
     describe "Evaluates a profile that is not the best" do
@@ -151,7 +153,8 @@ describe HmmProfile do
       end
       
       it "should be false for evaluate_for_best?" do
-        hmm_profile4.evaluate_for_best?(db_sequence4, sequence_source).should be_false
+        fullseq_score = hmm_profile4.db_sequence_best_profiles.where(:sequence_source_id => sequence_source.id, :db_sequence_id => db_sequence4.id).first.fullseq_score
+        hmm_profile4.evaluate_no_sql(db_sequence4, sequence_source, hmm_profile4.inclusion_criteria, fullseq_score).should be_false
       end
     end
     

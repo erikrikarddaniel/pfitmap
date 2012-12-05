@@ -29,6 +29,7 @@ class HmmProfile < ActiveRecord::Base
   has_many :db_sequence_best_profiles
   has_many :best_profile_sequences, through: :db_sequence_best_profiles, source: :db_sequence
   has_many :pfitmap_sequences
+  has_many :hmm_profile_release_statistics
 
   has_attached_file :hmm_logo, :styles => { :medium => "40000x400>", :thumb => "10000x100>" }
 
@@ -80,9 +81,9 @@ class HmmProfile < ActiveRecord::Base
   end
   # Evaluates under the assumption that the profile is the best_profile for 
   # that db_sequence and sequence_source
-  def evaluate_for_best?(db_sequence, sequence_source)
-    has_criteria = self.inclusion_criteria != []
-    bool = self.inclusion_criteria.inject(has_criteria) { |result, element| result && element.evaluate?(db_sequence,sequence_source) }
+  def evaluate_no_sql(db_sequence, sequence_source, inclusion_criteria, fullseq_score)
+    has_criteria = inclusion_criteria != []
+    bool = inclusion_criteria.inject(has_criteria) { |result, element| result && element.evaluate_with_score?(db_sequence,sequence_source, fullseq_score) }
   end
 
   # Provides a concatenation of name and protein name useful for display

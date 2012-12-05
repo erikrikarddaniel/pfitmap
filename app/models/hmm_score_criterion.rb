@@ -20,4 +20,8 @@ class HmmScoreCriterion < InclusionCriterion
     score = db_sequence.best_hmm_result_row(sequence_source).fullseq_score
     return (score > self.min_fullseq_score)
   end
+
+  def evaluate_with_score?(db_sequence, sequence_source, fullseq_score)
+    return (fullseq_score > self.min_fullseq_score)
+  end
 end

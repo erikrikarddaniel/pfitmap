@@ -11,23 +11,26 @@ Discussion points
 
 Big Items
 ---------
-* Calculate protein_counts
-    - Still interaction with db that consumes time
-    - May be possible to use the import gem even more extensively
-
-    - Evaluate consumes almost as much time as calculate with
-    - the new sample dataset.
-
 * "Main table" GUI
     - Sort on hierarchy (I think we mixed this up with the profiles)
 
+* import of FASTA-files
+
+* Export of sequences and PDB-ids
 Things to fix
 -------------
+*hmm_profile view directory contains unused files e.g. _new_hmm_result.html.erb
+
+* pfitmap_release show page is too slow, load with ajax
+
 * Controller error gives full error page... like in development mode
 
 * Can remove wgs attribute from taxon with a migration
 
 * Can remove obs_as_genome attribute from protein_counts
+
+* Inclusion Criteria is not implemented, it is just bypassed to get to
+  hmm_score_criteria
 
 * unauthorized users should still have the right to visit protein_counts statistic pages
 
@@ -139,6 +142,13 @@ p0. Implement model unit test
 
 DONE
 ----
+* Calculate protein_counts
+    - Still interaction with db that consumes time
+    - May be possible to use the import gem even more extensively
+
+    - Evaluate consumes almost as much time as calculate with
+    - the new sample dataset.
+
 * Route to "With Enzymes" gives error if no release in session
 
 *Heatmap:
