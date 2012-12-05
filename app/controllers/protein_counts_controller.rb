@@ -141,14 +141,6 @@ class ProteinCountsController < ApplicationController
 
   private
   def find_standard_enzymes
-    enzymes = []
-    name_array = ['RNR class I enzyme', 'RNR class Ib enzyme', 'RNR class II enzyme', 'RNR class III enzyme']
-    name_array.each do |name|
-      enz = Enzyme.find_by_name(name)
-      if enz
-        enzymes << enz
-      end
-    end
-    return enzymes
+    enzymes = Enzyme.order("name").all
   end
 end
