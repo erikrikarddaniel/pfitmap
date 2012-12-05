@@ -195,6 +195,46 @@ ActiveRecord::Schema.define(:version => 20121130063228) do
     t.foreign_key ["taxon_id"], "taxons", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "protein_counts_taxon_id_fkey"
   end
 
+  create_table "result_rows", :force => true do |t|
+    t.integer  "result_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.index ["result_id"], :name => "index_result_rows_on_result_id"
+  end
+
+  create_table "result_rows_sequences", :force => true do |t|
+    t.integer  "result_row_id", :null => false
+    t.integer  "sequence_id",   :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.index ["result_row_id"], :name => "index_result_rows_sequences_on_result_row_id"
+    t.index ["result_row_id", "sequence_id"], :name => "index_result_rows_sequences_on_result_row_id_and_sequence_id", :unique => true
+    t.index ["sequence_id"], :name => "index_result_rows_sequences_on_sequence_id"
+  end
+
+  create_table "results", :force => true do |t|
+    t.date     "date"
+    t.integer  "profile_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.index ["profile_id"], :name => "index_results_on_profile_id"
+  end
+
+  create_table "sequence_dbs", :force => true do |t|
+    t.string   "source"
+    t.string   "name"
+    t.string   "version"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "sequences", :force => true do |t|
+    t.string   "seq"
+    t.integer  "biosql_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "users", :force => true do |t|
     t.string   "provider"
     t.string   "uid"
