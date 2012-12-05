@@ -173,6 +173,10 @@ table.heat-map {
   background-color: white;
   td.taxon {
     width: 180px;
+    a {
+       font-size:20px;
+       hover { text-decoration: none;}
+    }  
   } 
   td.heat {
     color: black;

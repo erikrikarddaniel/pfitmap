@@ -32,6 +32,10 @@ describe "ProteinCounts" do
       FactoryGirl.create(:taxon, rank: "phylum", parent_ncbi_id: @parent_taxon.ncbi_taxon_id)
     end
     @first_child = Taxon.find_by_rank("phylum")
+    10.times do
+      FactoryGirl.create(:taxon, rank: "class", parent_ncbi_id: @first_child.ncbi_taxon_id)
+    end
+    @second_child = Taxon.find_by_rank("class")
     Taxon.all.each do |taxon|
       Protein.all.each do |protein|
         FactoryGirl.create(:protein_count, protein: protein, taxon: taxon, pfitmap_release: pfitmap_release)
@@ -46,9 +50,36 @@ describe "ProteinCounts" do
     end
     it "can expand by clicking on name", :js => true do
       visit protein_counts_with_enzymes_path
+      page.should_not have_content(@first_child.name)
       page.should have_content(@parent_taxon.name)
-      click_link "#{@parent_taxon.name}"
+      parent_row = find_by_id("taxon#{@parent_taxon.id}")
+      within parent_row do
+        click_link "+"
+      end
       page.should have_content(@first_child.name)
+      parent_row = find_by_id("taxon#{@parent_taxon.id}")
+      within parent_row do
+        click_link "-"
+      end
+      page.should_not have_content(@first_child.name)
+    end
+    it "can collapse several levels", :js => true do
+      visit protein_counts_with_enzymes_path
+      parent_row = find_by_id("taxon#{@parent_taxon.id}")
+      within parent_row do
+        click_link "+"
+      end
+      second_parent_row = find_by_id("taxon#{@first_child.id}")
+      within second_parent_row do
+        click_link "+"
+      end
+      page.should have_content(@second_child.name)
+      parent_row = find_by_id("taxon#{@parent_taxon.id}")
+      #Collapsing grandparent should remove all relatives below"
+      within parent_row do
+        click_link "-"
+      end
+      page.should_not have_content(@second_child.name)
     end
   end
 end

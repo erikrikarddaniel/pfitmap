@@ -131,6 +131,7 @@ class ProteinCountsController < ApplicationController
     end
     @level = Integer(params[:level])
     @parent_taxon = Taxon.find(params[:parent_id])
+    @after_children_taxon = Taxon.where('rank = ? AND hierarchy > ?', @parent_taxon.rank, @parent_taxon.hierarchy).order("hierarchy").first 
     @taxons = @parent_taxon.children
     
     respond_to do |format|
