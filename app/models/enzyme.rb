@@ -6,6 +6,7 @@
 #  name       :string(255)
 #  created_at :datetime        not null
 #  updated_at :datetime        not null
+#  parent_id  :integer
 #
 
 class Enzyme < ActiveRecord::Base
@@ -15,4 +16,6 @@ class Enzyme < ActiveRecord::Base
   has_many :enzyme_proteins
   has_many :proteins, through: :enzyme_proteins
   validates :name, :presence => :true
+  has_many :children, :class_name => "Enzyme", :foreign_key => "parent_id"
+  belongs_to :parent, :class_name => "Enzyme", :foreign_key => "parent_id"
 end

@@ -6,6 +6,7 @@
 #  name       :string(255)
 #  created_at :datetime        not null
 #  updated_at :datetime        not null
+#  parent_id  :integer
 #
 
 require 'spec_helper'
@@ -28,4 +29,14 @@ describe Enzyme do
     
     its(:hmm_profiles) { should include(hmm_profile) }
   end
+
+  describe "hierarchy" do
+    let!(:enzyme2) { FactoryGirl.create(:enzyme, parent: @enzyme) }
+    
+    it "should work" do
+      enzyme2.parent.should be(@enzyme)
+      @enzyme.children.should include(enzyme2)
+    end
+  end
+
 end
