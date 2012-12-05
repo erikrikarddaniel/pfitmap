@@ -10,7 +10,7 @@
 #
 
 class Enzyme < ActiveRecord::Base
-  attr_accessible :name
+  attr_accessible :name, :parent_id
   has_many :enzyme_profiles, dependent: :destroy
   has_many :hmm_profiles, through: :enzyme_profiles
   has_many :enzyme_proteins

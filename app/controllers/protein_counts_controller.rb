@@ -141,6 +141,6 @@ class ProteinCountsController < ApplicationController
 
   private
   def find_standard_enzymes
-    enzymes = Enzyme.order("name").all
+    enzymes = Enzyme.find_all_by_parent_id(nil, :order => "name")
   end
 end

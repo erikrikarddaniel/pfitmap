@@ -4,7 +4,7 @@ describe "ProteinCounts" do
   let!(:sequence_source) { FactoryGirl.create(:sequence_source) }
   let!(:pfitmap_release) { FactoryGirl.create(:pfitmap_release, current: true, sequence_source: sequence_source) }
   let!(:class1) { FactoryGirl.create(:enzyme_class_1) }
-  let!(:class1b) { FactoryGirl.create(:enzyme_class_1b) }
+  let!(:class1b) { FactoryGirl.create(:enzyme_class_1b, parent: class1) }
   let!(:class2) { FactoryGirl.create(:enzyme_class_2) }
   let!(:class3) { FactoryGirl.create(:enzyme_class_3) }
   let!(:nrdA) { FactoryGirl.create(:protein) }
@@ -48,7 +48,7 @@ describe "ProteinCounts" do
       make_mock_admin
       login_with_oauth
     end
-    it "can expand by clicking on name", :js => true do
+    it "can expand by clicking on taxon name", :js => true do
       visit protein_counts_with_enzymes_path
       page.should_not have_content(@first_child.name)
       page.should have_content(@parent_taxon.name)
@@ -63,7 +63,7 @@ describe "ProteinCounts" do
       end
       page.should_not have_content(@first_child.name)
     end
-    it "can collapse several levels", :js => true do
+    it "can collapse several levels of taxons", :js => true do
       visit protein_counts_with_enzymes_path
       parent_row = find_by_id("taxon#{@parent_taxon.id}")
       within parent_row do
@@ -80,6 +80,13 @@ describe "ProteinCounts" do
         click_link "-"
       end
       page.should_not have_content(@second_child.name)
+    end
+    it "only show root enzymes" do
+      visit protein_counts_with_enzymes_path
+      page.should have_content(class1.name)
+      page.should have_content(class2.name)
+      page.should have_content(class3.name)
+      page.should_not have_content(class1b.name)
     end
   end
 end
