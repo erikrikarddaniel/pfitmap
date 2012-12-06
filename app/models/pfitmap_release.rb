@@ -19,6 +19,7 @@ class PfitmapRelease < ActiveRecord::Base
   has_many :hmm_db_hits, :through => :db_sequences
   has_many :taxons
   has_many :protein_counts
+  has_many :hmm_profile_release_statistics
   belongs_to :sequence_source
   validates :release, :presence => :true
   validates :release_date, :presence => :true
@@ -90,9 +91,10 @@ class PfitmapRelease < ActiveRecord::Base
     db_string = "ref"
 
     # Accepted ranks
-    rank_hash = {"superkingdom" => true, "phylum" => true, 
-      "class" => true, "order" => true, "family" => true,
-      "genus" => true, "species" => true }
+    rank_hash = {}
+    Taxon::RANKS.each do |r|
+      rank_hash[r] = true
+    end 
     
     # Destroy old protein counts rows for this release
     ProteinCount.delete_all(["pfitmap_release_id = ?",pfitmap_release.id])

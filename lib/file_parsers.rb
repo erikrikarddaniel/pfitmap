@@ -1,4 +1,34 @@
 module FileParsers
+  def parse_fasta(io)
+    updated = 0
+    DbSequence.transaction do
+      @db_seq_to_update = {}
+      DbSequence.includes(:hmm_db_hits).where("sequence IS NULL").each do |dbs|
+	dbs.hmm_db_hits.each do |hdb|
+	  @db_seq_to_update[hdb.gi] = dbs
+	end
+      end
+      gi = nil
+      seq = ''
+      File.open(io.path, "r").each do |line|
+	line.chomp!
+	if line[0..3] == '>gi|'
+	  if gi and seq != ''
+	    @db_seq_to_update[gi].sequence = seq
+	    @db_seq_to_update[gi].save
+	    seq = ''
+	    updated += 1
+	  end
+	  gi = line.split('|')[1].to_i
+	  gi = nil unless @db_seq_to_update[gi]
+	elsif line[0] != '>'
+	  seq += line
+	end
+      end
+    end
+    updated
+  end
+
   def parse_hmm_tblout(result, io)
     HmmResult.transaction do
       @hmm_result_rows = []

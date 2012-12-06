@@ -92,11 +92,10 @@ FactoryGirl.define do
   factory :protein do
     sequence(:name) { |n| "ex_protein " + n.to_s }
     hmm_profile
-    enzyme
  end
 
   factory :protein_count do
-    no_genomes 0
+    no_genomes 1
     no_proteins 0
     no_genomes_with_proteins 0
     protein

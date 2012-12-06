@@ -1,32 +1,12 @@
 <div class="pageheader1">
-  <h1>Listing Database Sequences</h1>
+  <h1>Database Sequences</h1>
 </div>
 
 <div class="main-content">
-  <table class="standard">
-    <thead>
-      <tr>
-	<th>Created at</th>
-	<th>Best Profile</th>
-	<th></th>
-	<th></th>
-	<th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @db_sequences.each do |db_sequence| %>
-      <tr>
-	<td><%= db_sequence.created_at %></td>
-	<td><%= db_sequence.hmm_profiles %></td>
-	<td><%= link_to 'Show', db_sequence %></td>
-	<td><%= link_to 'Edit', edit_db_sequence_path(db_sequence) %></td>
-	<td><%= link_to 'Destroy', db_sequence, :data => { confirm: 'Are you sure?'}, method: :delete %></td>
-      </tr>
-      <% end %>
-    </tbody>
-  </table>
-  <%= will_paginate @db_sequences %>
-  <br />
-
-  <%= link_to 'New Db sequence', new_db_sequence_path %>
+  <%= form_tag('/import_fasta', :class => "well", :multipart => true, controller: 'db_sequences', action: 'import_fasta', method: 'post') do %>
+    <%= label_tag :fasta_file, "Upload a fasta file to update the sequence of DbSequence objects:" %><br/>
+    <%= file_field_tag :fasta_file %>
+    <%= submit_tag "Upload" %>
+    (<%= @count_without_sequence %> DbSequence objects without sequence.)
+  <% end %>
 </div>

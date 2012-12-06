@@ -18,6 +18,7 @@ class SequenceSource < ActiveRecord::Base
   has_many :db_sequences, :through => :hmm_result_rows
   has_many :view_db_sequence_best_profiles
   has_one :pfitmap_release
+  has_many :hmm_profile_release_statistics
   validates :source, presence: true
   validates :name, presence: true
   validates :version, presence: true

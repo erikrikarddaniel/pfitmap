@@ -1,6 +1,7 @@
 <thead>
   <tr>
     <th>HMM Profile</th>
+    <th>Pfitmap Release</th>
     <th>Count</th>
     <th>Min Score</th>
     <th>Max Score</th>
@@ -8,11 +9,18 @@
 </thead>
 <tbody>
   <% @hmm_profiles.each do |profile|%>
+  <% first = true %>
+<tbody>
+  <% profile.release_statistics.each do |statistics| %>
   <tr>
-    <td><%= profile.description %></td>
-    <td><%= profile.release_statistics[:included][:count] %></td>
-    <td><%= profile.release_statistics[:included][:min_score] %></td>
-    <td><%= profile.release_statistics[:included][:max_score] %></td>
+    <td><b><%= first ? profile.description : "" %></b></td>
+    <td><%= statistics[:release] ? statistics[:release].release : "Not Included" %></td>
+    <td><%= statistics[:count] %></td>
+    <td><%= statistics[:min_score] %></td>
+    <td><%= statistics[:max_score] %></td>
   </tr>
+  <% first = false %>
+  <% end %>
+</tbody>
   <% end %>
 </tbody>

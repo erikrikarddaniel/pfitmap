@@ -11,7 +11,7 @@
     <tr>
       <th>Taxon</th>
       <% @enzymes.each do |enzyme| %>
-        <% enzyme.proteins.each do |protein| %>
+        <% enzyme.proteins.order("name").each do |protein| %>
           <th><%= protein.name %> </th>
         <% end %>
       <% end %>
