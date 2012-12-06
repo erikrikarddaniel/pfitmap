@@ -38,7 +38,11 @@ module ProteinCountsHelper
     a = pc.no_genomes_with_proteins
     b = pc.no_genomes
     color_ratio = Float(a)/b
-    color_int = Integer(100*color_ratio)
+    if (color_ratio > 0.0) && (color_ratio < 0.01)
+      color_int = 1
+    else
+      color_int = Integer(100*color_ratio)
+    end
   end
 
   def row_id(taxon)
