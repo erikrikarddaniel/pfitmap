@@ -19,6 +19,8 @@ class Taxon < ActiveRecord::Base
   has_many :children, :class_name => "Taxon", :foreign_key => "parent_ncbi_id", :primary_key => "ncbi_taxon_id"
   has_many :protein_counts
 
+  RANKS = ["superkingdom", "kingdom", "phylum", "class", "order", "family", "genus", "species"]
+
   def self_and_ancestors
     all_up_to_root_rec(self, [])
   end

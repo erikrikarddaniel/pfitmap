@@ -68,7 +68,7 @@ class ProteinCountsController < ApplicationController
   # GET /protein_counts_by_rank
   # GET /protein_counts_by_rank.json
   def with_enzymes
-    @taxon_ranks = Taxon.all_ranks
+    @taxon_ranks = Taxon::RANKS
     if session[:release_id]
       @pfitmap_release = PfitmapRelease.find(session[:release_id])
     else
