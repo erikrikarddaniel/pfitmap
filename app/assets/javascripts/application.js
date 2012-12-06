@@ -15,3 +15,5 @@
 //= require_tree .
 //= require bootstrap-dropdown.js
 //= require bootstrap-tooltip.js
+//= require dataTables/jquery.dataTables
+//= require dataTables/jquery.dataTables.bootstrap
