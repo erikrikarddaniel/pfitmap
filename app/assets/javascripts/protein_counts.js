@@ -1,7 +1,3 @@
-$('.heat-map').dataTable({
-    "sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
-    "sPaginationType": "bootstrap"
-});
 
 jQuery(function($) {
     $('#protein_menu').bind("ajax:success", function(xhr, data, status) {
@@ -29,7 +25,18 @@ function toHex(N) {
 $(document).ready(function(){
     colorHeatmap();
     IndentTaxons();
+    startDataTable();
 });
+
+function startDataTable(){
+    $('.datatable').dataTable({
+	"sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
+	"bPaginate()": false,
+	"sPagePrevDisabled": "paginate_enabled_previous",
+	"bSort": false,
+	"bFilter": false
+    });
+};
 
 function colorHeatmap(){
     // Original from:
