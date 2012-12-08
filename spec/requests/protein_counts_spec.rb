@@ -88,5 +88,13 @@ describe "ProteinCounts" do
       page.should have_content(class3.name)
       page.should_not have_content(class1b.name)
     end
+    it "can expand enzyme" do
+      visit protein_counts_with_enzymes_path
+      within('table.enzyme-header') do
+        click_link "+"
+      end
+      page.should have_content(class1b.name)
+      page.should_not have_content(class1.proteins.first.name)
+    end
   end
 end

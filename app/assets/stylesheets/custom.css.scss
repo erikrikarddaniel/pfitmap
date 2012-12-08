@@ -168,9 +168,14 @@ table.standard {
 	       @extend .table-striped;
 	       }
 
+div.heat-map {
+  overflow: auto;
+}
 table.heat-map {
-  width: 100%;
   background-color: white;
+  th {
+      vertical-align: bottom;
+  }
   td.taxon {
     width: 180px;
     a {
@@ -181,7 +186,18 @@ table.heat-map {
   td.heat {
     color: black;
     text-align: center;
-}
+    text-wrap: none;
+  }
+  table.enzyme-header {
+    th {
+       width: inherit;
+       text-align: center;
+    }
+    td.protein-header {
+      width: 120px;
+      text-align: center;
+    }
+  }
 }	       
 
 /* forms */

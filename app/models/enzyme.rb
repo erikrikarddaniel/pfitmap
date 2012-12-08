@@ -44,7 +44,7 @@ class Enzyme < ActiveRecord::Base
     
     enzymes.each do |e|
       children = []
-      e.children.each do |c|
+      e.children.order("name").each do |c|
         if enzyme_hash[c.id]
           children << c.id
         end

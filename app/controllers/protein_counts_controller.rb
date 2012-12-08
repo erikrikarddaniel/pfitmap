@@ -11,7 +11,7 @@ class ProteinCountsController < ApplicationController
       @pfitmap_release = PfitmapRelease.find_current_release
     end
     if @pfitmap_release
-      [@enzyme_tree, @parent_enzyme_ids] = find_standard_enzymes(params[:enzyme_ids])
+      @enzyme_tree, @parent_enzyme_ids, @enzymes = Enzyme.find_standard_enzymes(params[:enzyme_ids])
       @level = 0
       
       if params[:taxon_rank]
@@ -51,7 +51,7 @@ class ProteinCountsController < ApplicationController
     parent_level = params[:level]
     @level = Integer(parent_level) + 1
     @taxons = @parent_taxon.children.order('hierarchy DESC')
-    [@enzyme_tree, @parent_enzyme_ids, @enzymes] = find_standard_enzymes(params[:enzyme_ids])
+    @enzyme_tree, @parent_enzyme_ids, @enzymes = Enzyme.find_standard_enzymes(params[:enzyme_ids])
 
     @protein_counts_hash = ProteinCount.protein_counts_hash_for(@taxons, Protein.all, @pfitmap_release)
     respond_to do |format|
@@ -73,44 +73,5 @@ class ProteinCountsController < ApplicationController
     respond_to do |format|
       format.js
     end
-  end
-
-  private
-  def find_standard_enzymes(enzyme_ids)
-    parent_ids = 
-    if enzyme_ids
-      enzymes = Enzyme.find(enzyme_ids, :order => "parent_id, name")
-      enzyme_tree = build_tree_from(enzymes, {})
-      parent_ids = Enzyme.find(enzyme_ids, :order => "name", :condition => "parent_id IS NULL")
-    else
-      enzymes = Enzyme.find_all_by_parent_id(nil, :order => "name")
-      parent_ids = 
-      [enzyme_tree, parent_ids] = build_tree_from(enzymes, {})
-    end
-  end
-  
-  # All enzymes are sorted on the parent_id
-  # so the root enzymes will come first
-  def build_tree_from(enzymes)
-    tree = {}
-    enzyme_hash = {}
-    parent_ids = []
-    enzymes.each do |e|
-      enzyme_hash[e.id] = true
-      if not e.parent_id
-        parent_ids << e.id
-      end
-    end
-    
-    enzymes.each do |e|
-      children = []
-      e.children.each do |c|
-        if enzyme_hash[c.id]
-          children << c.id
-        end
-      end
-      tree[e.id] = [e, children, e.proteins]
-    end
-    return [tree, parent_ids, enzymes]
   end
 end

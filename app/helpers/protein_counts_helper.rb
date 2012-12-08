@@ -52,4 +52,38 @@ module ProteinCountsHelper
       "+"
     end
   end
+
+  def enzyme_sign(enzyme, enzyme_tree)
+    if (enzyme_tree[enzyme.id][1] == []) and 
+        (enzyme.children.count != 0)
+      "+"
+    else
+      "-"
+    end
+  end
+
+  def no_columns(id, tree)
+    children = tree[id][1]
+    arr = children.map { |c_id| no_columns(c_id,tree) }
+    if arr == []
+      tree[id][0].proteins.count
+    else
+      sum(arr)
+    end
+  end
+
+  def enzyme_array_expand(expand_enzyme, enzyme_ids)
+    new_enzyme_ids = expand_enzyme.children.map { |e| e.id }
+    enzyme_ids +  new_enzyme_ids
+  end
+
+  def enzyme_array_collapse(collapse_enzyme, enzyme_ids)
+    remove_enzyme_ids = collapse_enzyme.children.map { |e| e.id }
+    enzyme_ids - remove_enzyme_ids
+  end
+
+  private
+  def sum(arr)
+    arr.inject{|s,x| s + x }
+  end
 end
