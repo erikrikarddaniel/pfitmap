@@ -1,0 +1,26 @@
+<% enzyme = enzyme_tree[parent_id][0] %>
+<% n_columns = no_columns(enzyme.id, enzyme_tree)%>
+<th colspan=<%= (n_columns).to_s %> >
+  <table class="enzyme-header">
+    <thead>
+      <th colspan=<%= (n_columns).to_s %>>
+	<% if enzyme_sign(enzyme,enzyme_tree) == "+" %>
+	  <%= link_to "+", protein_counts_with_enzymes_path, :enzyme_ids => enzyme_array_expand(enzyme, enzyme_ids) %> <%= enzyme.name %>
+        <% else %>
+          <%= link_to "-", protein_counts_with_enzymes_path, :enzyme_ids => enzyme_array_collapse(enzyme, enzyme_ids) %> <%= enzyme.name %>
+        <% end %>
+      </th>
+    </thead>
+    <tbody>
+      <% if enzyme_tree[parent_id][1] == []%>
+        <% enzyme.proteins.order("name").each do |protein| %>
+        <td colspan=1 class="protein-header"><%= protein.name %> </td>
+        <% end %>
+      <% else %>
+        <% enzyme.children.each do |enzyme_child| %>
+          <%= render :partial => 'header_table', :locals => {parent_id: enzyme_child.id, enzyme_tree: @enzyme_tree} %>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</th>
