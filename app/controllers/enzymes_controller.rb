@@ -29,7 +29,7 @@ class EnzymesController < ApplicationController
   def new
     @enzyme = Enzyme.new
     @hmm_profiles = HmmProfile.all
-
+    @parent_candidates = Enzyme.all
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @enzyme }
@@ -40,6 +40,7 @@ class EnzymesController < ApplicationController
   def edit
     @enzyme = Enzyme.find(params[:id])
     @hmm_profiles = HmmProfile.all
+    @parent_candidates = Enzyme.all
   end
 
   # POST /enzymes
@@ -47,6 +48,7 @@ class EnzymesController < ApplicationController
   def create
     @enzyme = Enzyme.new(params[:enzyme])
     @hmm_profiles = HmmProfile.find_all_by_id(params[:hmm_profile_ids])
+    @parent_candidates = Enzyme.all
 
     respond_to do |format|
       if @enzyme.save

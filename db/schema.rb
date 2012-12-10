@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121130083423) do
+ActiveRecord::Schema.define(:version => 20121205121631) do
 
   create_table "hmm_result_rows", :force => true do |t|
     t.string   "target_name"
@@ -84,6 +84,9 @@ ActiveRecord::Schema.define(:version => 20121130083423) do
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "parent_id"
+    t.index ["parent_id"], :name => "index_enzymes_on_parent_id"
+    t.foreign_key ["parent_id"], "enzymes", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "enzymes_parent_id_fkey"
   end
 
   create_table "hmm_profiles", :force => true do |t|

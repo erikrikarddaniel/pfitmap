@@ -169,19 +169,35 @@ table.standard {
 	       }
 
 table.heat-map {
-  width: 100%;
-  background-color: white;
+  th {
+    vertical-align: bottom;
+  }
   td.taxon {
     width: 180px;
     a {
        font-size:20px;
-       hover { text-decoration: none;}
     }  
   } 
   td.heat {
+    width: 120px !important;
     color: black;
     text-align: center;
-}
+  }
+  tbody.heat-body {
+  }
+  .enzyme-header {
+    a {
+       font-size:20px;
+    }
+    th {
+       width: inherit;
+       text-align: center;
+    }
+    td.protein-header {
+      width: 120px;
+      text-align: center;
+    }
+  }
 }	       
 
 /* forms */

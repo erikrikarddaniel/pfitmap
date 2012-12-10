@@ -1,0 +1,21 @@
+<% enzyme = @enzyme_tree[enzyme_id][0] %>
+<% enzyme_children = @enzyme_tree[enzyme_id][1] %>
+<% if enzyme_children == [] %>
+  <% enzyme.proteins.order("name").each do |protein| %>
+    <% protein_count = @protein_counts_hash[taxon.id][protein.id] %>
+    <% if protein_count %>
+      <% color_int = pc_col(protein_count) %>
+      <td class="heat" data-color= "<%= color_int %>">
+	<%= protein_count.no_genomes.to_s %> |
+	<%= protein_count.no_proteins.to_s %> |
+	<%= protein_count.no_genomes_with_proteins.to_s %>
+      </td>
+    <% else %>
+      <td colspan="3">none</td>
+    <% end %>
+  <% end %>
+<% else %>
+  <% enzyme_children.each do |child_id|  %>
+    <%= render :partial => 'row_part', :locals => {enzyme_id: child_id, taxon: taxon} %>
+  <% end %>
+<% end %>
