@@ -168,27 +168,24 @@ table.standard {
 	       @extend .table-striped;
 	       }
 
-div.heat-map {
-  overflow: auto;
-}
 table.heat-map {
-  background-color: white;
   th {
-      vertical-align: bottom;
+    vertical-align: bottom;
   }
   td.taxon {
     width: 180px;
     a {
        font-size:20px;
-       hover { text-decoration: none;}
     }  
   } 
   td.heat {
+    width: 120px !important;
     color: black;
     text-align: center;
-    text-wrap: none;
   }
-  table.enzyme-header {
+  tbody.heat-body {
+  }
+  .enzyme-header {
     a {
        font-size:20px;
     }
