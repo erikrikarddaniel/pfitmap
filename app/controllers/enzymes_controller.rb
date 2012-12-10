@@ -29,8 +29,8 @@ class EnzymesController < ApplicationController
   def new
     @enzyme = Enzyme.new
     @hmm_profiles = HmmProfile.all
-    @parent_candidates = Enzyme.all
-    respond_to do |format|
+    @parent_candidates = Enzyme.all 
+   respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @enzyme }
     end
@@ -92,6 +92,7 @@ class EnzymesController < ApplicationController
         format.json { head :no_content }
       else
         @hmm_profiles = HmmProfile.all
+        @parent_candidates = Enzyme.all
         format.html { render action: "edit" }
         format.json { render json: @enzyme.errors, status: :unprocessable_entity }
       end

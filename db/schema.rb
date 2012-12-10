@@ -85,7 +85,7 @@ ActiveRecord::Schema.define(:version => 20121205121631) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.integer  "parent_id"
-    t.index ["parent_id"], :name => "index_enzymes_on_parent_id"
+    t.index ["parent_id"], :name => "fk__enzymes_parent_id", :order => {"parent_id" => :asc}
     t.foreign_key ["parent_id"], "enzymes", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "enzymes_parent_id_fkey"
   end
 
