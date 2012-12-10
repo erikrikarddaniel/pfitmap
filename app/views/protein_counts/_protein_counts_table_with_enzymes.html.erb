@@ -21,7 +21,7 @@
   </thead>
   <tbody>
     <% @taxons.each do |taxon| %>
-    <%= render :partial => 'row', :locals => {taxon: taxon, level: @level} %>
+    <%= render :partial => 'row', :locals => {taxon: taxon} %>
     <% end %>
   </tbody>
   <% end %>

@@ -189,6 +189,9 @@ table.heat-map {
     text-wrap: none;
   }
   table.enzyme-header {
+    a {
+       font-size:20px;
+    }
     th {
        width: inherit;
        text-align: center;
