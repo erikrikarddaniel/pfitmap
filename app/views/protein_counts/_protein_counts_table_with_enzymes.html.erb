@@ -1,3 +1,4 @@
+<div class="heat-map">
 <table class="heat-map" id="heatmap">
   <% if @enzymes %>
   <thead>
@@ -18,12 +19,15 @@
       <% end %>
     </tr>
   </thead>
-  <tbody class="heat-body">
-    <% @taxons.each do |taxon| %>
-    <%= render :partial => 'row', :locals => {taxon: taxon} %>
-    <% end %>
-  </tbody>
+  <div class="heat-body"> 
+    <tbody class="heat-body">
+      <% @taxons.each do |taxon| %>
+      <%= render :partial => 'row', :locals => {taxon: taxon} %>
+      <% end %>
+    </tbody>
   <% end %>
+  </div>
 </table>
+</div>
 <%= will_paginate @taxons %>
 <br />

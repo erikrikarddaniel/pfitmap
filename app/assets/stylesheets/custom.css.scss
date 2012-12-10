@@ -168,17 +168,30 @@ table.standard {
 	       @extend .table-striped;
 	       }
 
+div.heat-map { 
+  width: 100%;
+  overflow-x: auto;
+}
+
+div.heat-body {
+  overflow-y: auto;
+}
 table.heat-map {
+  min-width: 700px;
+  max-width: none;
+  table-layout:fixed;
   th {
     vertical-align: bottom;
   }
   td.taxon {
+    white-space: nowrap;
     width: 180px;
     a {
        font-size:20px;
     }  
   } 
   td.heat {
+    white-space: nowrap;
     width: 120px !important;
     color: black;
     text-align: center;
