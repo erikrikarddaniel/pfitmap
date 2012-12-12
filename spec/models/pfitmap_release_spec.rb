@@ -156,13 +156,13 @@ describe PfitmapRelease do
       @pfitmap_release.calculate_main("GOLDWGStest10", FactoryGirl.create(:user_admin))
       # warn "#{__FILE__}:#{__LINE__}: ProteinCount.all:\n\t#{ProteinCount.all.map { |pc| "#{pc}" }.join("\n\t")}"
       taxons = Taxon.all
-      Taxon.all.length.should == 50
+      Taxon.all.length.should == 51
       Enzyme.all.length.should == 1
       Protein.all.length.should == 2
-      ProteinCount.all.length.should == 100
-      ProteinCount.sum("no_proteins").should == 68
-      ProteinCount.maximum("no_proteins").should == 4
-      ProteinCount.maximum("no_genomes_with_proteins").should == 3 # New implementation gives 4
+      ProteinCount.all.length.should == 102
+      ProteinCount.sum("no_proteins").should == 86
+      ProteinCount.maximum("no_proteins").should == 5
+      ProteinCount.maximum("no_genomes_with_proteins").should == 4
     end
 
     it "should not include all taxon-levels" do
@@ -174,8 +174,9 @@ describe PfitmapRelease do
       root_taxons = Taxon.find_all_by_parent_ncbi_id(nil)
       root_taxons.length.should == 1
       root_taxons.first.hierarchy.should == "root"
-      root_taxons.first.children.first.hierarchy.should == "root:Bacteria"
+      root_taxons.first.children.order('hierarchy').first.hierarchy.should == "root:Bacteria"
       Taxon.find_all_by_hierarchy(nil).should == []
+      Taxon.find_all_by_name("Metazoa").should_not == nil
     end
   end
 
@@ -200,20 +201,20 @@ describe PfitmapRelease do
     
     it "should be succesful to call calculate_main", :heavy => true do
       @pfitmap_release.calculate_main("GOLDWGStest10",FactoryGirl.create(:user_admin))
-      Taxon.all.length.should == 50
+      Taxon.all.length.should == 51
       HmmProfile.all.length.should == 4
       Protein.all.length.should == 4
-      ProteinCount.count.should == 200
+      ProteinCount.count.should == 204
 # Used to say 10
       # Check specific values (human nrdb)
       nrdb_protein = Protein.find_by_name('NrdB')
       human_taxon = Taxon.find_by_name('Homo sapiens')
       human_nrdb_protein_count = ProteinCount.find(:first, :conditions => ["protein_id = ? AND taxon_id = ? AND pfitmap_release_id = ?", nrdb_protein.id, human_taxon.id, @pfitmap_release.id])
-      human_nrdb_protein_count.no_proteins.should == 2
+      human_nrdb_protein_count.no_proteins.should == 3
       human_nrdb_protein_count.no_genomes.should == 1
       human_nrdb_protein_count.no_genomes_with_proteins.should == 1
       
-      ProteinCount.maximum("no_proteins").should == 6
+      ProteinCount.maximum("no_proteins").should == 7
       ProteinCount.maximum("no_genomes_with_proteins").should == 4
       #warn "#{__FILE__}:#{__LINE__}: ProteinCount.all:\n\t#{ProteinCount.all.map { |pc| "#{pc}" }.join("\n\t")}"
       # no loose branches in the tree of life:
@@ -242,9 +243,9 @@ describe PfitmapRelease do
       @pfitmap_release.calculate_main("GOLDWGStest100", FactoryGirl.create(:user_admin))
       Protein.all.length.should == 4
 
-      ProteinCount.sum("no_proteins").should == 180 # first was 180 or 162
-      ProteinCount.sum("no_genomes").should ==  3508  #first was 3436 or 3472 or 3476
-      ProteinCount.sum("no_genomes_with_proteins").should == 82
+      ProteinCount.sum("no_proteins").should == 194
+      ProteinCount.sum("no_genomes").should ==  3528 
+      ProteinCount.sum("no_genomes_with_proteins").should == 86
       # Check specific values (human nrdb)
       nrdb_protein = Protein.find_by_name('NrdB')
       human_taxon = Taxon.find_by_name('Homo sapiens')
@@ -254,7 +255,7 @@ describe PfitmapRelease do
       human_nrdb_protein_count.no_genomes_with_proteins.should == 1
       
 
-      ProteinCount.all.length.should == 1372
+      ProteinCount.all.length.should == 1376
       # Check the root
       root_taxon = Taxon.find_by_name('root')
       root_nrdb_pc = ProteinCount.find(:first, :conditions => ["protein_id = ? AND taxon_id = ? AND pfitmap_release_id = ?", nrdb_protein.id, root_taxon.id, @pfitmap_release.id])

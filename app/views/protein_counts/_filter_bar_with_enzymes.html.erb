@@ -6,13 +6,15 @@
     </a>
     <ul id="taxon_rank_menu" class="dropdown-menu">
       <% @taxon_ranks.each do |rank_name| %>
+      <% if rank_name %>
       <li>
-	<%= link_to rank_name, protein_counts_with_enzymes_path(protein_counts_params({taxon_rank: rank_name}, params.dup)) %>
+	<%= link_to rank_name, protein_counts_with_enzymes_path(protein_counts_params({taxon_rank: rank_name, :enzyme_ids => @enzymes.map { |e| e.id }}, params.dup)) %>
       </li>
+      <% end %>
       <% end %>
       <li class="divider"></li>
       <li>
-	<%= link_to "All", protein_counts_with_enzymes_path(protein_counts_params({taxon_rank: "All"}, params.dup)) %>
+	<%= link_to "All", protein_counts_with_enzymes_path(protein_counts_params({taxon_rank: "All", enzyme_ids: @enzymes.map{ |e| e.id} }, params.dup))%>
       </li>
     </ul>
   </li>
