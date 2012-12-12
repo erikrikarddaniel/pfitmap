@@ -1,5 +1,5 @@
 module FileParsers
-  def parse_fasta(io)
+  def self.import_external_db_fasta(io)
     updated = 0
     DbSequence.transaction do
       @db_seq_to_update = {}

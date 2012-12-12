@@ -168,11 +168,11 @@ describe DbSequencesController do
     end
   end
 
-  describe "POST import_fasta" do
+  describe "POST import_external_db_fasta" do
     it "updates the sequence field of all db_sequence objects" do
       hmm_result_nrdb = FactoryGirl.create(:hmm_result_nrdb)
       parse_hmm_tblout(hmm_result_nrdb, fixture_file_upload("/NrdB.test.tblout"))
-      post :import_fasta, { :fasta_file => fixture_file_upload("/NrdB.test.fasta") }, valid_session
+      post :import_external_db_fasta, { :fasta_file => fixture_file_upload("/NrdB.test.fasta") }, valid_session
       DbSequence.where("sequence IS NULL").length.should == 0
     end
   end

@@ -15,8 +15,8 @@ class DbSequencesController < ApplicationController
     end
   end
 
-  def import_fasta
-    updated = parse_fasta(params[:fasta_file])
+  def import_external_db_fasta
+    updated = FileParsers::import_external_db_fasta(params[:fasta_file])
     respond_to do |format|
       format.html { redirect_to db_sequences_url, notice: "Updated #{updated} DbSequence objects" }
       format.json { render json: @db_sequences }
