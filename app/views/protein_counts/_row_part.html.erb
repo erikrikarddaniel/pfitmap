@@ -6,9 +6,10 @@
     <% if protein_count %>
       <% color_int = pc_col(protein_count) %>
       <td class="heat" data-color= "<%= color_int %>">
-	<%= protein_count.no_genomes.to_s %> |
-	<%= protein_count.no_proteins.to_s %> |
-	<%= protein_count.no_genomes_with_proteins.to_s %>
+	<a href="#" rel="tooltip" title="<%= taxon.name + "<br>" + enzyme.name + ":" + protein.name%>">
+	  <%= protein_count.no_proteins.to_s %> |
+	  <%= protein_count.no_genomes_with_proteins.to_s %>
+	</a>
       </td>
     <% else %>
       <td colspan="3">none</td>

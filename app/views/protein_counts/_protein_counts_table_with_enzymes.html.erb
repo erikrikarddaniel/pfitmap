@@ -14,6 +14,17 @@
 	  </tbody>
 	</table>
       </th>
+      <th>
+	<table>
+	  <thead>
+	  </thead>
+	  <tbody>
+	    <tr>
+	      <td>Genomes</td>
+	    </tr>
+	  </tbody>
+	</table>
+      </th>
       <% @parent_enzyme_ids.each do |parent_id| %>
       <%= render :partial => 'header_table', :locals => {parent_id: parent_id, enzyme_tree: @enzyme_tree, enzyme_ids: @enzyme_tree.keys} %>
       <% end %>

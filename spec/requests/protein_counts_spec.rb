@@ -103,18 +103,27 @@ describe "ProteinCounts" do
       it "simply" do
         visit protein_counts_with_enzymes_path
         within("#taxon#{@parent_taxon.id}") do
-          page.should have_css('td', :count => 6)
+          page.should have_css('td', :count => 7)
         end
-        within('table.enzyme-header') do
+        within("#enzyme#{class1.id}") do
           click_link "+"
         end
         page.should have_content(class1b.name)
         page.should have_content(class1x.name)
         page.should_not have_content(class1.proteins.first.name)
         within("#taxon#{@parent_taxon.id}") do
-          page.should have_css('td', :count => 8)
+          page.should have_css('td', :count => 9)
         end
       end
+
+      it "without children" do
+        visit protein_counts_with_enzymes_path
+        within("#enzyme#{class2.id}") do
+          click_link "-"
+        end
+        page.should have_content(class1.name)
+      end
+
       it "and expand taxon", :js => true do
         visit protein_counts_with_enzymes_path
         within('table.enzyme-header') do
@@ -129,12 +138,12 @@ describe "ProteinCounts" do
         page.should_not have_content(class1.proteins.first.name)
         page.should_not have_content("none")
         within("#taxon#{@parent_taxon.id}") do
-          page.should have_css('td', :count => 8)
+          page.should have_css('td', :count => 9)
           page.should_not have_content("none")
         end
         page.should have_content(@first_child.name)
         within("#taxon#{@first_child.id}") do
-          page.should have_css('td', :count => 8)
+          page.should have_css('td', :count => 9)
           page.should_not have_content("none")
           page.should have_content("33") # From @special_count
           # Should be nice to test the order of the columns 

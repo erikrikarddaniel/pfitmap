@@ -169,8 +169,12 @@ table.standard {
 	       }
 
 div.heat-map { 
-  width: 100%;
+  width: 1100px;
   overflow-x: auto;
+}
+
+div.wide {
+  width: 2400px;
 }
 
 div.heat-body {
@@ -191,9 +195,11 @@ table.heat-map {
     }  
   } 
   td.heat {
+    a {
+      color: black;
+    }
     white-space: nowrap;
     width: 120px !important;
-    color: black;
     text-align: center;
   }
   tbody.heat-body {

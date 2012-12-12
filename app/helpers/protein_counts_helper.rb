@@ -76,6 +76,10 @@ module ProteinCountsHelper
     end
   end
 
+  def no_genomes_for_taxon(pc_hash, taxon)
+    pc_hash[taxon.id].values.find { |pc| pc }.no_genomes
+  end
+
   def enzyme_array_expand(expand_enzyme, enzyme_ids)
     new_enzyme_ids = expand_enzyme.children.map { |e| e.id }
     enzyme_ids +  new_enzyme_ids
@@ -83,7 +87,11 @@ module ProteinCountsHelper
 
   def enzyme_array_collapse(collapse_enzyme, enzyme_ids)
     remove_enzyme_ids = collapse_enzyme.children.map { |e| e.id }
-    enzyme_ids - remove_enzyme_ids
+    if remove_enzyme_ids == []
+      enzyme_ids
+    else
+      enzyme_ids - remove_enzyme_ids
+    end
   end
 
   private
