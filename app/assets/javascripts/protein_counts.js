@@ -7,7 +7,9 @@ jQuery(function($) {
 	$("#protein_counts_table").html(data);
     });
 
-    $('#explanations a').tooltip()
+    $('#widentable').unbind('click').click(function(event) {
+	$('div.heat-map').toggleClass('wide');
+    });
 })
 // Following two functions are taken from 
 // http://www.linuxtopia.org/online_books/javascript_guides/javascript_faq/rgbtohex.htm
@@ -24,7 +26,13 @@ function toHex(N) {
 $(document).ready(function(){
     colorHeatmap();
     IndentTaxons();
+    initTips();
 });
+
+function initTips(){
+    $('#explanations a').tooltip();
+    $('td.heat a').tooltip();
+}
 
 function colorHeatmap(){
     // Original from:
