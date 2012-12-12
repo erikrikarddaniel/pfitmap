@@ -85,7 +85,7 @@ ActiveRecord::Schema.define(:version => 20121205121631) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.integer  "parent_id"
-    t.index ["parent_id"], :name => "fk__enzymes_parent_id", :order => {"parent_id" => :asc}
+    t.index ["parent_id"], :name => "index_enzymes_on_parent_id", :order => {"parent_id" => :asc}
     t.foreign_key ["parent_id"], "enzymes", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "enzymes_parent_id_fkey"
   end
 
@@ -155,6 +155,20 @@ ActiveRecord::Schema.define(:version => 20121205121631) do
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
     t.index ["hmm_profile_id"], :name => "index_hmm_score_criterions_on_hmm_profile_id", :order => {"hmm_profile_id" => :asc}
+  end
+
+  create_table "hmm_score_criterions", :force => true do |t|
+    t.float    "min_fullseq_score"
+    t.integer  "inclusion_criterion_id"
+    t.datetime "created_at",             :null => false
+    t.datetime "updated_at",             :null => false
+  end
+
+  create_table "inclusion_criterions", :force => true do |t|
+    t.integer  "hmm_profile_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.index ["hmm_profile_id"], :name => "index_inclusion_criterions_on_hmm_profile_id", :order => {"hmm_profile_id" => :asc}
   end
 
   create_table "sequence_sources", :force => true do |t|
