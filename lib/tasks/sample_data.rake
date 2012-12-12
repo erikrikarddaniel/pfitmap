@@ -123,7 +123,7 @@ SQL
     # Make some subprofiles
     %w[ Ae Ac Da Db Dc Dd Dd0 Dd1 Dd2 Ja Jc Jd Jm ].each do |c|
       str = %(@hmm_profile_nrd#{c.downcase} = HmmProfile.create!(
-	name: "RNR subclass III#{c.downcase} enzyme",
+	name: "RNR Nrd#{c} protein",
 	protein_name: "NrdD#{c}",
 	version: "20120402",
 	parent_id: @hmm_profile_nrd#{c[0..-2].downcase}.id
