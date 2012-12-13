@@ -1,28 +1,44 @@
+<div class="heat-map">
 <table class="heat-map" id="heatmap">
   <% if @enzymes %>
   <thead>
     <tr>
-      <th></th>
-      <% @enzymes.each do |enzyme| %>
-      <% no_proteins = enzyme.proteins.length %>
-      <th colspan=<%= (no_proteins).to_s %> > <%= enzyme.name %> </th>
-      <% end %>
-    </tr>
-    <tr>
-      <th>Taxon</th>
-      <% @enzymes.each do |enzyme| %>
-        <% enzyme.proteins.each do |protein| %>
-          <th><%= protein.name %> </th>
-        <% end %>
+      <th>
+	<table>
+	  <thead>
+	  </thead>
+	  <tbody>
+	    <tr>
+	      <td>Taxon</td>
+	    </tr>
+	  </tbody>
+	</table>
+      </th>
+      <th>
+	<table>
+	  <thead>
+	  </thead>
+	  <tbody>
+	    <tr>
+	      <td>Genomes</td>
+	    </tr>
+	  </tbody>
+	</table>
+      </th>
+      <% @parent_enzyme_ids.each do |parent_id| %>
+      <%= render :partial => 'header_table', :locals => {parent_id: parent_id, enzyme_tree: @enzyme_tree, enzyme_ids: @enzyme_tree.keys} %>
       <% end %>
     </tr>
   </thead>
-  <tbody>
-    <% @taxons.each do |taxon| %>
-    <%= render :partial => 'row', :locals => {taxon: taxon, level: @level} %>
-    <% end %>
-  </tbody>
+  <div class="heat-body"> 
+    <tbody class="heat-body">
+      <% @taxons.each do |taxon| %>
+      <%= render :partial => 'row', :locals => {taxon: taxon} %>
+      <% end %>
+    </tbody>
   <% end %>
+  </div>
 </table>
+</div>
 <%= will_paginate @taxons %>
 <br />

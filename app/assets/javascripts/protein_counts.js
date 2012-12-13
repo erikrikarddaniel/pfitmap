@@ -7,7 +7,9 @@ jQuery(function($) {
 	$("#protein_counts_table").html(data);
     });
 
-    $('#explanations a').tooltip()
+    $('#widentable').unbind('click').click(function(event) {
+	$('div.heat-map').toggleClass('wide');
+    });
 })
 // Following two functions are taken from 
 // http://www.linuxtopia.org/online_books/javascript_guides/javascript_faq/rgbtohex.htm
@@ -24,7 +26,13 @@ function toHex(N) {
 $(document).ready(function(){
     colorHeatmap();
     IndentTaxons();
+    initTips();
 });
+
+function initTips(){
+    $('#explanations a').tooltip();
+    $('td.heat a').tooltip();
+}
 
 function colorHeatmap(){
     // Original from:
@@ -37,20 +45,29 @@ function colorHeatmap(){
     n = 100;
 
     // Define the starting colour (ratio = 0)
-    xr = 30;
-    xg = 0;
-    xb = 30;
+    xr = 255;
+    xg = 255;
+    xb = 0;
  
     // Define the ending colour (ratio = 1)
     yr = 255;
     yg = 0;
-    yb = 255;
+    yb = 0;
 
     $('.heat-map tbody td.heat').each(function(){
 	var color_int = this.getAttribute('data-color');
-	red =  parseInt((xr + ((color_int * (yr-xr))/(n-1))).toFixed(0));
-	green = parseInt((xg + ((color_int * (yg-xg))/(n-1))).toFixed(0));
-	blue =  parseInt((xb + ((color_int * (yb-xb))/(n-1))).toFixed(0));
+	if (color_int == 0)
+	{
+	    red = 255;
+	    green = 255;
+	    blue = 255;
+	}
+	else
+	{
+	    red =  parseInt((xr + ((color_int * (yr-xr))/(n-1))).toFixed(0));
+	    green = parseInt((xg + ((color_int * (yg-xg))/(n-1))).toFixed(0));
+	    blue =  parseInt((xb + ((color_int * (yb-xb))/(n-1))).toFixed(0));
+	}
 	hex_clr = RGBtoHex(red,green,blue);
 	hex_clr2 = '#' + hex_clr;
 	$(this).css({backgroundColor: hex_clr2});

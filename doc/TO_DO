@@ -1,24 +1,7 @@
-Discussion points
------------------
-
-* The server has shown some significant weaknesses with memory leak, 
-  it allocates allmost all available memory, and this has led to at least
-  one crash. This is possibly caused by delayed_job and/or its dependencies
-  such as 'daemons' gem. The problem was first observed short after these had
-  been deployed. The problem does not appear in development environment, so 
-  it could be due to caching, although most caching is now turned off, 
-  (I believe). 
-
-Big Items
----------
-* "Main table" GUI
-    - Sort on hierarchy (I think we mixed this up with the profiles)
-
-* import of FASTA-files
-
-* Export of sequences and PDB-ids
 Things to fix
 -------------
+*hmm_profile view directory contains unused files e.g. _new_hmm_result.html.erb
+
 * pfitmap_release show page is too slow, load with ajax
 
 * Controller error gives full error page... like in development mode
@@ -37,7 +20,6 @@ Things to fix
 * NoMethodError in Protein_counts#by_rank when there is no pfitmap_release calculated
    - <h2>Taxon rank: <%=@taxon_rank ? @taxon_rank : "All" %>, pfitmap_release: <%= @pfitmap_release.release %></h2>
 
-	
 * From pfitmap_release show, link from a row to the not_included db_sequences
   from there, make it possible to include a db_sequence, previously not included
   the first task needs a custom controller method and route for db_sequences
@@ -126,6 +108,7 @@ Things to fix
      - The protein exists but it gets no protein_counts because of 
      - the missing hmm_score_criterion.
      - Low priority, only occurs if data entered by developer is missing
+
 PfitmapRelease.calculate_main
 -----------------------------
 
@@ -137,38 +120,5 @@ p0. Implement model unit test
 
 3. Look at nested loop implementation 
 
-
-DONE
-----
-* Calculate protein_counts
-    - Still interaction with db that consumes time
-    - May be possible to use the import gem even more extensively
-
-    - Evaluate consumes almost as much time as calculate with
-    - the new sample dataset.
-
-* Route to "With Enzymes" gives error if no release in session
-
-*Heatmap:
- -  Toggle heatmap rows instead of only adding
-
-* Only include taxonomic classes: superkingdom, phylum, class, order, family, genus, species.
-
-* "Integration" tests for calculate
-
-* nested loop implementation
-
-* Explanation of how the calculate-method works
-
-* Factories with associations does not work
-
-* Check that there are no "loose branches" in the taxon tree, aka that the only node
-  without parent is "root".
-
-* Enzyme controller update does not work
-
-
 Tests:
   - Hierarchy of taxon
-
-

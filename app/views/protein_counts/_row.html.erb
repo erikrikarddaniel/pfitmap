@@ -1,22 +1,12 @@
 <tr id=<%=row_id(taxon)%>>
-<td class="taxon" data-indent=<%=level%>>
-<%= link_to taxon.name, { :controller => "protein_counts", :action => "add_row", :parent_id => taxon.id, :level => level}, :remote => true %>
-</td>
-<% @enzymes.each do |enzyme| %>
-<% enzyme.proteins.each do |protein| %>
-<% protein_count = @protein_counts_hash[taxon.id][protein.id] %>
-<% if protein_count %>
-<% color_int = pc_col(protein_count) %>
-<td class="heat" data-color= "<%= color_int %>">
-<%= protein_count.no_genomes.to_s %> |
-<%= protein_count.no_proteins.to_s %> |
-<%= protein_count.no_genomes_with_proteins.to_s %>
-</td>
-<% else %>
-<td colspan="3">none</td>
-<td></td>
-<td></td>
-<% end %>
-<% end %>
-<% end %>
+  <td class="taxon" data-indent=<%=@level%>>
+  <%= link_to taxon_sign(taxon), { :controller => "protein_counts", :action => "add_row", :parent_id => taxon.id, :level => @level, :enzyme_ids => @enzyme_tree.keys}, :remote => true %>
+  <%= taxon.name%>
+  </td>
+  <td class="no_genomes">
+    <%= no_genomes_for_taxon(@protein_counts_hash, taxon) %>
+  </td>
+  <% @parent_enzyme_ids.each do |enzyme_id| %>
+    <%= render :partial => 'row_part', :locals => {enzyme_id: enzyme_id, taxon: taxon} %>
+  <% end %>
 </tr>

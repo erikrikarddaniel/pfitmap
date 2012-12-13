@@ -19,6 +19,8 @@ class Taxon < ActiveRecord::Base
   has_many :children, :class_name => "Taxon", :foreign_key => "parent_ncbi_id", :primary_key => "ncbi_taxon_id"
   has_many :protein_counts
 
+  RANKS = ["superkingdom", "kingdom", "phylum", "class", "order", "family", "genus", "species"]
+
   def self_and_ancestors
     all_up_to_root_rec(self, [])
   end
@@ -28,7 +30,7 @@ class Taxon < ActiveRecord::Base
   end
 
   def self.all_ranks
-    hierarchy = {"superkingdom" => 1, "phylum" => 2, "class" => 3, "order" => 4, "family" => 5, "genus" => 6, "species" => 7}
+    hierarchy = {"superkingdom" => 1, "kingdom" => 2, "phylum" => 3, "class" => 4, "order" => 5, "family" => 6, "genus" => 7, "species" => 8}
     ranks = self.uniq.pluck(:rank)
     ranks.sort_by{ |r| hierarchy[r] ? hierarchy[r] : 10}
   end

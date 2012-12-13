@@ -38,11 +38,64 @@ module ProteinCountsHelper
     a = pc.no_genomes_with_proteins
     b = pc.no_genomes
     color_ratio = Float(a)/b
-    color_int = Integer(100*color_ratio)
+    if (color_ratio > 0.0) && (color_ratio < 0.01)
+      color_int = 1
+    else
+      color_int = Integer(100*color_ratio)
+    end
   end
 
   def row_id(taxon)
     base="taxon#{taxon.id}"
   end
 
+  def taxon_sign(taxon)
+    if taxon.children.count == 0
+      "-"
+    else
+      "+"
+    end
+  end
+
+  def enzyme_sign(enzyme, enzyme_tree)
+    if (enzyme_tree[enzyme.id][1] == []) and 
+        (enzyme.children.count != 0)
+      "+"
+    else
+      "-"
+    end
+  end
+
+  def no_columns(id, tree)
+    children = tree[id][1]
+    arr = children.map { |c_id| no_columns(c_id,tree) }
+    if arr == []
+      tree[id][0].proteins.count
+    else
+      sum(arr)
+    end
+  end
+
+  def no_genomes_for_taxon(pc_hash, taxon)
+    pc_hash[taxon.id].values.find { |pc| pc }.no_genomes
+  end
+
+  def enzyme_array_expand(expand_enzyme, enzyme_ids)
+    new_enzyme_ids = expand_enzyme.children.map { |e| e.id }
+    enzyme_ids +  new_enzyme_ids
+  end
+
+  def enzyme_array_collapse(collapse_enzyme, enzyme_ids)
+    remove_enzyme_ids = collapse_enzyme.children.map { |e| e.id }
+    if remove_enzyme_ids == []
+      enzyme_ids
+    else
+      enzyme_ids - remove_enzyme_ids
+    end
+  end
+
+  private
+  def sum(arr)
+    arr.inject{|s,x| s + x }
+  end
 end

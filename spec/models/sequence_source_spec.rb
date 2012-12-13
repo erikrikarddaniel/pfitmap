@@ -119,14 +119,14 @@ describe SequenceSource do
       end
       
       it "should have imported all rows from the tables" do
-        @hmm_result_nrdb.hmm_result_rows.length.should == 19
+        @hmm_result_nrdb.hmm_result_rows.length.should == 20
         @hmm_result_nrdbe.hmm_result_rows.length.should == 23
-        DbSequence.all.length.should == 39
+        DbSequence.all.length.should == 40
       end
 
       it "should add all db_sequences to pfitmap" do
-        PfitmapSequence.all.length.should == 39
-        @pfitmap_release.pfitmap_sequences.length.should == 39
+        PfitmapSequence.all.length.should == 40
+        @pfitmap_release.pfitmap_sequences.length.should == 40
       end
     end
   end

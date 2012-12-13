@@ -1,8 +1,7 @@
 Pfitmap::Application.routes.draw do
 
-  get 'protein_counts_by_rank', to: 'protein_counts#by_rank'
   get 'protein_counts_with_enzymes', to: 'protein_counts#with_enzymes'
-  get 'protein_counts_by_hierarchy', to: 'protein_counts#by_hierarchy'
+  post 'protein_counts_with_enzymes', to: 'protein_counts#with_enzymes'
   get 'add_row', to: 'protein_counts#add_row'
   get 'collapse_rows', to: 'protein_counts#collapse_rows'
   
@@ -24,7 +23,9 @@ Pfitmap::Application.routes.draw do
     post 'calculate', :as => :calculate
   end
 
-  resources :db_sequences
+  resources :db_sequences do
+  end
+  post 'import_external_db_fasta', controller: 'db_sequences', action: 'import_external_db_fasta'
 
   resources :hmm_db_hits
 
