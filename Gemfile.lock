@@ -103,12 +103,8 @@ GEM
     launchy (2.1.2)
       addressable (~> 2.3)
     libv8 (3.3.10.4)
-<<<<<<< HEAD
-    libwebsocket (0.1.6.1)
-=======
     libwebsocket (0.1.7.1)
       addressable
->>>>>>> f8a375a9b6a97537980b9a163c0c94c4f03319e3
       websocket
     mail (2.4.4)
       i18n (>= 0.4.0)
@@ -167,7 +163,7 @@ GEM
       rake (>= 0.8.7)
       rdoc (~> 3.4)
       thor (>= 0.14.6, < 2.0)
-    rake (10.0.2)
+    rake (10.0.3)
     rdoc (3.12)
       json (~> 1.4)
     rspec (2.8.0)
