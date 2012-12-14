@@ -13,7 +13,21 @@
 <tbody>
   <% profile.release_statistics.each do |statistics| %>
   <tr>
-    <td><b><%= first ? profile.description : "" %></b></td>
+    <td>
+      <b>
+	<% if first %> 
+	<div class="dropdown">
+	  <a class="dropdown-toggle" data-toggle="dropdown" href="#"><%= profile.description %></a>
+	  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+	    <li> <%= link_to "Browse this profile", profile %></li>
+	    <% if profile.hmm_result_for(@sequence_source) %>
+	    <li> <%= link_to "Browse this HMM result file", profile.hmm_result_for(@sequence_source) %> </li>
+	    <% end %>
+	  </ul>
+	</div>
+	<% end %>
+      </b>
+    </td>
     <td><%= statistics[:release] ? statistics[:release].release : "Not Included" %></td>
     <td><%= statistics[:count] %></td>
     <td><%= statistics[:min_score] %></td>
