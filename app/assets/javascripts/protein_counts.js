@@ -32,6 +32,7 @@ $(document).ready(function(){
 function initTips(){
     $('#explanations a').tooltip();
     $('td.heat a').tooltip();
+    $('td.taxon a.name').tooltip();
 }
 
 function colorHeatmap(){

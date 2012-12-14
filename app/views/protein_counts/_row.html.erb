@@ -1,7 +1,9 @@
 <tr id=<%=row_id(taxon)%>>
   <td class="taxon" data-indent=<%=@level%>>
-  <%= link_to taxon_sign(taxon), { :controller => "protein_counts", :action => "add_row", :parent_id => taxon.id, :level => @level, :enzyme_ids => @enzyme_tree.keys}, :remote => true %>
-  <%= taxon.name%>
+    <%= link_to taxon_sign(taxon), { :controller => "protein_counts", :action => "add_row", :parent_id => taxon.id, :level => @level, :enzyme_ids => @enzyme_tree.keys}, :remote => true, :class => "sign"%>
+    <a class="name" href="#" rel="tooltip" title="<%= taxon.hierarchy.gsub(/[:]/,'<br>') %>">
+      <%= taxon.name%>
+    </a>
   </td>
   <td class="no_genomes">
     <%= no_genomes_for_taxon(@protein_counts_hash, taxon) %>

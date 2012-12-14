@@ -190,16 +190,19 @@ table.heat-map {
   td.taxon {
     white-space: nowrap;
     width: 180px;
-    a {
+    .sign {
        font-size:20px;
     }  
+  }
+  td.no_genomes {
+    width: 80px;
   } 
   td.heat {
     a {
       color: black;
     }
     white-space: nowrap;
-    width: 120px !important;
+    width: 80px !important;
     text-align: center;
   }
   tbody.heat-body {
