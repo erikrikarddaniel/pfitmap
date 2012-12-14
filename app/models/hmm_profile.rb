@@ -45,6 +45,10 @@ class HmmProfile < ActiveRecord::Base
     end
   end
 
+  def hmm_result_for(ss)
+    self.hmm_results.where("sequence_source_id = ?", ss.id).first
+  end
+
   def to_s
     "HmmProfile: #{protein_name} #{parent}"
   end

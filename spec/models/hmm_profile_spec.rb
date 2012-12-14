@@ -69,6 +69,35 @@ describe HmmProfile do
     it { should respond_to(:all_parents_including_self) }
   end
 
+  describe "hmm result for" do
+    let!(:sequence_source) { FactoryGirl.create(:sequence_source) }
+    let!(:sequence_source2) { FactoryGirl.create(:sequence_source) }
+    let!(:sequence_source3) { FactoryGirl.create(:sequence_source) }
+    let!(:hmm_result1) { FactoryGirl.create(:hmm_result, 
+                                            hmm_profile: hmm_profile, 
+                                            sequence_source: sequence_source) }
+    let!(:hmm_result2) { FactoryGirl.create(:hmm_result, 
+                                            hmm_profile: hmm_profile, 
+                                            sequence_source: sequence_source2) }
+    let!(:hmm_result3) { FactoryGirl.create(:hmm_result, 
+                                            hmm_profile: hmm_profile_nrdbr2lox, 
+                                            sequence_source: sequence_source) }
+    let!(:hmm_result4) { FactoryGirl.create(:hmm_result, 
+                                            hmm_profile: hmm_profile_nrdbr2lox, 
+                                            sequence_source: sequence_source2) }
+
+    it "should give the correct one" do
+      hmm_profile.hmm_result_for(sequence_source).should == hmm_result1
+      hmm_profile.hmm_result_for(sequence_source2).should == hmm_result2
+      hmm_profile_nrdbr2lox.hmm_result_for(sequence_source).should == hmm_result3
+      hmm_profile_nrdbr2lox.hmm_result_for(sequence_source2).should == hmm_result4
+    end
+
+    it "should give nil when there is none" do
+      hmm_profile.hmm_result_for(sequence_source3).should == nil
+      hmm_profile_nrdbr2lox.hmm_result_for(sequence_source3).should == nil
+    end
+  end
 
   describe "inclusion criteria" do
     #two alternative sequences
