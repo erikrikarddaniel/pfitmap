@@ -6,6 +6,6 @@ el.nextAll("tr").remove();
 <% end %>
 
 
-el.children('.taxon').find('.sign').html("<%= (j link_to "+", { :controller => "protein_counts", :action => "add_row", :parent_id => @parent_taxon.id, :level => @level}, :remote => true)%>");
+el.children('.taxon').children('.sign').html("<%= (j link_to "+", { :controller => "protein_counts", :action => "add_row", :parent_id => @parent_taxon.id, :level => @level}, :remote => true, :class => "sign")%>");
 
 
