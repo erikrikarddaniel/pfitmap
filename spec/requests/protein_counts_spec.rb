@@ -69,11 +69,9 @@ describe "ProteinCounts" do
       page.should have_content(@first_child.name)
       page.should have_css('td.taxon', :count => 50)
       parent_row = find_by_id("taxon#{@parent_taxon.id}")
-      save_and_open_page
       within parent_row do
         click_link "-"
       end
-      save_and_open_page
       page.should_not have_content(@first_child.name)
     end
     it "can collapse several levels of taxons", :js => true do
