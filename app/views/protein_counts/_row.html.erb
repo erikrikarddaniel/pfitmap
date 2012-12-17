@@ -1,6 +1,6 @@
 <tr id=<%=row_id(taxon)%>>
   <td class="taxon" data-indent=<%=@level%>>
-    <%= link_to taxon_sign(taxon), { :controller => "protein_counts", :action => "add_row", :parent_id => taxon.id, :level => @level, :enzyme_ids => @enzyme_tree.keys}, :remote => true %>
+    <%= link_to_expand(taxon_sign(taxon), taxon, @enzyme_tree.keys, @level) %>
     <%= taxon.name%>
   </td>
   <td class="no_genomes">

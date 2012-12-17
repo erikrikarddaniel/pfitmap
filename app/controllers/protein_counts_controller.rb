@@ -69,6 +69,7 @@ class ProteinCountsController < ApplicationController
     @parent_taxon = Taxon.find(params[:parent_id])
     @after_children_taxon = Taxon.where('parent_ncbi_id= ? AND hierarchy > ?', @parent_taxon.parent_ncbi_id, @parent_taxon.hierarchy).order("hierarchy").first 
     @taxons = @parent_taxon.children
+    @enzyme_tree, @parent_enzyme_ids, @enzymes = Enzyme.find_standard_enzymes(params[:enzyme_ids])
     
     respond_to do |format|
       format.js
