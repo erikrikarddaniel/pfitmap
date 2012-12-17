@@ -20,7 +20,8 @@ class HmmResultsController < ApplicationController
   def show
     @hmm_result = HmmResult.find(params[:id])
     @hmm_result_rows = @hmm_result.hmm_result_rows.paginate(page: params[:page], order: "fullseq_score DESC")
-    
+    # Generate histogram
+    @chart = @hmm_result.create_histogram
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @hmm_result }
