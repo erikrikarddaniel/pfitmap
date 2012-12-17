@@ -85,7 +85,7 @@ ActiveRecord::Schema.define(:version => 20121205121631) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.integer  "parent_id"
-    t.index ["parent_id"], :name => "index_enzymes_on_parent_id", :order => {"parent_id" => :asc}
+    t.index ["parent_id"], :name => "fk__enzymes_parent_id", :order => {"parent_id" => :asc}
     t.foreign_key ["parent_id"], "enzymes", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "enzymes_parent_id_fkey"
   end
 
@@ -117,8 +117,8 @@ ActiveRecord::Schema.define(:version => 20121205121631) do
     t.integer  "protein_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-    t.index ["enzyme_id"], :name => "index_enzyme_proteins_on_enzyme_id", :order => {"enzyme_id" => :asc}
-    t.index ["protein_id"], :name => "index_enzyme_proteins_on_protein_id", :order => {"protein_id" => :asc}
+    t.index ["enzyme_id"], :name => "fk__enzyme_proteins_enzyme_id", :order => {"enzyme_id" => :asc}
+    t.index ["protein_id"], :name => "fk__enzyme_proteins_protein_id", :order => {"protein_id" => :asc}
     t.foreign_key ["enzyme_id"], "enzymes", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "enzyme_proteins_enzyme_id_fkey"
     t.foreign_key ["protein_id"], "proteins", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "enzyme_proteins_protein_id_fkey"
   end
