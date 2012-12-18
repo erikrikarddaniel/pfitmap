@@ -25,4 +25,6 @@
 
 class HmmAlignment < ActiveRecord::Base
   attr_accessible :acc, :alifrom, :alito, :bias, :envfrom, :envto, :evalue, :hmm_line, :hmm_result_row_id, :hmmfrom, :hmmto, :ievalue, :match_line, :pp_line, :score, :target_line
+  belongs_to :hmm_result_row
+  belongs_to :hmm_result
 end

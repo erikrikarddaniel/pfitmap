@@ -28,7 +28,7 @@ require 'spec_helper'
 describe HmmAlignment do
   let(:hmm_result_row) { FactoryGirl.create(:hmm_result_row) }
   before do
-    @hmm_alignment = @hmm_result_row.hmm_alignments.create(
+    @hmm_alignment = hmm_result_row.hmm_alignments.create(
       score: 365.5,
       evalue: 6.1e-110,
       hmmfrom: 13,
@@ -51,4 +51,15 @@ describe HmmAlignment do
   it { should respond_to(:match_line) }
   it { should respond_to(:target_line) }
   it { should respond_to(:pp_line) }
+  it { should respond_to(:hmm_result) }
+
+  describe "Simple import cases" do
+    before(:each) do
+      @hmm_result_nrdb = FactoryGirl.create(:hmm_result_nrdb)
+    end
+
+    it "should correctly import a file with a single sequence" do
+      parse_hmm_tblout(@hmm_result_nrdb, fixture_file_upload("/NrdB.test_single_seq.hmmout"))
+      @hmm_result_nrdb.hmm_alignments.length.should == 1
+    end 
 end
