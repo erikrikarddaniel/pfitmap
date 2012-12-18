@@ -58,7 +58,25 @@ describe "HmmResults" do
     end
   end
 
-  
+  describe "hmm alignments" do
+    before do
+      visit hmm_result_path(r1)
+    end
+    it "has a link on result show page" do
+      page.should have_content("Upload HMM Alignments")
+    end
+    
+    describe "upload page" do
+      before do
+        visit hmm_result_upload_alignments_path(r1)
+      end
+      it "works" do
+        page.should have_content("Upload HMM Alignments")
+        page.should have_content(r1.hmm_profile.description)
+        page.should have_content(r1.sequence_source)
+      end
+    end
+  end
   describe "show result-rows" do
     before do
       visit hmm_result_row_path(result_row)
