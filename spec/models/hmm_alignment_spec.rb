@@ -59,7 +59,7 @@ describe HmmAlignment do
     end
 
     it "should correctly import a file with a single sequence" do
-      parse_hmm_tblout(@hmm_result_nrdb, fixture_file_upload("/NrdB.test_single_seq.hmmout"))
+      parse_hmm_tblout(@hmm_result_nrdb, fixture_file_upload("/NrdB.gi_160942848.hmmout"))
       @hmm_result_nrdb.hmm_alignments.length.should == 1
     end 
 end
