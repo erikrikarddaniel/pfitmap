@@ -21,7 +21,9 @@ class HmmResultsController < ApplicationController
     @hmm_result = HmmResult.find(params[:id])
     @hmm_result_rows = @hmm_result.hmm_result_rows.paginate(page: params[:page], order: "fullseq_score DESC")
     # Generate histogram
-    @chart, @chart2 = @hmm_result.create_histogram
+    if @hmm_result.hmm_result_rows.any?
+      @chart, @chart2 = @hmm_result.create_histogram
+    end
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @hmm_result }
@@ -52,6 +54,7 @@ class HmmResultsController < ApplicationController
         if file
           if @hmm_result.save
             if parse_hmm_tblout(@hmm_result,file)
+              @chart1, @chart2 = @hmm_result.create_histogram
               format.html { redirect_to hmm_result_path(@hmm_result), notice: 'Hmm result was successfully created.' }
               format.json { render json: hmm_result_path(@hmm_result), status: :created, location: @hmm_result }
             else
