@@ -12,7 +12,7 @@
   <aside class="span4">
     <section>
       <h1>
-	<%= @hmm_result.hmm_profile.name %>
+	<%= @hmm_result.hmm_profile.description %>
       </h1>
       <h2>
 	<%= @hmm_result.sequence_source.source %>:
@@ -25,6 +25,18 @@
 	<b>Executed:</b>
 	<%= @hmm_result.executed.to_formatted_s(:long)%>
       </p>      
+    </section>
+    <section>
+      <h1> HMM Score Criterion: </h1>
+      <% if @hmm_score_criterion %>
+        <% if can? :manage, @hmm_score_criterion %>
+	<%= render 'hmm_score_criteria/form_results' %>
+	<% else %>
+	<p> Current limit: <%= link_to @hmm_score_criterion.min_fullseq_score, @hmm_score_criterion  %> </p>
+	<% end %>
+      <% else %>
+      <p> No criterion created for <%= @hmm_result.hmm_profile.description %> </p>
+      <% end %>
     </section>
   </aside>
   <div class="span8">

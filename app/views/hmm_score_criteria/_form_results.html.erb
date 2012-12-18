@@ -1,11 +1,8 @@
 <%= form_for(@hmm_score_criterion, :html => {:class => "well"}) do |f| %>
 <%= render :partial => 'shared/error_messages', :locals => {:error_subject => @hmm_score_criterion} %>
 <div class="row-fluid">
-  <div class="control-group span6">
-    <%= f.label "HMM profile" %>
-    <%= collection_select( :hmm_score_criterion, :hmm_profile_id, @hmm_profiles, :id, :description) %>
-  </div>
-  <div class="control-group span6">
+  <%= f.hidden_field :hmm_profile_id, :value => @hmm_profile.id %>
+  <div class="control-group">
     <%= f.label "Minimum Full-Sequence Score" %>
     <%= f.text_field :min_fullseq_score %>
   </div>
