@@ -1,0 +1,51 @@
+# hmmsearch :: search profile(s) against a sequence database
+# HMMER 3.0 (March 2010); http://hmmer.org/
+# Copyright (C) 2010 Howard Hughes Medical Institute.
+# Freely distributed under the GNU General Public License (GPLv3).
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# query HMM file:                  NrdB.hmm
+# target sequence database:        /proj/b2010008/nobackup/data/ncbi/nr.fasta
+# output directed to file:         NrdB.ncbi_nr.hmmout
+# per-seq hits tabular output:     NrdB.ncbi_nr.tblout
+# per-dom hits tabular output:     NrdB.ncbi_nr.domtblout
+# number of worker threads:        8
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Query:       NrdB  [M=364]
+Scores for complete sequences (score includes all domains):
+   --- full sequence ---   --- best 1 domain ---    -#dom-
+   2.5e-106  365.7   0.9     3e-106  365.5   0.6    1.0  1  gi|160942848|ref|ZP_02090088.1|        hypothetical protein FAEPRAM212_
+
+
+>> gi|160942848|ref|ZP_02090088.1|  hypothetical protein FAEPRAM212_00325 [Faecalibacterium prausnitzii M21/2]gi|158445
+   #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
+ ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
+   1 !  365.5   0.6  6.1e-110    3e-106      13     349 ..       5     343 ..       1     346 [. 0.98
+
+  Alignments for each domain:
+  == domain 1    score: 365.5 bits;  conditional E-value: 6.1e-110
+                             NrdB  13 kakkleeesqkeeekkepllsgenlsrvnlnpikypwakefykkaeanfWlpeeidlsdDikdWktLseeerrlikrv 90 
+                                      k+k+l++++ + +++ +++  g++++ +++n++ky w+ ++y++a++nfW+peei+ls+D+kd+  L  +er +++++
+  gi|160942848|ref|ZP_02090088.1|   5 KKKPLFNPEGDPDVRLRRMTGGNTTNLNDFNNMKYAWVSDWYRQAMNNFWIPEEINLSQDVKDYPRLLSAERSAYDKI 82 
+                                      5667899999999***************************************************************** PP
+
+                             NrdB  91 lafltllDtivgenlvealsqeitapeakavlgfqafmEaiHaksYsliletlgtdeeidelFdavrenpalqkKaef 168
+                                      l+fl +lD+i++ nl  ++  +ita+e++ +l+ qaf+E +H++sYs++l+t++++ e++++  +++++++l ++++f
+  gi|160942848|ref|ZP_02090088.1|  83 LSFLVFLDSIQTANLP-NIGAYITANEVNLCLSIQAFQECVHSQSYSYMLDTICSPVERNDILYQWKTDEHLLRRNTF 159
+                                      ****************.************************************************************* PP
+
+                             NrdB 169 vlrlyeslqdeetkqsllkllaasvllEgilFYsgFalilalarrgkmkglaeiieliiRDEslHgdfvilliqelle 246
+                                      + + y+++q+++++ +ll++++a+++lEgi+FYsgF+++++l+r+gkm+g+a+ i++i+RDE++H++++ ++i el++
+  gi|160942848|ref|ZP_02090088.1| 160 IGDCYNEFQERKDAPTLLRVMMANYILEGIYFYSGFMFFYNLSRNGKMPGSAQEIRYINRDENTHLWLFRNIITELQK 237
+                                      ****************************************************************************** PP
+
+                             NrdB 247 enpelqqkelkeevyelleeavelEeeyaedllpegllglnaedvkqYvryiadkrlmnlGleklfeve..aenplpw 322
+                                      e+pel+++e  + ++e+++e ve+E+++ ++++++++ gln +++ +Y+ry+ + r ++lG+++l+++   + + ++w
+  gi|160942848|ref|ZP_02090088.1| 238 EQPELFTAESVQALREMMREGVEQEIAWGHYVIGDDIPGLNRQMISDYIRYLGNLRWTSLGYPALYPGFesEPESMEW 315
+                                      *******************************************************************98778899*** PP
+
+                             NrdB 323 veailst.tkktdFFekrvteYqkagve 349
+                                      v+++ ++   ktdFFe+r+t+Y+k+++ 
+  gi|160942848|ref|ZP_02090088.1| 316 VSQYADAnMVKTDFFEARSTAYAKSTAL 343
+                                      ************************9875 PP
+
