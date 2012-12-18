@@ -90,4 +90,12 @@ describe HmmResult do
       hmm_db_hits.length.should == 709
     end
   end
+  describe "Calculate bins" do
+    it "gets the upper right" do
+      @result.bin_size_and_count(500.0).should == [40, 12]
+      @result.bin_size_and_count(529.0).should == [40, 13]
+      @result.bin_size_and_count(1000.0).first.should == 50
+      @result.bin_size_and_count(1020.0).first.should == 50
+    end
+  end
 end

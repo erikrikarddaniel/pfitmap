@@ -39,6 +39,8 @@ gem 'rvm-capistrano'
 
 gem 'pg'
 
+gem 'google_visualr'
+
 group :development, :test do
 	gem 'rspec-rails', '2.8.1'
 	gem 'annotate', '~> 2.4.1.beta'

@@ -33,6 +33,30 @@ describe "HmmResults" do
       end
     end
   end
+  describe "HMM score criteria" do
+    before do
+      visit hmm_result_path(r1)
+    end
+    it "without criteria" do
+      page.should have_content("No criterion created for")
+    end
+    describe "with criteria" do
+      let!(:hmm_score_criterion) { FactoryGirl.create(:hmm_score_criterion, hmm_profile: profile1, min_fullseq_score: 500) }
+      before do
+        visit hmm_result_path(r1)
+      end
+      it "should be displayed" do
+        page.should_not have_content("No criterion created for")
+        page.should have_button("Update Hmm score criterion")
+      end
+      it "should be editable" do
+        fill_in 'hmm_score_criterion_min_fullseq_score', :with => '800'
+        click_button "Update Hmm score criterion"
+        page.should have_content("Hmm score criterion was successfully updated.")
+        profile1.hmm_score_criteria.first.min_fullseq_score.should == 800
+      end
+    end
+  end
 
   
   describe "show result-rows" do
