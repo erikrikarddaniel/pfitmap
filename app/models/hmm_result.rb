@@ -30,25 +30,54 @@ class HmmResult < ActiveRecord::Base
     max_score = hmm_result_rows.maximum("fullseq_score")
     bin_size,n_bins = bin_size_and_count(max_score)
     histogram_hash = group_counts(bin_size)
+    another_graph, cut_limit = second_graph(histogram_hash)
     rows = []
-    histogram_hash.each_pair do |divisor, n|
-      rows << ["#{divisor*bin_size}-#{divisor*bin_size+bin_size-1}",n]
+    
+    histogram_hash.keys.sort.each do |divisor|
+      rows << ["#{divisor*bin_size}-#{divisor*bin_size+bin_size-1}",histogram_hash[divisor]]
     end
     data_table = GoogleVisualr::DataTable.new
-    data_table.new_columns([{type: 'string', label: 'Year'},{type: 'number', label: 'No Sequences'}])
+    data_table.new_columns([{type: 'string', label: 'Bit Score'},{type: 'number', label: 'No Sequences'}])
     data_table.add_rows(rows)
-
     opts   = { :width => 600, 
       :height => 240, 
       :title => 'HMM Score Histogram',
-      :colors => ['blue'],
       :legend => {position: 'none'},
       :bar => {groupWidth:"99%"},
       :hAxis => {slantedText: "true"}
-      }
-    chart = GoogleVisualr::Interactive::ColumnChart.new(data_table, opts)
-  end
+    }
 
+    chart = GoogleVisualr::Interactive::ColumnChart.new(data_table, opts)
+    
+    chart2 = nil
+    if another_graph
+      rows2 = []
+      histogram_hash.keys.find_all{|i| i > cut_limit }.sort.each do |divisor|
+        rows2 << ["#{divisor*bin_size}-#{divisor*bin_size+bin_size-1}",histogram_hash[divisor]]
+      end
+      data_table2 = GoogleVisualr::DataTable.new
+      data_table2.new_columns([{type: 'string', label: 'Bit Score'},{type: 'number', label: 'No Sequences'}])
+      data_table2.add_rows(rows2)
+      opts2 = opts.dup
+      opts2[:title] = 'HMM Score Histogram without lower 20%'
+      chart2 = GoogleVisualr::Interactive::ColumnChart.new(data_table2, opts2)
+    end
+    return chart, chart2
+  end
+  
+  private
+  def second_graph(histogram_hash)
+    max_key = histogram_hash.keys.max
+    below_limit = []
+    limit = max_key/5
+    0.upto(limit).each do |n|
+      if histogram_hash[n]
+        below_limit << histogram_hash[n]
+      end
+    end
+    return (below_limit.sum > histogram_hash.values.sum/2), limit
+  end
+  
   def group_counts(bin_size)
     histogram_hash = {} 
     scores = hmm_result_rows.select("fullseq_score").map { |r| r.fullseq_score }
@@ -59,7 +88,10 @@ class HmmResult < ActiveRecord::Base
   def bin_size_and_count(max_score)
     bin_size = MAX_HISTO_CLASS_SIZE
     while (Integer(max_score)/bin_size) <= MIN_N_HISTO_CLASSES
-      bin_size += 10
+      bin_size -= 10
+    end
+    if bin_size < 10
+      bin_size = 10
     end
     no_bins = (Integer(max_score)/bin_size)
     return bin_size, no_bins

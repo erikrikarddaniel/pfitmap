@@ -28,8 +28,12 @@
     </section>
   </aside>
   <div class="span8">
-    <div id='chart'></div>
-    <%= render_chart @chart, 'chart' %>
+    <div id='chart1'></div>
+    <%= render_chart @chart, 'chart1' %>
+    <% if @chart2 %>
+      <div id='chart2'></div>
+      <%= render_chart @chart2, 'chart2' %>
+    <% end %>
     <% if @hmm_result.hmm_result_rows.any? %>
     <h3> Listing HMM result-rows (<%= @hmm_result.hmm_result_rows.count %>)</h3>
     <table class="table table-striped">
