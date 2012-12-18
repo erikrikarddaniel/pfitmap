@@ -82,6 +82,26 @@ module FileParsers
     end
   end
   
+  def parse_hmmout(result, io)
+    HmmResult.transaction do
+      @hmm_alignments = []
+      gi_row_hash = gi_to_result_row_hash(result)
+      File.open("#{io.path}", "r").each_with_index do |line, index|
+        
+      HmmAlignment.import @hmm_alignments
+    end
+  end
+
+  def gi_to_result_row_hash(result)
+    h = {}
+    result.hmm_result_rows.all(:include => :hmm_db_hits).each do |rr|
+      rr.hmm_db_hits.each do |db_hit|
+        h[db_hit.gi] = rr.id
+      end
+    end
+    return h
+  end
+
   def add_hmm_result_row(fields,result, present_sequence_id)
     hmm_result_row = HmmResultRow.new(
      :target_name => fields[0],
