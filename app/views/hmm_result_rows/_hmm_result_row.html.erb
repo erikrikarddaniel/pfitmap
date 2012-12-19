@@ -1,6 +1,12 @@
+<% best_profiles = hmm_result_row.db_sequence.best_hmm_profiles_for(@hmm_result.sequence_source) %>
+<% best_profile_criterium = best_profiles[0].hmm_score_criteria[0] %>
+<% this_profile_criterium = @hmm_result.hmm_profile.hmm_score_criteria[0] %>
+<% best_hmm_rr = hmm_result_row.db_sequence.best_hmm_result_rows_for(@hmm_result.sequence_source) %>
 <tr>
-  <td> <%= hmm_result_row.target_name %> </td>
   <td> <%= link_to hmm_result_row.target_acc, hmm_result_row %> </td>
+  <td class="score <%= accepted_css_class(this_profile_criterium, hmm_result_row) %>"> <%= hmm_result_row.fullseq_score %> </td>
   <td> <%= hmm_result_row.fullseq_evalue %> </td>
-  <td> <%= hmm_result_row.fullseq_score %> </td>
+  <td> <%= best_profiles.map { |p| p.protein_name }.join(", ") %> </td>
+  <td class="score <%= accepted_css_class(best_profile_criterium, best_hmm_rr[0]) %>"> <%= best_hmm_rr[0].fullseq_score %></td>
+  <td> <%= best_hmm_rr[0].fullseq_evalue %></td>
 </tr>

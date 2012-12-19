@@ -33,6 +33,14 @@ class DbSequence < ActiveRecord::Base
     return hmm_result_rows
   end
 
+  def best_hmm_result_rows_for(sequence_source)
+    r = []
+    best_hmm_profiles_for(sequence_source).each do |profile|
+      r << profile.hmm_results.find_by_sequence_source_id(sequence_source.id).hmm_result_rows.find_by_db_sequence_id(self.id)
+    end
+    r
+  end
+
   # A method that returns the best hmm profile object
   def best_hmm_profiles_for(sequence_source)
     dsbps = self.db_sequence_best_profiles.\

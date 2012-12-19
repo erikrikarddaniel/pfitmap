@@ -1,0 +1,13 @@
+<tr>
+  <td>Domain <%= hmm_alignment.domain_num %>,
+  score: <%= hmm_alignment.score %>,
+  c-Evalue: <%= hmm_alignment.cevalue %></td>
+</tr>
+<tr>
+  <td>
+      <pre><%= sprintf "%5d ", hmm_alignment.hmmfrom %><%= hmm_alignment.hmm_line %><%= sprintf " %-5d", hmm_alignment.hmmto %>
+      <%= hmm_alignment.match_line %>
+<%= sprintf "%5d ", hmm_alignment.alifrom %><%= hmm_alignment.target_line %><%= sprintf " %-5d", hmm_alignment.alito %>
+      <%= hmm_alignment.pp_line %></pre>
+  </td>
+</tr>

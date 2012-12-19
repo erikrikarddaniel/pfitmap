@@ -13,11 +13,18 @@ describe "HmmResultRows" do
   let!(:r1) { FactoryGirl.create(:hmm_result, hmm_profile: profile1, sequence_source: sequence_source, executed: 100.years.ago) }
   let!(:hmm_result_row) { FactoryGirl.create(:hmm_result_row, hmm_result: r1, db_sequence: db_sequence) }
   let!(:hmm_db_hit) { FactoryGirl.create(:hmm_db_hit, db_sequence: db_sequence) }
+  let!(:hmm_alignment1) { FactoryGirl.create(:hmm_alignment, hmm_result_row: hmm_result_row) }
+  let!(:hmm_alignment2) { FactoryGirl.create(:hmm_alignment, hmm_result_row: hmm_result_row, hmm_line: "genlsenyprvnlnpikypwakefykk") }
+
 
   describe "show result row" do 
     before{ visit hmm_result_row_path(hmm_result_row) }
     it {should have_content(profile1.name) }
     it { should have_content(hmm_db_hit.db) }
+    it { should have_content(hmm_alignment1.hmm_line) }
+    it { should have_content(hmm_alignment2.hmm_line) }
+    it { should have_content(hmm_alignment1.target_line) }
+    it { should have_content(hmm_alignment1.pp_line) }
   end
   
   describe "links works" do

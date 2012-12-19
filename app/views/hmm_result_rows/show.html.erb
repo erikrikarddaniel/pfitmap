@@ -151,6 +151,17 @@
       </tbody>
     </table>
     <% end %>
+    <% if @hmm_result_row.hmm_alignments.any? %>
+    <h3> Listing HMM alignments </h3>
+    <div class="alignment">
+      <table class="standard alignment" style="width: <%= ( @hmm_alignments.sort_by { |a| -a.hmm_line.length }[0].hmm_line.length + 30 ) * 7 %>px">
+	<tbody class>
+	  <%= render @hmm_alignments %>
+	</tbody>
+      </table>
+    </div>
+    <% end %>
+    <br/>
     <%  if @hmm_result_row.hmm_db_hits.any? %>
     <h3> Listing HMM database hits </h3>
     <table class="standard">

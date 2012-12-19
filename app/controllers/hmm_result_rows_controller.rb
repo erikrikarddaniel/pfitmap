@@ -16,6 +16,7 @@ class HmmResultRowsController < ApplicationController
   def show
     @hmm_result_row = HmmResultRow.find(params[:id])
     @hmm_db_hits = @hmm_result_row.hmm_db_hits.paginate(page: params[:page])
+    @hmm_alignments = @hmm_result_row.hmm_alignments
     @db_sequence = @hmm_result_row.db_sequence
 
     sequence_source = @hmm_result_row.hmm_result.sequence_source

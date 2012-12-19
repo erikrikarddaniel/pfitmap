@@ -167,6 +167,29 @@ table.standard {
 	       @extend .table;
 	       @extend .table-striped;
 	       }
+table.result-rows {
+  td.score {
+    font-weight: bold;
+  }
+  td.accepted {
+    color: green;
+  }
+  td.not-accepted {
+    color: red;
+  }
+}
+
+table.alignment {
+  white-space: nowrap;
+  td.domain {
+    width: 80px
+  }
+  table-layout:fixed;
+}
+
+div.alignment {
+  overflow-x: auto;
+}
 
 div.heat-map { 
   width: 1100px;
