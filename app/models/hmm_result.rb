@@ -26,7 +26,7 @@ class HmmResult < ActiveRecord::Base
     "HmmResult: #{hmm_profile}-#{sequence_source} #{executed}"
   end
 
-   # http://code.google.com/apis/chart/interactive/docs/gallery/barchart.html#Example
+  # http://code.google.com/apis/chart/interactive/docs/gallery/barchart.html#Example
   def create_histogram
     max_score = hmm_result_rows.maximum("fullseq_score")
     bin_size,n_bins = bin_size_and_count(max_score)
@@ -63,7 +63,7 @@ class HmmResult < ActiveRecord::Base
       opts2[:title] = 'HMM Score Histogram without lower 20%'
       chart2 = GoogleVisualr::Interactive::ColumnChart.new(data_table2, opts2)
     end
-    return chart, chart2
+    return chart, chart2, bin_size, n_bins
   end
   
   # Public so that it can be tested

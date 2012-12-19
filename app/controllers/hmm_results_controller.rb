@@ -113,7 +113,7 @@ class HmmResultsController < ApplicationController
   # Helper method to avoid duplicated code
   def show_params(hmm_result)
     @hmm_profile = hmm_result.hmm_profile
-    @hmm_result_rows = hmm_result.hmm_result_rows.paginate(page: params[:page], order: "fullseq_score DESC")
+    @hmm_result_rows = hmm_result.hmm_result_rows#.paginate(page: params[:page], order: "fullseq_score DESC")
     # Editable Hmm Score Criterion
     hmm_score_criteria = hmm_result.hmm_profile.hmm_score_criteria
     if hmm_score_criteria
@@ -121,7 +121,7 @@ class HmmResultsController < ApplicationController
     end
     # Generate histogram
     if hmm_result.hmm_result_rows.any?
-      @chart, @chart2 = hmm_result.create_histogram
+      @chart, @chart2, @bin_size, @n_bins = hmm_result.create_histogram
     end    
   end
 end
