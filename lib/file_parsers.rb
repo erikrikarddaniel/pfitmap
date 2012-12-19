@@ -88,6 +88,7 @@ module FileParsers
       @hmm_alignments = []
       gi_row_hash = gi_to_result_row_hash(result)
       first_domain_found = nil
+      end_of_file = nil
       File.open("#{io.path}", "r").each_with_index do |line, index|
         line.chomp!
 	line.sub!(/^#.*/, '')
@@ -97,6 +98,8 @@ module FileParsers
               @hmm_alignments += parse_single_protein(domain_ack, gi_row_hash)
             end
             domain_ack = [line]
+          elsif line =~  /^Internal pipeline statistics/
+            break
           else
             domain_ack << line
           end
