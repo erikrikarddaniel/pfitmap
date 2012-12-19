@@ -60,7 +60,9 @@ describe "HmmResults" do
 
   describe "hmm alignments" do
     before do
-      visit hmm_result_path(r1)
+      @hmm_result_nrdb = FactoryGirl.create(:hmm_result_nrdb, executed: Time.now)
+      parse_hmm_tblout(@hmm_result_nrdb, fixture_file_upload("/NrdB-20rows.tblout"))
+      visit hmm_result_path(@hmm_result_nrdb)
     end
     it "has a link on result show page" do
       page.should have_content("Upload HMM Alignments")
@@ -68,12 +70,20 @@ describe "HmmResults" do
     
     describe "upload page" do
       before do
-        visit hmm_result_upload_alignments_path(r1)
+        @hmm_result_nrdb = FactoryGirl.create(:hmm_result_nrdb, executed: Time.now)
+        parse_hmm_tblout(@hmm_result_nrdb, fixture_file_upload("/NrdB-20rows.tblout"))
+        visit hmm_result_upload_alignments_path(@hmm_result_nrdb)
+      end
+      it "loads" do
+        page.should have_content("Upload HMM Alignments")
+        page.should have_content(@hmm_result_nrdb.hmm_profile.description)
+        page.should have_content(@hmm_result_nrdb.sequence_source.name)
       end
       it "works" do
-        page.should have_content("Upload HMM Alignments")
-        page.should have_content(r1.hmm_profile.description)
-        page.should have_content(r1.sequence_source)
+        attach_file 'file', "#{Rails.root}/spec/fixtures/NrdB-5alignments.hmmout"
+        click_on 'Create Alignments'
+        page.should have_content('successfully')
+        HmmAlignment.count.should == 5
       end
     end
   end

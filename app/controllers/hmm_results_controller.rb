@@ -91,6 +91,24 @@ class HmmResultsController < ApplicationController
     @hmm_result = HmmResult.find(params[:hmm_result_id])
   end
 
+  def create_alignments
+    if current_user.nil? || current_user.role != "admin"
+      flash[:error] = "Please sign in to register alignments"
+      redirect_to root_path
+    end
+    @hmm_result = HmmResult.find(params[:hmm_result_id])
+    file = params[:file]
+    respond_to do |format|
+      if file
+        if parse_hmmout(@hmm_result, file)
+          format.html { redirect_to hmm_result_path(@hmm_result), notice: 'Hmm Alignments was successfully created.' }
+        else
+          format.html { redirect_to @hmm_result, notice: 'Error while parsing the given file' }
+        end
+      end
+    end
+  end
+
   private
   # Helper method to avoid duplicated code
   def show_params(hmm_result)
