@@ -176,20 +176,20 @@ module FileParsers
     lines.each_with_index do |line, i|
       next if line =~ /^\s*$/
       if i % 5 == 0
-        a = line.split(/\s+/)[-2]
-        startpos = line.index(a)
-        len = a.length
+	a = line.split(/\s+/)[-2]
+	startpos = line.index(a)
+	len = a.length
       end
       a = line[startpos, len]
       case i % 5
       when 0
-        aln.hmm_line += a
+	aln.hmm_line += a
       when 1
-        aln.match_line += a
+	aln.match_line += a
       when 2
-        aln.target_line += a
+	aln.target_line += a
       when 3
-        aln.pp_line += a
+	aln.pp_line += a
       end
     end
   end
