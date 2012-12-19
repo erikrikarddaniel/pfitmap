@@ -150,8 +150,7 @@ SQL
   end
 
   def make_hmm_results
-   # %w[ A Ac Ae Ben Be B Da Db Dc Dd Dd0 Dd1 Dd2 D E F Ja Jc Jd Jm J G_PFLa ].each do |c|
-    %w[ Ac A Ae Ben Be B Da Db Dc Dd Dd0 Dd1 Dd2 D E F Ja Jc Jd Jm J ].each do |c|
+    %w[ A Ac Ae Ben Be B Da Db Dc Dd Dd0 Dd1 Dd2 D E F Ja Jc Jd Jm J ].each do |c|
       str = %(puts "*** #{Time.now()}: Nrd#{c}: Importing HMM result ***"
       @hmm_result_nrd#{c.downcase}_nr_april = @hmm_profile_nrd#{c.downcase}.hmm_results.create!(
 	executed: "2012-08-01 12:00",
