@@ -54,13 +54,8 @@
     <% end %>
     <% if @hmm_result.hmm_result_rows.any? %>
     <h3> Listing HMM result-rows (<%= @hmm_result.hmm_result_rows.count %>)</h3>
-    <% bins = (0..@n_bins).map { |b| "#{b * @bin_size}-#{ ( b + 1 ) * @bin_size - 1 }" }.reverse %>
-    <% @bin_limits = (0..@n_bins).map { |b| ( b + 1 ) * @bin_size }.reverse %>
-    <p>
-    <% bins.each_with_index do |bin,i| %>
-      <a href="#bin_<%= @bin_limits[i] %>"><%= bin %></a>
-    <% end %>
-    </p>
+    <% bin_limits = (0..@n_bins - 1).map { |b| ( b + 1 ) * @bin_size }.reverse %>
+    <p>Go to maximum score in list: <%= bin_limits.map { |bin| link_to("#{bin}", hmm_result_path(@hmm_result, max_score: bin)) }.join(" | ").html_safe %></p>
     <table class="table table-striped result-rows">
       <thead>
 	<tr>

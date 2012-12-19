@@ -18,8 +18,9 @@ class HmmResultsController < ApplicationController
   # GET /hmm_results/1
   # GET /hmm_results/1.json
   def show
+    max_score = ( params[:max_score] ? params[:max_score].to_f : 1000000.0 )
     @hmm_result = HmmResult.find(params[:id])
-    show_params(@hmm_result)
+    show_params(@hmm_result, max_score)
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @hmm_result }
@@ -111,9 +112,9 @@ class HmmResultsController < ApplicationController
 
   private
   # Helper method to avoid duplicated code
-  def show_params(hmm_result)
+  def show_params(hmm_result, max_score = 1000000)
     @hmm_profile = hmm_result.hmm_profile
-    @hmm_result_rows = hmm_result.hmm_result_rows#.paginate(page: params[:page], order: "fullseq_score DESC")
+    @hmm_result_rows = hmm_result.hmm_result_rows.where("fullseq_score <= ?", max_score).paginate(page: params[:page], order: "fullseq_score DESC")
     # Editable Hmm Score Criterion
     hmm_score_criteria = hmm_result.hmm_profile.hmm_score_criteria
     if hmm_score_criteria
