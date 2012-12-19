@@ -16,6 +16,7 @@ class HmmDbHit < ActiveRecord::Base
   attr_accessible :gi, :db, :acc, :desc, :db_sequence_id
   has_many :hmm_result_rows, :through => :db_sequence
   belongs_to :db_sequence
+  has_many :hmm_alignments, :through => :hmm_result_rows
   validates :gi, presence: true
   validates :db_sequence_id, presence: true
 
