@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121218123653) do
+ActiveRecord::Schema.define(:version => 20121219131238) do
 
   create_table "hmm_result_rows", :force => true do |t|
     t.string   "target_name"
@@ -127,7 +127,7 @@ ActiveRecord::Schema.define(:version => 20121218123653) do
     t.integer  "hmm_result_row_id"
     t.float    "score"
     t.float    "bias"
-    t.float    "evalue"
+    t.float    "cevalue"
     t.float    "ievalue"
     t.integer  "hmmfrom"
     t.integer  "hmmto"
@@ -142,6 +142,7 @@ ActiveRecord::Schema.define(:version => 20121218123653) do
     t.text     "pp_line"
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
+    t.integer  "domain_num"
     t.index ["hmm_result_row_id"], :name => "fk__hmm_alignments_hmm_result_row_id", :order => {"hmm_result_row_id" => :asc}
     t.foreign_key ["hmm_result_row_id"], "hmm_result_rows", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "hmm_alignments_hmm_result_row_id_fkey"
   end

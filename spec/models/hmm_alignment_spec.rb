@@ -6,7 +6,7 @@
 #  hmm_result_row_id :integer
 #  score             :float
 #  bias              :float
-#  evalue            :float
+#  cevalue           :float
 #  ievalue           :float
 #  hmmfrom           :integer
 #  hmmto             :integer
@@ -21,6 +21,7 @@
 #  pp_line           :text
 #  created_at        :datetime        not null
 #  updated_at        :datetime        not null
+#  domain_num        :integer
 #
 
 require 'spec_helper'
@@ -30,7 +31,7 @@ describe HmmAlignment do
   before do
     @hmm_alignment = hmm_result_row.hmm_alignments.create(
       score: 365.5,
-      evalue: 6.1e-110,
+      cevalue: 6.1e-110,
       hmmfrom: 13,
       hmmto: 349,
       alifrom: 3,
@@ -46,6 +47,7 @@ describe HmmAlignment do
   end
 
   subject { @hmm_alignment }
+  it { should respond_to(:domain_num) }
   it { should respond_to(:hmm_result_row) }
   it { should respond_to(:hmm_line) }
   it { should respond_to(:match_line) }
@@ -70,6 +72,23 @@ describe HmmAlignment do
     end
   end
 
+  describe "Import a single alignment with two domains" do
+    before(:each) do
+      @hmm_result_nrdb = FactoryGirl.create(:hmm_result_nrdb)
+      parse_hmm_tblout(@hmm_result_nrdb, fixture_file_upload("/NrdB.2domains.tblout"))
+    end
+    
+    it "should correctly import it" do
+      parse_hmmout(@hmm_result_nrdb, fixture_file_upload("/NrdB.2domains.hmmout"))
+      alns = @hmm_result_nrdb.hmm_alignments.sort_by { |n| n.domain_num }
+      alns.length.should == 2
+      alns[0].hmm_line[0..9] == "kepllsgenl"
+      alns[0].hmm_line[-10..-1] == "lleeavelEe"
+      alns[1].hmm_line[0..9] == "eeyaedllpe"
+      alns[1].hmm_line[-10..-1] == ".ededfdfeg"
+    end
+  end
+
   describe "Medium hard import cases" do
     before(:each) do
       @hmm_result_nrdb = FactoryGirl.create(:hmm_result_nrdb)
@@ -81,9 +100,10 @@ describe HmmAlignment do
       @hmm_result_nrdb.hmm_alignments.length.should == 5
       @hit1 = HmmDbHit.find_by_gi(161525957)
       a = @hit1.hmm_alignments.first
+      a.domain_num == 1
       a.score.should == 431.4
       a.bias.should == 0.0
-      a.evalue.should == 5.5e-130
+      a.cevalue.should == 5.5e-130
       a.ievalue.should == 2.7e-126
       a.hmmfrom.should == 21
       a.hmmto.should == 351
@@ -92,7 +112,7 @@ describe HmmAlignment do
       a.envfrom.should == 15
       a.envto.should == 396
       a.acc.should == 0.96
-      a.hmm_line.should == "endsqkeeekkepllsgenlsrvnlnpikypwakefykkaeanfWlpeeidlsdDikdWkt...LseeerrlikrvlafltllDtivgenlvealsqeitapeakavlgfqafmEaiHaksYsliletlgtdeeidelFdavrenpalqkKaefvlrlyeslqde.......etkqsll.kllaasvllEgilFYsgFalilalarrgkmkglaeiieliiRDEslHgdfvilliqelleenpelqqkelkeevyelleeavelEeeyaedllpegllglnaedvkqYvryiadkrlmnlGleklfeveaenplpwveailsttkktdFFekrvteYqkagveet"
+      a.hmm_line.should == "sqkeeekkepllsgenlsrvnlnpikypwakefykkaeanfWlpeeidlsdDikdWkt...LseeerrlikrvlafltllDtivgenlvealsqeitapeakavlgfqafmEaiHaksYsliletlgtdeeidelFdavrenpalqkKaefvlrlyeslqde.......etkqsll.kllaasvllEgilFYsgFalilalarrgkmkglaeiieliiRDEslHgdfvilliqelleenpelqqkelkeevyelleeavelEeeyaedllpegllglnaedvkqYvryiadkrlmnlGleklfeveaenplpwveailsttkktdFFekrvteYqkagveet"
       a.match_line.should == "+++++++++++++g++ ++++l p+ky+wa+e+y + +an+W+p+ei++s+Di+ Wk+   L+e+err++kr+l+f+ ++D++ ++n+v+ ++++itape++++l +qaf+EaiH+++Y++i+e+lg d  + e+F+a++e+p+++ K+ef+  ++++l+d+       e +q+ll +l+++++++Eg++FY+gF++ilal r++km+g ae++++i+RDEs+H++f+i+li++++ enp+l+++e+++e++el+++avelE +yaed++p+g+lglna+++k+Y+r+i+++r++++Gl++lf++e enp+pw++++++++k+ +FFe+rv eYq++g+ ++"
       a.target_line.should == "EARVNVADKRIINGQT-DVNQLVPFKYKWAWEKYLAGCANHWMPQEINMSRDIALWKDpngLTEDERRIVKRNLGFFVTADSLAANNIVLGTYRHITAPECRQFLLRQAFEEAIHTHAYQYIVESLGLD--EGEIFNAYHEVPSIRAKDEFLIPFIHTLTDPafktgtlEADQKLLkSLIVFACIMEGLFFYVGFTQILALGRQNKMTGAAEQYQYILRDESMHCNFGIDLINQIKLENPHLWTAEFRAEIRELFKQAVELEYRYAEDTMPRGVLGLNASMFKSYLRFICNRRCQQIGLDPLFPNE-ENPFPWMSEMIDLKKERNFFETRVIEYQTGGALSW"
       a.pp_line.should == "67899*******8777.****************************************************************************************************************..**************************************999****9*********************************************************************************************************************************.*******************************9987"

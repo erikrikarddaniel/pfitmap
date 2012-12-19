@@ -87,32 +87,26 @@ module FileParsers
     HmmResult.transaction do
       @hmm_alignments = []
       gi_row_hash = gi_to_result_row_hash(result)
-      first_domain_found = false
+      first_domain_found = nil
       File.open("#{io.path}", "r").each_with_index do |line, index|
         line.chomp!
 	line.sub!(/^#.*/, '')
         if first_domain_found
           if ( line =~ />>(.*)/)
             if domain_ack != []
-              a = parse_single_alignment(domain_ack, gi_row_hash)
-              if a
-                @hmm_alignments << a
-              end
+              @hmm_alignments += parse_single_protein(domain_ack, gi_row_hash)
             end
             domain_ack = [line]
           else
             domain_ack << line
           end
         else
-          first_domain_found = (line == "Domain annotation for each sequence (and alignments):")
+          first_domain_found = (line[0..16] == "Domain annotation")
         end
 	next if line == '' or (not first_domain_found)
       end
       # Last domain in file
-      a = parse_single_alignment(domain_ack, gi_row_hash)
-      if a
-        @hmm_alignments << a
-      end
+      @hmm_alignments += parse_single_protein(domain_ack, gi_row_hash)
       HmmAlignment.import @hmm_alignments
     end
   end
@@ -127,23 +121,77 @@ module FileParsers
     return h
   end
   
-  def parse_single_alignment(domain, gi_to_row_id)
-    a = HmmAlignment.new()
-    domain.each_with_index do |line, index|
-      if index == 0
-        gi = domain.first.split("|")[1]
-        row_id = gi_to_row_id[gi.to_i]
-        if row_id
-          a.hmm_result_row_id = row_id
-        else
-          warn "Error while parsing hmmout: No HMM Result Row corresponding to this domain was found, found gi: #{gi}"
-          return nil
-        end
-      elsif index == 3
-        
+  def parse_single_protein(lines, gi_to_row_id)
+    domsummary = false
+    domainlines = nil
+    row_id = get_rowid_from_line(lines[0], gi_to_row_id)
+    alignments = []
+    lines.each_with_index do |line, index|
+      if line[0..3] == ' ---' and not domsummary and not domainlines
+        domsummary = true
+      elsif domsummary and line != ''
+        a = HmmAlignment.new(hmm_result_row_id: row_id)
+        fields = line.split("\s")
+        a.domain_num = fields[0].to_i
+        a.score = fields[2].to_f
+        a.bias = fields[3].to_f
+        a.cevalue = fields[4].to_f
+        a.ievalue = fields[5].to_f
+        a.hmmfrom = fields[6].to_i
+        a.hmmto = fields[7].to_i
+        a.alifrom = fields[9].to_i
+        a.alito = fields[10].to_i
+        a.envfrom = fields[12].to_i
+        a.envto = fields[13].to_i
+        a.acc = fields[15].to_f
+        alignments << a
+      elsif domsummary and line =~ /^\s*$/
+        domsummary = false
+        domainlines = []
+      elsif domainlines and line =~ /== domain (\d+)/
+        n = $1.to_i
+        parse_domain_lines(domainlines, alignments[n - 2]) if n > 1
+        domainlines = []
+      elsif domainlines
+        domainlines << line
       end
     end
-    return a
+    parse_domain_lines(domainlines, alignments[-1])
+    return alignments
+  end
+
+  def get_rowid_from_line(line, gi_to_row_id)
+    gi = line.split("|")[1].to_i
+    raise "Didn't find HmmResultRow corresponding to '#{line}'" unless gi_to_row_id[gi]
+    return gi_to_row_id[gi]
+  end
+
+  def parse_domain_lines(lines, aln)
+    aln.hmm_line = ''
+    aln.match_line = ''
+    aln.target_line = ''
+    aln.pp_line = ''
+    startpos = nil
+    len = nil
+    lines.each_with_index do |line, i|
+      next if line =~ /^\s*$/
+      if i % 5 == 0
+        a = line.split(/\s+/)[-2]
+        startpos = line.index(a)
+        len = a.length
+      end
+      a = line[startpos, len]
+      case i % 5
+      when 0
+        aln.hmm_line += a
+      when 1
+        aln.match_line += a
+      when 2
+        aln.target_line += a
+      when 3
+        aln.pp_line += a
+      end
+    end
   end
 
   def add_hmm_result_row(fields,result, present_sequence_id)
