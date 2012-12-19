@@ -183,3 +183,17 @@ Domain annotation for each sequence (and alignments):
                                        ******************************9987 PP
 
 
+
+Internal pipeline statistics summary:
+-------------------------------------
+Query model(s):                            1  (364 nodes)
+Target sequences:                   21786050  (7479994897 residues)
+Passed MSV filter:                    694176  (0.0318633); expected 435721.0 (0.02)
+Passed bias filter:                   377749  (0.017339); expected 435721.0 (0.02)
+Passed Vit filter:                     38180  (0.0017525); expected 21786.0 (0.001)
+Passed Fwd filter:                      4923  (0.00022597); expected 217.9 (1e-05)
+Initial search space (Z):           21786050  [actual number of targets]
+Domain search space  (domZ):            4465  [number of targets reported over threshold]
+# CPU time: 520.49u 16.32s 00:08:56.81 Elapsed: 00:01:40.32
+# Mc/sec: 27140.33
+//

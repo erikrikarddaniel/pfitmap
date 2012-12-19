@@ -1,6 +1,6 @@
 <h3> Upload HMM Alignments for <%= @hmm_result.hmm_profile.description%>, <%= @hmm_result.sequence_source %></h3>
 <div class="well">
-<%= form_tag hmm_result_create_alignments_path(@hmm_result), :html => { :class => "well"} do %>
+<%= form_tag hmm_result_create_alignments_path(@hmm_result), :html => { :class => "well"}, :multipart => true do %>
 <%= render :partial => 'shared/error_messages', :locals => { :error_subject => @hmm_result } %>
 <div class="row-fluid">
   <div class="control-group span4">
