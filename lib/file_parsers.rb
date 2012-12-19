@@ -82,6 +82,70 @@ module FileParsers
     end
   end
   
+  def parse_hmmout(result, io)
+    domain_ack = []
+    HmmResult.transaction do
+      @hmm_alignments = []
+      gi_row_hash = gi_to_result_row_hash(result)
+      first_domain_found = false
+      File.open("#{io.path}", "r").each_with_index do |line, index|
+        line.chomp!
+	line.sub!(/^#.*/, '')
+        if first_domain_found
+          if ( line =~ />>(.*)/)
+            if domain_ack != []
+              a = parse_single_alignment(domain_ack, gi_row_hash)
+              if a
+                @hmm_alignments << a
+              end
+            end
+            domain_ack = [line]
+          else
+            domain_ack << line
+          end
+        else
+          first_domain_found = (line == "Domain annotation for each sequence (and alignments):")
+        end
+	next if line == '' or (not first_domain_found)
+      end
+      # Last domain in file
+      a = parse_single_alignment(domain_ack, gi_row_hash)
+      if a
+        @hmm_alignments << a
+      end
+      HmmAlignment.import @hmm_alignments
+    end
+  end
+
+  def gi_to_result_row_hash(result)
+    h = {}
+    result.hmm_result_rows.all(:include => :hmm_db_hits).each do |rr|
+      rr.hmm_db_hits.each do |db_hit|
+        h[db_hit.gi] = rr.id
+      end
+    end
+    return h
+  end
+  
+  def parse_single_alignment(domain, gi_to_row_id)
+    a = HmmAlignment.new()
+    domain.each_with_index do |line, index|
+      if index == 0
+        gi = domain.first.split("|")[1]
+        row_id = gi_to_row_id[gi.to_i]
+        if row_id
+          a.hmm_result_row_id = row_id
+        else
+          warn "Error while parsing hmmout: No HMM Result Row corresponding to this domain was found, found gi: #{gi}"
+          return nil
+        end
+      elsif index == 3
+        
+      end
+    end
+    return a
+  end
+
   def add_hmm_result_row(fields,result, present_sequence_id)
     hmm_result_row = HmmResultRow.new(
      :target_name => fields[0],

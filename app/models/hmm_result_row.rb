@@ -34,6 +34,7 @@ class HmmResultRow < ActiveRecord::Base
   has_many :hmm_db_hits, :through => :db_sequence
   has_many :view_db_sequence_best_profiles
   belongs_to :db_sequence
+  has_many :hmm_alignments
   validates :hmm_result_id, presence: true
   validates :db_sequence_id, presence: true
 

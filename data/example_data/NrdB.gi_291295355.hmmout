@@ -1,0 +1,51 @@
+# hmmsearch :: search profile(s) against a sequence database
+# HMMER 3.0 (March 2010); http://hmmer.org/
+# Copyright (C) 2010 Howard Hughes Medical Institute.
+# Freely distributed under the GNU General Public License (GPLv3).
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# query HMM file:                  NrdB.hmm
+# target sequence database:        /proj/b2010008/nobackup/data/ncbi/nr.fasta
+# output directed to file:         NrdB.ncbi_nr.hmmout
+# per-seq hits tabular output:     NrdB.ncbi_nr.tblout
+# per-dom hits tabular output:     NrdB.ncbi_nr.domtblout
+# number of worker threads:        8
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Query:       NrdB  [M=364]
+Scores for complete sequences (score includes all domains):
+   --- full sequence ---   --- best 1 domain ---    -#dom-
+   9.4e-139  472.4   0.0   1.1e-138  472.2   0.0    1.1  1  gi|291295355|ref|YP_003506753.1|       ribonucleoside-diphosphate reduc
+
+
+Domain annotation for each sequence (and alignments):
+>> gi|291295355|ref|YP_003506753.1|  ribonucleoside-diphosphate reductase [Meiothermus ruber DSM 1279]gi|290470314|gb|A
+   #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
+ ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
+   1 !  472.2   0.0  2.3e-142  1.1e-138      34     363 ..       5     330 ..       1     331 [. 0.98
+
+  Alignments for each domain:
+  == domain 1    score: 472.2 bits;  conditional E-value: 2.3e-142
+                              NrdB  34 genlsrvnlnpikypwakefykkaeanfWlpeeidlsdDikdWktLseeerrlikrvlafltllDtivgenlveals 110
+                                       +++ls+vn+n+++++++k+f+++++++fW++eei+l+dD+ +W+tLs+ee+r++++vla+ltllDt++g+++++ ls
+  gi|291295355|ref|YP_003506753.1|   5 LSVLSAVNWNRPDDGYTKMFWDQNVRQFWVDEEIPLADDKLTWMTLSREEQRVYEQVLAGLTLLDTVQGSVGMPLLS 81 
+                                       57889************************************************************************ PP
+
+                              NrdB 111 qeitapeakavlgfqafmEaiHaksYsliletlgtdeeidelFdavrenpalqkKaefvlrlyeslqdeetkqsllk 187
+                                       q+i++ +akav+gf+++mE++HaksYs+i++tl+t+e+i+elFd+vr++p+lq+K++fv+r+y ++qde   qsl+ 
+  gi|291295355|ref|YP_003506753.1|  82 QHIESLQAKAVMGFMGAMEHMHAKSYSSIFSTLCTSERIAELFDWVRSEPVLQEKQTFVHRRYLGVQDE---QSLYL 155
+                                       ******************************************************************987...***** PP
+
+                              NrdB 188 llaasvllEgilFYsgFalilalarrgkmkglaeiieliiRDEslHgdfvilliqelleenpelqqkelkeevyell 264
+                                        laasvllE++lFYsgF+++l+la++g+m++++eii+liiRDEs+Hg++v+ll+qe+++++pe+qqk+++e vy++l
+  gi|291295355|ref|YP_003506753.1| 156 GLAASVLLESFLFYSGFFYPLLLAGQGRMTSSGEIINLIIRDESIHGVYVGLLAQEVYAGLPEAQQKTAREGVYSML 232
+                                       ***************************************************************************** PP
+
+                              NrdB 265 eeavelEeeyaedllpegllglnaedvkqYvryiadkrlmnlGleklfeveaenplpwveailst.tkktdFFekrv 340
+                                       e++++lEe+y+++l++++   +++e+v++++ry+adk+lmnlGle++f+v+ae+++p+v+a+lst tk++dFF++++
+  gi|291295355|ref|YP_003506753.1| 233 EHLAGLEERYSRMLYTPL---GLTEAVVTFSRYNADKALMNLGLEPYFGVSAEAVNPVVLAGLSThTKNHDFFSTKG 306
+                                       ******************...******************************************************** PP
+
+                              NrdB 341 teYqkagveet.ededfdfegead 363
+                                       ++Y+ka+++e+ +dedf+feg a+
+  gi|291295355|ref|YP_003506753.1| 307 NGYVKAIRVEPiQDEDFIFEGLAP 330
+                                       *******************99876 PP

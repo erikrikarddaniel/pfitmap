@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121205121631) do
+ActiveRecord::Schema.define(:version => 20121218123653) do
 
   create_table "hmm_result_rows", :force => true do |t|
     t.string   "target_name"
@@ -121,6 +121,29 @@ ActiveRecord::Schema.define(:version => 20121205121631) do
     t.index ["protein_id"], :name => "index_enzyme_proteins_on_protein_id", :order => {"protein_id" => :asc}
     t.foreign_key ["enzyme_id"], "enzymes", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "enzyme_proteins_enzyme_id_fkey"
     t.foreign_key ["protein_id"], "proteins", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "enzyme_proteins_protein_id_fkey"
+  end
+
+  create_table "hmm_alignments", :force => true do |t|
+    t.integer  "hmm_result_row_id"
+    t.float    "score"
+    t.float    "bias"
+    t.float    "evalue"
+    t.float    "ievalue"
+    t.integer  "hmmfrom"
+    t.integer  "hmmto"
+    t.integer  "alifrom"
+    t.integer  "alito"
+    t.integer  "envfrom"
+    t.integer  "envto"
+    t.float    "acc"
+    t.text     "hmm_line"
+    t.text     "match_line"
+    t.text     "target_line"
+    t.text     "pp_line"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+    t.index ["hmm_result_row_id"], :name => "fk__hmm_alignments_hmm_result_row_id", :order => {"hmm_result_row_id" => :asc}
+    t.foreign_key ["hmm_result_row_id"], "hmm_result_rows", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "hmm_alignments_hmm_result_row_id_fkey"
   end
 
   create_table "hmm_db_hits", :force => true do |t|

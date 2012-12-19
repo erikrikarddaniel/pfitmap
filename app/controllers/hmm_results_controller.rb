@@ -86,6 +86,11 @@ class HmmResultsController < ApplicationController
   def hmm_result_params
     params[:hmm_result].slice(:executed)
   end
+
+  def upload_alignments
+    @hmm_result = HmmResult.find(params[:hmm_result_id])
+  end
+
   private
   # Helper method to avoid duplicated code
   def show_params(hmm_result)

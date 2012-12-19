@@ -6,6 +6,9 @@
   <div class="span4">
     <%= link_to "Browse this profile", @hmm_result.hmm_profile, class: "btn"%>
     <%= link_to "Browse this source", @hmm_result.sequence_source, class: "btn"%>
+    <% if can? :manage, @hmm_result %>
+    <%= link_to "Upload HMM Alignments", hmm_result_upload_alignments_path(@hmm_result), class: "btn"%>
+    <% end %>
   </div>
 </div>
 <div class="row-fluid">

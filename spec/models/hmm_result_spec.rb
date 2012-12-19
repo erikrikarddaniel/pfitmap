@@ -27,6 +27,7 @@ describe HmmResult do
   it { should respond_to(:hmm_result_rows) }
   it { should respond_to(:hmm_profile_id) }
   it { should respond_to(:hmm_profile) }
+  it { should respond_to(:hmm_alignments) }
   
   it { should be_valid }
   

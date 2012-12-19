@@ -31,7 +31,10 @@ Pfitmap::Application.routes.draw do
 
   resources :hmm_result_rows, :except => [:index, :new]
 
-  resources :hmm_results, :except => [:new, :edit]
+  resources :hmm_results, :except => [:new, :edit] do
+    get 'upload_alignments', to: 'hmm_results#upload_alignments'
+    post 'create_alignments', to: 'hmm_results#create_alignments'
+  end
 
   resources :sequence_sources do
     post 'evaluate', :as => :evaluate
