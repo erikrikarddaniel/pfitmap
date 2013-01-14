@@ -13,8 +13,8 @@
 class Protein < ActiveRecord::Base
   attr_accessible :name, :rank
   belongs_to :hmm_profile
-  has_many :enzyme_proteins
-  has_many :enzymes, through: :enzyme_proteins
+  has_many :enzyme_proteins, dependent: :destroy
+  has_many :enzymes, through: :enzyme_proteins, dependent: :destroy
 
   def self.initialize_proteins
     profiles = HmmProfile.all
