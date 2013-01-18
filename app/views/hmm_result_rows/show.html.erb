@@ -137,7 +137,7 @@
 	</tr>
       </thead>
       <tbody>
-	<% @hmm_result_row.db_sequence.hmm_result_rows(order: "fullseq_score").each do |related_row|%>
+	<% @hmm_result_row.db_sequence.hmm_result_rows.order_by { |hrr| hrr.fullseq_score }.each do |related_row|%>
 	<tr>
 	  <td><%= related_row.hmm_result.hmm_profile.name %></td>
 	  <td><%= related_row.fullseq_score %></td>
