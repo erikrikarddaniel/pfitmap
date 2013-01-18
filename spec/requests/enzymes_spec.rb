@@ -22,13 +22,14 @@ describe "Enzymes" do
       end
       it "can handle invalid parameters" do
         click_button "Create Enzyme"
-        page.should have_content("The form contains 1 error")
-        page.should have_content("#{hmm_profile.name}")
+        page.should have_content("The form contains 2 errors")
+        page.should have_content("#{hmm_profile.protein_name}")
       end
       
       it "can handle valid parameters" do
         page.fill_in 'Name', :with => "Bobs' enzyme"
-        page.select("#{hmm_profile.name}")
+	page.fill_in 'Abbreviation', with: "NNN"
+        page.select("#{hmm_profile.protein_name}")
         click_button "Create Enzyme"
         page.should have_content("successfully created")
       end
@@ -41,12 +42,16 @@ describe "Enzymes" do
       end
       it "can handle invalid parameters" do
         page.fill_in 'Name', :with => ""
+        page.fill_in 'Abbreviation', :with => ""
         click_button "Update Enzyme"
-        page.should have_content("The form contains 1 error")
+        page.should have_content("Name can't be blank")
+        page.should have_content("Abbreviation can't be blank")
+        page.should have_content("The form contains 2 errors")
       end
       
       it "can handle valid parameters" do
         page.fill_in 'Name', :with => "Bobs' Enzyme"
+        page.fill_in 'Abbreviation', :with => "RNR I"
         click_button "Update Enzyme"
         page.should have_content("successfully updated")
       end

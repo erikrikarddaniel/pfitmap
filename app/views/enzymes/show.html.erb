@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 <div class="pageheader1">
-  <h1> <%= @enzyme.name %> </h1>
+  <h1> <%= @enzyme.name %> (<%= @enzyme.abbreviation %>)</h1>
   <%= @enzyme.parent ? "Parent: #{@enzyme.parent.name}" : "" %>
 </div>
 

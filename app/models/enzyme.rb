@@ -2,20 +2,22 @@
 #
 # Table name: enzymes
 #
-#  id         :integer         not null, primary key
-#  name       :string(255)
-#  created_at :datetime        not null
-#  updated_at :datetime        not null
-#  parent_id  :integer
+#  id           :integer         not null, primary key
+#  name         :string(255)
+#  created_at   :datetime        not null
+#  updated_at   :datetime        not null
+#  parent_id    :integer
+#  abbreviation :string(255)
 #
 
 class Enzyme < ActiveRecord::Base
-  attr_accessible :name, :parent_id
+  attr_accessible :name, :parent_id, :abbreviation
   has_many :enzyme_profiles, dependent: :destroy
   has_many :hmm_profiles, through: :enzyme_profiles
   has_many :enzyme_proteins
   has_many :proteins, through: :enzyme_proteins
   validates :name, :presence => :true
+  validates :abbreviation, :presence => :true
   has_many :children, :class_name => "Enzyme", :foreign_key => "parent_id"
   belongs_to :parent, :class_name => "Enzyme", :foreign_key => "parent_id"
 
@@ -52,5 +54,10 @@ class Enzyme < ActiveRecord::Base
       tree[e.id] = [e, children, e.proteins]
     end
     return tree
+  end
+
+  # Returns a string of enzyme abbreviations separated by ':' -- useful for sorting purposes
+  def hierarchy
+    parent ?  "#{parent.hierarchy}:#{abbreviation}" : abbreviation
   end
 end

@@ -188,7 +188,8 @@ SQL
 
   def make_enzymes
     @enzyme_class_i_rnr = Enzyme.create!(
-      name: 'RNR class I enzyme'
+      name: 'RNR class I enzyme',
+      abbreviation: 'RNR I'
     )
     ep = @hmm_profile_nrdb.enzyme_profiles.create!
     ep.enzyme_id = @enzyme_class_i_rnr.id
@@ -196,8 +197,9 @@ SQL
     ep = @hmm_profile_nrda.enzyme_profiles.create!
     ep.enzyme_id = @enzyme_class_i_rnr.id
     ep.save
-    @enzyme_class_ib_rnr = Enzyme.create!(
-      name: 'RNR class Ib enzyme'
+    @enzyme_class_ib_rnr = @enzyme_class_i_rnr.children.create!(
+      name: 'RNR class Ib enzyme',
+      abbreviation: 'RNR Ib'
     )
     ep = @hmm_profile_nrdf.enzyme_profiles.create!
     ep.enzyme_id = @enzyme_class_ib_rnr.id
@@ -206,13 +208,15 @@ SQL
     ep.enzyme_id = @enzyme_class_ib_rnr.id
     ep.save
     @enzyme_class_ii_rnr = Enzyme.create!(
-      name: 'RNR class II enzyme'
+      name: 'RNR class II enzyme',
+      abbreviation: 'RNR II'
     )
     ep = @hmm_profile_nrdj.enzyme_profiles.create!
     ep.enzyme_id = @enzyme_class_ii_rnr.id
     ep.save
     @enzyme_class_iii_rnr = Enzyme.create!(
-      name: 'RNR class III enzyme'
+      name: 'RNR class III enzyme',
+      abbreviation: 'RNR III'
     )
     ep = @hmm_profile_nrdd.enzyme_profiles.create!
     ep.enzyme_id = @enzyme_class_iii_rnr.id

@@ -5,9 +5,9 @@
     <thead>
       <th colspan=<%= (n_columns).to_s %>>
 	<% if enzyme_sign(enzyme,enzyme_tree) == "+" %>
-	  <%= link_to "+", { controller: "protein_counts", action: "with_enzymes", enzyme_ids: enzyme_array_expand(enzyme, enzyme_ids) }%> <%= enzyme.name %>
+	  <%= link_to "+", { controller: "protein_counts", action: "with_enzymes", enzyme_ids: enzyme_array_expand(enzyme, enzyme_ids) }%> <%= enzyme.abbreviation %>
 	<% else %>
-          <%= link_to "-", { controller: "protein_counts", action: "with_enzymes", enzyme_ids: enzyme_array_collapse(enzyme, enzyme_ids) }%> <%= enzyme.name %>
+          <%= link_to "-", { controller: "protein_counts", action: "with_enzymes", enzyme_ids: enzyme_array_collapse(enzyme, enzyme_ids) }%> <%= enzyme.abbreviation %>
         <% end %>
       </th>
     </thead>

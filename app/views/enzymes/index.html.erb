@@ -5,14 +5,20 @@
   <table class="standard">
     <tr>
       <th>Name</th>
+      <th>Abbreviation</th>
+      <th>Parent</th>
+      <th>Profiles</th>
       <th></th>
       <th></th>
       <th></th>
     </tr>
 
-    <% @enzymes.each do |enzyme| %>
+    <% @enzymes.sort_by { |e| e.hierarchy }.each do |enzyme| %>
     <tr>
       <td><%= enzyme.name %></td>
+      <td><%= enzyme.abbreviation %></td>
+      <td><%= enzyme.parent ? enzyme.parent.abbreviation : "-" %></td>
+      <td><%= enzyme.hmm_profiles.map { |hp| hp.protein_name }.sort.join(", ") %></td>
       <td><%= link_to 'Show', enzyme %></td>
       <td><%= link_to 'Edit', edit_enzyme_path(enzyme) %></td>
       <td><%= link_to 'Destroy', enzyme, confirm: 'Are you sure?', method: :delete %></td>

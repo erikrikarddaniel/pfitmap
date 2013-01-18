@@ -99,6 +99,7 @@ FactoryGirl.define do
 
   factory :enzyme do
     name "Example ENZ"
+    abbreviation "ENZ"
   end
 
   factory :taxon do |t|

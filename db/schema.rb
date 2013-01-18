@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121219131238) do
+ActiveRecord::Schema.define(:version => 20130118122617) do
 
   create_table "hmm_result_rows", :force => true do |t|
     t.string   "target_name"
@@ -82,9 +82,10 @@ ActiveRecord::Schema.define(:version => 20121219131238) do
 
   create_table "enzymes", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
     t.integer  "parent_id"
+    t.string   "abbreviation"
     t.index ["parent_id"], :name => "fk__enzymes_parent_id", :order => {"parent_id" => :asc}
     t.foreign_key ["parent_id"], "enzymes", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "enzymes_parent_id_fkey"
   end
