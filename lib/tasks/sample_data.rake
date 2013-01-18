@@ -10,10 +10,10 @@ namespace :db do
     make_users
     make_hmm_profiles
     make_sequence_sources
-    make_hmm_results
-    make_hmm_score_criteria
     make_enzymes
     make_release
+    make_hmm_score_criteria
+    make_hmm_results
   end
 
   def make_users
@@ -226,7 +226,7 @@ SQL
     ep.save
     %w[ a b c d d0 d1 d2 ].each do |c|
       str = "@enzyme_class_iii#{c}_rnr = @enzyme_class_iii#{c[0..-2]}_rnr.children.create!(
-	name: \"RNR subclass III#{c} enzyme\")
+	name: \"RNR subclass III#{c} enzyme\", abbreviation: \"RNR III#{c}\")
 	ep = @hmm_profile_nrdd#{c}.enzyme_profiles.create!
 	ep.enzyme_id = @enzyme_class_iii#{c}_rnr.id
 	ep.save
