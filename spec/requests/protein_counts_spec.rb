@@ -92,13 +92,15 @@ describe "ProteinCounts" do
       end
       page.should_not have_content(@second_child.name)
     end
+
     it "only show root enzymes" do
       visit protein_counts_with_enzymes_path
-      page.should have_content(class1.name)
-      page.should have_content(class2.name)
-      page.should have_content(class3.name)
-      page.should_not have_content(class1b.name)
+      page.should have_content(class1.abbreviation)
+      page.should have_content(class2.abbreviation)
+      page.should have_content(class3.abbreviation)
+      page.should_not have_content(class1b.abbreviation)
     end
+
     describe "expand enzyme" do
       it "simply" do
         visit protein_counts_with_enzymes_path
@@ -108,8 +110,8 @@ describe "ProteinCounts" do
         within("#enzyme#{class1.id}") do
           click_link "+"
         end
-        page.should have_content(class1b.name)
-        page.should have_content(class1x.name)
+        page.should have_content(class1b.abbreviation)
+        page.should have_content(class1x.abbreviation)
         page.should_not have_content(class1.proteins.first.name)
         within("#taxon#{@parent_taxon.id}") do
           page.should have_css('td', :count => 9)
@@ -121,7 +123,7 @@ describe "ProteinCounts" do
         within("#enzyme#{class2.id}") do
           click_link "-"
         end
-        page.should have_content(class1.name)
+        page.should have_content(class1.abbreviation)
       end
 
       it "and expand taxon", :js => true do
@@ -133,8 +135,8 @@ describe "ProteinCounts" do
         within parent_row do
           click_link "+"
         end
-        page.should have_content(class1b.name)
-        page.should have_content(class1x.name)
+        page.should have_content(class1b.abbreviation)
+        page.should have_content(class1x.abbreviation)
         page.should_not have_content(class1.proteins.first.name)
         page.should_not have_content("none")
         within("#taxon#{@parent_taxon.id}") do
