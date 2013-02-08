@@ -1,7 +1,7 @@
 <% enzyme = enzyme_tree[parent_id][0] %>
 <% n_columns = no_columns(enzyme.id, enzyme_tree)%>
 <th colspan=<%= (n_columns).to_s %> >
-  <table class="enzyme-header" id=<%= "enzyme#{enzyme.id}" %> border="1">
+  <table class="enzyme-header" id=<%= "enzyme#{enzyme.id}" %>>
     <thead>
       <th colspan=<%= (n_columns).to_s %>>
 	<% if enzyme_sign(enzyme,enzyme_tree) == "+" %>
@@ -12,7 +12,11 @@
       </th>
     </thead>
     <tbody>
-      <% unless enzyme_tree[parent_id][1] == [] %>
+      <% if enzyme_tree[parent_id][1] == []%>
+        <% enzyme.proteins.order("name").each do |protein| %>
+	  <td colspan=1 class="protein-header">&nbsp;</td>
+        <% end %>
+      <% else %>
         <% enzyme.children.each do |enzyme_child| %>
           <%= render :partial => 'header_table', :locals => {parent_id: enzyme_child.id, enzyme_tree: @enzyme_tree, enzyme_ids: @enzyme_tree.keys} %>
         <% end %>
