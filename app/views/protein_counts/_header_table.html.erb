@@ -14,7 +14,7 @@
     <tbody>
       <% if enzyme_tree[parent_id][1] == []%>
         <% enzyme.proteins.order("name").each do |protein| %>
-        <td colspan=1 class="protein-header"><%= protein.name %> </td>
+	  <td colspan=1 class="protein-header">&nbsp;</td>
         <% end %>
       <% else %>
         <% enzyme.children.each do |enzyme_child| %>

@@ -1,0 +1,11 @@
+<% enzyme = @enzyme_tree[enzyme_id][0] %>
+<% enzyme_children = @enzyme_tree[enzyme_id][1] %>
+<% if enzyme_children == [] %>
+  <% enzyme.proteins.order("name").map { |p| p.name }.each do |name| %>
+    <th><%= name %></th>
+  <% end %>
+<% else %>
+  <% enzyme_children.each do |child_id|  %>
+    <%= render :partial => 'protein_name_part', :locals => { enzyme_id: child_id } %>
+  <% end %>
+<% end %>
