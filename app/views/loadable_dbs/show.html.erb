@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Db:</b>
+  <%= @loadable_db.db %>
+</p>
+
+<p>
+  <b>Common name:</b>
+  <%= @loadable_db.common_name %>
+</p>
+
+<p>
+  <b>Genome sequenced:</b>
+  <%= @loadable_db.genome_sequenced %>
+</p>
+
+<p>
+  <b>Default:</b>
+  <%= @loadable_db.default %>
+</p>
+
+
+<%= link_to 'Edit', edit_loadable_db_path(@loadable_db) %> |
+<%= link_to 'Back', loadable_dbs_path %>

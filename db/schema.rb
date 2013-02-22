@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130118122617) do
+ActiveRecord::Schema.define(:version => 20130222074806) do
 
   create_table "hmm_result_rows", :force => true do |t|
     t.string   "target_name"
@@ -180,6 +180,15 @@ ActiveRecord::Schema.define(:version => 20130118122617) do
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
     t.index ["hmm_profile_id"], :name => "index_hmm_score_criterions_on_hmm_profile_id", :order => {"hmm_profile_id" => :asc}
+  end
+
+  create_table "loadable_dbs", :force => true do |t|
+    t.string   "db"
+    t.string   "common_name"
+    t.boolean  "genome_sequenced"
+    t.boolean  "default"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
   end
 
   create_table "sequence_sources", :force => true do |t|

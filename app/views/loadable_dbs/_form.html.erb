@@ -1,0 +1,33 @@
+<%= form_for(@loadable_db) do |f| %>
+  <% if @loadable_db.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@loadable_db.errors.count, "error") %> prohibited this loadable_db from being saved:</h2>
+
+      <ul>
+      <% @loadable_db.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :db %><br />
+    <%= f.text_field :db %>
+  </div>
+  <div class="field">
+    <%= f.label :common_name %><br />
+    <%= f.text_field :common_name %>
+  </div>
+  <div class="field">
+    <%= f.label :genome_sequenced %><br />
+    <%= f.check_box :genome_sequenced %>
+  </div>
+  <div class="field">
+    <%= f.label :default %><br />
+    <%= f.check_box :default %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

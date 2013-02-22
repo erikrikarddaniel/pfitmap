@@ -1,0 +1,29 @@
+<h1>Listing loadable_dbs</h1>
+
+<table>
+  <tr>
+    <th>Db</th>
+    <th>Common name</th>
+    <th>Genome sequenced</th>
+    <th>Default</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @loadable_dbs.each do |loadable_db| %>
+  <tr>
+    <td><%= loadable_db.db %></td>
+    <td><%= loadable_db.common_name %></td>
+    <td><%= loadable_db.genome_sequenced %></td>
+    <td><%= loadable_db.default %></td>
+    <td><%= link_to 'Show', loadable_db %></td>
+    <td><%= link_to 'Edit', edit_loadable_db_path(loadable_db) %></td>
+    <td><%= link_to 'Destroy', loadable_db, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Loadable db', new_loadable_db_path %>
