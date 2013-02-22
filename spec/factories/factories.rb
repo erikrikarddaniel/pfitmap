@@ -140,6 +140,7 @@ FactoryGirl.define do
     protein
     pfitmap_release
     taxon
+    loadable_db
   end
 
 end

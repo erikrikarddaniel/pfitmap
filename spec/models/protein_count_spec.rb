@@ -25,8 +25,9 @@ describe ProteinCount do
   let!(:taxon) { FactoryGirl.create(:taxon) }
   let!(:refseq) { FactoryGirl.create(:refseq) }
   let!(:pdb) { FactoryGirl.create(:pdb) }
+  let!(:refseq) { FactoryGirl.create(:refseq) }
   let!(:protein_count1) { 
-    FactoryGirl.create(:protein_count, taxon: taxon, protein: protein, pfitmap_release: pfitmap_release) 
+    FactoryGirl.create(:protein_count, taxon: taxon, protein: protein, pfitmap_release: pfitmap_release, loadable_db: refseq) 
   }
 
   subject { protein_count1 }
@@ -56,16 +57,20 @@ describe ProteinCount do
     protein_count.obs_as_genome.should be(true)
   end
 
+  it "is not valid without loadable_db_id" do
+    protein_count1.loadable_db_id = nil
+    protein_count1.should_not be_valid
+  end
+
   describe "from_rank" do
     let!(:taxon2) { FactoryGirl.create(:taxon, rank: "genus") }
     10.times do |i|
       protein_count_name = "protein_count" + (i+2).to_s
-      let!(protein_count_name.to_sym) { FactoryGirl.create(:protein_count, taxon: taxon2, protein: protein, pfitmap_release: pfitmap_release) }
+      let!(protein_count_name.to_sym) { FactoryGirl.create(:protein_count, taxon: taxon2, protein: protein, pfitmap_release: pfitmap_release, loadable_db: refseq) }
     end
     it "gives the ones with the right rank back" do
       ProteinCount.from_rank("genus").count.should == 10
       ProteinCount.from_rank(nil).count.should == 11
     end
   end
-
 end

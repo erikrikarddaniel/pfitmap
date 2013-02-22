@@ -88,7 +88,6 @@ class PfitmapRelease < ActiveRecord::Base
     # Resets the protein_counts table for the release and 
     # fills it with new values.
     pfitmap_release = self
-    db_string = "ref"
 
     # Accepted ranks
     rank_hash = {}
@@ -105,20 +104,30 @@ class PfitmapRelease < ActiveRecord::Base
     proteins = Protein.all
     calculate_logger.info "#{Time.now} Initialized proteins."
 
-    # Retrieve all whole genome sequenced organisms id
-    taxon_ncbi_ids = BiosqlWeb.organism_group2ncbi_taxon_ids(organism_group)
-    calculate_logger.info "#{Time.now} Collected organism groups' NCBI taxon ids from biosql."
+    LoadableDb.all.each do |loadable_db|
+      # Retrieve all whole genome sequenced organisms id
+      taxon_ncbi_ids = []
+      if loadable_db.genome_sequenced
+	taxon_ncbi_ids = BiosqlWeb.organism_group2ncbi_taxon_ids(organism_group)
+	calculate_logger.info "#{Time.now} Fetched organism groups' NCBI taxon ids from biosql."
+      else
+	HmmDbHit.find_all_by_db(loadable_db.db).map { |hmmdbhit| hmmdbhit.gi }.each do |gi|
+	  taxon_ncbi_ids << BiosqlWeb.gi2ncbi_taxon_id(gi)
+	end
+	calculate_logger.info "#{Time.now}: Retrieved NCBI taxon ids for #{loadable_db.common_name} hits"
+      end
 
-    # Initialize dry run, count genomes
-    tree = dry_run(taxon_ncbi_ids, pfitmap_release, proteins, rank_hash)
-    calculate_logger.info "#{Time.now} Dry run finished."
-    
-    # Second iteration, count hits
-    second_run_count_hits(tree, pfitmap_release,db_string)
-    calculate_logger.info "#{Time.now} Second_run_count_hits finished."
+      # Initialize dry run, count genomes
+      tree = dry_run(taxon_ncbi_ids, pfitmap_release, proteins, rank_hash)
+      calculate_logger.info "#{Time.now} Dry run finished."
+      
+      # Second iteration, count hits
+      second_run_count_hits(tree, pfitmap_release,loadable_db)
+      calculate_logger.info "#{Time.now} Second_run_count_hits finished."
 
-    # Save tree to database
-    save_to_db(tree)
+      # Save tree to database
+      save_to_db(tree, loadable_db)
+    end
     calculate_logger.info "#{Time.now} Everything finished, saved protein counts to db.\n"
   end
 
@@ -177,7 +186,7 @@ class PfitmapRelease < ActiveRecord::Base
       
 
 
-  def second_run_count_hits(tree, pfitmap_release, db_string)
+  def second_run_count_hits(tree, pfitmap_release, loadable_db)
     # To be called after the dry_run method. 
     # Iterates over all pfitmap_sequences and collects the corresponding
     # taxon through biosqlweb. It thereby iterates upwards through
@@ -191,7 +200,7 @@ class PfitmapRelease < ActiveRecord::Base
     pfitmap_release.pfitmap_sequences.each do |p_sequence|
       best_profile = p_sequence.hmm_profile
       proteins = best_profile.all_proteins_including_parents
-      p_sequence.hmm_db_hits.where("db = ?", db_string).select(:gi).each do |hit|
+      p_sequence.hmm_db_hits.where("db = ?", loadable_db.db).select(:gi).each do |hit|
         ncbi_taxon_id = BiosqlWeb.gi2ncbi_taxon_id(hit.gi)
         tree_item = tree[ncbi_taxon_id]
 
@@ -215,7 +224,7 @@ class PfitmapRelease < ActiveRecord::Base
     end
   end
 
-  def save_to_db(tree)
+  def save_to_db(tree, loadable_db)
     tree.each do |ncbi_id, value_list|
       parent_ncbi_id = value_list ? value_list[0] : nil
       taxon = value_list[1]
@@ -223,7 +232,7 @@ class PfitmapRelease < ActiveRecord::Base
       taxon_id = save_taxon(taxon,parent_ncbi_id)
       protein_counts = []
       protein_pc_hash.each do |protein, vec|
-        protein_counts << save_protein_count(protein, taxon_id, vec)
+        protein_counts << save_protein_count(protein, taxon_id, vec, loadable_db)
       end
       ProteinCount.import protein_counts
     end 
@@ -292,10 +301,13 @@ class PfitmapRelease < ActiveRecord::Base
     return taxon.id
   end
 
-  def save_protein_count(protein_id, taxon_id, vec)
-    protein_count = ProteinCount.new(no_genomes: vec[0], 
-                                     no_proteins: vec[1], 
-                                     no_genomes_with_proteins: vec[2])
+  def save_protein_count(protein_id, taxon_id, vec, loadable_db)
+    protein_count = ProteinCount.new(
+      no_genomes: vec[0], 
+      no_proteins: vec[1], 
+      no_genomes_with_proteins: vec[2],
+      loadable_db_id: loadable_db.id
+    )
     protein_count.pfitmap_release_id = self.id
     protein_count.protein_id = protein_id
     protein_count.taxon_id = taxon_id

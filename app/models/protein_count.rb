@@ -28,7 +28,8 @@
 ## as a genome together with a protein.
   
 class ProteinCount < ActiveRecord::Base
-  attr_accessible :no_genomes, :no_proteins, :no_genomes_with_proteins, :obs_as_genome
+  attr_accessible :no_genomes, :no_proteins, :no_genomes_with_proteins, :obs_as_genome, :loadable_db_id
+  validates :loadable_db_id, presence: true
   belongs_to :protein
   belongs_to :pfitmap_release
   belongs_to :taxon

@@ -195,6 +195,7 @@ describe "PfitmapReleases" do
     it "evaluated correclty" do
       pfitmap_release.hmm_db_hits.should include(hmm_db_hit1)
     end
+
     it "can calculate" do
       visit pfitmap_release_path(pfitmap_release)
       click_on "Calculate"

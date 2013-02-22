@@ -18,4 +18,8 @@ class LoadableDb < ActiveRecord::Base
   validates :genome_sequenced, :inclusion => {:in => [true, false]}
   validates :default, :inclusion => {:in => [true, false]}
   has_many :protein_counts
+
+  def to_s
+    "<LoadableDb: db: #{db}, common_name: #{common_name}, genome_sequenced: #{genome_sequenced}>"
+  end
 end

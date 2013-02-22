@@ -18,6 +18,8 @@ describe PfitmapRelease do
   before do
     @pfitmap_release = PfitmapRelease.new(release: "0.1", release_date: "2001-04-20", sequence_source_id: sequence_source.id)
     @pfitmap_release.current = false
+    @refseq_loadable_db = FactoryGirl.create(:refseq)
+    @pdb_loadable_db = FactoryGirl.create(:pdb)
   end
   subject{ @pfitmap_release }
   
@@ -159,8 +161,9 @@ describe PfitmapRelease do
       Taxon.all.length.should == 51
       Enzyme.all.length.should == 1
       Protein.all.length.should == 2
-      ProteinCount.all.length.should == 102
-      ProteinCount.sum("no_proteins").should == 86
+      ProteinCount.find_all_by_loadable_db_id(@refseq_loadable_db.id).length.should == 102
+      ProteinCount.find_all_by_loadable_db_id(@pdb_loadable_db.id).length.should == 18
+      ProteinCount.sum("no_proteins").should == 122	# 86 from ref, 36 from pdb
       ProteinCount.maximum("no_proteins").should == 5
       ProteinCount.maximum("no_genomes_with_proteins").should == 4
     end
@@ -204,12 +207,17 @@ describe PfitmapRelease do
       Taxon.all.length.should == 51
       HmmProfile.all.length.should == 4
       Protein.all.length.should == 4
-      ProteinCount.count.should == 204
-# Used to say 10
-      # Check specific values (human nrdb)
+      ProteinCount.find_all_by_loadable_db_id(@refseq_loadable_db.id).count.should == 204
+      ProteinCount.find_all_by_loadable_db_id(@pdb_loadable_db.id).count.should == 36
       nrdb_protein = Protein.find_by_name('NrdB')
       human_taxon = Taxon.find_by_name('Homo sapiens')
-      human_nrdb_protein_count = ProteinCount.find(:first, :conditions => ["protein_id = ? AND taxon_id = ? AND pfitmap_release_id = ?", nrdb_protein.id, human_taxon.id, @pfitmap_release.id])
+      human_nrdb_protein_count = ProteinCount.find(
+	:first, 
+	:conditions => [
+	  "protein_id = ? AND taxon_id = ? AND pfitmap_release_id = ? AND loadable_db_id = ?", 
+	  nrdb_protein.id, human_taxon.id, @pfitmap_release.id, @refseq_loadable_db.id
+        ]
+      )
       human_nrdb_protein_count.no_proteins.should == 3
       human_nrdb_protein_count.no_genomes.should == 1
       human_nrdb_protein_count.no_genomes_with_proteins.should == 1
@@ -244,7 +252,7 @@ describe PfitmapRelease do
       Protein.all.length.should == 4
 
       ProteinCount.sum("no_proteins").should == 194
-      ProteinCount.sum("no_genomes").should ==  3528 
+      ProteinCount.sum("no_genomes").should ==  3560 		# 3528 from ref, 32 from pdb
       ProteinCount.sum("no_genomes_with_proteins").should == 86
       # Check specific values (human nrdb)
       nrdb_protein = Protein.find_by_name('NrdB')
@@ -254,8 +262,8 @@ describe PfitmapRelease do
       human_nrdb_protein_count.no_genomes.should == 1
       human_nrdb_protein_count.no_genomes_with_proteins.should == 1
       
-
-      ProteinCount.all.length.should == 1376
+      ProteinCount.find_all_by_loadable_db_id(@refseq_loadable_db.id).length.should == 1376
+      ProteinCount.find_all_by_loadable_db_id(@pdb_loadable_db.id).length.should == 32
       # Check the root
       root_taxon = Taxon.find_by_name('root')
       root_nrdb_pc = ProteinCount.find(:first, :conditions => ["protein_id = ? AND taxon_id = ? AND pfitmap_release_id = ?", nrdb_protein.id, root_taxon.id, @pfitmap_release.id])

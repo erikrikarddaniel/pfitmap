@@ -26,6 +26,8 @@ describe "ProteinCounts" do
   let!(:enzyme_protein5) { FactoryGirl.create(:enzyme_protein, enzyme: class2, protein: nrdJ) }
   let!(:enzyme_protein6) { FactoryGirl.create(:enzyme_protein, enzyme: class3, protein: nrdG) }
   let!(:enzyme_protein7) { FactoryGirl.create(:enzyme_protein, enzyme: class3, protein: nrdD) }
+  let!(:refseq_loadable_db) { FactoryGirl.create(:refseq) }
+  let!(:pdb_loadable_db) { FactoryGirl.create(:pdb) }
 
   before do
     50.times do |n|
@@ -43,7 +45,7 @@ describe "ProteinCounts" do
     @protein_counts = []
     Taxon.all.each_with_index do |taxon, i|
       Protein.all.each_with_index do |protein, j|
-        @protein_counts << FactoryGirl.create(:protein_count, no_proteins: ( i + 1 ) * j * 2, no_genomes_with_proteins: ( i + 1 ) * j,  protein: protein, taxon: taxon, pfitmap_release: pfitmap_release)
+        @protein_counts << FactoryGirl.create(:protein_count, no_proteins: ( i + 1 ) * j * 2, no_genomes_with_proteins: ( i + 1 ) * j,  protein: protein, taxon: taxon, pfitmap_release: pfitmap_release, loadable_db_id: refseq_loadable_db.id)
       end
     end
     @special_count = ProteinCount.find_by_protein_id_and_taxon_id(nrdxx.id,@first_child.id)
