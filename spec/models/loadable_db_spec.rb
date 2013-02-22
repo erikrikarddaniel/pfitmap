@@ -20,6 +20,7 @@ describe LoadableDb do
 
   subject { @loadable_db }
 
+  it { should be_valid }
   it { should respond_to(:db) }
   it { should respond_to(:common_name) }
   it { should respond_to(:genome_sequenced) }
@@ -44,6 +45,27 @@ describe LoadableDb do
     it "should not be valid without default" do
       @loadable_db.default = nil
       @loadable_db.should_not be_valid
+    end
+  end
+
+  describe "unique fields" do
+    before do
+      @loadable_db.save
+      @copy = LoadableDb.new(db: 'name', common_name: 'Name', genome_sequenced: false, default: false)
+    end
+
+    it "shold be valid if db and common_name are different" do
+      @copy.should be_valid
+    end
+
+    it "should not be valid with a duplicate db field" do
+      @copy.db = @loadable_db.db
+      @copy.should_not be_valid
+    end
+
+    it "should not be valid with a duplicate common_name field" do
+      @copy.common_name = @loadable_db.common_name
+      @copy.should_not be_valid
     end
   end
 end

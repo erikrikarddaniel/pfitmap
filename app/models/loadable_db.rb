@@ -13,8 +13,8 @@
 
 class LoadableDb < ActiveRecord::Base
   attr_accessible :common_name, :db, :default, :genome_sequenced
-  validates :db, presence: true
-  validates :common_name, presence: true
-  validates :genome_sequenced, presence: true
-  validates :default, presence: true
+  validates :db, presence: true, uniqueness: true
+  validates :common_name, presence: true, uniqueness: true
+  validates :genome_sequenced, :inclusion => {:in => [true, false]}
+  validates :default, :inclusion => {:in => [true, false]}
 end
