@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130222074806) do
+ActiveRecord::Schema.define(:version => 20130222102237) do
 
   create_table "hmm_result_rows", :force => true do |t|
     t.string   "target_name"
@@ -233,9 +233,12 @@ ActiveRecord::Schema.define(:version => 20130222074806) do
     t.datetime "created_at",               :null => false
     t.datetime "updated_at",               :null => false
     t.boolean  "obs_as_genome"
+    t.integer  "loadable_db_id"
+    t.index ["loadable_db_id"], :name => "fk__protein_counts_loadable_db_id", :order => {"loadable_db_id" => :asc}
     t.index ["pfitmap_release_id"], :name => "index_protein_counts_on_pfitmap_release_id", :order => {"pfitmap_release_id" => :asc}
     t.index ["protein_id"], :name => "index_protein_counts_on_protein_id", :order => {"protein_id" => :asc}
     t.index ["taxon_id"], :name => "index_protein_counts_on_taxon_id", :order => {"taxon_id" => :asc}
+    t.foreign_key ["loadable_db_id"], "loadable_dbs", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_protein_counts_loadable_db_id"
     t.foreign_key ["pfitmap_release_id"], "pfitmap_releases", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "protein_counts_pfitmap_release_id_fkey"
     t.foreign_key ["protein_id"], "proteins", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "protein_counts_protein_id_fkey"
     t.foreign_key ["taxon_id"], "taxons", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "protein_counts_taxon_id_fkey"

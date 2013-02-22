@@ -25,6 +25,7 @@ describe LoadableDb do
   it { should respond_to(:common_name) }
   it { should respond_to(:genome_sequenced) }
   it { should respond_to(:default) }
+  it { should respond_to(:protein_counts) }
 
   describe "mandatory fields" do
     it "should not be valid without db" do

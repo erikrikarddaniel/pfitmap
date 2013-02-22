@@ -12,6 +12,7 @@
 #  created_at               :datetime        not null
 #  updated_at               :datetime        not null
 #  obs_as_genome            :boolean
+#  loadable_db_id           :integer
 #
 
 require 'spec_helper'
@@ -22,7 +23,22 @@ describe ProteinCount do
   let!(:sequence_source) { FactoryGirl.create(:sequence_source ) }
   let!(:pfitmap_release) { FactoryGirl.create(:pfitmap_release, sequence_source: sequence_source) }
   let!(:taxon) { FactoryGirl.create(:taxon) }
-  let!(:protein_count1) { FactoryGirl.create(:protein_count, taxon: taxon, protein: protein, pfitmap_release: pfitmap_release) }
+  let!(:refseq) { FactoryGirl.create(:refseq) }
+  let!(:pdb) { FactoryGirl.create(:pdb) }
+  let!(:protein_count1) { 
+    FactoryGirl.create(:protein_count, taxon: taxon, protein: protein, pfitmap_release: pfitmap_release) 
+  }
+
+  subject { protein_count1 }
+
+  it { should respond_to(:no_genomes) }
+  it { should respond_to(:no_proteins) }
+  it { should respond_to(:no_genomes_with_proteins) }
+  it { should respond_to(:protein) }
+  it { should respond_to(:pfitmap_release) }
+  it { should respond_to(:taxon) }
+  it { should respond_to(:loadable_db) }
+
   it "add a genome" do 
     protein_count1.add_genome
     protein_count1.no_genomes.should == 2

@@ -12,6 +12,7 @@
 #  created_at               :datetime        not null
 #  updated_at               :datetime        not null
 #  obs_as_genome            :boolean
+#  loadable_db_id           :integer
 #
 
 
@@ -31,6 +32,7 @@ class ProteinCount < ActiveRecord::Base
   belongs_to :protein
   belongs_to :pfitmap_release
   belongs_to :taxon
+  belongs_to :loadable_db
 
   def self.from_rank(rank)
     if rank

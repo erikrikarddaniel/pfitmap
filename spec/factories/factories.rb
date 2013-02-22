@@ -102,6 +102,27 @@ FactoryGirl.define do
     abbreviation "ENZ"
   end
 
+  factory :loadable_db do
+    db			'db'
+    common_name		'DB name'
+    genome_sequenced	false
+    default		false
+  end
+
+  factory :refseq, class: LoadableDb do
+    db			'ref'
+    common_name		'RefSeq'
+    genome_sequenced	true
+    default		true
+  end
+
+  factory :pdb, class: LoadableDb do
+    db			'pdb'
+    common_name		'PDB'
+    genome_sequenced	false
+    default		false
+  end
+
   factory :taxon do |t|
     sequence(:name) { |n|  "example_taxon_name " + n.to_s }
     sequence(:ncbi_taxon_id) { |n| n} 

@@ -17,4 +17,5 @@ class LoadableDb < ActiveRecord::Base
   validates :common_name, presence: true, uniqueness: true
   validates :genome_sequenced, :inclusion => {:in => [true, false]}
   validates :default, :inclusion => {:in => [true, false]}
+  has_many :protein_counts
 end
