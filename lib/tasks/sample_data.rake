@@ -8,6 +8,7 @@ namespace :db do
     @dbsequences = {}	# Object hash indexed by acc number
     @hmm_db_hits = {} 	# Object hash indexed by acc number
     make_users
+    make_loadable_dbs
     make_hmm_profiles
     make_sequence_sources
     make_enzymes
@@ -43,6 +44,21 @@ VALUES(
   now()
 )
 SQL
+    )
+  end
+
+  def make_loadable_dbs
+    @refseq = LoadableDb.create!(
+      db: 'ref',
+      common_name: 'RefSeq',
+      genome_sequenced: true,
+      default: true
+    )
+    @pdb = LoadableDb.create!(
+      db: 'pdb',
+      common_name: 'PDB',
+      genome_sequenced: false,
+      default: false
     )
   end
 
