@@ -8,15 +8,15 @@ describe "ProteinCounts" do
   let!(:class1x) 	 { FactoryGirl.create(:enzyme_class_1c, parent: class1) }
   let!(:class2) 	 { FactoryGirl.create(:enzyme_class_2) }
   let!(:class3) 	 { FactoryGirl.create(:enzyme_class_3) }
-  let!(:nrdA) 		 { FactoryGirl.create(:protein) }
-  let!(:nrdB) 		 { FactoryGirl.create(:protein) }
-  let!(:nrdE) 		 { FactoryGirl.create(:protein) }
-  let!(:nrdF) 		 { FactoryGirl.create(:protein) }
-  let!(:nrdJ) 		 { FactoryGirl.create(:protein) }
-  let!(:nrdG) 		 { FactoryGirl.create(:protein) }
-  let!(:nrdD) 		 { FactoryGirl.create(:protein) }
-  let!(:nrdxx) 		 { FactoryGirl.create(:protein) }
-  let!(:nrdyy) 		 { FactoryGirl.create(:protein) }
+  let!(:nrdA) 		 { FactoryGirl.create(:protein, name: "Nrd A") }
+  let!(:nrdB) 		 { FactoryGirl.create(:protein, name: "Nrd B") }
+  let!(:nrdE) 		 { FactoryGirl.create(:protein, name: "Nrd E") }
+  let!(:nrdF) 		 { FactoryGirl.create(:protein, name: "Nrd F") }
+  let!(:nrdJ) 		 { FactoryGirl.create(:protein, name: "Nrd J") }
+  let!(:nrdG) 		 { FactoryGirl.create(:protein, name: "Nrd G") }
+  let!(:nrdD) 		 { FactoryGirl.create(:protein, name: "Nrd D") }
+  let!(:nrdxx) 		 { FactoryGirl.create(:protein, name: "Nrd xx") }
+  let!(:nrdyy) 		 { FactoryGirl.create(:protein, name: "Nrd yy") }
   let!(:enzyme_protein1) { FactoryGirl.create(:enzyme_protein, enzyme: class1, protein: nrdA) }
   let!(:enzyme_protein2) { FactoryGirl.create(:enzyme_protein, enzyme: class1, protein: nrdB) }
   let!(:enzyme_protein3) { FactoryGirl.create(:enzyme_protein, enzyme: class1b, protein: nrdE) }
