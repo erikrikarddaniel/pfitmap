@@ -9,7 +9,7 @@
     <th></th>
   </tr>
 
-<% @hmm_score_criteria.each do |hmm_score_criterion| %>
+<% @hmm_score_criteria.sort_by { |sc| sc.hmm_profile.hierarchy }.each do |hmm_score_criterion| %>
   <tr>
     <td><%= hmm_score_criterion.hmm_profile.name %> </td>
     <td><%= hmm_score_criterion.min_fullseq_score %></td>
