@@ -17,7 +17,7 @@
 	  <td colspan=1 class="protein-header">&nbsp;</td>
         <% end %>
       <% else %>
-        <% enzyme.children.each do |enzyme_child| %>
+        <% enzyme.children.order(:abbreviation).each do |enzyme_child| %>
           <%= render :partial => 'header_table', :locals => {parent_id: enzyme_child.id, enzyme_tree: @enzyme_tree, enzyme_ids: @enzyme_tree.keys} %>
         <% end %>
       <% end %>
