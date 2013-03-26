@@ -1,5 +1,5 @@
 module FileParsers
-  def self.import_external_db_fasta(io)
+  def self.import_external_db_fasta(uploaded_file)
     updated = 0
     DbSequence.transaction do
       @db_seq_to_update = {}
@@ -10,7 +10,7 @@ module FileParsers
       end
       gi = nil
       seq = ''
-      File.open(io.path, "r").each do |line|
+      _get_io(uploaded_file.path).each do |line|
 	line.chomp!
 	if line[0..3] == '>gi|'
 	  if gi and seq != ''
@@ -29,7 +29,7 @@ module FileParsers
     updated
   end
 
-  def parse_hmm_tblout(result, io)
+  def parse_hmm_tblout(result, uploaded_file)
     HmmResult.transaction do
       @hmm_result_rows = []
       @db_hits = []	# This will become an array of arrays, with one array per hmm_result_row (i.e. infile row). This is in preparation for a smart way of updating all objects with db_sequence.id...
@@ -37,7 +37,8 @@ module FileParsers
       HmmDbHit.all.each do |dbh|
 	@db_hit_cache[dbh.gi] = dbh
       end
-      File.open("#{io.path}", "r").each_with_index do |line, index|
+      #File.open("#{uploaded_file.path}", "r").each_with_index do |line, index|
+      _get_io(uploaded_file.path).each_with_index do |line, index|
 	line.chomp!
 	line.sub!(/^#.*/, '')
 	next if line == ''
@@ -82,14 +83,15 @@ module FileParsers
     end
   end
   
-  def parse_hmmout(result, io)
+  def parse_hmmout(result, uploaded_file)
     domain_ack = []
     HmmResult.transaction do
       @hmm_alignments = []
       gi_row_hash = gi_to_result_row_hash(result)
       first_domain_found = nil
       end_of_file = nil
-      File.open("#{io.path}", "r").each_with_index do |line, index|
+      #File.open("#{uploaded_file.path}", "r").each_with_index do |line, index|
+      _get_io(uploaded_file.path).each_with_index do |line, index|
         line.chomp!
 	line.sub!(/^#.*/, '')
         if first_domain_found
@@ -220,5 +222,19 @@ module FileParsers
      :db_sequence_id => present_sequence_id,
      :hmm_result_id => result.id
     )
+  end
+
+  private
+
+  def _get_io(file_name)
+    io = nil
+    if file_name =~ /\.gz/
+      io = IO.popen("gunzip -c #{file_name}", "r")
+    elsif file_name =~ /\.bz2/
+      io = IO.popen("bunzip2 -c #{file_name}", "r")
+    else
+      io = File.open("#{file_name}")
+    end
+    return io
   end
 end
