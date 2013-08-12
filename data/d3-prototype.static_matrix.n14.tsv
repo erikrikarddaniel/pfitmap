@@ -1,0 +1,15 @@
+domain	phylum	class	order	family	genus	species	strain	protein0	protein1	protein2	protein3	protein4	enzyme0	enzyme1	enzyme2	enzyme3	enzyme4	no_genomes	no_proteins	no_genomes_with_protein
+Viruses			Caudovirales	Siphoviridae		Clostridium phage phiCD38-2		NrdB	NrdF				RNR I	RNR Ib				1	1	1
+Bacteria	Proteobacteria	Betaproteobacteria	Burkholderiales	Oxalobacteraceae	Collimonas	Collimonas fungivorans	Collimonas fungivorans Ter331	NrdG					RNR III	RNR IIId	RNR IIId2			1	1	1
+Bacteria	Firmicutes	Bacilli	Lactobacillales	Streptococcaceae	Streptococcus	Streptococcus suis		NrdG					RNR III	RNR IIId	RNR IIId2			1	2	1
+Bacteria	Proteobacteria	Alphaproteobacteria	Rhodospirillales	Acetobacteraceae	Gluconacetobacter	Gluconacetobacter sp. SXCC-1		NrdG					RNR III	RNR IIId	RNR IIId2			1	1	1
+Bacteria	Actinobacteria	Actinobacteria	Actinomycetales	Mycobacteriaceae	Mycobacterium	Mycobacterium bovis	Mycobacterium bovis BCG str. ATCC 35743	NrdA	NrdE				RNR I	RNR Ib				1	1	1
+Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Pseudomonas	Pseudomonas aeruginosa	Pseudomonas aeruginosa 138244	NrdA	NrdE				RNR I	RNR Ib				1	1	1
+Bacteria	Actinobacteria	Actinobacteria	Actinomycetales	Mycobacteriaceae	Mycobacterium	Mycobacterium bovis	Mycobacterium bovis BCG str. ATCC 35740	NrdD	NrdDa	NrdDa1			RNR III	RNR IIIa	RNR IIIa1			1	2	1
+Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Pseudomonas	Pseudomonas aeruginosa	Pseudomonas aeruginosa 138244	NrdD	NrdDa				RNR III	RNR IIIa				1	1	1
+Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli K-12	NrdA	NrdAg				RNR I	RNR Ig				1	1	1
+Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli K-12	NrdB	NrdBg				RNR I	RNR Ig				1	1	1
+Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli K-12	NrdA	NrdE				RNR I	RNR Ib				1	1	1
+Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli K-12	NrdB	NrdF				RNR I	RNR Ib				1	1	1
+Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli K-12	NrdD	NrdDc	NrdDc1			RNR III	RNR IIIc	RNR IIIc1			1	1	1
+Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli K-12	NrdG					RNR III	RNR IIIc	RNR IIIc1			1	1	1
