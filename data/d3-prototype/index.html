@@ -9,6 +9,7 @@
 				display: inline-block;
 				width: 20px;
 				height: 75px;
+				margin-right: 2px;
 				background-color: teal;
 			}
 		</style>
@@ -16,7 +17,7 @@
 	<body>
 		<script type="text/javascript">
 			var dataset;
-			d3.tsv("d3-prototype.static_matrix.n14.tsv", function(data) {
+			d3.tsv("d3-prototype.static_matrix.n100.tsv", function(data) {
 				dataset = data;
 				console.log(dataset);
 				d3.select("body").selectAll("div")
@@ -24,7 +25,7 @@
 					.enter()
 					.append("div")
 					.attr("class","bar")
-					.style("height",function(d) {return d.no_genomes});
+					.style("height",function(d) {var bar_height = d.no_proteins * 10; return bar_height + "px"});
 			});
 		</script>
 	</body>
