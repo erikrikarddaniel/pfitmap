@@ -7,7 +7,17 @@
 	</head>
 	<body>
 		<script type="text/javascript">
-			//Beutiful D3 code
+			var dataset;
+			d3.tsv("d3-prototype.static_matrix.n14.tsv", function(data) {
+				dataset = data;
+				console.log(dataset);
+				d3.select("body").selectAll("p")
+					.data(dataset)
+					.enter()
+					.append("p")
+					.text(function(d) { return "Species: " + d.species + ", Strain: " + d.strain;})
+					.style("color",function(d) { if (d.species[0] == "E") { return "red"; } else { return "black"; } });
+			});
 		</script>
 	</body>
 </html>
