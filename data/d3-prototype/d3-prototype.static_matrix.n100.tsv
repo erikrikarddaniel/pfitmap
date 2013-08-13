@@ -1,62 +1,67 @@
-domain	phylum	class	order	family	genus	species	strain	protein0	protein1	protein2	protein3	protein4	enzyme0	enzyme1	enzyme2	enzyme3	enzyme4	no_genomes	no_proteins	no_genomes_with_protein
-Viruses			Caudovirales	Siphoviridae		Clostridium phage phiCD38-2		NrdB	NrdF				RNR I	RNR Ib				1	1	1
-Bacteria	Proteobacteria	Betaproteobacteria	Burkholderiales	Oxalobacteraceae	Collimonas	Collimonas fungivorans	Collimonas fungivorans Ter331	NrdG					RNR III	RNR IIId	RNR IIId2			1	1	1
-Bacteria	Firmicutes	Bacilli	Lactobacillales	Streptococcaceae	Streptococcus	Streptococcus suis		NrdG					RNR III	RNR IIId	RNR IIId2			1	2	1
-Bacteria	Proteobacteria	Alphaproteobacteria	Rhodospirillales	Acetobacteraceae	Gluconacetobacter	Gluconacetobacter sp. SXCC-1		NrdG					RNR III	RNR IIId	RNR IIId2			1	1	1
-Bacteria	Actinobacteria	Actinobacteria	Actinomycetales	Mycobacteriaceae	Mycobacterium	Mycobacterium bovis	Mycobacterium bovis BCG str. ATCC 35743	NrdA	NrdE				RNR I	RNR Ib				1	1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Pseudomonas	Pseudomonas aeruginosa	Pseudomonas aeruginosa 138244	NrdA	NrdE				RNR I	RNR Ib				1	1	1
-Bacteria	Actinobacteria	Actinobacteria	Actinomycetales	Mycobacteriaceae	Mycobacterium	Mycobacterium bovis	Mycobacterium bovis BCG str. ATCC 35740	NrdD	NrdDa	NrdDa1			RNR III	RNR IIIa	RNR IIIa1			1	2	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Pseudomonas	Pseudomonas aeruginosa	Pseudomonas aeruginosa 138244	NrdD	NrdDa				RNR III	RNR IIIa				1	1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli K-12	NrdA	NrdAg				RNR I	RNR Ig				1	1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli K-12	NrdB	NrdBg				RNR I	RNR Ig				1	1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli K-12	NrdA	NrdE				RNR I	RNR Ib				1	1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli K-12	NrdB	NrdF				RNR I	RNR Ib				1	1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli K-12	NrdD	NrdDc	NrdDc1			RNR III	RNR IIIc	RNR IIIc1			1	1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli K-12	NrdG					RNR III	RNR IIIc	RNR IIIc1			1	1	1
-Viruses			Caudovirales	Myoviridae	T4-like viruses	Enterobacteria phage T4 sensu lato		NrdB	NrdBg				RNR I	RNR Ig				1	1	1
-Viruses			Caudovirales	Myoviridae	T4-like viruses	Enterobacteria phage T4 sensu lato		NrdD	NrdDc	NrdDc1			RNR III	RNR IIIc	RNR IIIc1			1	1	1
-Viruses			Caudovirales	Myoviridae	T4-like viruses	Enterobacteria phage T4 sensu lato		NrdA	NrdAg				RNR I	RNR Ig				1	1	1
-Viruses			Caudovirales	Myoviridae	T4-like viruses	Enterobacteria phage RB51		NrdB	NrdBg				RNR I	RNR Ig				1	1	1
-Viruses			Caudovirales	Myoviridae	T4-like viruses	Enterobacteria phage RB51		NrdD	NrdDc	NrdDc1			RNR III	RNR IIIc	RNR IIIc1			1	1	1
-Viruses			Caudovirales	Myoviridae	T4-like viruses	Enterobacteria phage RB51		NrdA	NrdAg				RNR I	RNR Ig				1	1	1
-Viruses			Caudovirales	Myoviridae	T4-like viruses	Enterobacteria phage T4		NrdB	NrdBg				RNR I	RNR Ig				1	1	1
-Viruses			Caudovirales	Myoviridae	T4-like viruses	Enterobacteria phage T4		NrdD	NrdDc	NrdDc1			RNR III	RNR IIIc	RNR IIIc1			1	1	1
-Viruses			Caudovirales	Myoviridae	T4-like viruses	Enterobacteria phage T4		NrdA	NrdAg				RNR I	RNR Ig				1	1	1
-Viruses			Caudovirales	Myoviridae	FelixO1likevirus	Escherichia phage wV8		NrdA	NrdAg				RNR I	RNR Ig				1	1	1
-Viruses			Caudovirales	Myoviridae	FelixO1likevirus	Escherichia phage wV8		NrdD	NrdDc	NrdDc1			RNR III	RNR IIIc	RNR IIIc1			1	1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli PCN033	NrdB	NrdBg				RNR I	RNR Ig				1	1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli PCN033	NrdB	NrdF	NrdF1			RNR I	RNR Ib	RNR Ib1			1	1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli PCN033	NrdD	NrdDc	NrdDc1			RNR III	RNR IIIc	RNR IIIc1			1	1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli PCN033	NrdA	NrdAg				RNR I	RNR Ig				1	1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli PCN033	NrdA	NrdE	NrdE1			RNR I	RNR Ib	RNR Ib1			1	1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Shigella	Shigella flexneri	Shigella flexneri 5a str. M90T	NrdB	NrdBg				RNR I	RNR Ig				1	1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Shigella	Shigella flexneri	Shigella flexneri 5a str. M90T	NrdB	NrdF	NrdF1			RNR I	RNR Ib	RNR Ib1			1	1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Shigella	Shigella flexneri	Shigella flexneri 5a str. M90T	NrdD	NrdDc	NrdDc1			RNR III	RNR IIIc	RNR IIIc1			1	1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Shigella	Shigella flexneri	Shigella flexneri 5a str. M90T	NrdA	NrdAg				RNR I	RNR Ig				1	1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Shigella	Shigella flexneri	Shigella flexneri 5a str. M90T	NrdA	NrdE	NrdE1			RNR I	RNR Ib	RNR Ib1			1	1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Moraxellaceae	Acinetobacter	Acinetobacter baumanii	Acinetobacter baumannii ATCC 17978	NrdB	NrdBc				RNR I	RNR Ic				1	1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Moraxellaceae	Acinetobacter	Acinetobacter baumanii	Acinetobacter baumannii ATCC 17978	NrdA	NrdAc				RNR I	RNR Ic				1	1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Moraxellaceae	Moraxella	Moraxella catarrhalis	Moraxella catarrhalis RH4	NrdB	NrdBc				RNR I	RNR Ic				1	2	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Moraxellaceae	Moraxella	Moraxella catarrhalis	Moraxella catarrhalis RH4	NrdA	NrdAc				RNR I	RNR Ic				1	2	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Azotobacter	Azotobacter vinelandii	Azotobacter vinelandii DJ	NrdB	NrdBc				RNR I	RNR Ic				1	1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Azotobacter	Azotobacter vinelandii	Azotobacter vinelandii DJ	NrdJ	NrdJf				RNR II	RNR IIf				1	1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Azotobacter	Azotobacter vinelandii	Azotobacter vinelandii DJ	NrdA	NrdAc				RNR I	RNR Ic				1	1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Pseudomonas	Pseudomonas aeruginosa	Pseudomonas aeruginosa PA7	NrdB	NrdBc				RNR I	RNR Ic				1	1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Pseudomonas	Pseudomonas aeruginosa	Pseudomonas aeruginosa PA7	NrdJ	NrdJf				RNR II	RNR IIf				1	1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Pseudomonas	Pseudomonas aeruginosa	Pseudomonas aeruginosa PA7	NrdA	NrdAc				RNR I	RNR Ic				1	1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Pseudomonas	Pseudomonas aeruginosa	Pseudomonas aeruginosa PA7	NrdD	NrdDd	NrdDd1			RNR III	RNR IIId	RNR IIId1			1	1	1
-Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens		NrdB	NrdBe				RNR I	RNR Ie				1	5	1
-Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens		NrdA	NrdAe				RNR I	RNR Ie				1	1	1
-Eukaryota	Chordata	Mammalia	Primates	Hominidae	Pongo	Pongo abelii		NrdB	NrdBe				RNR I	RNR Ie				1	2	1
-Eukaryota	Chordata	Mammalia	Primates	Hominidae	Pongo	Pongo abelii		NrdA	NrdAe				RNR I	RNR Ie				1	1	1
-Eukaryota	Chordata	Mammalia	Carnivora	Canidae	Canis	Canis lupus		NrdB	NrdBe				RNR I	RNR Ie				1	3	1
-Eukaryota	Chordata	Mammalia	Carnivora	Canidae	Canis	Canis lupus		NrdA	NrdAe				RNR I	RNR Ie				1	1	1
-Archaea	Euryarchaeota	Halobacteria	Halobacteriales	Halobacteriaceae	Natronomonas	Natronomonas pharaonis	Natronomonas pharaonis DSM 2160	NrdB	NrdBi				RNR I	RNR Ii				1	1	1
-Archaea	Euryarchaeota	Halobacteria	Halobacteriales	Halobacteriaceae	Natronomonas	Natronomonas pharaonis	Natronomonas pharaonis DSM 2160	R2lox	R2loxE				R2lox	R2loxE				1	2	1
-Archaea	Euryarchaeota	Halobacteria	Halobacteriales	Halobacteriaceae	Natronomonas	Natronomonas pharaonis	Natronomonas pharaonis DSM 2160	NrdJ	NrdJf				RNR II	RNR IIf				1	1	1
-Archaea	Euryarchaeota	Halobacteria	Halobacteriales	Halobacteriaceae	Natronomonas	Natronomonas pharaonis	Natronomonas pharaonis DSM 2160	NrdA	NrdAi				RNR I	RNR Ii				1	1	1
-Archaea	Euryarchaeota	Halobacteria	Halobacteriales	Halobacteriaceae	Halobacterium	Halobacterium salinarum	Halobacterium salinarum R1	NrdB	NrdBc				RNR I	RNR Ic				1	1	1
-Archaea	Euryarchaeota	Halobacteria	Halobacteriales	Halobacteriaceae	Halobacterium	Halobacterium salinarum	Halobacterium salinarum R1	NrdJ	NrdJf				RNR II	RNR IIf				1	1	1
-Archaea	Euryarchaeota	Halobacteria	Halobacteriales	Halobacteriaceae	Halobacterium	Halobacterium salinarum	Halobacterium salinarum R1	NrdA	NrdAc				RNR I	RNR Ic				1	1	1
-Archaea	Euryarchaeota	Methanococci	Methanococcales	Methanococcaceae	Methanococcus	Methanococcus maripaludis	Methanococcus maripaludis X1	NrdD	NrdDa				RNR III	RNR IIIa				1	1	1
-Archaea	Thaumarchaeota		Nitrosopumilales	Nitrosopumilaceae	Nitrosopumilus	Nitrosopumilus maritimus	Nitrosopumilus maritimus SCM1		NrdJf					RNR IIf				1	1	1
+Viruses			Caudovirales	Siphoviridae		Clostridium phage phiCD38-2		NrdB	NrdF				1	1
+Bacteria	Proteobacteria	Betaproteobacteria	Burkholderiales	Oxalobacteraceae	Collimonas	Collimonas fungivorans	Collimonas fungivorans Ter331	NrdG					1	1
+Bacteria	Firmicutes	Bacilli	Lactobacillales	Streptococcaceae	Streptococcus	Streptococcus suis		NrdG					2	1
+Bacteria	Proteobacteria	Alphaproteobacteria	Rhodospirillales	Acetobacteraceae	Gluconacetobacter	Gluconacetobacter sp. SXCC-1		NrdG					1	1
+Bacteria	Actinobacteria	Actinobacteria	Actinomycetales	Mycobacteriaceae	Mycobacterium	Mycobacterium bovis	Mycobacterium bovis BCG str. ATCC 35743	NrdA	NrdE				1	1
+Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Pseudomonas	Pseudomonas aeruginosa	Pseudomonas aeruginosa 138244	NrdA	NrdE				1	1
+Bacteria	Actinobacteria	Actinobacteria	Actinomycetales	Mycobacteriaceae	Mycobacterium	Mycobacterium bovis	Mycobacterium bovis BCG str. ATCC 35740	NrdD	NrdDa	NrdDa1			2	1
+Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Pseudomonas	Pseudomonas aeruginosa	Pseudomonas aeruginosa 138244	NrdD	NrdDa				1	1
+Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli K-12	NrdA	NrdAg				1	1
+Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli K-12	NrdB	NrdBg				1	1
+Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli K-12	NrdA	NrdE				1	1
+Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli K-12	NrdB	NrdF				1	1
+Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli K-12	NrdD	NrdDc	NrdDc1			1	1
+Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli K-12	NrdG	NrdG	NrdG			1	1
+Viruses			Caudovirales	Myoviridae	T4-like viruses	Enterobacteria phage T4 sensu lato		NrdB	NrdBg				1	1
+Viruses			Caudovirales	Myoviridae	T4-like viruses	Enterobacteria phage T4 sensu lato		NrdD	NrdDc	NrdDc1			1	1
+Viruses			Caudovirales	Myoviridae	T4-like viruses	Enterobacteria phage T4 sensu lato		NrdA	NrdAg				1	1
+Viruses			Caudovirales	Myoviridae	T4-like viruses	Enterobacteria phage RB51		NrdB	NrdBg				1	1
+Viruses			Caudovirales	Myoviridae	T4-like viruses	Enterobacteria phage RB51		NrdD	NrdDc	NrdDc1			1	1
+Viruses			Caudovirales	Myoviridae	T4-like viruses	Enterobacteria phage RB51		NrdA	NrdAg				1	1
+Viruses			Caudovirales	Myoviridae	T4-like viruses	Enterobacteria phage T4		NrdB	NrdBg				1	1
+Viruses			Caudovirales	Myoviridae	T4-like viruses	Enterobacteria phage T4		NrdD	NrdDc	NrdDc1			1	1
+Viruses			Caudovirales	Myoviridae	T4-like viruses	Enterobacteria phage T4		NrdA	NrdAg				1	1
+Viruses			Caudovirales	Myoviridae	FelixO1likevirus	Escherichia phage wV8		NrdA	NrdAg				1	1
+Viruses			Caudovirales	Myoviridae	FelixO1likevirus	Escherichia phage wV8		NrdD	NrdDc	NrdDc1			1	1
+Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli PCN033	NrdB	NrdBg				1	1
+Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli PCN033	NrdB	NrdF	NrdF1			1	1
+Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli PCN033	NrdD	NrdDc	NrdDc1			1	1
+Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli PCN033	NrdA	NrdAg				1	1
+Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli PCN033	NrdA	NrdE	NrdE1			1	1
+Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Shigella	Shigella flexneri	Shigella flexneri 5a str. M90T	NrdB	NrdBg				1	1
+Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Shigella	Shigella flexneri	Shigella flexneri 5a str. M90T	NrdB	NrdF	NrdF1			1	1
+Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Shigella	Shigella flexneri	Shigella flexneri 5a str. M90T	NrdD	NrdDc	NrdDc1			1	1
+Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Shigella	Shigella flexneri	Shigella flexneri 5a str. M90T	NrdA	NrdAg				1	1
+Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Shigella	Shigella flexneri	Shigella flexneri 5a str. M90T	NrdA	NrdE	NrdE1			1	1
+Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Moraxellaceae	Acinetobacter	Acinetobacter baumanii	Acinetobacter baumannii ATCC 17978	NrdB	NrdBc				1	1
+Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Moraxellaceae	Acinetobacter	Acinetobacter baumanii	Acinetobacter baumannii ATCC 17978	NrdA	NrdAc				1	1
+Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Moraxellaceae	Moraxella	Moraxella catarrhalis	Moraxella catarrhalis RH4	NrdB	NrdBc				2	1
+Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Moraxellaceae	Moraxella	Moraxella catarrhalis	Moraxella catarrhalis RH4	NrdA	NrdAc				2	1
+Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Azotobacter	Azotobacter vinelandii	Azotobacter vinelandii DJ	NrdB	NrdBc				1	1
+Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Azotobacter	Azotobacter vinelandii	Azotobacter vinelandii DJ	NrdJ	NrdJf				1	1
+Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Azotobacter	Azotobacter vinelandii	Azotobacter vinelandii DJ	NrdA	NrdAc				1	1
+Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Pseudomonas	Pseudomonas aeruginosa	Pseudomonas aeruginosa PA7	NrdB	NrdBc				1	1
+Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Pseudomonas	Pseudomonas aeruginosa	Pseudomonas aeruginosa PA7	NrdJ	NrdJf				1	1
+Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Pseudomonas	Pseudomonas aeruginosa	Pseudomonas aeruginosa PA7	NrdA	NrdAc				1	1
+Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Pseudomonas	Pseudomonas aeruginosa	Pseudomonas aeruginosa PA7	NrdD	NrdDd	NrdDd1			1	1
+Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens		NrdB	NrdBe				5	1
+Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens		NrdA	NrdAe				1	1
+Eukaryota	Chordata	Mammalia	Primates	Hominidae	Pongo	Pongo abelii		NrdB	NrdBe				2	1
+Eukaryota	Chordata	Mammalia	Primates	Hominidae	Pongo	Pongo abelii		NrdA	NrdAe				1	1
+Eukaryota	Chordata	Mammalia	Carnivora	Canidae	Canis	Canis lupus		NrdB	NrdBe				3	1
+Eukaryota	Chordata	Mammalia	Carnivora	Canidae	Canis	Canis lupus		NrdA	NrdAe				1	1
+Archaea	Euryarchaeota	Halobacteria	Halobacteriales	Halobacteriaceae	Natronomonas	Natronomonas pharaonis	Natronomonas pharaonis DSM 2160	NrdB	NrdBi				1	1
+Archaea	Euryarchaeota	Halobacteria	Halobacteriales	Halobacteriaceae	Natronomonas	Natronomonas pharaonis	Natronomonas pharaonis DSM 2160	R2lox	R2loxE				2	1
+Archaea	Euryarchaeota	Halobacteria	Halobacteriales	Halobacteriaceae	Natronomonas	Natronomonas pharaonis	Natronomonas pharaonis DSM 2160	NrdJ	NrdJf				1	1
+Archaea	Euryarchaeota	Halobacteria	Halobacteriales	Halobacteriaceae	Natronomonas	Natronomonas pharaonis	Natronomonas pharaonis DSM 2160	NrdA	NrdAi				1	1
+Archaea	Euryarchaeota	Halobacteria	Halobacteriales	Halobacteriaceae	Halobacterium	Halobacterium salinarum	Halobacterium salinarum R1	NrdB	NrdBc				1	1
+Archaea	Euryarchaeota	Halobacteria	Halobacteriales	Halobacteriaceae	Halobacterium	Halobacterium salinarum	Halobacterium salinarum R1	NrdJ	NrdJf				1	1
+Archaea	Euryarchaeota	Halobacteria	Halobacteriales	Halobacteriaceae	Halobacterium	Halobacterium salinarum	Halobacterium salinarum R1	NrdA	NrdAc				1	1
+Archaea	Euryarchaeota	Methanococci	Methanococcales	Methanococcaceae	Methanococcus	Methanococcus maripaludis	Methanococcus maripaludis X1	NrdD	NrdDa				1	1
+Archaea	Thaumarchaeota		Nitrosopumilales	Nitrosopumilaceae	Nitrosopumilus	Nitrosopumilus maritimus	Nitrosopumilus maritimus SCM1	NrdJf	NrdJf				1	1
+Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Pantotea	Pantoea sp. aB		NrdB	NrdBg				1	1
+Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Pantotea	Pantoea sp. aB		NrdB	NrdF	NrdF1			1	1
+Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Pantotea	Pantoea sp. aB		NrdD	NrdDc	NrdDc1			1	1
+Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Pantotea	Pantoea sp. aB		NrdA	NrdAg				1	1
+Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Pantotea	Pantoea sp. aB		NrdA	NrdE	NrdE1			1	1
+Bacteria	Spirochaetes	Spirochaetia	Spirochaetales	Spirochaetaceae	Borrelia	Borrelia burgdorferi							0	0

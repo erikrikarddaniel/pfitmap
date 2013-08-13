@@ -1,0 +1,14 @@
+1. Create the row_matrix table in a database by running the
+create_row_matrix.sql sql script.
+
+2. Import data from a tsv file in the directory above (e.g.
+d3-prototype.static_matrix.n100.tsv). See the import_row_matrix.sh script
+(which assumes your default database).
+
+3. Run any select_*.sql script to create individual data matrices using make:
+
+  make select_column_matrix_top.tsv
+
+The above makes some assumptions...
+
+4. Move the file one step up and check in to github.

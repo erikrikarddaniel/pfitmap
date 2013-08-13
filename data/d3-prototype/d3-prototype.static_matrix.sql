@@ -1,9 +1,22 @@
 select
-  t0.name as organism_name,
-  t0.rank as organism_rank,
-  p.name as protein_name,
-  p.rank as protein_rank,
-  e.abbreviation as enzyme_name,
+  '' as domain,
+  '' as phylum,
+  '' as class,
+  '' as order,
+  '' as family,
+  '' as genus,
+  '' as species,
+  t0.name as strain,
+  '' as protein0,
+  p.name as protein1,
+  '' as protein2,
+  '' as protein3,
+  '' as protein4,
+  '' as enzyme0,
+  e.abbreviation as enzyme1,
+  '' as enzyme2,
+  '' as enzyme3,
+  '' as enzyme4,
   pc.no_genomes,
   pc.no_proteins,
   pc.no_genomes_with_proteins
@@ -13,6 +26,7 @@ from
   join enzyme_profiles ep on p.hmm_profile_id = ep.hmm_profile_id
   join enzymes e on ep.enzyme_id = e.id
 where
-  pc.taxon_id not in ( select distinct parent_id from taxons ) and
-  pc.protein_id not in ( select distinct parent_id from proteins )
+  pc.no_proteins > 0 and
+  t0.rank in ('species', 'no rank') and
+  t0.name not in ('root')
 ;
