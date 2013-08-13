@@ -4,29 +4,19 @@
 		<meta charset="utf-8">
 		<title>D3 page template</title>
 		<script type="text/javascript" src="d3.v3.js"></script>
-		<style type="text/css">
-			div.bar {
-				display: inline-block;
-				width: 20px;
-				height: 75px;
-				margin-right: 2px;
-				background-color: teal;
-			}
-		</style>
+		<script type="text/javascript" src="scripts.js"></script>
+		<link rel="stylesheet" type="text/css" href="style.css"/>
 	</head>
 	<body>
-		<script type="text/javascript">
-			var dataset;
-			d3.tsv("d3-prototype.static_matrix.n100.tsv", function(data) {
-				dataset = data;
-				console.log(dataset);
-				d3.select("body").selectAll("div")
-					.data(dataset)
-					.enter()
-					.append("div")
-					.attr("class","bar")
-					.style("height",function(d) {var bar_height = d.no_proteins * 10; return bar_height + "px"});
-			});
+		<div id="organism_selector">
+			<ul>
+				<li onclick="sum_organism('domain')">
+					Domain
+				</li>
+			</ul>
+		</div>
+		<script>
+			div_bar();
 		</script>
 	</body>
 </html>
