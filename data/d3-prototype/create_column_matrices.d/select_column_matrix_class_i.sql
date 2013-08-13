@@ -1,108 +1,233 @@
 SELECT
   taxa.*,
-  COALESCE(SUM(nrdab.n_proteins), 0) AS "protein:RNR Ib:NrdE:n_proteins",
-  COALESCE(SUM(nrdab.n_genomes_w_protein), 0) AS "protein:RNR Ib:NrdE:n_genomes_w_protein",
-  COALESCE(SUM(nrdbb.n_proteins), 0) AS "protein:RNR Ib:NrdF:n_proteins",
-  COALESCE(SUM(nrdbb.n_genomes_w_protein), 0) AS "protein:RNR Ib:NrdF:n_genomes_w_protein",
-  COALESCE(SUM(nrdac.n_proteins), 0) AS "protein:RNR Ic:NrdAc:n_proteins",
-  COALESCE(SUM(nrdac.n_genomes_w_protein), 0) AS "protein:RNR Ic:NrdAc:n_genomes_w_protein",
-  COALESCE(SUM(nrdbc.n_proteins), 0) AS "protein:RNR Ic:NrdBc:n_proteins",
-  COALESCE(SUM(nrdbc.n_genomes_w_protein), 0) AS "protein:RNR Ic:NrdBc:n_genomes_w_protein",
-  COALESCE(SUM(nrdae.n_proteins), 0) AS "protein:RNR Ie:NrdAe:n_proteins",
-  COALESCE(SUM(nrdae.n_genomes_w_protein), 0) AS "protein:RNR Ie:NrdAe:n_genomes_w_protein",
-  COALESCE(SUM(nrdbe.n_proteins), 0) AS "protein:RNR Ie:NrdBe:n_proteins",
-  COALESCE(SUM(nrdbe.n_genomes_w_protein), 0) AS "protein:RNR Ie:NrdBe:n_genomes_w_protein",
-  COALESCE(SUM(nrdag.n_proteins), 0) AS "protein:RNR Ig:NrdAg:n_proteins",
-  COALESCE(SUM(nrdag.n_genomes_w_protein), 0) AS "protein:RNR Ig:NrdAg:n_genomes_w_protein",
-  COALESCE(SUM(nrdbg.n_proteins), 0) AS "protein:RNR Ig:NrdBg:n_proteins",
-  COALESCE(SUM(nrdbg.n_genomes_w_protein), 0) AS "protein:RNR Ig:NrdBg:n_genomes_w_protein",
-  COALESCE(SUM(nrdah.n_proteins), 0) AS "protein:RNR Ih:NrdAh:n_proteins",
-  COALESCE(SUM(nrdah.n_genomes_w_protein), 0) AS "protein:RNR Ih:NrdAh:n_genomes_w_protein",
-  COALESCE(SUM(nrdbh.n_proteins), 0) AS "protein:RNR Ih:NrdBh:n_proteins",
-  COALESCE(SUM(nrdbh.n_genomes_w_protein), 0) AS "protein:RNR Ih:NrdBh:n_genomes_w_protein",
-  COALESCE(SUM(nrdai.n_proteins), 0) AS "protein:RNR Ii:NrdAi:n_proteins",
-  COALESCE(SUM(nrdai.n_genomes_w_protein), 0) AS "protein:RNR Ii:NrdAi:n_genomes_w_protein",
-  COALESCE(SUM(nrdbi.n_proteins), 0) AS "protein:RNR Ii:NrdBi:n_proteins",
-  COALESCE(SUM(nrdbi.n_genomes_w_protein), 0) AS "protein:RNR Ii:NrdBi:n_genomes_w_protein",
-  COALESCE(SUM(nrdak.n_proteins), 0) AS "protein:RNR Ik:NrdAk:n_proteins",
-  COALESCE(SUM(nrdak.n_genomes_w_protein), 0) AS "protein:RNR Ik:NrdAk:n_genomes_w_protein",
-  COALESCE(SUM(nrdbk.n_proteins), 0) AS "protein:RNR Ik:NrdBk:n_proteins",
-  COALESCE(SUM(nrdbk.n_genomes_w_protein), 0) AS "protein:RNR Ik:NrdBk:n_genomes_w_protein",
-  COALESCE(SUM(nrdan.n_proteins), 0) AS "protein:RNR In:NrdAn:n_proteins",
-  COALESCE(SUM(nrdan.n_genomes_w_protein), 0) AS "protein:RNR In:NrdAn:n_genomes_w_protein",
-  COALESCE(SUM(nrdbn.n_proteins), 0) AS "protein:RNR In:NrdBn:n_proteins",
-  COALESCE(SUM(nrdbn.n_genomes_w_protein), 0) AS "protein:RNR In:NrdBn:n_genomes_w_protein"
+  COALESCE(NrdE.n_proteins,0) AS "protein:RNR Ib:NrdE:n_proteins",
+  COALESCE(NrdE.n_genomes_w_protein,0) AS "protein:RNR Ib:NrdE:n_genomes_w_protein",
+  COALESCE(NrdF.n_proteins,0) AS "protein:RNR Ib:NrdF:n_proteins",
+  COALESCE(NrdF.n_genomes_w_protein,0) AS "protein:RNR Ib:NrdF:n_genomes_w_protein",
+  COALESCE(NrdAc.n_proteins,0) AS "protein:RNR Ic:NrdAc:n_proteins",
+  COALESCE(NrdAc.n_genomes_w_protein,0) AS "protein:RNR Ic:NrdAc:n_genomes_w_protein",
+  COALESCE(NrdBc.n_proteins,0) AS "protein:RNR Ic:NrdBc:n_proteins",
+  COALESCE(NrdBc.n_genomes_w_protein,0) AS "protein:RNR Ic:NrdBc:n_genomes_w_protein",
+  COALESCE(NrdAe.n_proteins,0) AS "protein:RNR Ie:NrdAe:n_proteins",
+  COALESCE(NrdAe.n_genomes_w_protein,0) AS "protein:RNR Ie:NrdAe:n_genomes_w_protein",
+  COALESCE(NrdBe.n_proteins,0) AS "protein:RNR Ie:NrdBe:n_proteins",
+  COALESCE(NrdBe.n_genomes_w_protein,0) AS "protein:RNR Ie:NrdBe:n_genomes_w_protein",
+  COALESCE(NrdAg.n_proteins,0) AS "protein:RNR Ig:NrdAg:n_proteins",
+  COALESCE(NrdAg.n_genomes_w_protein,0) AS "protein:RNR Ig:NrdAg:n_genomes_w_protein",
+  COALESCE(NrdBg.n_proteins,0) AS "protein:RNR Ig:NrdBg:n_proteins",
+  COALESCE(NrdBg.n_genomes_w_protein,0) AS "protein:RNR Ig:NrdBg:n_genomes_w_protein",
+  COALESCE(NrdAh.n_proteins,0) AS "protein:RNR Ih:NrdAh:n_proteins",
+  COALESCE(NrdAh.n_genomes_w_protein,0) AS "protein:RNR Ih:NrdAh:n_genomes_w_protein",
+  COALESCE(NrdBh.n_proteins,0) AS "protein:RNR Ih:NrdBh:n_proteins",
+  COALESCE(NrdBh.n_genomes_w_protein,0) AS "protein:RNR Ih:NrdBh:n_genomes_w_protein",
+  COALESCE(NrdAi.n_proteins,0) AS "protein:RNR Ii:NrdAi:n_proteins",
+  COALESCE(NrdAi.n_genomes_w_protein,0) AS "protein:RNR Ii:NrdAi:n_genomes_w_protein",
+  COALESCE(NrdBi.n_proteins,0) AS "protein:RNR Ii:NrdBi:n_proteins",
+  COALESCE(NrdBi.n_genomes_w_protein,0) AS "protein:RNR Ii:NrdBi:n_genomes_w_protein",
+  COALESCE(NrdAk.n_proteins,0) AS "protein:RNR Ik:NrdAk:n_proteins",
+  COALESCE(NrdAk.n_genomes_w_protein,0) AS "protein:RNR Ik:NrdAk:n_genomes_w_protein",
+  COALESCE(NrdBk.n_proteins,0) AS "protein:RNR Ik:NrdBk:n_proteins",
+  COALESCE(NrdBk.n_genomes_w_protein,0) AS "protein:RNR Ik:NrdBk:n_genomes_w_protein",
+  COALESCE(NrdAn.n_proteins,0) AS "protein:RNR In:NrdAn:n_proteins",
+  COALESCE(NrdAn.n_genomes_w_protein,0) AS "protein:RNR In:NrdAn:n_genomes_w_protein",
+  COALESCE(NrdBn.n_proteins,0) AS "protein:RNR In:NrdBn:n_proteins",
+  COALESCE(NrdBn.n_genomes_w_protein,0) AS "protein:RNR In:NrdBn:n_genomes_w_protein"
 FROM
   (
     SELECT domain, phylum, class, "order", family, genus, species, strain, COUNT(*) AS n_genomes
     FROM ( SELECT DISTINCT domain, phylum, class, "order", family, genus, species, strain FROM row_matrix ) t
     GROUP BY 1,2,3,4,5,6,7,8
-  ) taxa LEFT JOIN
-  row_matrix nrdab ON
-    taxa.species = nrdab.species AND 
-    taxa.strain = nrdab.strain AND
-    nrdab.protein1 = 'NrdE' LEFT JOIN
-  row_matrix nrdbb ON
-    taxa.species = nrdbb.species AND 
-    taxa.strain = nrdbb.strain AND
-    nrdbb.protein1 = 'NrdF' LEFT JOIN
-  row_matrix nrdac ON
-    taxa.species = nrdac.species AND 
-    taxa.strain = nrdac.strain AND
-    nrdac.protein1 = 'NrdAc' LEFT JOIN
-  row_matrix nrdbc ON
-    taxa.species = nrdbc.species AND 
-    taxa.strain = nrdbc.strain AND
-    nrdbc.protein1 = 'NrdBc' LEFT JOIN
-  row_matrix nrdae ON
-    taxa.species = nrdae.species AND 
-    taxa.strain = nrdae.strain AND
-    nrdae.protein1 = 'NrdAe' LEFT JOIN
-  row_matrix nrdbe ON
-    taxa.species = nrdbe.species AND 
-    taxa.strain = nrdbe.strain AND
-    nrdbe.protein1 = 'NrdBe' LEFT JOIN
-  row_matrix nrdag ON
-    taxa.species = nrdag.species AND 
-    taxa.strain = nrdag.strain AND
-    nrdag.protein1 = 'NrdAg' LEFT JOIN
-  row_matrix nrdbg ON
-    taxa.species = nrdbg.species AND 
-    taxa.strain = nrdbg.strain AND
-    nrdbg.protein1 = 'NrdBg' LEFT JOIN
-  row_matrix nrdah ON
-    taxa.species = nrdah.species AND 
-    taxa.strain = nrdah.strain AND
-    nrdah.protein1 = 'NrdAh' LEFT JOIN
-  row_matrix nrdbh ON
-    taxa.species = nrdbh.species AND 
-    taxa.strain = nrdbh.strain AND
-    nrdbh.protein1 = 'NrdBh' LEFT JOIN
-  row_matrix nrdai ON
-    taxa.species = nrdai.species AND 
-    taxa.strain = nrdai.strain AND
-    nrdai.protein1 = 'NrdAi' LEFT JOIN
-  row_matrix nrdbi ON
-    taxa.species = nrdbi.species AND 
-    taxa.strain = nrdbi.strain AND
-    nrdbi.protein1 = 'NrdBi' LEFT JOIN
-  row_matrix nrdak ON
-    taxa.species = nrdak.species AND 
-    taxa.strain = nrdak.strain AND
-    nrdak.protein1 = 'NrdAk' LEFT JOIN
-  row_matrix nrdbk ON
-    taxa.species = nrdbk.species AND 
-    taxa.strain = nrdbk.strain AND
-    nrdbk.protein1 = 'NrdBk' LEFT JOIN
-  row_matrix nrdan ON
-    taxa.species = nrdan.species AND 
-    taxa.strain = nrdan.strain AND
-    nrdan.protein1 = 'NrdAn' LEFT JOIN
-  row_matrix nrdbn ON
-    taxa.species = nrdbn.species AND 
-    taxa.strain = nrdbn.strain AND
-    nrdbn.protein1 = 'NrdBn'
-GROUP BY
-  1,2,3,4,5,6,7,8,9
+  ) taxa 
+  LEFT JOIN
+  (
+    SELECT 
+      domain, phylum, class, "order", family, genus, species, strain, SUM(n_proteins) AS n_proteins, CASE WHEN SUM(n_proteins) > 0 THEN 1 ELSE 0 END AS n_genomes_w_protein
+    FROM
+      row_matrix
+    WHERE
+      protein1 = 'NrdE'
+    GROUP BY
+      1,2,3,4,5,6,7,8
+  ) NrdE ON
+    taxa.species = NrdE.species AND taxa.strain = NrdE.strain
+  LEFT JOIN
+  (
+    SELECT 
+      domain, phylum, class, "order", family, genus, species, strain, SUM(n_proteins) AS n_proteins, CASE WHEN SUM(n_proteins) > 0 THEN 1 ELSE 0 END AS n_genomes_w_protein
+    FROM
+      row_matrix
+    WHERE
+      protein1 = 'NrdF'
+    GROUP BY
+      1,2,3,4,5,6,7,8
+  ) NrdF ON
+    taxa.species = NrdF.species AND taxa.strain = NrdF.strain
+  LEFT JOIN
+  (
+    SELECT 
+      domain, phylum, class, "order", family, genus, species, strain, SUM(n_proteins) AS n_proteins, CASE WHEN SUM(n_proteins) > 0 THEN 1 ELSE 0 END AS n_genomes_w_protein
+    FROM
+      row_matrix
+    WHERE
+      protein1 = 'NrdAc'
+    GROUP BY
+      1,2,3,4,5,6,7,8
+  ) NrdAc ON
+    taxa.species = NrdAc.species AND taxa.strain = NrdAc.strain
+  LEFT JOIN
+  (
+    SELECT 
+      domain, phylum, class, "order", family, genus, species, strain, SUM(n_proteins) AS n_proteins, CASE WHEN SUM(n_proteins) > 0 THEN 1 ELSE 0 END AS n_genomes_w_protein
+    FROM
+      row_matrix
+    WHERE
+      protein1 = 'NrdBc'
+    GROUP BY
+      1,2,3,4,5,6,7,8
+  ) NrdBc ON
+    taxa.species = NrdBc.species AND taxa.strain = NrdBc.strain
+  LEFT JOIN
+  (
+    SELECT 
+      domain, phylum, class, "order", family, genus, species, strain, SUM(n_proteins) AS n_proteins, CASE WHEN SUM(n_proteins) > 0 THEN 1 ELSE 0 END AS n_genomes_w_protein
+    FROM
+      row_matrix
+    WHERE
+      protein1 = 'NrdAe'
+    GROUP BY
+      1,2,3,4,5,6,7,8
+  ) NrdAe ON
+    taxa.species = NrdAe.species AND taxa.strain = NrdAe.strain
+  LEFT JOIN
+  (
+    SELECT 
+      domain, phylum, class, "order", family, genus, species, strain, SUM(n_proteins) AS n_proteins, CASE WHEN SUM(n_proteins) > 0 THEN 1 ELSE 0 END AS n_genomes_w_protein
+    FROM
+      row_matrix
+    WHERE
+      protein1 = 'NrdBe'
+    GROUP BY
+      1,2,3,4,5,6,7,8
+  ) NrdBe ON
+    taxa.species = NrdBe.species AND taxa.strain = NrdBe.strain
+  LEFT JOIN
+  (
+    SELECT 
+      domain, phylum, class, "order", family, genus, species, strain, SUM(n_proteins) AS n_proteins, CASE WHEN SUM(n_proteins) > 0 THEN 1 ELSE 0 END AS n_genomes_w_protein
+    FROM
+      row_matrix
+    WHERE
+      protein1 = 'NrdAg'
+    GROUP BY
+      1,2,3,4,5,6,7,8
+  ) NrdAg ON
+    taxa.species = NrdAg.species AND taxa.strain = NrdAg.strain
+  LEFT JOIN
+  (
+    SELECT 
+      domain, phylum, class, "order", family, genus, species, strain, SUM(n_proteins) AS n_proteins, CASE WHEN SUM(n_proteins) > 0 THEN 1 ELSE 0 END AS n_genomes_w_protein
+    FROM
+      row_matrix
+    WHERE
+      protein1 = 'NrdBg'
+    GROUP BY
+      1,2,3,4,5,6,7,8
+  ) NrdBg ON
+    taxa.species = NrdBg.species AND taxa.strain = NrdBg.strain
+  LEFT JOIN
+  (
+    SELECT 
+      domain, phylum, class, "order", family, genus, species, strain, SUM(n_proteins) AS n_proteins, CASE WHEN SUM(n_proteins) > 0 THEN 1 ELSE 0 END AS n_genomes_w_protein
+    FROM
+      row_matrix
+    WHERE
+      protein1 = 'NrdAh'
+    GROUP BY
+      1,2,3,4,5,6,7,8
+  ) NrdAh ON
+    taxa.species = NrdAh.species AND taxa.strain = NrdAh.strain
+  LEFT JOIN
+  (
+    SELECT 
+      domain, phylum, class, "order", family, genus, species, strain, SUM(n_proteins) AS n_proteins, CASE WHEN SUM(n_proteins) > 0 THEN 1 ELSE 0 END AS n_genomes_w_protein
+    FROM
+      row_matrix
+    WHERE
+      protein1 = 'NrdBh'
+    GROUP BY
+      1,2,3,4,5,6,7,8
+  ) NrdBh ON
+    taxa.species = NrdBh.species AND taxa.strain = NrdBh.strain
+  LEFT JOIN
+  (
+    SELECT 
+      domain, phylum, class, "order", family, genus, species, strain, SUM(n_proteins) AS n_proteins, CASE WHEN SUM(n_proteins) > 0 THEN 1 ELSE 0 END AS n_genomes_w_protein
+    FROM
+      row_matrix
+    WHERE
+      protein1 = 'NrdAi'
+    GROUP BY
+      1,2,3,4,5,6,7,8
+  ) NrdAi ON
+    taxa.species = NrdAi.species AND taxa.strain = NrdAi.strain
+  LEFT JOIN
+  (
+    SELECT 
+      domain, phylum, class, "order", family, genus, species, strain, SUM(n_proteins) AS n_proteins, CASE WHEN SUM(n_proteins) > 0 THEN 1 ELSE 0 END AS n_genomes_w_protein
+    FROM
+      row_matrix
+    WHERE
+      protein1 = 'NrdBi'
+    GROUP BY
+      1,2,3,4,5,6,7,8
+  ) NrdBi ON
+    taxa.species = NrdBi.species AND taxa.strain = NrdBi.strain
+  LEFT JOIN
+  (
+    SELECT 
+      domain, phylum, class, "order", family, genus, species, strain, SUM(n_proteins) AS n_proteins, CASE WHEN SUM(n_proteins) > 0 THEN 1 ELSE 0 END AS n_genomes_w_protein
+    FROM
+      row_matrix
+    WHERE
+      protein1 = 'NrdAk'
+    GROUP BY
+      1,2,3,4,5,6,7,8
+  ) NrdAk ON
+    taxa.species = NrdAk.species AND taxa.strain = NrdAk.strain
+  LEFT JOIN
+  (
+    SELECT 
+      domain, phylum, class, "order", family, genus, species, strain, SUM(n_proteins) AS n_proteins, CASE WHEN SUM(n_proteins) > 0 THEN 1 ELSE 0 END AS n_genomes_w_protein
+    FROM
+      row_matrix
+    WHERE
+      protein1 = 'NrdBk'
+    GROUP BY
+      1,2,3,4,5,6,7,8
+  ) NrdBk ON
+    taxa.species = NrdBk.species AND taxa.strain = NrdBk.strain
+  LEFT JOIN
+  (
+    SELECT 
+      domain, phylum, class, "order", family, genus, species, strain, SUM(n_proteins) AS n_proteins, CASE WHEN SUM(n_proteins) > 0 THEN 1 ELSE 0 END AS n_genomes_w_protein
+    FROM
+      row_matrix
+    WHERE
+      protein1 = 'NrdAn'
+    GROUP BY
+      1,2,3,4,5,6,7,8
+  ) NrdAn ON
+    taxa.species = NrdAn.species AND taxa.strain = NrdAn.strain
+  LEFT JOIN
+  (
+    SELECT 
+      domain, phylum, class, "order", family, genus, species, strain, SUM(n_proteins) AS n_proteins, CASE WHEN SUM(n_proteins) > 0 THEN 1 ELSE 0 END AS n_genomes_w_protein
+    FROM
+      row_matrix
+    WHERE
+      protein1 = 'NrdBn'
+    GROUP BY
+      1,2,3,4,5,6,7,8
+  ) NrdBn ON
+    taxa.species = NrdBn.species AND taxa.strain = NrdBn.strain
 ;
-
