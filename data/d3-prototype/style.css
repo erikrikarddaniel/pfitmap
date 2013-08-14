@@ -1,6 +1,12 @@
 body {
 
 }
+
+#heat_map table {
+	font-size: 10px;
+	border: thin solid;
+	border-bottom-style: solid;  
+}
 #organism_selector {
 	display: inline-block;
 }

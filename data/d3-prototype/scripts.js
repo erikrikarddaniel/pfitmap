@@ -20,7 +20,7 @@ function load_data() {
 	pfitmap.organisms_count = pfitmap.dataset.length;
 	pfitmap.svg_height = (pfitmap.organisms_count + 1) * pfitmap.row_height;
 	pfitmap.svg_width = (pfitmap.columns_names.length * pfitmap.column_width);
-	svg_it();
+	table_it();
 	});
 };
   
@@ -49,9 +49,33 @@ function svg_it() {
 }
 
 function table_it() {
-	console.log(dataset);
-	var tr = d3.select("body").append("table").selectAll("tr").data(dataset).enter().append("tr");
-	var td = tr.selectAll("td").data(function(d) {return [d.n_genomes, d["protein:RNR I:NrdA:n_proteins"], d["protein:RNR I:NrdA:n_genomes_w_protein"], d["protein:RNR I:NrdB:n_proteins"], d["protein:RNR I:NrdB:n_genomes_w_protein"], d["protein:RNR III:NrdD:n_proteins"], d["protein:RNR III:NrdD:n_genomes_w_protein"], d["protein:RNR III:NrdG:n_proteins"], d["protein:RNR III:NrdG:n_genomes_w_protein"],d["protein:RNR II:NrdJ:n_proteins"],d["protein:RNR II:NrdJ:n_genomes_w_protein"] ]; }).enter().append("td").text(function(d) { return d; });
+	var table = d3.select("#heat_map")
+		.append("table");
+		
+	var thead = table.append("thead");
+	var tbody = table.append("tbody");
+	
+	thead.append("tr")
+		.selectAll("th")
+		.data(pfitmap.columns_names)
+		.enter()
+		.append("th")
+		.text(function(column) { return column;})
+		
+	var rows = tbody.selectAll("tr")
+		.data(pfitmap.dataset)
+		.enter()
+		.append("tr");
+		
+	var cells = rows.selectAll("td")
+		.data(function(row) {
+			return pfitmap.columns_names.map(function(column) {
+				return {column: column, value: row[column]}
+			})		
+		})
+		.enter()
+		.append("td")
+		.text(function(d) { return d.value; });
 }
 
 
