@@ -25,7 +25,7 @@ gem 'delayed_job_active_record', '0.3.2'
 gem 'daemons'
 
 # Debugging memory leak
-gem 'oink'
+#gem 'oink'
 
 # Deployment
 gem 'capistrano'
@@ -39,13 +39,15 @@ gem 'rvm-capistrano'
 
 gem 'pg'
 
+gem 'google_visualr'
+
 group :development, :test do
 	gem 'rspec-rails', '2.8.1'
 	gem 'annotate', '~> 2.4.1.beta'
 end
 
 group :test do
-  gem 'capybara-webkit'
+  gem 'capybara-webkit', '~> 0.13.0'	# capybara 2.0 requires some moving, see http://alindeman.github.com/2012/11/11/rspec-rails-and-capybara-2.0-what-you-need-to-know.html
   gem 'database_cleaner' # Added to enable js testing
   gem 'factory_girl_rails', '1.4.0'
   gem 'autotest-standalone', :require => 'autotest'

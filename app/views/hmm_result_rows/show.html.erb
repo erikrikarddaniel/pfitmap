@@ -137,7 +137,7 @@
 	</tr>
       </thead>
       <tbody>
-	<% @hmm_result_row.db_sequence.hmm_result_rows(order: "fullseq_score").each do |related_row|%>
+	<% @hmm_result_row.db_sequence.hmm_result_rows.sort_by { |hrr| hrr.fullseq_score }.each do |related_row|%>
 	<tr>
 	  <td><%= related_row.hmm_result.hmm_profile.name %></td>
 	  <td><%= related_row.fullseq_score %></td>
@@ -151,6 +151,17 @@
       </tbody>
     </table>
     <% end %>
+    <% if @hmm_result_row.hmm_alignments.any? %>
+    <h3> Listing HMM alignments </h3>
+    <div class="alignment">
+      <table class="standard alignment" style="width: <%= ( @hmm_alignments.sort_by { |a| -a.hmm_line.length }[0].hmm_line.length + 30 ) * 7 %>px">
+	<tbody class>
+	  <%= render @hmm_alignments %>
+	</tbody>
+      </table>
+    </div>
+    <% end %>
+    <br/>
     <%  if @hmm_result_row.hmm_db_hits.any? %>
     <h3> Listing HMM database hits </h3>
     <table class="standard">

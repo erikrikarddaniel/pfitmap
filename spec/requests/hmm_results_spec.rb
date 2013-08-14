@@ -33,8 +33,60 @@ describe "HmmResults" do
       end
     end
   end
+  describe "HMM score criteria" do
+    before do
+      visit hmm_result_path(r1)
+    end
+    it "without criteria" do
+      page.should have_content("No criterion created for")
+    end
+    describe "with criteria" do
+      let!(:hmm_score_criterion) { FactoryGirl.create(:hmm_score_criterion, hmm_profile: profile1, min_fullseq_score: 500) }
+      before do
+        visit hmm_result_path(r1)
+      end
+      it "should be displayed" do
+        page.should_not have_content("No criterion created for")
+        page.should have_button("Update Hmm score criterion")
+      end
+      it "should be editable" do
+        fill_in 'hmm_score_criterion_min_fullseq_score', :with => '800'
+        click_button "Update Hmm score criterion"
+        page.should have_content("Hmm score criterion was successfully updated.")
+        profile1.hmm_score_criteria.first.min_fullseq_score.should == 800
+      end
+    end
+  end
 
-  
+  describe "hmm alignments" do
+    before do
+      @hmm_result_nrdb = FactoryGirl.create(:hmm_result_nrdb, executed: Time.now)
+      parse_hmm_tblout(@hmm_result_nrdb, fixture_file_upload("/NrdB-20rows.tblout"))
+      visit hmm_result_path(@hmm_result_nrdb)
+    end
+    it "has a link on result show page" do
+      page.should have_content("Upload HMM Alignments")
+    end
+    
+    describe "upload page" do
+      before do
+        @hmm_result_nrdb = FactoryGirl.create(:hmm_result_nrdb, executed: Time.now)
+        parse_hmm_tblout(@hmm_result_nrdb, fixture_file_upload("/NrdB-20rows.tblout"))
+        visit hmm_result_upload_alignments_path(@hmm_result_nrdb)
+      end
+      it "loads" do
+        page.should have_content("Upload HMM Alignments")
+        page.should have_content(@hmm_result_nrdb.hmm_profile.description)
+        page.should have_content(@hmm_result_nrdb.sequence_source.name)
+      end
+      it "works" do
+        attach_file 'file', "#{Rails.root}/spec/fixtures/NrdB-5alignments.hmmout"
+        click_on 'Create Alignments'
+        page.should have_content('successfully')
+        HmmAlignment.count.should == 5
+      end
+    end
+  end
   describe "show result-rows" do
     before do
       visit hmm_result_row_path(result_row)

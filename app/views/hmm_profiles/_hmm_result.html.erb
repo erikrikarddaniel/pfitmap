@@ -1,7 +1,10 @@
 <tr>
+  <td> <%= link_to "Show Result", hmm_result %> </td>
   <td> <%= hmm_result.sequence_source.source %> </td>
   <td> <%= hmm_result.sequence_source.name %> </td>
   <td> <%= hmm_result.sequence_source.version %> </td>
-  <td> <%= link_to "show", hmm_result %> </td>
-<td> <%= link_to "destroy", hmm_result, data: {confirm: 'Are you sure you want to delete this HMM Result and all its rows?'}, method: :delete %></td>
+  <td> <% if can?  :delete, hmm_result %>
+    <%= link_to "Destroy", hmm_result, data: {confirm: 'Are you sure you want to delete this HMM Result and all its rows?'}, method: :delete %>
+    <% end %>
+  </td>
 </tr>

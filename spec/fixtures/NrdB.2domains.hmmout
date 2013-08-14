@@ -1,0 +1,54 @@
+# hmmsearch :: search profile(s) against a sequence database
+# HMMER 3.0 (March 2010); http://hmmer.org/
+# Copyright (C) 2010 Howard Hughes Medical Institute.
+# Freely distributed under the GNU General Public License (GPLv3).
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# query HMM file:                  NrdB.hmm
+# target sequence database:        /proj/b2010008/nobackup/data/ncbi/nr.fasta
+# output directed to file:         NrdB.ncbi_nr.hmmout
+# per-seq hits tabular output:     NrdB.ncbi_nr.tblout
+# per-dom hits tabular output:     NrdB.ncbi_nr.domtblout
+# number of worker threads:        8
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Query:       NrdB  [M=364]
+Scores for complete sequences (score includes all domains):
+   --- full sequence ---   --- best 1 domain ---    -#dom-
+    E-value  score  bias    E-value  score  bias    exp  N  Sequence                               Description
+    ------- ------ -----    ------- ------ -----   ---- --  --------                               -----------
+   1.4e-105  363.3   0.4    2.7e-81  283.4   0.0    2.0  2  gi|47208564|emb|CAF96041.1|            unnamed protein product [Tetraod
+
+Domain annotation for each sequence (and alignments):
+>> gi|47208564|emb|CAF96041.1|  unnamed protein product [Tetraodon nigroviridis]
+   #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
+ ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
+   1 !  283.4   0.0   5.4e-85   2.7e-81      28     272 ..       4     236 ..       1     239 [. 0.97
+   2 !   78.4   0.0   1.1e-22   5.5e-19     272     360 ..     264     348 ..     259     352 .] 0.91
+
+  Alignments for each domain:
+  == domain 1    score: 283.4 bits;  conditional E-value: 5.4e-85
+                         NrdB  28 kepllsgenlsrvnlnpikypwakefykkaeanfWlpeeidlsdDikdWktLseeerrlikrvlafltllDtivgenlveal 109
+                                   epll +en++r++++pi+yp+++++yk+a+a+fW+ ee+dls+D+++W +L++ee+++i++vlaf++++D+iv+enlv+++
+  gi|47208564|emb|CAF96041.1|   4 GEPLL-QENPRRFVIFPIQYPDIWKMYKQAQASFWTVEEVDLSKDLAHWDSLKPEEKHFISHVLAFFAASDGIVNENLVQRF 84 
+                                  57899.6899************************************************************************ PP
+
+                         NrdB 110 sqeitapeakavlgfqafmEaiHaksYsliletlgtd.eeidelFdavrenpalqkKaefvlrlyeslqdeetkqsllklla 190
+                                   qe++ pea+ +++ q   E++H+++Ysl+++t+++d +e+++lF+a+ ++p++++Ka+++l+++++ +     +++ ++l+
+  gi|47208564|emb|CAF96041.1|  85 CQEVQVPEARSFYSYQVLIESVHSEMYSLLINTYIRDlKEREHLFNAIYTMPCVKRKADWALQWINDST-----STFGERLV 161
+                                  *******************************************************************75.....78999999 PP
+
+                         NrdB 191 asvllEgilFYsgFalilalarrgkmkglaeiieliiRDEslHgdfvilliqelleenpelqqkelkeevyelleeavelEe 272
+                                  a++++Egi+F+++Fa+i++l++rg+m+gl+ ++eli+RDE+lH++f++ll++ l++++        +++v++++++av +E+
+  gi|47208564|emb|CAF96041.1| 162 AFAAVEGIFFSGSFASIYWLKKRGLMPGLTYSNELISRDEGLHCTFACLLYSYLVKKP-------SEDRVKDIITKAVSIEQ 236
+                                  9*********************************************************.......79************997 PP
+
+  == domain 2    score: 78.4 bits;  conditional E-value: 1.1e-22
+                         NrdB 272 eeyaedllpegllglnaedvkqYvryiadkrlmnlGleklfeveaenplpwveailsttkktdFFekrvteYqkagveet.e 352
+                                  +e+++++lp +l+g+n   +kqY++++ad++   lGl k++++e  np++++eai++ ++kt+FFekrv eYq  g +++  
+  gi|47208564|emb|CAF96041.1| 264 QEFLTEALPVDLIGMNRCLMKQYIEFVADRLFADLGLAKMYNAE--NPFDFMEAISL-EGKTNFFEKRVAEYQRFGIMSSpV 342
+                                  689*****************************************..***********.********************9844 PP
+
+                         NrdB 353 dedfdfeg 360
+                                  d++f  + 
+  gi|47208564|emb|CAF96041.1| 343 DSEF--TL 348
+                                  4444..33 PP

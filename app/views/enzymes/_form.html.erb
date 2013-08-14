@@ -6,12 +6,23 @@
     <%= f.text_field :name %>
   </div>
   <div class="field">
+    <%= f.label :abbreviation %><br />
+    <%= f.text_field :abbreviation %>
+  </div>
+  <div class="field">
     <%= f.label :parent_id %>
     <%= collection_select(:enzyme, :parent_id, @parent_candidates, :id, :name, {:include_blank => :true}) %>
   </div>
   <div class="field">
     <%= f.label :hmm_profile %>
-    <%= select_tag("hmm_profile_ids[]", options_for_select(@hmm_profiles.collect { |profile| [profile.description, profile.id] }, @enzyme.hmm_profiles.collect { |profile| profile.id}), {:multiple=> true})%>
+    <%= select_tag(
+      "hmm_profile_ids[]", 
+      options_for_select(
+	@hmm_profiles.sort_by { |p| p.hierarchy }.collect { |profile| [profile.protein_name, profile.id] }, 
+	@enzyme.hmm_profiles.collect { |profile| profile.id}
+      ), 
+      {:multiple=> true}
+    )%>
   </div>
   <div class="actions">
     <%= f.submit %>

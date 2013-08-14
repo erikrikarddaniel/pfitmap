@@ -5,19 +5,19 @@
     <thead>
       <th colspan=<%= (n_columns).to_s %>>
 	<% if enzyme_sign(enzyme,enzyme_tree) == "+" %>
-	  <%= link_to "+", { controller: "protein_counts", action: "with_enzymes", enzyme_ids: enzyme_array_expand(enzyme, enzyme_ids) }%> <%= enzyme.name %>
+	  <%= link_to "+", { controller: "protein_counts", action: "with_enzymes", enzyme_ids: enzyme_array_expand(enzyme, enzyme_ids) }%> <%= enzyme.abbreviation %>
 	<% else %>
-          <%= link_to "-", { controller: "protein_counts", action: "with_enzymes", enzyme_ids: enzyme_array_collapse(enzyme, enzyme_ids) }%> <%= enzyme.name %>
+          <%= link_to "-", { controller: "protein_counts", action: "with_enzymes", enzyme_ids: enzyme_array_collapse(enzyme, enzyme_ids) }%> <%= enzyme.abbreviation %>
         <% end %>
       </th>
     </thead>
     <tbody>
       <% if enzyme_tree[parent_id][1] == []%>
         <% enzyme.proteins.order("name").each do |protein| %>
-        <td colspan=1 class="protein-header"><%= protein.name %> </td>
+	  <td colspan=1 class="protein-header">&nbsp;</td>
         <% end %>
       <% else %>
-        <% enzyme.children.each do |enzyme_child| %>
+        <% enzyme.children.order(:abbreviation).each do |enzyme_child| %>
           <%= render :partial => 'header_table', :locals => {parent_id: enzyme_child.id, enzyme_tree: @enzyme_tree, enzyme_ids: @enzyme_tree.keys} %>
         <% end %>
       <% end %>

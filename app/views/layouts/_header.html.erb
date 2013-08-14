@@ -4,15 +4,8 @@
       <%= link_to "RNRdb", root_path, id: "logo" %>
       <nav>
 	<ul class="nav nav-pills pull-right">
-	  <li class="dropdown" id="protein_counts">
-	    <a class="dropdown-toggle" data-toggle="dropdown" href="#protein_counts">
-	      Protein Statistics
-	      <b class="caret"></b>
-	    </a>
-	    <ul class="dropdown-menu">
-	      <li><%= link_to "With Enzymes", protein_counts_with_enzymes_path, title: "See Protein statistics for standard RNR enzymes" %></li>
-
-	    </ul>
+	  <li>
+	      <%= link_to "Protein Statistics", protein_counts_with_enzymes_path, title: "See Protein statistics for standard RNR enzymes" %>
 	  </li>
 	  <li class="dropdown" id="evaluation">
 	    <a class="dropdown-toggle" data-toggle="dropdown" href="#evaulation">
@@ -21,13 +14,12 @@
 	    </a>
 	    <ul class="dropdown-menu">
 	      <li><%= link_to "Home", root_path, title: "Home" %></li>
-	      <li><%= link_to "HMM profiles", hmm_profiles_path, title: "profiles" %></li>
-	      <li><%= link_to "Sequence Sources", sequence_sources_path %></li>
-	      <li><%= link_to "HMM Results", hmm_results_path %></li>
-	      <li><%= link_to "DB Sequences", db_sequences_path %></li>
-	      <li><%= link_to "HMM DB Hits", hmm_db_hits_path %></li>
-	      <li><%= link_to "HMM Score Criteria", hmm_score_criteria_path %></li>
+	      <li><%= link_to "HMM Profiles", hmm_profiles_path, title: "profiles" %></li>
 	      <li><%= link_to "Enzymes", enzymes_path %></li>
+	      <li><%= link_to "HMM Results", hmm_results_path %></li>
+	      <li><%= link_to "Evaluate/Sequence Sources", sequence_sources_path %></li>
+	      <li><%= link_to "HMM Score Criteria", hmm_score_criteria_path %></li>
+	      <li><%= link_to "Calculate/Pfitmap Releases", pfitmap_releases_path %></li>
 	    </ul>
 	  </li>
 	  <li class="dropdown" id="release">

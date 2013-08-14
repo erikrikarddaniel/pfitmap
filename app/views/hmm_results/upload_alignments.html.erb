@@ -1,0 +1,16 @@
+<h3> Upload HMM Alignments for <%= @hmm_result.hmm_profile.description%>, <%= @hmm_result.sequence_source %></h3>
+<div class="well">
+<%= form_tag hmm_result_create_alignments_path(@hmm_result), :html => { :class => "well"}, :multipart => true do %>
+<%= render :partial => 'shared/error_messages', :locals => { :error_subject => @hmm_result } %>
+<div class="row-fluid">
+  <div class="control-group span4">
+    <label for="file">Choose a file containing your hmm-alignments (hmmout format)</label>
+    <%= file_field_tag :file, :class => "span12"%>
+  </div>
+  <div class="control-group span4">
+    <%= submit_tag "Create Alignments", :class => "btn btn-large btn-primary", data: { disable_with: 'Processing...'} %>
+  </div>
+  <% end %>
+</div>
+</div>
+

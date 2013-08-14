@@ -94,6 +94,14 @@ module ProteinCountsHelper
     end
   end
 
+  def link_to_collapse(parent_taxon, enzyme_ids, level)
+    link_to "-", { :controller => "protein_counts", :action => "collapse_rows", :parent_id => parent_taxon.id, :level => (level-1), :enzyme_ids => enzyme_ids}, :remote => true
+  end
+
+  def link_to_expand(sign, parent_taxon, enzyme_ids, level)
+    link_to sign , { :controller => "protein_counts", :action => "add_row", :parent_id => parent_taxon.id, :level => level, :enzyme_ids => enzyme_ids}, :remote => true
+  end
+
   private
   def sum(arr)
     arr.inject{|s,x| s + x }

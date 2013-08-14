@@ -51,6 +51,23 @@ FactoryGirl.define do
     db_sequence
   end
 
+  factory :hmm_alignment do
+    hmm_result_row
+    score 365.5
+    cevalue 6.1e-110
+    hmmfrom 13
+    hmmto 349
+    alifrom 3
+    alito 343
+    envfrom 1
+    envto 346
+    acc 0.98
+    hmm_line "kakkleeesqkeeekkepllsgenlsrvnlnpikypwakefykkaeanfWlpeeidlsdDikdWktLseeerrlikrvlafltllDtivgenlvealsqeitapeakavlgfqafmEaiHaksYsliletlgtdeeidelFdavrenpalqkKaef"
+    match_line  "k+k+l++++ + +++ +++  g++++ +++n++ky w+ ++y++a++nfW+peei+ls+D+kd+  L  +er +++++l+fl +lD+i++ nl  ++  +ita+e++ +l+ qaf+E +H++sYs++l+t++++ e++++  +++++++l ++++f"
+    target_line "KKKPLFNPEGDPDVRLRRMTGGNTTNLNDFNNMKYAWVSDWYRQAMNNFWIPEEINLSQDVKDYPRLLSAERSAYDKILSFLVFLDSIQTANLP-NIGAYITANEVNLCLSIQAFQECVHSQSYSYMLDTICSPVERNDILYQWKTDEHLLRRNTF"
+    pp_line     "5667899999999*********************************************************************************.*************************************************************"
+  end
+
   factory :pfitmap_sequence do
     db_sequence
     pfitmap_release
@@ -82,6 +99,7 @@ FactoryGirl.define do
 
   factory :enzyme do
     name "Example ENZ"
+    abbreviation "ENZ"
   end
 
   factory :taxon do |t|

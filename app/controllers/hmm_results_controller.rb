@@ -18,9 +18,9 @@ class HmmResultsController < ApplicationController
   # GET /hmm_results/1
   # GET /hmm_results/1.json
   def show
+    max_score = ( params[:max_score] ? params[:max_score].to_f : 1000000.0 )
     @hmm_result = HmmResult.find(params[:id])
-    @hmm_result_rows = @hmm_result.hmm_result_rows.paginate(page: params[:page], order: "fullseq_score DESC")
-    
+    show_params(@hmm_result, max_score)
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @hmm_result }
@@ -51,6 +51,7 @@ class HmmResultsController < ApplicationController
         if file
           if @hmm_result.save
             if parse_hmm_tblout(@hmm_result,file)
+              show_params(@hmm_result)
               format.html { redirect_to hmm_result_path(@hmm_result), notice: 'Hmm result was successfully created.' }
               format.json { render json: hmm_result_path(@hmm_result), status: :created, location: @hmm_result }
             else
@@ -85,5 +86,43 @@ class HmmResultsController < ApplicationController
 
   def hmm_result_params
     params[:hmm_result].slice(:executed)
+  end
+
+  def upload_alignments
+    @hmm_result = HmmResult.find(params[:hmm_result_id])
+  end
+
+  def create_alignments
+    if current_user.nil? || current_user.role != "admin"
+      flash[:error] = "Please sign in to register alignments"
+      redirect_to root_path
+    end
+    @hmm_result = HmmResult.find(params[:hmm_result_id])
+    file = params[:file]
+    respond_to do |format|
+      if file
+        if parse_hmmout(@hmm_result, file)
+          format.html { redirect_to hmm_result_path(@hmm_result), notice: 'Hmm Alignments was successfully created.' }
+        else
+          format.html { redirect_to @hmm_result, notice: 'Error while parsing the given file' }
+        end
+      end
+    end
+  end
+
+  private
+  # Helper method to avoid duplicated code
+  def show_params(hmm_result, max_score = 1000000)
+    @hmm_profile = hmm_result.hmm_profile
+    @hmm_result_rows = hmm_result.hmm_result_rows.where("fullseq_score <= ?", max_score).paginate(page: params[:page], order: "fullseq_score DESC")
+    # Editable Hmm Score Criterion
+    hmm_score_criteria = hmm_result.hmm_profile.hmm_score_criteria
+    if hmm_score_criteria
+      @hmm_score_criterion = hmm_score_criteria.first
+    end
+    # Generate histogram
+    if hmm_result.hmm_result_rows.any?
+      @chart, @chart2, @bin_size, @n_bins = hmm_result.create_histogram
+    end    
   end
 end

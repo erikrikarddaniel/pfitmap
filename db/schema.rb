@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121205121631) do
+ActiveRecord::Schema.define(:version => 20130118122617) do
 
   create_table "hmm_result_rows", :force => true do |t|
     t.string   "target_name"
@@ -82,10 +82,11 @@ ActiveRecord::Schema.define(:version => 20121205121631) do
 
   create_table "enzymes", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
     t.integer  "parent_id"
-    t.index ["parent_id"], :name => "index_enzymes_on_parent_id", :order => {"parent_id" => :asc}
+    t.string   "abbreviation"
+    t.index ["parent_id"], :name => "fk__enzymes_parent_id", :order => {"parent_id" => :asc}
     t.foreign_key ["parent_id"], "enzymes", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "enzymes_parent_id_fkey"
   end
 
@@ -123,6 +124,30 @@ ActiveRecord::Schema.define(:version => 20121205121631) do
     t.foreign_key ["protein_id"], "proteins", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "enzyme_proteins_protein_id_fkey"
   end
 
+  create_table "hmm_alignments", :force => true do |t|
+    t.integer  "hmm_result_row_id"
+    t.float    "score"
+    t.float    "bias"
+    t.float    "cevalue"
+    t.float    "ievalue"
+    t.integer  "hmmfrom"
+    t.integer  "hmmto"
+    t.integer  "alifrom"
+    t.integer  "alito"
+    t.integer  "envfrom"
+    t.integer  "envto"
+    t.float    "acc"
+    t.text     "hmm_line"
+    t.text     "match_line"
+    t.text     "target_line"
+    t.text     "pp_line"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+    t.integer  "domain_num"
+    t.index ["hmm_result_row_id"], :name => "fk__hmm_alignments_hmm_result_row_id", :order => {"hmm_result_row_id" => :asc}
+    t.foreign_key ["hmm_result_row_id"], "hmm_result_rows", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "hmm_alignments_hmm_result_row_id_fkey"
+  end
+
   create_table "hmm_db_hits", :force => true do |t|
     t.integer  "gi"
     t.string   "db"
@@ -155,20 +180,6 @@ ActiveRecord::Schema.define(:version => 20121205121631) do
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
     t.index ["hmm_profile_id"], :name => "index_hmm_score_criterions_on_hmm_profile_id", :order => {"hmm_profile_id" => :asc}
-  end
-
-  create_table "hmm_score_criterions", :force => true do |t|
-    t.float    "min_fullseq_score"
-    t.integer  "inclusion_criterion_id"
-    t.datetime "created_at",             :null => false
-    t.datetime "updated_at",             :null => false
-  end
-
-  create_table "inclusion_criterions", :force => true do |t|
-    t.integer  "hmm_profile_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
-    t.index ["hmm_profile_id"], :name => "index_inclusion_criterions_on_hmm_profile_id", :order => {"hmm_profile_id" => :asc}
   end
 
   create_table "sequence_sources", :force => true do |t|

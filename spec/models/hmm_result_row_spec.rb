@@ -116,9 +116,6 @@ describe HmmResultRow do
     end
   end
 
-
-  
-
   describe "finding all unique databases represented in the hit list" do
     its( :dbs_included ) { should eq(["ref"]) }
   end

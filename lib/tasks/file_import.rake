@@ -9,8 +9,8 @@ namespace :file_import do
     puts "Searching in #{dir} for fasta files to import"
     Dir.open(dir).each do |file|
       next unless file =~ /^[^.].*\.(fasta)|(faa)/
-      puts "\tImporting sequences from #{file}"
-      FileParsers.import_external_db_fasta(File.open("#{dir}/#{file}"))
+      puts "\tImporting sequences from #{dir}/#{file}"
+      FileParsers.import_external_db_fasta(File.new("#{dir}/#{file}"))
       puts "\tDone"
     end
     puts "Done with all imports"

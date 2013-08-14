@@ -21,15 +21,15 @@ class HmmProfile < ActiveRecord::Base
   attr_accessor :release_statistics
   has_many :children, :class_name => "HmmProfile", :foreign_key => "parent_id", :dependent => :destroy
   belongs_to :parent, :class_name => "HmmProfile", :foreign_key => "parent_id"
-  has_many :hmm_results
+  has_many :hmm_results, :dependent => :destroy
   has_many :hmm_score_criteria, :dependent => :destroy
-  has_many :enzyme_profiles
+  has_many :enzyme_profiles, :dependent => :destroy
   has_many :enzymes, :through => :enzyme_profiles
-  has_many :proteins
-  has_many :db_sequence_best_profiles
-  has_many :best_profile_sequences, through: :db_sequence_best_profiles, source: :db_sequence
-  has_many :pfitmap_sequences
-  has_many :hmm_profile_release_statistics
+  has_many :proteins, :dependent => :destroy
+  has_many :db_sequence_best_profiles, :dependent => :destroy
+  has_many :best_profile_sequences, through: :db_sequence_best_profiles, source: :db_sequence, :dependent => :destroy
+  has_many :pfitmap_sequences, :dependent => :destroy
+  has_many :hmm_profile_release_statistics, :dependent => :destroy
 
   has_attached_file :hmm_logo, :styles => { :medium => "40000x400>", :thumb => "10000x100>" }
 
@@ -43,6 +43,10 @@ class HmmProfile < ActiveRecord::Base
     else
       protein_name
     end
+  end
+
+  def hmm_result_for(ss)
+    self.hmm_results.where("sequence_source_id = ?", ss.id).first
   end
 
   def to_s

@@ -2,32 +2,34 @@
 #
 # Table name: enzymes
 #
-#  id         :integer         not null, primary key
-#  name       :string(255)
-#  created_at :datetime        not null
-#  updated_at :datetime        not null
-#  parent_id  :integer
+#  id           :integer         not null, primary key
+#  name         :string(255)
+#  created_at   :datetime        not null
+#  updated_at   :datetime        not null
+#  parent_id    :integer
+#  abbreviation :string(255)
 #
 
 class Enzyme < ActiveRecord::Base
-  attr_accessible :name, :parent_id
+  attr_accessible :name, :parent_id, :abbreviation
   has_many :enzyme_profiles, dependent: :destroy
   has_many :hmm_profiles, through: :enzyme_profiles
   has_many :enzyme_proteins
   has_many :proteins, through: :enzyme_proteins
   validates :name, :presence => :true
+  validates :abbreviation, :presence => :true
   has_many :children, :class_name => "Enzyme", :foreign_key => "parent_id"
   belongs_to :parent, :class_name => "Enzyme", :foreign_key => "parent_id"
 
   
   def self.find_standard_enzymes(enzyme_ids)
     if enzyme_ids
-      enzymes = Enzyme.find_all_by_id(enzyme_ids, :order => "parent_id, name")
+      enzymes = Enzyme.find_all_by_id(enzyme_ids, :order => "parent_id, abbreviation")
       enzyme_tree = Enzyme.build_tree_from(enzymes)
-      parent_ids = Enzyme.find_all_by_id(enzyme_ids, :order => "name", :conditions => "parent_id IS NULL").map { |e| e.id}
+      parent_ids = Enzyme.find_all_by_id(enzyme_ids, :order => "abbreviation", :conditions => "parent_id IS NULL").map { |e| e.id}
     else
-      enzymes = Enzyme.find_all_by_parent_id(nil, :order => "name")
-      parent_ids = Enzyme.find(:all, :order => "name", :conditions => "parent_id IS NULL").map { |e| e.id}
+      enzymes = Enzyme.find_all_by_parent_id(nil, :order => "abbreviation")
+      parent_ids = Enzyme.find(:all, :order => "abbreviation", :conditions => "parent_id IS NULL").map { |e| e.id}
       enzyme_tree = Enzyme.build_tree_from(enzymes)
     end
     return enzyme_tree, parent_ids, enzymes
@@ -44,7 +46,7 @@ class Enzyme < ActiveRecord::Base
     
     enzymes.each do |e|
       children = []
-      e.children.order("name").each do |c|
+      e.children.order("abbreviation").each do |c|
         if enzyme_hash[c.id]
           children << c.id
         end
@@ -52,5 +54,10 @@ class Enzyme < ActiveRecord::Base
       tree[e.id] = [e, children, e.proteins]
     end
     return tree
+  end
+
+  # Returns a string of enzyme abbreviations separated by ':' -- useful for sorting purposes
+  def hierarchy
+    parent ?  "#{parent.hierarchy}:#{abbreviation}" : abbreviation
   end
 end

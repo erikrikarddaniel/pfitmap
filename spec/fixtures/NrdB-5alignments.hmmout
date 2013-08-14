@@ -1,0 +1,199 @@
+# hmmsearch :: search profile(s) against a sequence database
+# HMMER 3.0 (March 2010); http://hmmer.org/
+# Copyright (C) 2010 Howard Hughes Medical Institute.
+# Freely distributed under the GNU General Public License (GPLv3).
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# query HMM file:                  NrdB.hmm
+# target sequence database:        /proj/b2010008/nobackup/data/ncbi/nr.fasta
+# output directed to file:         NrdB.ncbi_nr.hmmout
+# per-seq hits tabular output:     NrdB.ncbi_nr.tblout
+# per-dom hits tabular output:     NrdB.ncbi_nr.domtblout
+# number of worker threads:        8
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Query:       NrdB  [M=364]
+Scores for complete sequences (score includes all domains):
+   --- full sequence ---   --- best 1 domain ---    -#dom-
+   9.4e-139  472.4   0.0   1.1e-138  472.2   0.0    1.1  1  gi|291295355|ref|YP_003506753.1|       ribonucleoside-diphosphate reduc
+   1.2e-126  432.6   0.1   1.4e-126  432.4   0.0    1.0  1  gi|158341282|ref|YP_001522354.1|       ribonucleotide-diphosphate reduc
+   2.2e-126  431.7   0.0   2.6e-126  431.5   0.0    1.0  1  gi|221202418|ref|ZP_03575450.1|        ribonucleoside-diphosphate reduc
+   2.4e-126  431.6   0.0   2.7e-126  431.4   0.0    1.0  1  gi|161525957|ref|YP_001580969.1|       ribonucleotide-diphosphate reduc
+   2.4e-126  431.6   0.0   2.8e-126  431.4   0.0    1.0  1  gi|189349324|ref|YP_001944952.1|       ribonucleotide-diphosphate reduc
+
+
+Domain annotation for each sequence (and alignments):
+>> gi|291295355|ref|YP_003506753.1|  ribonucleoside-diphosphate reductase [Meiothermus ruber DSM 1279]gi|290470314|gb|A
+   #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
+ ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
+   1 !  472.2   0.0  2.3e-142  1.1e-138      34     363 ..       5     330 ..       1     331 [. 0.98
+
+  Alignments for each domain:
+  == domain 1    score: 472.2 bits;  conditional E-value: 2.3e-142
+                              NrdB  34 genlsrvnlnpikypwakefykkaeanfWlpeeidlsdDikdWktLseeerrlikrvlafltllDtivgenlveals 110
+                                       +++ls+vn+n+++++++k+f+++++++fW++eei+l+dD+ +W+tLs+ee+r++++vla+ltllDt++g+++++ ls
+  gi|291295355|ref|YP_003506753.1|   5 LSVLSAVNWNRPDDGYTKMFWDQNVRQFWVDEEIPLADDKLTWMTLSREEQRVYEQVLAGLTLLDTVQGSVGMPLLS 81 
+                                       57889************************************************************************ PP
+
+                              NrdB 111 qeitapeakavlgfqafmEaiHaksYsliletlgtdeeidelFdavrenpalqkKaefvlrlyeslqdeetkqsllk 187
+                                       q+i++ +akav+gf+++mE++HaksYs+i++tl+t+e+i+elFd+vr++p+lq+K++fv+r+y ++qde   qsl+ 
+  gi|291295355|ref|YP_003506753.1|  82 QHIESLQAKAVMGFMGAMEHMHAKSYSSIFSTLCTSERIAELFDWVRSEPVLQEKQTFVHRRYLGVQDE---QSLYL 155
+                                       ******************************************************************987...***** PP
+
+                              NrdB 188 llaasvllEgilFYsgFalilalarrgkmkglaeiieliiRDEslHgdfvilliqelleenpelqqkelkeevyell 264
+                                        laasvllE++lFYsgF+++l+la++g+m++++eii+liiRDEs+Hg++v+ll+qe+++++pe+qqk+++e vy++l
+  gi|291295355|ref|YP_003506753.1| 156 GLAASVLLESFLFYSGFFYPLLLAGQGRMTSSGEIINLIIRDESIHGVYVGLLAQEVYAGLPEAQQKTAREGVYSML 232
+                                       ***************************************************************************** PP
+
+                              NrdB 265 eeavelEeeyaedllpegllglnaedvkqYvryiadkrlmnlGleklfeveaenplpwveailst.tkktdFFekrv 340
+                                       e++++lEe+y+++l++++   +++e+v++++ry+adk+lmnlGle++f+v+ae+++p+v+a+lst tk++dFF++++
+  gi|291295355|ref|YP_003506753.1| 233 EHLAGLEERYSRMLYTPL---GLTEAVVTFSRYNADKALMNLGLEPYFGVSAEAVNPVVLAGLSThTKNHDFFSTKG 306
+                                       ******************...******************************************************** PP
+
+                              NrdB 341 teYqkagveet.ededfdfegead 363
+                                       ++Y+ka+++e+ +dedf+feg a+
+  gi|291295355|ref|YP_003506753.1| 307 NGYVKAIRVEPiQDEDFIFEGLAP 330
+                                       *******************99876 PP
+
+>> gi|158341282|ref|YP_001522354.1|  ribonucleotide-diphosphate reductase subunit beta [Acaryochloris marina MBIC11017]
+   #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
+ ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
+   1 !  432.4   0.0  2.8e-130  1.4e-126      14     351 ..      39     383 ..       5     384 .] 0.94
+
+  Alignments for each domain:
+  == domain 1    score: 432.4 bits;  conditional E-value: 2.8e-130
+                              NrdB  14 akkleeesqkeeekkepllsgenlsrvnlnpikypwakefykkaeanfWlpeeidlsdDikdWkt...Lseeerrli 87 
+                                       a++ +++ ++ +++++++++g++ ++++l p+ky+wa+++y + +an+W+p+ei++s+Di+ Wkt   L+e+err++
+  gi|158341282|ref|YP_001522354.1|  39 AQPETQPPRRINVADKRIINGQT-DVNQLVPFKYQWAWDKYLAGCANHWMPQEINMSRDIALWKTtdgLTEDERRIV 114
+                                       23345568899********8777.***************************************************** PP
+
+                              NrdB  88 krvlafltllDtivgenlvealsqeitapeakavlgfqafmEaiHaksYsliletlgtdeeidelFdavrenpalqk 164
+                                       kr+l+f+ ++D++ ++n+v+ ++++itape++++l +qaf+EaiH+++Y++i+e+lg d  + e+F+a+re++++++
+  gi|158341282|ref|YP_001522354.1| 115 KRNLGFFVTADSLAANNIVLGTYRHITAPECRQYLLRQAFEEAIHTHAYQYIVESLGLD--EGEIFNAYREVDCIRE 189
+                                       ***********************************************************..**************** PP
+
+                              NrdB 165 Kaefvlrlyeslqde.......etkqsll.kllaasvllEgilFYsgFalilalarrgkmkglaeiieliiRDEslH 233
+                                       K+ef+  ++e+l+d+       e++q+ll +l+a+s+l+Eg++FY+gF++ilal r++km+g ae++++i+RDEs+H
+  gi|158341282|ref|YP_001522354.1| 190 KDEFLIPFVETLTDPtfetgtpENDQKLLkSLIAFSCLMEGLFFYVGFVQILALGRQNKMTGAAEQYQYILRDESMH 266
+                                       *****************************9*********************************************** PP
+
+                              NrdB 234 gdfvilliqelleenpelqqkelkeevyelleeavelEeeyaedllpegllglnaedvkqYvryiadkrlmnlGlek 310
+                                       ++f+i+l++ +++enp+l+++e+ ee+++l+++avelE +yaed++p+g+lglna+++k+Y+ryia++r +++Gl++
+  gi|158341282|ref|YP_001522354.1| 267 CNFGIDLVNAIKQENPHLWTPEFCEEIRDLFKRAVELEYRYAEDTMPRGVLGLNASMFKSYLRYIANRRSQQIGLDP 343
+                                       ***************************************************************************** PP
+
+                              NrdB 311 lfeveaenplpwveailsttkktdFFekrvteYqkagveet 351
+                                       +f +e enp+pw++++++++k+ +FFe+rv eYq++g+ ++
+  gi|158341282|ref|YP_001522354.1| 344 IFASE-ENPFPWMSEMVDLKKERNFFETRVLEYQTGGALSW 383
+                                       *****.*******************************9987 PP
+
+>> gi|221202418|ref|ZP_03575450.1|  ribonucleoside-diphosphate reductase, beta subunit [Burkholderia multivorans CGD2M]
+   #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
+ ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
+   1 !  431.5   0.0  5.3e-130  2.6e-126      21     351 ..      34     371 ..       8     372 .] 0.97
+
+  Alignments for each domain:
+  == domain 1    score: 431.5 bits;  conditional E-value: 5.3e-130
+                             NrdB  21 sqkeeekkepllsgenlsrvnlnpikypwakefykkaeanfWlpeeidlsdDikdWkt...Lseeerrlikrvlaflt 95 
+                                      +++++++++++++g++ ++++l p+ky+wa+e+y + +an+W+p+ei++s+Di+ Wk+   L+e+err++kr+l+f+ 
+  gi|221202418|ref|ZP_03575450.1|  34 EARVNVADKRIINGQT-DVNQLVPFKYKWAWEKYLAGCANHWMPQEINMSRDIALWKDpngLTEDERRIVKRNLGFFV 110
+                                      678999******8777.************************************************************* PP
+
+                             NrdB  96 llDtivgenlvealsqeitapeakavlgfqafmEaiHaksYsliletlgtdeeidelFdavrenpalqkKaefvlrly 173
+                                      ++D++ ++n+v+ ++++itape++++l +qaf+EaiH+++Y++i+e+lg d  + e+F+a++e+p+++ K+ef+  ++
+  gi|221202418|ref|ZP_03575450.1| 111 TADSLAANNIVLGTYRHITAPECRQFLLRQAFEEAIHTHAYQYIVESLGLD--EGEIFNAYHEVPSIRAKDEFLIPFI 186
+                                      ***************************************************..************************* PP
+
+                             NrdB 174 eslqde.......etkqsll.kllaasvllEgilFYsgFalilalarrgkmkglaeiieliiRDEslHgdfvilliqe 243
+                                      ++l+d+       e +q+ll +l+++++++Eg++FY+gF++ilal r++km+g ae++++i+RDEs+H++f+i+li++
+  gi|221202418|ref|ZP_03575450.1| 187 HTLTDPafktgtlEADQKLLkSLIVFACIMEGLFFYVGFTQILALGRQNKMTGAAEQYQYILRDESMHCNFGIDLINQ 264
+                                      *************999****9********************************************************* PP
+
+                             NrdB 244 lleenpelqqkelkeevyelleeavelEeeyaedllpegllglnaedvkqYvryiadkrlmnlGleklfeveaenplp 321
+                                      ++ enp+l+++e+++e++el+++avelE +yaed++p+g+lglna+++k+Y+r+i+++r++++Gl++lf++e enp+p
+  gi|221202418|ref|ZP_03575450.1| 265 IKLENPHLWTAEFRAEIRELFKQAVELEYRYAEDTMPRGVLGLNASMFKSYLRFICNRRCQQIGLDPLFPNE-ENPFP 341
+                                      ************************************************************************.***** PP
+
+                             NrdB 322 wveailsttkktdFFekrvteYqkagveet 351
+                                      w++++++++k+ +FFe+rv eYq++g+ ++
+  gi|221202418|ref|ZP_03575450.1| 342 WMSEMIDLKKERNFFETRVIEYQTGGALSW 371
+                                      **************************9987 PP
+
+>> gi|161525957|ref|YP_001580969.1|  ribonucleotide-diphosphate reductase subunit beta [Burkholderia multivorans ATCC 17
+   #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
+ ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
+   1 !  431.4   0.0  5.5e-130  2.7e-126      21     351 ..      58     395 ..      15     396 .] 0.96
+
+  Alignments for each domain:
+  == domain 1    score: 431.4 bits;  conditional E-value: 5.5e-130
+                              NrdB  21 sqkeeekkepllsgenlsrvnlnpikypwakefykkaeanfWlpeeidlsdDikdWkt...Lseeerrlikrvlafl 94 
+                                       +++++++++++++g++ ++++l p+ky+wa+e+y + +an+W+p+ei++s+Di+ Wk+   L+e+err++kr+l+f+
+  gi|161525957|ref|YP_001580969.1|  58 EARVNVADKRIINGQT-DVNQLVPFKYKWAWEKYLAGCANHWMPQEINMSRDIALWKDpngLTEDERRIVKRNLGFF 133
+                                       67899*******8777.************************************************************ PP
+
+                              NrdB  95 tllDtivgenlvealsqeitapeakavlgfqafmEaiHaksYsliletlgtdeeidelFdavrenpalqkKaefvlr 171
+                                        ++D++ ++n+v+ ++++itape++++l +qaf+EaiH+++Y++i+e+lg d  + e+F+a++e+p+++ K+ef+  
+  gi|161525957|ref|YP_001580969.1| 134 VTADSLAANNIVLGTYRHITAPECRQFLLRQAFEEAIHTHAYQYIVESLGLD--EGEIFNAYHEVPSIRAKDEFLIP 208
+                                       ****************************************************..*********************** PP
+
+                              NrdB 172 lyeslqde.......etkqsll.kllaasvllEgilFYsgFalilalarrgkmkglaeiieliiRDEslHgdfvill 240
+                                       ++++l+d+       e +q+ll +l+++++++Eg++FY+gF++ilal r++km+g ae++++i+RDEs+H++f+i+l
+  gi|161525957|ref|YP_001580969.1| 209 FIHTLTDPafktgtlEADQKLLkSLIVFACIMEGLFFYVGFTQILALGRQNKMTGAAEQYQYILRDESMHCNFGIDL 285
+                                       ***************999****9****************************************************** PP
+
+                              NrdB 241 iqelleenpelqqkelkeevyelleeavelEeeyaedllpegllglnaedvkqYvryiadkrlmnlGleklfeveae 317
+                                       i++++ enp+l+++e+++e++el+++avelE +yaed++p+g+lglna+++k+Y+r+i+++r++++Gl++lf++e e
+  gi|161525957|ref|YP_001580969.1| 286 INQIKLENPHLWTAEFRAEIRELFKQAVELEYRYAEDTMPRGVLGLNASMFKSYLRFICNRRCQQIGLDPLFPNE-E 361
+                                       ***************************************************************************.* PP
+
+                              NrdB 318 nplpwveailsttkktdFFekrvteYqkagveet 351
+                                       np+pw++++++++k+ +FFe+rv eYq++g+ ++
+  gi|161525957|ref|YP_001580969.1| 362 NPFPWMSEMIDLKKERNFFETRVIEYQTGGALSW 395
+                                       ******************************9987 PP
+
+>> gi|189349324|ref|YP_001944952.1|  ribonucleotide-diphosphate reductase subunit beta [Burkholderia multivorans ATCC 17
+   #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
+ ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
+   1 !  431.4   0.0  5.7e-130  2.8e-126      21     351 ..      65     402 ..      19     403 .] 0.96
+
+  Alignments for each domain:
+  == domain 1    score: 431.4 bits;  conditional E-value: 5.7e-130
+                              NrdB  21 sqkeeekkepllsgenlsrvnlnpikypwakefykkaeanfWlpeeidlsdDikdWkt...Lseeerrlikrvlafl 94 
+                                       +++++++++++++g++ ++++l p+ky+wa+e+y + +an+W+p+ei++s+Di+ Wk+   L+e+err++kr+l+f+
+  gi|189349324|ref|YP_001944952.1|  65 EARVNVADKRIINGQT-DVNQLVPFKYKWAWEKYLAGCANHWMPQEINMSRDIALWKDpngLTEDERRIVKRNLGFF 140
+                                       67899*******8777.************************************************************ PP
+
+                              NrdB  95 tllDtivgenlvealsqeitapeakavlgfqafmEaiHaksYsliletlgtdeeidelFdavrenpalqkKaefvlr 171
+                                        ++D++ ++n+v+ ++++itape++++l +qaf+EaiH+++Y++i+e+lg d  + e+F+a++e+p+++ K+ef+  
+  gi|189349324|ref|YP_001944952.1| 141 VTADSLAANNIVLGTYRHITAPECRQFLLRQAFEEAIHTHAYQYIVESLGLD--EGEIFNAYHEVPSIRAKDEFLIP 215
+                                       ****************************************************..*********************** PP
+
+                              NrdB 172 lyeslqde.......etkqsll.kllaasvllEgilFYsgFalilalarrgkmkglaeiieliiRDEslHgdfvill 240
+                                       ++++l+d+       e +q+ll +l+++++++Eg++FY+gF++ilal r++km+g ae++++i+RDEs+H++f+i+l
+  gi|189349324|ref|YP_001944952.1| 216 FIHTLTDPafktgtlEADQKLLkSLIVFACIMEGLFFYVGFTQILALGRQNKMTGAAEQYQYILRDESMHCNFGIDL 292
+                                       ***************999****9****************************************************** PP
+
+                              NrdB 241 iqelleenpelqqkelkeevyelleeavelEeeyaedllpegllglnaedvkqYvryiadkrlmnlGleklfeveae 317
+                                       i++++ enp+l+++e+++e++el+++avelE +yaed++p+g+lglna+++k+Y+r+i+++r++++Gl++lf++e e
+  gi|189349324|ref|YP_001944952.1| 293 INQIKLENPHLWTAEFRAEIRELFKQAVELEYRYAEDTMPRGVLGLNASMFKSYLRFICNRRCQQIGLDPLFPNE-E 368
+                                       ***************************************************************************.* PP
+
+                              NrdB 318 nplpwveailsttkktdFFekrvteYqkagveet 351
+                                       np+pw++++++++k+ +FFe+rv eYq++g+ ++
+  gi|189349324|ref|YP_001944952.1| 369 NPFPWMSEMIDLKKERNFFETRVIEYQTGGALSW 402
+                                       ******************************9987 PP
+
+
+
+Internal pipeline statistics summary:
+-------------------------------------
+Query model(s):                            1  (364 nodes)
+Target sequences:                   21786050  (7479994897 residues)
+Passed MSV filter:                    694176  (0.0318633); expected 435721.0 (0.02)
+Passed bias filter:                   377749  (0.017339); expected 435721.0 (0.02)
+Passed Vit filter:                     38180  (0.0017525); expected 21786.0 (0.001)
+Passed Fwd filter:                      4923  (0.00022597); expected 217.9 (1e-05)
+Initial search space (Z):           21786050  [actual number of targets]
+Domain search space  (domZ):            4465  [number of targets reported over threshold]
+# CPU time: 520.49u 16.32s 00:08:56.81 Elapsed: 00:01:40.32
+# Mc/sec: 27140.33
+//

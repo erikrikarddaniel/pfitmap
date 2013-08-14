@@ -17,14 +17,14 @@ role :db, "rnrdb.pfitmap.org", :primary => true
 default_run_options[:pty] = true
 ssh_options[:forward_agent] = true
 set :deploy_to, "/scratch/webapps/rnrdb.pfitmap.org"
-set :deploy_via, :remote_cache
+#set :deploy_via, :remote_cache
 set :user, "passenger"
 set :use_sudo, false
 set :port, 50021
 
 #repo details
 set :scm, :git
-set :repository, "git@github.com:alneberg/pfitmap.git"
+set :repository, "git@github.com:erikrikarddaniel/pfitmap.git"
 set :branch, "stable"
 set :git_enable_submodules, 1
 

@@ -1,0 +1,14 @@
+<%= form_for(@hmm_score_criterion, :html => {:class => "well"}) do |f| %>
+<%= render :partial => 'shared/error_messages', :locals => {:error_subject => @hmm_score_criterion} %>
+<div class="row-fluid">
+  <%= f.hidden_field :hmm_profile_id, :value => @hmm_profile.id %>
+  <div class="control-group">
+    <%= f.label "Minimum Full-Sequence Score" %>
+    <%= f.text_field :min_fullseq_score %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+</div>
+
+<% end %>

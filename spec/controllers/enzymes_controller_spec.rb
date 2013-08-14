@@ -26,7 +26,10 @@ describe EnzymesController do
   # Enzyme. As you add validations to Enzyme, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {name: "exname"}
+    {
+      name: "exname",
+      abbreviation: "NNN"
+    }
   end
   
   # This should return the minimal set of values that should be in the session

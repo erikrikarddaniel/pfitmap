@@ -3,7 +3,7 @@
 <div class="row-fluid">
   <div class="control-group span6">
     <%= f.label "HMM profile" %>
-    <%= collection_select( :hmm_score_criterion, :hmm_profile_id, @hmm_profiles, :id, :name) %>
+    <%= collection_select( :hmm_score_criterion, :hmm_profile_id, @hmm_profiles, :id, :description) %>
   </div>
   <div class="control-group span6">
     <%= f.label "Minimum Full-Sequence Score" %>

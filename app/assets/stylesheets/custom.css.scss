@@ -167,6 +167,30 @@ table.standard {
 	       @extend .table;
 	       @extend .table-striped;
 	       }
+table.result-rows {
+  td.score {
+    font-weight: bold;
+  }
+  td.accepted {
+    color: green;
+  }
+  td.not-accepted {
+    color: red;
+  }
+}
+
+table.alignment {
+  white-space: nowrap;
+  max-width: none;
+  td.domain {
+    width: 80px
+  }
+  table-layout:fixed;
+}
+
+div.alignment {
+  overflow-x: auto;
+}
 
 div.heat-map { 
   width: 1100px;
@@ -193,13 +217,16 @@ table.heat-map {
     a {
        font-size:20px;
     }  
+  }
+  td.no_genomes {
+    width: 80px;
   } 
   td.heat {
     a {
       color: black;
     }
     white-space: nowrap;
-    width: 120px !important;
+    width: 80px !important;
     text-align: center;
   }
   tbody.heat-body {
