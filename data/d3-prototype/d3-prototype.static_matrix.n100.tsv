@@ -1,168 +1,185 @@
-Archaea	Crenarchaeota	Thermoprotei	Thermoproteales	Thermoproteaceae	Pyrobaculum	Pyrobaculum islandicum	Pyrobaculum islandicum DSM 4184	NrdJ	NrdJf				1	1
-Archaea	Crenarchaeota	Thermoprotei	Thermoproteales	Thermoproteaceae	Pyrobaculum	Pyrobaculum islandicum	Pyrobaculum islandicum DSM 4184	NrdD	NrdDi				1	1
-Archaea	Euryarchaeota	Halobacteria	Halobacteriales	Halobacteriaceae	Halobacterium	Halobacterium salinarum	Halobacterium salinarum R1	NrdB	NrdBc				1	1
-Archaea	Euryarchaeota	Halobacteria	Halobacteriales	Halobacteriaceae	Halobacterium	Halobacterium salinarum	Halobacterium salinarum R1	NrdJ	NrdJf				1	1
-Archaea	Euryarchaeota	Halobacteria	Halobacteriales	Halobacteriaceae	Halobacterium	Halobacterium salinarum	Halobacterium salinarum R1	NrdA	NrdAc				1	1
-Archaea	Euryarchaeota	Halobacteria	Halobacteriales	Halobacteriaceae	Halorhabdus	Halorhabdus utahensis	Halorhabdus utahensis DSM 12940	NrdB	NrdBc				1	1
-Archaea	Euryarchaeota	Halobacteria	Halobacteriales	Halobacteriaceae	Halorhabdus	Halorhabdus utahensis	Halorhabdus utahensis DSM 12940	NrdJ	NrdJf				1	1
-Archaea	Euryarchaeota	Halobacteria	Halobacteriales	Halobacteriaceae	Halorhabdus	Halorhabdus utahensis	Halorhabdus utahensis DSM 12940	NrdA	NrdAc				1	1
-Archaea	Euryarchaeota	Halobacteria	Halobacteriales	Halobacteriaceae	Halorhabdus	Halorhabdus utahensis	Halorhabdus utahensis DSM 12940	NrdD	NrdDd	NrdDd2			1	1
-Archaea	Euryarchaeota	Halobacteria	Halobacteriales	Halobacteriaceae	Natronomonas	Natronomonas pharaonis	Natronomonas pharaonis DSM 2160	NrdB	NrdBi				1	1
-Archaea	Euryarchaeota	Halobacteria	Halobacteriales	Halobacteriaceae	Natronomonas	Natronomonas pharaonis	Natronomonas pharaonis DSM 2160	R2lox	R2loxE				2	1
-Archaea	Euryarchaeota	Halobacteria	Halobacteriales	Halobacteriaceae	Natronomonas	Natronomonas pharaonis	Natronomonas pharaonis DSM 2160	NrdJ	NrdJf				1	1
-Archaea	Euryarchaeota	Halobacteria	Halobacteriales	Halobacteriaceae	Natronomonas	Natronomonas pharaonis	Natronomonas pharaonis DSM 2160	NrdA	NrdAi				1	1
-Archaea	Euryarchaeota	Methanococci	Methanococcales	Methanococcaceae	Methanococcus	Methanococcus maripaludis	Methanococcus maripaludis X1	NrdD	NrdDa				1	1
-Archaea	Thaumarchaeota		Nitrosopumilales	Nitrosopumilaceae	Nitrosopumilus	Nitrosopumilus maritimus	Nitrosopumilus maritimus SCM1	NrdJf	NrdJf				1	1
-Bacteria	Actinobacteria	Actinobacteria	Actinomycetales	Mycobacteriaceae	Mycobacterium	Mycobacterium bovis	Mycobacterium bovis BCG str. ATCC 35740	NrdD	NrdDa	NrdDa1			2	1
-Bacteria	Actinobacteria	Actinobacteria	Actinomycetales	Mycobacteriaceae	Mycobacterium	Mycobacterium bovis	Mycobacterium bovis BCG str. ATCC 35743	NrdA	NrdE				1	1
-Bacteria	Actinobacteria	Actinobacteria	Actinomycetales	Pseudonocardiaceae	Amycolatopsis	Amycolatopsis sp. ATCC 39116		NrdB	NrdBc				1	1
-Bacteria	Actinobacteria	Actinobacteria	Actinomycetales	Pseudonocardiaceae	Amycolatopsis	Amycolatopsis sp. ATCC 39116		R2lox	R2loxA				2	1
-Bacteria	Actinobacteria	Actinobacteria	Actinomycetales	Pseudonocardiaceae	Amycolatopsis	Amycolatopsis sp. ATCC 39116		NrdA	NrdAc				1	1
-Bacteria	Actinobacteria	Actinobacteria	Actinomycetales	Pseudonocardiaceae	Amycolatopsis	Amycolatopsis sp. ATCC 39116		NrdJ	NrdJd				1	1
-Bacteria	Actinobacteria	Actinobacteria	Bifidobacteriales	Bifidobacteriaceae	Bifidobacterium	Bifidobacterium angulatum	Bifidobacterium angulatum DSM 20098 = JCM 7096	NrdD	NrdDc	NrdDc1			1	1
-Bacteria	Actinobacteria	Actinobacteria	Bifidobacteriales	Bifidobacteriaceae	Bifidobacterium	Bifidobacterium breve	Bifidobacterium breve DSM 20213 = JCM 1192	NrdB	NrdF	NrdF1			1	1
-Bacteria	Actinobacteria	Actinobacteria	Bifidobacteriales	Bifidobacteriaceae	Bifidobacterium	Bifidobacterium breve	Bifidobacterium breve DSM 20213 = JCM 1192	NrdD	NrdDc	NrdDc1			1	1
-Bacteria	Actinobacteria	Actinobacteria	Bifidobacteriales	Bifidobacteriaceae	Bifidobacterium	Bifidobacterium breve	Bifidobacterium breve DSM 20213 = JCM 1192	NrdA	NrdE	NrdE1			1	1
-Bacteria	Actinobacteria	Actinobacteria	Coriobacteriales	Coriobacteriaceae	Collinsella	Collinsella intestinalis	Collinsella intestinalis DSM 13280	NrdB	NrdBh				1	1
-Bacteria	Actinobacteria	Actinobacteria	Coriobacteriales	Coriobacteriaceae	Collinsella	Collinsella intestinalis	Collinsella intestinalis DSM 13280	NrdD	NrdDc	NrdDc2			1	1
-Bacteria	Actinobacteria	Actinobacteria	Coriobacteriales	Coriobacteriaceae	Collinsella	Collinsella intestinalis	Collinsella intestinalis DSM 13280	NrdA	NrdAh				1	1
-Bacteria	Bacteroidetes		Bacteroidetes Order II. Incertae sedis	Rhodothermaceae	Rhodothermus	Rhodothermus marinus	Rhodothermus marinus DSM 4252	NrdB	NrdBc				1	1
-Bacteria	Bacteroidetes		Bacteroidetes Order II. Incertae sedis	Rhodothermaceae	Rhodothermus	Rhodothermus marinus	Rhodothermus marinus DSM 4252	NrdJ	NrdJf				1	1
-Bacteria	Bacteroidetes		Bacteroidetes Order II. Incertae sedis	Rhodothermaceae	Rhodothermus	Rhodothermus marinus	Rhodothermus marinus DSM 4252	NrdA	NrdAc				1	1
-Bacteria	Bacteroidetes		Bacteroidetes Order II. Incertae sedis	Rhodothermaceae	Rhodothermus	Rhodothermus marinus	Rhodothermus marinus DSM 4252	NrdJ	NrdJd				1	1
-Bacteria	Chloroflexi	Chloroflexi	Chloroflexales	Chloroflexaceae	Roseiflexus	Roseiflexus castenholzii	Roseiflexus castenholzii DSM 13941	R2lox	R2loxB				1	1
-Bacteria	Chloroflexi	Chloroflexi	Chloroflexales	Chloroflexaceae	Roseiflexus	Roseiflexus castenholzii	Roseiflexus castenholzii DSM 13941	NrdJ	NrdJm	NrdJm2			1	1
-Bacteria	Firmicutes	Bacilli	Bacillales	Listeriaceae	Listeria	Listeria welshimeri	Listeria welshimeri serovar 6b str. SLCC5334	NrdB					1	1
-Bacteria	Firmicutes	Bacilli	Bacillales	Listeriaceae	Listeria	Listeria welshimeri	Listeria welshimeri serovar 6b str. SLCC5334	NrdD	NrdDc	NrdDc1			1	1
-Bacteria	Firmicutes	Bacilli	Bacillales	Listeriaceae	Listeria	Listeria welshimeri	Listeria welshimeri serovar 6b str. SLCC5334	NrdA	NrdAh				1	1
-Bacteria	Firmicutes	Bacilli	Lactobacillales	Streptococcaceae	Streptococcus	Streptococcus suis		NrdG					2	1
-Bacteria	Firmicutes	Clostridia	Clostridiales	Clostridiaceae	Clostridium	Clostridium asparagiforme	Clostridium asparagiforme DSM 15981	NrdB	NrdBh				1	1
-Bacteria	Firmicutes	Clostridia	Clostridiales	Clostridiaceae	Clostridium	Clostridium asparagiforme	Clostridium asparagiforme DSM 15981	NrdA	NrdAh				1	1
-Bacteria	Firmicutes	Clostridia	Clostridiales	Clostridiaceae	Clostridium	Clostridium asparagiforme	Clostridium asparagiforme DSM 15981	NrdD	NrdDc				1	1
-Bacteria	Firmicutes	Clostridia	Clostridiales	Clostridiaceae	Clostridium	Clostridium novyi	Clostridium novyi NT	NrdB	NrdBh				1	1
-Bacteria	Firmicutes	Clostridia	Clostridiales	Clostridiaceae	Clostridium	Clostridium novyi	Clostridium novyi NT	NrdA	NrdAh				1	1
-Bacteria	Firmicutes	Clostridia	Clostridiales	Clostridiaceae	Clostridium	Clostridium novyi	Clostridium novyi NT	NrdD	NrdDb				1	1
-Bacteria	Firmicutes	Erysipelotrichi	Erysipelotrichales	Erysipelotrichaceae	Eubacterium	Eubacterium biforme	Eubacterium biforme DSM 3989	NrdD	NrdDc	NrdDc2			1	1
-Bacteria	Fusobacteria	Fusobacteriia	Fusobacteriales	Leptotrichiaceae	Streptobacillus	Streptobacillus moniliformis	Streptobacillus moniliformis DSM 12112	NrdB	NrdF				1	1
-Bacteria	Fusobacteria	Fusobacteriia	Fusobacteriales	Leptotrichiaceae	Streptobacillus	Streptobacillus moniliformis	Streptobacillus moniliformis DSM 12112	NrdD	NrdDc	NrdDc2			1	1
-Bacteria	Fusobacteria	Fusobacteriia	Fusobacteriales	Leptotrichiaceae	Streptobacillus	Streptobacillus moniliformis	Streptobacillus moniliformis DSM 12112	NrdA	NrdE				1	1
-Bacteria	Proteobacteria	Alphaproteobacteria	Rhizobiales	Bartonellaceae	Bartonella	Bartonella tribocorum	Bartonella tribocorum CIP 105476	NrdB	NrdF	NrdF1			1	1
-Bacteria	Proteobacteria	Alphaproteobacteria	Rhizobiales	Bartonellaceae	Bartonella	Bartonella tribocorum	Bartonella tribocorum CIP 105476	NrdA	NrdE	NrdE1			1	1
-Bacteria	Proteobacteria	Alphaproteobacteria	Rhodospirillales	Acetobacteraceae	Gluconacetobacter	Gluconacetobacter sp. SXCC-1		NrdG					1	1
-Bacteria	Proteobacteria	Alphaproteobacteria	Sphingomonadales	Sphingomonadaceae	Citromicrobium	Citromicrobium sp. JLT1363		NrdB	NrdBk				1	1
-Bacteria	Proteobacteria	Alphaproteobacteria	Sphingomonadales	Sphingomonadaceae	Citromicrobium	Citromicrobium sp. JLT1363		NrdA	NrdAk				1	1
-Bacteria	Proteobacteria	Betaproteobacteria	Burkholderiales	Oxalobacteraceae	Collimonas	Collimonas fungivorans	Collimonas fungivorans Ter331	NrdG					1	1
-Bacteria	Proteobacteria	Betaproteobacteria	Neisseriales	Neisseriaceae	Neisseria	Neisseria elongata	Neisseria elongata subsp. glycolytica ATCC 29315	NrdB	NrdBg				1	1
-Bacteria	Proteobacteria	Betaproteobacteria	Neisseriales	Neisseriaceae	Neisseria	Neisseria elongata	Neisseria elongata subsp. glycolytica ATCC 29315	NrdA	NrdAg				1	1
-Bacteria	Proteobacteria	Betaproteobacteria	Neisseriales	Neisseriaceae	Neisseria	Neisseria elongata	Neisseria elongata subsp. glycolytica ATCC 29315	NrdD	NrdDh				1	1
-Bacteria	Proteobacteria	Betaproteobacteria	Neisseriales	Neisseriaceae	Neisseria	Neisseria flavescens	Neisseria flavescens NRL30031/H210	NrdB	NrdBg				1	1
-Bacteria	Proteobacteria	Betaproteobacteria	Neisseriales	Neisseriaceae	Neisseria	Neisseria flavescens	Neisseria flavescens NRL30031/H210	NrdA	NrdAg				1	1
-Bacteria	Proteobacteria	Betaproteobacteria	Neisseriales	Neisseriaceae	Neisseria	Neisseria flavescens	Neisseria flavescens NRL30031/H210	NrdD	NrdDh				1	1
-Bacteria	Proteobacteria	Betaproteobacteria	Neisseriales	Neisseriaceae	Neisseria	Neisseria gonorrhoeae	Neisseria gonorrhoeae NCCP11945	NrdB	NrdBg				1	1
-Bacteria	Proteobacteria	Betaproteobacteria	Neisseriales	Neisseriaceae	Neisseria	Neisseria gonorrhoeae	Neisseria gonorrhoeae NCCP11945	NrdA	NrdAg				1	1
-Bacteria	Proteobacteria	Epsilonproteobacteria			Nitratiruptor	Nitratiruptor sp. SB155-2		NrdB					1	1
-Bacteria	Proteobacteria	Epsilonproteobacteria			Nitratiruptor	Nitratiruptor sp. SB155-2		NrdA					1	1
-Bacteria	Proteobacteria	Epsilonproteobacteria			Nitratiruptor	Nitratiruptor sp. SB155-2		NrdJ	NrdJm	NrdJm1			1	1
-Bacteria	Proteobacteria	Epsilonproteobacteria			Nitratiruptor	Nitratiruptor sp. SB155-2		NrdD	NrdDd	NrdDd1	NrdDd1a		1	1
-Bacteria	Proteobacteria	Epsilonproteobacteria			Sulfurovum	Sulfurovum sp. NBC37-1		NrdB					1	1
-Bacteria	Proteobacteria	Epsilonproteobacteria			Sulfurovum	Sulfurovum sp. NBC370		NrdA					1	1
-Bacteria	Proteobacteria	Epsilonproteobacteria			Sulfurovum	Sulfurovum sp. NBC371		NrdD	NrdDd	NrdDd1	NrdDd1a		1	1
-Bacteria	Proteobacteria	Epsilonproteobacteria	Campylobacterales	Helicobacteraceae	Helicobacter	Helicobacter acinonychis	Helicobacter acinonychis str. Sheeba	NrdB	NrdBh				1	1
-Bacteria	Proteobacteria	Epsilonproteobacteria	Campylobacterales	Helicobacteraceae	Helicobacter	Helicobacter acinonychis	Helicobacter acinonychis str. Sheeba	NrdA					1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Aeromonadales	Aeromonadaceae	Aeromonas	Aeromonas salmonicida	Aeromonas salmonicida subsp. salmonicida A449	NrdB	NrdBg				1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Aeromonadales	Aeromonadaceae	Aeromonas	Aeromonas salmonicida	Aeromonas salmonicida subsp. salmonicida A449	NrdJ	NrdJf				1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Aeromonadales	Aeromonadaceae	Aeromonas	Aeromonas salmonicida	Aeromonas salmonicida subsp. salmonicida A449	NrdD	NrdDc	NrdDc1			1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Aeromonadales	Aeromonadaceae	Aeromonas	Aeromonas salmonicida	Aeromonas salmonicida subsp. salmonicida A449	NrdA	NrdAg				1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli K-12	NrdA	NrdAg				1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli K-12	NrdB	NrdBg				1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli K-12	NrdA	NrdE				1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli K-12	NrdB	NrdF				1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli K-12	NrdD	NrdDc	NrdDc1			1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli K-12	NrdG	NrdG	NrdG			1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli O157:H7 str. Sakai	NrdB	NrdBg				1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli O157:H7 str. Sakai	NrdB	NrdF	NrdF1			1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli O157:H7 str. Sakai	NrdD	NrdDc	NrdDc1			1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli O157:H7 str. Sakai	NrdA	NrdAg				1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli O157:H7 str. Sakai	NrdA	NrdE	NrdE1			1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli PCN033	NrdB	NrdBg				1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli PCN033	NrdB	NrdF	NrdF1			1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli PCN033	NrdD	NrdDc	NrdDc1			1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli PCN033	NrdA	NrdAg				1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli PCN033	NrdA	NrdE	NrdE1			1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Pantotea	Pantoea sp. aB		NrdB	NrdBg				1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Pantotea	Pantoea sp. aB		NrdB	NrdF	NrdF1			1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Pantotea	Pantoea sp. aB		NrdD	NrdDc	NrdDc1			1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Pantotea	Pantoea sp. aB		NrdA	NrdAg				1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Pantotea	Pantoea sp. aB		NrdA	NrdE	NrdE1			1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Providencia	Providencia alcalifaciens	Providencia alcalifaciens DSM 30120	NrdB	NrdBg				1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Providencia	Providencia alcalifaciens	Providencia alcalifaciens DSM 30120	NrdB	NrdF1				1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Providencia	Providencia alcalifaciens	Providencia alcalifaciens DSM 30120	NrdD	NrdDc	NrdDc1			1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Providencia	Providencia alcalifaciens	Providencia alcalifaciens DSM 30120	NrdA	NrdAg				1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Providencia	Providencia alcalifaciens	Providencia alcalifaciens DSM 30120	NrdA	NrdE1				1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Providencia	Providencia rettgeri	Providencia rettgeri DSM 1131	NrdB	NrdBg				1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Providencia	Providencia rettgeri	Providencia rettgeri DSM 1131	NrdB	NrdF1				1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Providencia	Providencia rettgeri	Providencia rettgeri DSM 1131	NrdD	NrdDc	NrdDc1			1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Providencia	Providencia rettgeri	Providencia rettgeri DSM 1131	NrdA	NrdAg				1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Providencia	Providencia rettgeri	Providencia rettgeri DSM 1131	NrdA	NrdE1				1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Shigella	Shigella flexneri	Shigella flexneri 5a str. M90T	NrdB	NrdBg				1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Shigella	Shigella flexneri	Shigella flexneri 5a str. M90T	NrdB	NrdF	NrdF1			1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Shigella	Shigella flexneri	Shigella flexneri 5a str. M90T	NrdD	NrdDc	NrdDc1			1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Shigella	Shigella flexneri	Shigella flexneri 5a str. M90T	NrdA	NrdAg				1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Shigella	Shigella flexneri	Shigella flexneri 5a str. M90T	NrdA	NrdE	NrdE1			1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Yersinia	Yersinia pestis	Yersinia pestis Pestoides F	NrdB	NrdBg				2	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Yersinia	Yersinia pestis	Yersinia pestis Pestoides F	NrdB	NrdF	NrdF1			1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Yersinia	Yersinia pestis	Yersinia pestis Pestoides F	NrdD	NrdDc	NrdDc1			1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Yersinia	Yersinia pestis	Yersinia pestis Pestoides F	NrdA	NrdAg				2	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Yersinia	Yersinia pestis	Yersinia pestis Pestoides F	NrdA	NrdE	NrdE1			1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Moraxellaceae	Acinetobacter	Acinetobacter baumanii	Acinetobacter baumannii ATCC 17978	NrdB	NrdBc				1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Moraxellaceae	Acinetobacter	Acinetobacter baumanii	Acinetobacter baumannii ATCC 17978	NrdA	NrdAc				1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Moraxellaceae	Moraxella	Moraxella catarrhalis	Moraxella catarrhalis RH4	NrdB	NrdBc				2	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Moraxellaceae	Moraxella	Moraxella catarrhalis	Moraxella catarrhalis RH4	NrdA	NrdAc				2	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Azotobacter	Azotobacter vinelandii	Azotobacter vinelandii DJ	NrdB	NrdBc				1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Azotobacter	Azotobacter vinelandii	Azotobacter vinelandii DJ	NrdJ	NrdJf				1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Azotobacter	Azotobacter vinelandii	Azotobacter vinelandii DJ	NrdA	NrdAc				1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Pseudomonas	Pseudomonas aeruginosa	Pseudomonas aeruginosa 138244	NrdA	NrdE				1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Pseudomonas	Pseudomonas aeruginosa	Pseudomonas aeruginosa 138244	NrdD	NrdDa				1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Pseudomonas	Pseudomonas aeruginosa	Pseudomonas aeruginosa PA7	NrdB	NrdBc				1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Pseudomonas	Pseudomonas aeruginosa	Pseudomonas aeruginosa PA7	NrdJ	NrdJf				1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Pseudomonas	Pseudomonas aeruginosa	Pseudomonas aeruginosa PA7	NrdA	NrdAc				1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Pseudomonas	Pseudomonas aeruginosa	Pseudomonas aeruginosa PA7	NrdD	NrdDd	NrdDd1			1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Pseudomonas	Pseudomonas entomophila	Pseudomonas entomophila L48	NrdB	NrdBc				1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Pseudomonas	Pseudomonas entomophila	Pseudomonas entomophila L48	NrdA	NrdAc				1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Xanthomonadales	Xanthomonadaceae	Xanthomonas	Xanthomonas oryzae	Xanthomonas oryzae pv. oryzicola BLS256	NrdB					1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Xanthomonadales	Xanthomonadaceae	Xanthomonas	Xanthomonas oryzae	Xanthomonas oryzae pv. oryzicola BLS256	NrdA	NrdAh				1	1
-Bacteria	Spirochaetes	Spirochaetia	Spirochaetales	Spirochaetaceae	Borrelia	Borrelia burgdorferi							0	0
-Bacteria	Thermotogae	Thermotogae	Thermotogales	Thermotogaceae	Fervidobacterium	Fervidobacterium nodosum	Fervidobacterium nodosum Rt17-B1	NrdJ	NrdJf				1	1
-Bacteria	Thermotogae	Thermotogae	Thermotogales	Thermotogaceae	Fervidobacterium	Fervidobacterium nodosum	Fervidobacterium nodosum Rt17-B1	NrdD	NrdDh				1	1
-Bacteria	Thermotogae	Thermotogae	Thermotogales	Thermotogaceae	Fervidobacterium	Fervidobacterium pennivorans	Fervidobacterium pennivorans DSM 9078	NrdJ	NrdJf				1	1
-Bacteria	Thermotogae	Thermotogae	Thermotogales	Thermotogaceae	Fervidobacterium	Fervidobacterium pennivorans	Fervidobacterium pennivorans DSM 9078	NrdD	NrdDh				2	1
-Bacteria	Thermotogae	Thermotogae	Thermotogales	Thermotogaceae	Thermosipho	Thermosipho africanus	Thermosipho africanus TCF52B	NrdJ	NrdJf				1	1
-Bacteria	Thermotogae	Thermotogae	Thermotogales	Thermotogaceae	Thermosipho	Thermosipho africanus	Thermosipho africanus TCF52B	NrdD	NrdDh				1	1
-Bacteria	Thermotogae	Thermotogae	Thermotogales	Thermotogaceae	Thermosipho	Thermosipho melanesiensis	Thermosipho melanesiensis BI429	NrdJ	NrdJf				1	1
-Bacteria	Thermotogae	Thermotogae	Thermotogales	Thermotogaceae	Thermosipho	Thermosipho melanesiensis	Thermosipho melanesiensis BI429	NrdD	NrdDh				1	1
-Bacteria	Thermotogae	Thermotogae	Thermotogales	Thermotogaceae	Thermotoga	Thermotoga thermarum	Thermotoga thermarum DSM 5069	NrdJ	NrdJf				1	1
-Bacteria	Thermotogae	Thermotogae	Thermotogales	Thermotogaceae	Thermotoga	Thermotoga thermarum	Thermotoga thermarum DSM 5069	NrdD	NrdDh				1	1
-Bacteria	Thermotogae	Thermotogae	Thermotogales	Thermotogaceae	Thermotoga	Thermotoga maritima	Thermotoga maritima MSB8	NrdJ	NrdJf				2	1
-Bacteria	Thermotogae	Thermotogae	Thermotogales	Thermotogaceae	Thermotoga	Thermotoga maritima	Thermotoga maritima MSB8	NrdD	NrdDh				2	1
-Bacteria	Thermotogae	Thermotogae	Thermotogales	Thermotogaceae	Thermotoga	Thermotoga neapolitana	Thermotoga neapolitana DSM 4359	NrdJ	NrdJf				1	1
-Bacteria	Thermotogae	Thermotogae	Thermotogales	Thermotogaceae	Thermotoga	Thermotoga neapolitana	Thermotoga neapolitana DSM 4359	NrdD	NrdDh				1	1
-Bacteria	Thermotogae	Thermotogae	Thermotogales	Thermotogaceae	Thermotoga	Thermotoga naphthophila	Thermotoga naphthophila RKU-10	NrdJ	NrdJf				1	1
-Bacteria	Thermotogae	Thermotogae	Thermotogales	Thermotogaceae	Thermotoga	Thermotoga naphthophila	Thermotoga naphthophila RKU-10	NrdD	NrdDh				1	1
-Eukaryota	Chordata	Mammalia	Carnivora	Canidae	Canis	Canis lupus		NrdB	NrdBe				3	1
-Eukaryota	Chordata	Mammalia	Carnivora	Canidae	Canis	Canis lupus		NrdA	NrdAe				1	1
-Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens		NrdB	NrdBe				5	1
-Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens		NrdA	NrdAe				1	1
-Eukaryota	Chordata	Mammalia	Primates	Hominidae	Pongo	Pongo abelii		NrdB	NrdBe				2	1
-Eukaryota	Chordata	Mammalia	Primates	Hominidae	Pongo	Pongo abelii		NrdA	NrdAe				1	1
-Viruses			Caudovirales	Myoviridae	FelixO1likevirus	Escherichia phage wV8		NrdA	NrdAg				1	1
-Viruses			Caudovirales	Myoviridae	FelixO1likevirus	Escherichia phage wV8		NrdD	NrdDc	NrdDc1			1	1
-Viruses			Caudovirales	Myoviridae	T4-like viruses	Enterobacteria phage RB51		NrdB	NrdBg				1	1
-Viruses			Caudovirales	Myoviridae	T4-like viruses	Enterobacteria phage RB51		NrdD	NrdDc	NrdDc1			1	1
-Viruses			Caudovirales	Myoviridae	T4-like viruses	Enterobacteria phage RB51		NrdA	NrdAg				1	1
-Viruses			Caudovirales	Myoviridae	T4-like viruses	Enterobacteria phage T4		NrdB	NrdBg				1	1
-Viruses			Caudovirales	Myoviridae	T4-like viruses	Enterobacteria phage T4		NrdD	NrdDc	NrdDc1			1	1
-Viruses			Caudovirales	Myoviridae	T4-like viruses	Enterobacteria phage T4		NrdA	NrdAg				1	1
-Viruses			Caudovirales	Myoviridae	T4-like viruses	Enterobacteria phage T4 sensu lato		NrdB	NrdBg				1	1
-Viruses			Caudovirales	Myoviridae	T4-like viruses	Enterobacteria phage T4 sensu lato		NrdD	NrdDc	NrdDc1			1	1
-Viruses			Caudovirales	Myoviridae	T4-like viruses	Enterobacteria phage T4 sensu lato		NrdA	NrdAg				1	1
-Viruses			Caudovirales	Siphoviridae		Clostridium phage phiCD38-2		NrdB	NrdF				1	1
+"Archaea"	"Crenarchaeota"	"Thermoprotei"	"Thermoproteales"	"Thermoproteaceae"	"Pyrobaculum"	"Pyrobaculum islandicum"	"Pyrobaculum islandicum DSM 4184"	"NrdJ"	"NrdJf"				1	1
+"Archaea"	"Crenarchaeota"	"Thermoprotei"	"Thermoproteales"	"Thermoproteaceae"	"Pyrobaculum"	"Pyrobaculum islandicum"	"Pyrobaculum islandicum DSM 4184"	"NrdD"	"NrdDi"				1	1
+"Archaea"	"Euryarchaeota"	"Halobacteria"	"Halobacteriales"	"Halobacteriaceae"	"Halobacterium"	"Halobacterium salinarum"	"Halobacterium salinarum R1"	"NrdB"	"NrdBc"				1	1
+"Archaea"	"Euryarchaeota"	"Halobacteria"	"Halobacteriales"	"Halobacteriaceae"	"Halobacterium"	"Halobacterium salinarum"	"Halobacterium salinarum R1"	"NrdJ"	"NrdJf"				1	1
+"Archaea"	"Euryarchaeota"	"Halobacteria"	"Halobacteriales"	"Halobacteriaceae"	"Halobacterium"	"Halobacterium salinarum"	"Halobacterium salinarum R1"	"NrdA"	"NrdAc"				1	1
+"Archaea"	"Euryarchaeota"	"Halobacteria"	"Halobacteriales"	"Halobacteriaceae"	"Halorhabdus"	"Halorhabdus utahensis"	"Halorhabdus utahensis DSM 12940"	"NrdB"	"NrdBc"				1	1
+"Archaea"	"Euryarchaeota"	"Halobacteria"	"Halobacteriales"	"Halobacteriaceae"	"Halorhabdus"	"Halorhabdus utahensis"	"Halorhabdus utahensis DSM 12940"	"NrdJ"	"NrdJf"				1	1
+"Archaea"	"Euryarchaeota"	"Halobacteria"	"Halobacteriales"	"Halobacteriaceae"	"Halorhabdus"	"Halorhabdus utahensis"	"Halorhabdus utahensis DSM 12940"	"NrdA"	"NrdAc"				1	1
+"Archaea"	"Euryarchaeota"	"Halobacteria"	"Halobacteriales"	"Halobacteriaceae"	"Halorhabdus"	"Halorhabdus utahensis"	"Halorhabdus utahensis DSM 12940"	"NrdD"	"NrdDd"	"NrdDd2"			1	1
+"Archaea"	"Euryarchaeota"	"Halobacteria"	"Halobacteriales"	"Halobacteriaceae"	"Natronomonas"	"Natronomonas pharaonis"	"Natronomonas pharaonis DSM 2160"	"NrdB"	"NrdBi"				1	1
+"Archaea"	"Euryarchaeota"	"Halobacteria"	"Halobacteriales"	"Halobacteriaceae"	"Natronomonas"	"Natronomonas pharaonis"	"Natronomonas pharaonis DSM 2160"	"R2lox"	"R2loxE"				2	1
+"Archaea"	"Euryarchaeota"	"Halobacteria"	"Halobacteriales"	"Halobacteriaceae"	"Natronomonas"	"Natronomonas pharaonis"	"Natronomonas pharaonis DSM 2160"	"NrdJ"	"NrdJf"				1	1
+"Archaea"	"Euryarchaeota"	"Halobacteria"	"Halobacteriales"	"Halobacteriaceae"	"Natronomonas"	"Natronomonas pharaonis"	"Natronomonas pharaonis DSM 2160"	"NrdA"	"NrdAi"				1	1
+"Archaea"	"Euryarchaeota"	"Methanococci"	"Methanococcales"	"Methanococcaceae"	"Methanococcus"	"Methanococcus maripaludis"	"Methanococcus maripaludis X1"	"NrdD"	"NrdDa"				1	1
+"Archaea"	"Thaumarchaeota"	"unspecified class"	"Nitrosopumilales"	"Nitrosopumilaceae"	"Nitrosopumilus"	"Nitrosopumilus maritimus"	"Nitrosopumilus maritimus SCM1"	"NrdJf"	"NrdJf"				1	1
+"Bacteria"	"Actinobacteria"	"Actinobacteria"	"Actinomycetales"	"Corynebacterineae"	"Rhodococcus"	"Rhodococcus jostii"	"Rhodococcus jostii RHA1"	"NrdB"	"NrdF"	"NrdF1"			1	1
+"Bacteria"	"Actinobacteria"	"Actinobacteria"	"Actinomycetales"	"Corynebacterineae"	"Rhodococcus"	"Rhodococcus jostii"	"Rhodococcus jostii RHA1"	"R2lox"	"R2loxA"				1	1
+"Bacteria"	"Actinobacteria"	"Actinobacteria"	"Actinomycetales"	"Corynebacterineae"	"Rhodococcus"	"Rhodococcus jostii"	"Rhodococcus jostii RHA1"	"NrdA"	"NrdE"	"NrdE1"			1	1
+"Bacteria"	"Actinobacteria"	"Actinobacteria"	"Actinomycetales"	"Mycobacteriaceae"	"Mycobacterium"	"Mycobacterium bovis"	"Mycobacterium bovis BCG str. ATCC 35740"	"NrdD"	"NrdDa"	"NrdDa1"			2	1
+"Bacteria"	"Actinobacteria"	"Actinobacteria"	"Actinomycetales"	"Mycobacteriaceae"	"Mycobacterium"	"Mycobacterium bovis"	"Mycobacterium bovis BCG str. ATCC 35743"	"NrdA"	"NrdE"				1	1
+"Bacteria"	"Actinobacteria"	"Actinobacteria"	"Actinomycetales"	"Pseudonocardiaceae"	"Amycolatopsis"	"Amycolatopsis sp. ATCC 39116"		"NrdB"	"NrdBc"				1	1
+"Bacteria"	"Actinobacteria"	"Actinobacteria"	"Actinomycetales"	"Pseudonocardiaceae"	"Amycolatopsis"	"Amycolatopsis sp. ATCC 39116"		"R2lox"	"R2loxA"				2	1
+"Bacteria"	"Actinobacteria"	"Actinobacteria"	"Actinomycetales"	"Pseudonocardiaceae"	"Amycolatopsis"	"Amycolatopsis sp. ATCC 39116"		"NrdA"	"NrdAc"				1	1
+"Bacteria"	"Actinobacteria"	"Actinobacteria"	"Actinomycetales"	"Pseudonocardiaceae"	"Amycolatopsis"	"Amycolatopsis sp. ATCC 39116"		"NrdJ"	"NrdJd"				1	1
+"Bacteria"	"Actinobacteria"	"Actinobacteria"	"Bifidobacteriales"	"Bifidobacteriaceae"	"Bifidobacterium"	"Bifidobacterium angulatum"	"Bifidobacterium angulatum DSM 20098 = JCM 7096"	"NrdD"	"NrdDc"	"NrdDc1"			1	1
+"Bacteria"	"Actinobacteria"	"Actinobacteria"	"Bifidobacteriales"	"Bifidobacteriaceae"	"Bifidobacterium"	"Bifidobacterium breve"	"Bifidobacterium breve DSM 20213 = JCM 1192"	"NrdB"	"NrdF"	"NrdF1"			1	1
+"Bacteria"	"Actinobacteria"	"Actinobacteria"	"Bifidobacteriales"	"Bifidobacteriaceae"	"Bifidobacterium"	"Bifidobacterium breve"	"Bifidobacterium breve DSM 20213 = JCM 1192"	"NrdD"	"NrdDc"	"NrdDc1"			1	1
+"Bacteria"	"Actinobacteria"	"Actinobacteria"	"Bifidobacteriales"	"Bifidobacteriaceae"	"Bifidobacterium"	"Bifidobacterium breve"	"Bifidobacterium breve DSM 20213 = JCM 1192"	"NrdA"	"NrdE"	"NrdE1"			1	1
+"Bacteria"	"Actinobacteria"	"Actinobacteria"	"Coriobacteriales"	"Coriobacteriaceae"	"Collinsella"	"Collinsella intestinalis"	"Collinsella intestinalis DSM 13280"	"NrdB"	"NrdBh"				1	1
+"Bacteria"	"Actinobacteria"	"Actinobacteria"	"Coriobacteriales"	"Coriobacteriaceae"	"Collinsella"	"Collinsella intestinalis"	"Collinsella intestinalis DSM 13280"	"NrdD"	"NrdDc"	"NrdDc2"			1	1
+"Bacteria"	"Actinobacteria"	"Actinobacteria"	"Coriobacteriales"	"Coriobacteriaceae"	"Collinsella"	"Collinsella intestinalis"	"Collinsella intestinalis DSM 13280"	"NrdA"	"NrdAh"				1	1
+"Bacteria"	"Bacteroidetes"	"unspecified class"	"Bacteroidetes Order II. Incertae sedis"	"Rhodothermaceae"	"Rhodothermus"	"Rhodothermus marinus"	"Rhodothermus marinus DSM 4252"	"NrdB"	"NrdBc"				1	1
+"Bacteria"	"Bacteroidetes"	"unspecified class"	"Bacteroidetes Order II. Incertae sedis"	"Rhodothermaceae"	"Rhodothermus"	"Rhodothermus marinus"	"Rhodothermus marinus DSM 4252"	"NrdJ"	"NrdJf"				1	1
+"Bacteria"	"Bacteroidetes"	"unspecified class"	"Bacteroidetes Order II. Incertae sedis"	"Rhodothermaceae"	"Rhodothermus"	"Rhodothermus marinus"	"Rhodothermus marinus DSM 4252"	"NrdA"	"NrdAc"				1	1
+"Bacteria"	"Bacteroidetes"	"unspecified class"	"Bacteroidetes Order II. Incertae sedis"	"Rhodothermaceae"	"Rhodothermus"	"Rhodothermus marinus"	"Rhodothermus marinus DSM 4252"	"NrdJ"	"NrdJd"				1	1
+"Bacteria"	"Chloroflexi"	"Chloroflexi"	"Chloroflexales"	"Chloroflexaceae"	"Roseiflexus"	"Roseiflexus castenholzii"	"Roseiflexus castenholzii DSM 13941"	"R2lox"	"R2loxB"				1	1
+"Bacteria"	"Chloroflexi"	"Chloroflexi"	"Chloroflexales"	"Chloroflexaceae"	"Roseiflexus"	"Roseiflexus castenholzii"	"Roseiflexus castenholzii DSM 13941"	"NrdJ"	"NrdJm"	"NrdJm2"			1	1
+"Bacteria"	"Firmicutes"	"Bacilli"	"Bacillales"	"Listeriaceae"	"Listeria"	"Listeria welshimeri"	"Listeria welshimeri serovar 6b str. SLCC5334"	"NrdB"					1	1
+"Bacteria"	"Firmicutes"	"Bacilli"	"Bacillales"	"Listeriaceae"	"Listeria"	"Listeria welshimeri"	"Listeria welshimeri serovar 6b str. SLCC5334"	"NrdD"	"NrdDc"	"NrdDc1"			1	1
+"Bacteria"	"Firmicutes"	"Bacilli"	"Bacillales"	"Listeriaceae"	"Listeria"	"Listeria welshimeri"	"Listeria welshimeri serovar 6b str. SLCC5334"	"NrdA"	"NrdAh"				1	1
+"Bacteria"	"Firmicutes"	"Bacilli"	"Lactobacillales"	"Streptococcaceae"	"Streptococcus"	"Streptococcus suis"		"NrdG"					2	1
+"Bacteria"	"Firmicutes"	"Clostridia"	"Clostridiales"	"Clostridiaceae"	"Clostridium"	"Clostridium asparagiforme"	"Clostridium asparagiforme DSM 15981"	"NrdB"	"NrdBh"				1	1
+"Bacteria"	"Firmicutes"	"Clostridia"	"Clostridiales"	"Clostridiaceae"	"Clostridium"	"Clostridium asparagiforme"	"Clostridium asparagiforme DSM 15981"	"NrdA"	"NrdAh"				1	1
+"Bacteria"	"Firmicutes"	"Clostridia"	"Clostridiales"	"Clostridiaceae"	"Clostridium"	"Clostridium asparagiforme"	"Clostridium asparagiforme DSM 15981"	"NrdD"	"NrdDc"				1	1
+"Bacteria"	"Firmicutes"	"Clostridia"	"Clostridiales"	"Clostridiaceae"	"Clostridium"	"Clostridium novyi"	"Clostridium novyi NT"	"NrdB"	"NrdBh"				1	1
+"Bacteria"	"Firmicutes"	"Clostridia"	"Clostridiales"	"Clostridiaceae"	"Clostridium"	"Clostridium novyi"	"Clostridium novyi NT"	"NrdA"	"NrdAh"				1	1
+"Bacteria"	"Firmicutes"	"Clostridia"	"Clostridiales"	"Clostridiaceae"	"Clostridium"	"Clostridium novyi"	"Clostridium novyi NT"	"NrdD"	"NrdDb"				1	1
+"Bacteria"	"Firmicutes"	"Clostridia"	"Clostridiales"	"Streptococcaceae"	"Streptococcus"	"Streptococcus anginosus"	"Streptococcus anginosus SK52 = DSM 20563"		"NrdF"				1	1
+"Bacteria"	"Firmicutes"	"Clostridia"	"Clostridiales"	"Streptococcaceae"	"Streptococcus"	"Streptococcus anginosus"	"Streptococcus anginosus SK52 = DSM 20563"		"NrdDc1"				1	1
+"Bacteria"	"Firmicutes"	"Clostridia"	"Clostridiales"	"Streptococcaceae"	"Streptococcus"	"Streptococcus anginosus"	"Streptococcus anginosus SK52 = DSM 20563"		"NrdE"				1	1
+"Bacteria"	"Firmicutes"	"Clostridia"	"Clostridiales"	"Streptococcaceae"	"Streptococcus"	"Streptococcus dysgalactiae"	"Streptococcus dysgalactiae subsp. equisimilis SK1249"		"NrdF"				1	1
+"Bacteria"	"Firmicutes"	"Clostridia"	"Clostridiales"	"Streptococcaceae"	"Streptococcus"	"Streptococcus dysgalactiae"	"Streptococcus dysgalactiae subsp. equisimilis SK1250"		"NrdDc1"				1	1
+"Bacteria"	"Firmicutes"	"Clostridia"	"Clostridiales"	"Streptococcaceae"	"Streptococcus"	"Streptococcus dysgalactiae"	"Streptococcus dysgalactiae subsp. equisimilis SK1251"		"NrdE"				1	1
+"Bacteria"	"Firmicutes"	"Erysipelotrichi"	"Erysipelotrichales"	"Erysipelotrichaceae"	"Eubacterium"	"Eubacterium biforme"	"Eubacterium biforme DSM 3989"	"NrdD"	"NrdDc"	"NrdDc2"			1	1
+"Bacteria"	"Firmicutes"	"Negativicutes"	"Selenomonadales"	"Veillonellaceae"	"Megasphaera"	"Megasphaera sp. UPII 199-6"		"NrdD"	"NrdDc"	"NrdDc2"			1	1
+"Bacteria"	"Fusobacteria"	"Fusobacteriia"	"Fusobacteriales"	"Leptotrichiaceae"	"Streptobacillus"	"Streptobacillus moniliformis"	"Streptobacillus moniliformis DSM 12112"	"NrdB"	"NrdF"				1	1
+"Bacteria"	"Fusobacteria"	"Fusobacteriia"	"Fusobacteriales"	"Leptotrichiaceae"	"Streptobacillus"	"Streptobacillus moniliformis"	"Streptobacillus moniliformis DSM 12112"	"NrdD"	"NrdDc"	"NrdDc2"			1	1
+"Bacteria"	"Fusobacteria"	"Fusobacteriia"	"Fusobacteriales"	"Leptotrichiaceae"	"Streptobacillus"	"Streptobacillus moniliformis"	"Streptobacillus moniliformis DSM 12112"	"NrdA"	"NrdE"				1	1
+"Bacteria"	"Proteobacteria"	"Alphaproteobacteria"	"Rhizobiales"	"Bartonellaceae"	"Bartonella"	"Bartonella tribocorum"	"Bartonella tribocorum CIP 105476"	"NrdB"	"NrdF"	"NrdF1"			1	1
+"Bacteria"	"Proteobacteria"	"Alphaproteobacteria"	"Rhizobiales"	"Bartonellaceae"	"Bartonella"	"Bartonella tribocorum"	"Bartonella tribocorum CIP 105476"	"NrdA"	"NrdE"	"NrdE1"			1	1
+"Bacteria"	"Proteobacteria"	"Alphaproteobacteria"	"Rhodospirillales"	"Acetobacteraceae"	"Gluconacetobacter"	"Gluconacetobacter sp. SXCC-1"		"NrdG"					1	1
+"Bacteria"	"Proteobacteria"	"Alphaproteobacteria"	"Rickettsiales"	"Anaplasmataceae"	"Anaplasma"	"Anaplasma marginale"		"NrdB"	"NrdBk"				2	2
+"Bacteria"	"Proteobacteria"	"Alphaproteobacteria"	"Rickettsiales"	"Anaplasmataceae"	"Anaplasma"	"Anaplasma marginale"		"NrdA"	"NrdAk"				2	2
+"Bacteria"	"Proteobacteria"	"Alphaproteobacteria"	"Sphingomonadales"	"Sphingomonadaceae"	"Citromicrobium"	"Citromicrobium sp. JLT1363"		"NrdB"	"NrdBk"				1	1
+"Bacteria"	"Proteobacteria"	"Alphaproteobacteria"	"Sphingomonadales"	"Sphingomonadaceae"	"Citromicrobium"	"Citromicrobium sp. JLT1363"		"NrdA"	"NrdAk"				1	1
+"Bacteria"	"Proteobacteria"	"Betaproteobacteria"	"Burkholderiales"	"Oxalobacteraceae"	"Collimonas"	"Collimonas fungivorans"	"Collimonas fungivorans Ter331"	"NrdG"					1	1
+"Bacteria"	"Proteobacteria"	"Betaproteobacteria"	"Neisseriales"	"Neisseriaceae"	"Neisseria"	"Neisseria elongata"	"Neisseria elongata subsp. glycolytica ATCC 29315"	"NrdB"	"NrdBg"				1	1
+"Bacteria"	"Proteobacteria"	"Betaproteobacteria"	"Neisseriales"	"Neisseriaceae"	"Neisseria"	"Neisseria elongata"	"Neisseria elongata subsp. glycolytica ATCC 29315"	"NrdA"	"NrdAg"				1	1
+"Bacteria"	"Proteobacteria"	"Betaproteobacteria"	"Neisseriales"	"Neisseriaceae"	"Neisseria"	"Neisseria elongata"	"Neisseria elongata subsp. glycolytica ATCC 29315"	"NrdD"	"NrdDh"				1	1
+"Bacteria"	"Proteobacteria"	"Betaproteobacteria"	"Neisseriales"	"Neisseriaceae"	"Neisseria"	"Neisseria flavescens"	"Neisseria flavescens NRL30031/H210"	"NrdB"	"NrdBg"				1	1
+"Bacteria"	"Proteobacteria"	"Betaproteobacteria"	"Neisseriales"	"Neisseriaceae"	"Neisseria"	"Neisseria flavescens"	"Neisseria flavescens NRL30031/H210"	"NrdA"	"NrdAg"				1	1
+"Bacteria"	"Proteobacteria"	"Betaproteobacteria"	"Neisseriales"	"Neisseriaceae"	"Neisseria"	"Neisseria flavescens"	"Neisseria flavescens NRL30031/H210"	"NrdD"	"NrdDh"				1	1
+"Bacteria"	"Proteobacteria"	"Betaproteobacteria"	"Neisseriales"	"Neisseriaceae"	"Neisseria"	"Neisseria gonorrhoeae"	"Neisseria gonorrhoeae NCCP11945"	"NrdB"	"NrdBg"				1	1
+"Bacteria"	"Proteobacteria"	"Betaproteobacteria"	"Neisseriales"	"Neisseriaceae"	"Neisseria"	"Neisseria gonorrhoeae"	"Neisseria gonorrhoeae NCCP11945"	"NrdA"	"NrdAg"				1	1
+"Bacteria"	"Proteobacteria"	"Betaproteobacteria"	"Rhodocyclales"	"Rhodocyclaceae"	"Methyloversatilis"	"Methyloversatilis universalis"	"Methyloversatilis universalis FAM5"	"NrdB"	"NrdBc"				1	1
+"Bacteria"	"Proteobacteria"	"Betaproteobacteria"	"Rhodocyclales"	"Rhodocyclaceae"	"Methyloversatilis"	"Methyloversatilis universalis"	"Methyloversatilis universalis FAM5"	"NrdJ"	"NrdJf"				1	1
+"Bacteria"	"Proteobacteria"	"Betaproteobacteria"	"Rhodocyclales"	"Rhodocyclaceae"	"Methyloversatilis"	"Methyloversatilis universalis"	"Methyloversatilis universalis FAM5"	"NrdA"	"NrdAc"				1	1
+"Bacteria"	"Proteobacteria"	"Epsilonproteobacteria"	"unspecified order"	"unspecified family"	"Nitratiruptor"	"Nitratiruptor sp. SB155-2"		"NrdB"					1	1
+"Bacteria"	"Proteobacteria"	"Epsilonproteobacteria"	"unspecified order"	"unspecified family"	"Nitratiruptor"	"Nitratiruptor sp. SB155-2"		"NrdA"					1	1
+"Bacteria"	"Proteobacteria"	"Epsilonproteobacteria"	"unspecified order"	"unspecified family"	"Nitratiruptor"	"Nitratiruptor sp. SB155-2"		"NrdJ"	"NrdJm"	"NrdJm1"			1	1
+"Bacteria"	"Proteobacteria"	"Epsilonproteobacteria"	"unspecified order"	"unspecified family"	"Nitratiruptor"	"Nitratiruptor sp. SB155-2"		"NrdD"	"NrdDd"	"NrdDd1"	"NrdDd1a"		1	1
+"Bacteria"	"Proteobacteria"	"Epsilonproteobacteria"	"unspecified order"	"unspecified family"	"Sulfurovum"	"Sulfurovum sp. NBC37-1"		"NrdB"					1	1
+"Bacteria"	"Proteobacteria"	"Epsilonproteobacteria"	"unspecified order"	"unspecified family"	"Sulfurovum"	"Sulfurovum sp. NBC370"		"NrdA"					1	1
+"Bacteria"	"Proteobacteria"	"Epsilonproteobacteria"	"unspecified order"	"unspecified family"	"Sulfurovum"	"Sulfurovum sp. NBC371"		"NrdD"	"NrdDd"	"NrdDd1"	"NrdDd1a"		1	1
+"Bacteria"	"Proteobacteria"	"Epsilonproteobacteria"	"Campylobacterales"	"Helicobacteraceae"	"Helicobacter"	"Helicobacter acinonychis"	"Helicobacter acinonychis str. Sheeba"	"NrdB"	"NrdBh"				1	1
+"Bacteria"	"Proteobacteria"	"Epsilonproteobacteria"	"Campylobacterales"	"Helicobacteraceae"	"Helicobacter"	"Helicobacter acinonychis"	"Helicobacter acinonychis str. Sheeba"	"NrdA"					1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Aeromonadales"	"Aeromonadaceae"	"Aeromonas"	"Aeromonas salmonicida"	"Aeromonas salmonicida subsp. salmonicida A449"	"NrdB"	"NrdBg"				1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Aeromonadales"	"Aeromonadaceae"	"Aeromonas"	"Aeromonas salmonicida"	"Aeromonas salmonicida subsp. salmonicida A449"	"NrdJ"	"NrdJf"				1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Aeromonadales"	"Aeromonadaceae"	"Aeromonas"	"Aeromonas salmonicida"	"Aeromonas salmonicida subsp. salmonicida A449"	"NrdD"	"NrdDc"	"NrdDc1"			1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Aeromonadales"	"Aeromonadaceae"	"Aeromonas"	"Aeromonas salmonicida"	"Aeromonas salmonicida subsp. salmonicida A449"	"NrdA"	"NrdAg"				1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Enterobacteriales"	"Enterobacteriaceae"	"Escherichia"	"Escherichia coli"	"Escherichia coli K-12"	"NrdA"	"NrdAg"				1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Enterobacteriales"	"Enterobacteriaceae"	"Escherichia"	"Escherichia coli"	"Escherichia coli K-12"	"NrdB"	"NrdBg"				1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Enterobacteriales"	"Enterobacteriaceae"	"Escherichia"	"Escherichia coli"	"Escherichia coli K-12"	"NrdA"	"NrdE"				1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Enterobacteriales"	"Enterobacteriaceae"	"Escherichia"	"Escherichia coli"	"Escherichia coli K-12"	"NrdB"	"NrdF"				1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Enterobacteriales"	"Enterobacteriaceae"	"Escherichia"	"Escherichia coli"	"Escherichia coli K-12"	"NrdD"	"NrdDc"	"NrdDc1"			1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Enterobacteriales"	"Enterobacteriaceae"	"Escherichia"	"Escherichia coli"	"Escherichia coli K-12"	"NrdG"	"NrdG"	"NrdG"			1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Enterobacteriales"	"Enterobacteriaceae"	"Escherichia"	"Escherichia coli"	"Escherichia coli O157:H7 str. Sakai"	"NrdB"	"NrdBg"				1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Enterobacteriales"	"Enterobacteriaceae"	"Escherichia"	"Escherichia coli"	"Escherichia coli O157:H7 str. Sakai"	"NrdB"	"NrdF"	"NrdF1"			1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Enterobacteriales"	"Enterobacteriaceae"	"Escherichia"	"Escherichia coli"	"Escherichia coli O157:H7 str. Sakai"	"NrdD"	"NrdDc"	"NrdDc1"			1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Enterobacteriales"	"Enterobacteriaceae"	"Escherichia"	"Escherichia coli"	"Escherichia coli O157:H7 str. Sakai"	"NrdA"	"NrdAg"				1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Enterobacteriales"	"Enterobacteriaceae"	"Escherichia"	"Escherichia coli"	"Escherichia coli O157:H7 str. Sakai"	"NrdA"	"NrdE"	"NrdE1"			1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Enterobacteriales"	"Enterobacteriaceae"	"Escherichia"	"Escherichia coli"	"Escherichia coli PCN033"	"NrdB"	"NrdBg"				1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Enterobacteriales"	"Enterobacteriaceae"	"Escherichia"	"Escherichia coli"	"Escherichia coli PCN033"	"NrdB"	"NrdF"	"NrdF1"			1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Enterobacteriales"	"Enterobacteriaceae"	"Escherichia"	"Escherichia coli"	"Escherichia coli PCN033"	"NrdD"	"NrdDc"	"NrdDc1"			1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Enterobacteriales"	"Enterobacteriaceae"	"Escherichia"	"Escherichia coli"	"Escherichia coli PCN033"	"NrdA"	"NrdAg"				1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Enterobacteriales"	"Enterobacteriaceae"	"Escherichia"	"Escherichia coli"	"Escherichia coli PCN033"	"NrdA"	"NrdE"	"NrdE1"			1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Enterobacteriales"	"Enterobacteriaceae"	"Pantotea"	"Pantoea sp. aB"		"NrdB"	"NrdBg"				1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Enterobacteriales"	"Enterobacteriaceae"	"Pantotea"	"Pantoea sp. aB"		"NrdB"	"NrdF"	"NrdF1"			1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Enterobacteriales"	"Enterobacteriaceae"	"Pantotea"	"Pantoea sp. aB"		"NrdD"	"NrdDc"	"NrdDc1"			1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Enterobacteriales"	"Enterobacteriaceae"	"Pantotea"	"Pantoea sp. aB"		"NrdA"	"NrdAg"				1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Enterobacteriales"	"Enterobacteriaceae"	"Pantotea"	"Pantoea sp. aB"		"NrdA"	"NrdE"	"NrdE1"			1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Enterobacteriales"	"Enterobacteriaceae"	"Providencia"	"Providencia alcalifaciens"	"Providencia alcalifaciens DSM 30120"	"NrdB"	"NrdBg"				1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Enterobacteriales"	"Enterobacteriaceae"	"Providencia"	"Providencia alcalifaciens"	"Providencia alcalifaciens DSM 30120"	"NrdB"	"NrdF1"				1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Enterobacteriales"	"Enterobacteriaceae"	"Providencia"	"Providencia alcalifaciens"	"Providencia alcalifaciens DSM 30120"	"NrdD"	"NrdDc"	"NrdDc1"			1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Enterobacteriales"	"Enterobacteriaceae"	"Providencia"	"Providencia alcalifaciens"	"Providencia alcalifaciens DSM 30120"	"NrdA"	"NrdAg"				1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Enterobacteriales"	"Enterobacteriaceae"	"Providencia"	"Providencia alcalifaciens"	"Providencia alcalifaciens DSM 30120"	"NrdA"	"NrdE1"				1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Enterobacteriales"	"Enterobacteriaceae"	"Providencia"	"Providencia rettgeri"	"Providencia rettgeri DSM 1131"	"NrdB"	"NrdBg"				1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Enterobacteriales"	"Enterobacteriaceae"	"Providencia"	"Providencia rettgeri"	"Providencia rettgeri DSM 1131"	"NrdB"	"NrdF1"				1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Enterobacteriales"	"Enterobacteriaceae"	"Providencia"	"Providencia rettgeri"	"Providencia rettgeri DSM 1131"	"NrdD"	"NrdDc"	"NrdDc1"			1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Enterobacteriales"	"Enterobacteriaceae"	"Providencia"	"Providencia rettgeri"	"Providencia rettgeri DSM 1131"	"NrdA"	"NrdAg"				1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Enterobacteriales"	"Enterobacteriaceae"	"Providencia"	"Providencia rettgeri"	"Providencia rettgeri DSM 1131"	"NrdA"	"NrdE1"				1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Enterobacteriales"	"Enterobacteriaceae"	"Shigella"	"Shigella flexneri"	"Shigella flexneri 5a str. M90T"	"NrdB"	"NrdBg"				1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Enterobacteriales"	"Enterobacteriaceae"	"Shigella"	"Shigella flexneri"	"Shigella flexneri 5a str. M90T"	"NrdB"	"NrdF"	"NrdF1"			1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Enterobacteriales"	"Enterobacteriaceae"	"Shigella"	"Shigella flexneri"	"Shigella flexneri 5a str. M90T"	"NrdD"	"NrdDc"	"NrdDc1"			1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Enterobacteriales"	"Enterobacteriaceae"	"Shigella"	"Shigella flexneri"	"Shigella flexneri 5a str. M90T"	"NrdA"	"NrdAg"				1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Enterobacteriales"	"Enterobacteriaceae"	"Shigella"	"Shigella flexneri"	"Shigella flexneri 5a str. M90T"	"NrdA"	"NrdE"	"NrdE1"			1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Enterobacteriales"	"Enterobacteriaceae"	"Yersinia"	"Yersinia pestis"	"Yersinia pestis Pestoides F"	"NrdB"	"NrdBg"				2	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Enterobacteriales"	"Enterobacteriaceae"	"Yersinia"	"Yersinia pestis"	"Yersinia pestis Pestoides F"	"NrdB"	"NrdF"	"NrdF1"			1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Enterobacteriales"	"Enterobacteriaceae"	"Yersinia"	"Yersinia pestis"	"Yersinia pestis Pestoides F"	"NrdD"	"NrdDc"	"NrdDc1"			1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Enterobacteriales"	"Enterobacteriaceae"	"Yersinia"	"Yersinia pestis"	"Yersinia pestis Pestoides F"	"NrdA"	"NrdAg"				2	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Enterobacteriales"	"Enterobacteriaceae"	"Yersinia"	"Yersinia pestis"	"Yersinia pestis Pestoides F"	"NrdA"	"NrdE"	"NrdE1"			1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Pseudomonadales"	"Moraxellaceae"	"Acinetobacter"	"Acinetobacter baumanii"	"Acinetobacter baumannii ATCC 17978"	"NrdB"	"NrdBc"				1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Pseudomonadales"	"Moraxellaceae"	"Acinetobacter"	"Acinetobacter baumanii"	"Acinetobacter baumannii ATCC 17978"	"NrdA"	"NrdAc"				1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Pseudomonadales"	"Moraxellaceae"	"Moraxella"	"Moraxella catarrhalis"	"Moraxella catarrhalis RH4"	"NrdB"	"NrdBc"				2	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Pseudomonadales"	"Moraxellaceae"	"Moraxella"	"Moraxella catarrhalis"	"Moraxella catarrhalis RH4"	"NrdA"	"NrdAc"				2	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Pseudomonadales"	"Pseudomonadaceae"	"Azotobacter"	"Azotobacter vinelandii"	"Azotobacter vinelandii DJ"	"NrdB"	"NrdBc"				1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Pseudomonadales"	"Pseudomonadaceae"	"Azotobacter"	"Azotobacter vinelandii"	"Azotobacter vinelandii DJ"	"NrdJ"	"NrdJf"				1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Pseudomonadales"	"Pseudomonadaceae"	"Azotobacter"	"Azotobacter vinelandii"	"Azotobacter vinelandii DJ"	"NrdA"	"NrdAc"				1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Pseudomonadales"	"Pseudomonadaceae"	"Pseudomonas"	"Pseudomonas aeruginosa"	"Pseudomonas aeruginosa 138244"	"NrdA"	"NrdE"				1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Pseudomonadales"	"Pseudomonadaceae"	"Pseudomonas"	"Pseudomonas aeruginosa"	"Pseudomonas aeruginosa 138244"	"NrdD"	"NrdDa"				1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Pseudomonadales"	"Pseudomonadaceae"	"Pseudomonas"	"Pseudomonas aeruginosa"	"Pseudomonas aeruginosa PA7"	"NrdB"	"NrdBc"				1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Pseudomonadales"	"Pseudomonadaceae"	"Pseudomonas"	"Pseudomonas aeruginosa"	"Pseudomonas aeruginosa PA7"	"NrdJ"	"NrdJf"				1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Pseudomonadales"	"Pseudomonadaceae"	"Pseudomonas"	"Pseudomonas aeruginosa"	"Pseudomonas aeruginosa PA7"	"NrdA"	"NrdAc"				1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Pseudomonadales"	"Pseudomonadaceae"	"Pseudomonas"	"Pseudomonas aeruginosa"	"Pseudomonas aeruginosa PA7"	"NrdD"	"NrdDd"	"NrdDd1"			1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Pseudomonadales"	"Pseudomonadaceae"	"Pseudomonas"	"Pseudomonas entomophila"	"Pseudomonas entomophila L48"	"NrdB"	"NrdBc"				1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Pseudomonadales"	"Pseudomonadaceae"	"Pseudomonas"	"Pseudomonas entomophila"	"Pseudomonas entomophila L48"	"NrdA"	"NrdAc"				1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Xanthomonadales"	"Xanthomonadaceae"	"Xanthomonas"	"Xanthomonas oryzae"	"Xanthomonas oryzae pv. oryzicola BLS256"	"NrdB"					1	1
+"Bacteria"	"Proteobacteria"	"Gammaproteobacteria"	"Xanthomonadales"	"Xanthomonadaceae"	"Xanthomonas"	"Xanthomonas oryzae"	"Xanthomonas oryzae pv. oryzicola BLS256"	"NrdA"	"NrdAh"				1	1
+"Bacteria"	"Spirochaetes"	"Spirochaetia"	"Spirochaetales"	"Spirochaetaceae"	"Borrelia"	"Borrelia burgdorferi"							0	0
+"Bacteria"	"Thermotogae"	"Thermotogae"	"Thermotogales"	"Thermotogaceae"	"Fervidobacterium"	"Fervidobacterium nodosum"	"Fervidobacterium nodosum Rt17-B1"	"NrdJ"	"NrdJf"				1	1
+"Bacteria"	"Thermotogae"	"Thermotogae"	"Thermotogales"	"Thermotogaceae"	"Fervidobacterium"	"Fervidobacterium nodosum"	"Fervidobacterium nodosum Rt17-B1"	"NrdD"	"NrdDh"				1	1
+"Bacteria"	"Thermotogae"	"Thermotogae"	"Thermotogales"	"Thermotogaceae"	"Fervidobacterium"	"Fervidobacterium pennivorans"	"Fervidobacterium pennivorans DSM 9078"	"NrdJ"	"NrdJf"				1	1
+"Bacteria"	"Thermotogae"	"Thermotogae"	"Thermotogales"	"Thermotogaceae"	"Fervidobacterium"	"Fervidobacterium pennivorans"	"Fervidobacterium pennivorans DSM 9078"	"NrdD"	"NrdDh"				2	1
+"Bacteria"	"Thermotogae"	"Thermotogae"	"Thermotogales"	"Thermotogaceae"	"Thermosipho"	"Thermosipho africanus"	"Thermosipho africanus TCF52B"	"NrdJ"	"NrdJf"				1	1
+"Bacteria"	"Thermotogae"	"Thermotogae"	"Thermotogales"	"Thermotogaceae"	"Thermosipho"	"Thermosipho africanus"	"Thermosipho africanus TCF52B"	"NrdD"	"NrdDh"				1	1
+"Bacteria"	"Thermotogae"	"Thermotogae"	"Thermotogales"	"Thermotogaceae"	"Thermosipho"	"Thermosipho melanesiensis"	"Thermosipho melanesiensis BI429"	"NrdJ"	"NrdJf"				1	1
+"Bacteria"	"Thermotogae"	"Thermotogae"	"Thermotogales"	"Thermotogaceae"	"Thermosipho"	"Thermosipho melanesiensis"	"Thermosipho melanesiensis BI429"	"NrdD"	"NrdDh"				1	1
+"Bacteria"	"Thermotogae"	"Thermotogae"	"Thermotogales"	"Thermotogaceae"	"Thermotoga"	"Thermotoga thermarum"	"Thermotoga thermarum DSM 5069"	"NrdJ"	"NrdJf"				1	1
+"Bacteria"	"Thermotogae"	"Thermotogae"	"Thermotogales"	"Thermotogaceae"	"Thermotoga"	"Thermotoga thermarum"	"Thermotoga thermarum DSM 5069"	"NrdD"	"NrdDh"				1	1
+"Bacteria"	"Thermotogae"	"Thermotogae"	"Thermotogales"	"Thermotogaceae"	"Thermotoga"	"Thermotoga maritima"	"Thermotoga maritima MSB8"	"NrdJ"	"NrdJf"				2	1
+"Bacteria"	"Thermotogae"	"Thermotogae"	"Thermotogales"	"Thermotogaceae"	"Thermotoga"	"Thermotoga maritima"	"Thermotoga maritima MSB8"	"NrdD"	"NrdDh"				2	1
+"Bacteria"	"Thermotogae"	"Thermotogae"	"Thermotogales"	"Thermotogaceae"	"Thermotoga"	"Thermotoga neapolitana"	"Thermotoga neapolitana DSM 4359"	"NrdJ"	"NrdJf"				1	1
+"Bacteria"	"Thermotogae"	"Thermotogae"	"Thermotogales"	"Thermotogaceae"	"Thermotoga"	"Thermotoga neapolitana"	"Thermotoga neapolitana DSM 4359"	"NrdD"	"NrdDh"				1	1
+"Bacteria"	"Thermotogae"	"Thermotogae"	"Thermotogales"	"Thermotogaceae"	"Thermotoga"	"Thermotoga naphthophila"	"Thermotoga naphthophila RKU-10"	"NrdJ"	"NrdJf"				1	1
+"Bacteria"	"Thermotogae"	"Thermotogae"	"Thermotogales"	"Thermotogaceae"	"Thermotoga"	"Thermotoga naphthophila"	"Thermotoga naphthophila RKU-10"	"NrdD"	"NrdDh"				1	1
+"Eukaryota"	"Chordata"	"Mammalia"	"Carnivora"	"Canidae"	"Canis"	"Canis lupus"		"NrdB"	"NrdBe"				3	1
+"Eukaryota"	"Chordata"	"Mammalia"	"Carnivora"	"Canidae"	"Canis"	"Canis lupus"		"NrdA"	"NrdAe"				1	1
+"Eukaryota"	"Chordata"	"Mammalia"	"Primates"	"Hominidae"	"Homo"	"Homo sapiens"		"NrdB"	"NrdBe"				5	1
+"Eukaryota"	"Chordata"	"Mammalia"	"Primates"	"Hominidae"	"Homo"	"Homo sapiens"		"NrdA"	"NrdAe"				1	1
+"Eukaryota"	"Chordata"	"Mammalia"	"Primates"	"Hominidae"	"Pongo"	"Pongo abelii"		"NrdB"	"NrdBe"				2	1
+"Eukaryota"	"Chordata"	"Mammalia"	"Primates"	"Hominidae"	"Pongo"	"Pongo abelii"		"NrdA"	"NrdAe"				1	1
+"Eukaryota"	"Chordata"	"Mammalia"	"Rodentia"	"Muridae"	"Mus"	"Mus musculus"			"NrdBe"				2	1
+"Eukaryota"	"Chordata"	"Mammalia"	"Rodentia"	"Muridae"	"Mus"	"Mus musculus"			"NrdAe"				1	1
+"Viruses"	"unspecified phylum"	"unspecified class"	"Caudovirales"	"Myoviridae"	"FelixO1likevirus"	"Escherichia phage wV8"		"NrdA"	"NrdAg"				1	1
+"Viruses"	"unspecified phylum"	"unspecified class"	"Caudovirales"	"Myoviridae"	"FelixO1likevirus"	"Escherichia phage wV8"		"NrdD"	"NrdDc"	"NrdDc1"			1	1
+"Viruses"	"unspecified phylum"	"unspecified class"	"Caudovirales"	"Myoviridae"	"T4-like viruses"	"Enterobacteria phage RB51"		"NrdB"	"NrdBg"				1	1
+"Viruses"	"unspecified phylum"	"unspecified class"	"Caudovirales"	"Myoviridae"	"T4-like viruses"	"Enterobacteria phage RB51"		"NrdD"	"NrdDc"	"NrdDc1"			1	1
+"Viruses"	"unspecified phylum"	"unspecified class"	"Caudovirales"	"Myoviridae"	"T4-like viruses"	"Enterobacteria phage RB51"		"NrdA"	"NrdAg"				1	1
+"Viruses"	"unspecified phylum"	"unspecified class"	"Caudovirales"	"Myoviridae"	"T4-like viruses"	"Enterobacteria phage T4"		"NrdB"	"NrdBg"				1	1
+"Viruses"	"unspecified phylum"	"unspecified class"	"Caudovirales"	"Myoviridae"	"T4-like viruses"	"Enterobacteria phage T4"		"NrdD"	"NrdDc"	"NrdDc1"			1	1
+"Viruses"	"unspecified phylum"	"unspecified class"	"Caudovirales"	"Myoviridae"	"T4-like viruses"	"Enterobacteria phage T4"		"NrdA"	"NrdAg"				1	1
+"Viruses"	"unspecified phylum"	"unspecified class"	"Caudovirales"	"Myoviridae"	"T4-like viruses"	"Enterobacteria phage T4 sensu lato"		"NrdB"	"NrdBg"				1	1
+"Viruses"	"unspecified phylum"	"unspecified class"	"Caudovirales"	"Myoviridae"	"T4-like viruses"	"Enterobacteria phage T4 sensu lato"		"NrdD"	"NrdDc"	"NrdDc1"			1	1
+"Viruses"	"unspecified phylum"	"unspecified class"	"Caudovirales"	"Myoviridae"	"T4-like viruses"	"Enterobacteria phage T4 sensu lato"		"NrdA"	"NrdAg"				1	1
+"Viruses"	"unspecified phylum"	"unspecified class"	"Caudovirales"	"Siphoviridae"		"Clostridium phage phiCD38-2"		"NrdB"	"NrdF"				1	1
