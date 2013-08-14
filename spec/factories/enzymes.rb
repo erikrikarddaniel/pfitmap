@@ -6,7 +6,7 @@ FactoryGirl.define do
 
   factory :enzyme_class_2, class: Enzyme do
     name "RNR class II enzyme"
-    abbreviation "RNR III"
+    abbreviation "RNR II"
   end
 
   factory :enzyme_class_3, class: Enzyme do

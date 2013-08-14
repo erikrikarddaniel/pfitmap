@@ -25,6 +25,8 @@ chdir $ROOT/log
 screen -t log
 chdir $ROOT/db/migrate
 screen -t migrate
+chdir $ROOT/data
+screen -t data
 chdir $ROOT
 screen -t man
 screen -t console

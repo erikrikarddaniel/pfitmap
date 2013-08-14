@@ -69,66 +69,68 @@ class PfitmapRelease < ActiveRecord::Base
   end
 
   def calculate_main(organism_group, user)
-    ## Calculate_main populates the protein_counts table with statistics:
-    #  There exists one row in protein_counts table for each combination of
-    #  taxon, protein and pfitmap_release (if it has been "calculated").
-    #  protein_counts row contains three values and one boolean:
-    #    - no_genomes
-    #    - no_proteins
-    #    - no_genomes_with_proteins
-    #    - obs_as_genome
-    #  See app/model/protein_count.rb for further information
-    #  
-    # The steps of the algorithm are explained below.
+    PfitmapRelease.transaction do
+      ## Calculate_main populates the protein_counts table with statistics:
+      #  There exists one row in protein_counts table for each combination of
+      #  taxon, protein and pfitmap_release (if it has been "calculated").
+      #  protein_counts row contains three values and one boolean:
+      #    - no_genomes
+      #    - no_proteins
+      #    - no_genomes_with_proteins
+      #    - obs_as_genome
+      #  See app/model/protein_count.rb for further information
+      #  
+      # The steps of the algorithm are explained below.
 
-    calculate_logger.info "#{Time.now} Started calculate_main."
+      calculate_logger.info "#{Time.now} Started calculate_main."
 
-    require "matrix"
+      require "matrix"
 
-    # Resets the protein_counts table for the release and 
-    # fills it with new values.
-    pfitmap_release = self
+      # Resets the protein_counts table for the release and 
+      # fills it with new values.
+      pfitmap_release = self
 
-    # Accepted ranks
-    rank_hash = {}
-    Taxon::RANKS.each do |r|
-      rank_hash[r] = true
-    end 
-    
-    # Destroy old protein counts rows for this release
-    ProteinCount.delete_all(["pfitmap_release_id = ?",pfitmap_release.id])
-    calculate_logger.info "#{Time.now} Deleted old protein_counts for this release."
-
-    # Make sure the protein table is filled
-    Protein.initialize_proteins
-    proteins = Protein.all
-    calculate_logger.info "#{Time.now} Initialized proteins."
-
-    LoadableDb.all.each do |loadable_db|
-      # Retrieve all whole genome sequenced organisms id
-      taxon_ncbi_ids = []
-      if loadable_db.genome_sequenced
-	taxon_ncbi_ids = BiosqlWeb.organism_group2ncbi_taxon_ids(organism_group)
-	calculate_logger.info "#{Time.now} Fetched organism groups' NCBI taxon ids from biosql."
-      else
-	HmmDbHit.find_all_by_db(loadable_db.db).map { |hmmdbhit| hmmdbhit.gi }.each do |gi|
-	  taxon_ncbi_ids << BiosqlWeb.gi2ncbi_taxon_id(gi)
-	end
-	calculate_logger.info "#{Time.now}: Retrieved NCBI taxon ids for #{loadable_db.common_name} hits"
-      end
-
-      # Initialize dry run, count genomes
-      tree = dry_run(taxon_ncbi_ids, pfitmap_release, proteins, rank_hash)
-      calculate_logger.info "#{Time.now} Dry run finished."
+      # Accepted ranks
+      rank_hash = {}
+      Taxon::RANKS.each do |r|
+	rank_hash[r] = true
+      end 
       
-      # Second iteration, count hits
-      second_run_count_hits(tree, pfitmap_release,loadable_db)
-      calculate_logger.info "#{Time.now} Second_run_count_hits finished."
+      # Destroy old protein counts rows for this release
+      ProteinCount.delete_all(["pfitmap_release_id = ?",pfitmap_release.id])
+      calculate_logger.info "#{Time.now} Deleted old protein_counts for this release."
 
-      # Save tree to database
-      save_to_db(tree, loadable_db)
+      # Make sure the protein table is filled
+      Protein.initialize_proteins
+      proteins = Protein.all
+      calculate_logger.info "#{Time.now} Initialized proteins."
+
+      LoadableDb.all.each do |loadable_db|
+	# Retrieve all whole genome sequenced organisms id
+	taxon_ncbi_ids = []
+	if loadable_db.genome_sequenced
+	  taxon_ncbi_ids = BiosqlWeb.organism_group2ncbi_taxon_ids(organism_group)
+	  calculate_logger.info "#{Time.now} Fetched organism groups' NCBI taxon ids from biosql."
+	else
+	  HmmDbHit.find_all_by_db(loadable_db.db).map { |hmmdbhit| hmmdbhit.gi }.each do |gi|
+	    taxon_ncbi_ids << BiosqlWeb.gi2ncbi_taxon_id(gi)
+	  end
+	  calculate_logger.info "#{Time.now}: Retrieved NCBI taxon ids for #{loadable_db.common_name} hits"
+	end
+
+	# Initialize dry run, count genomes
+	tree = dry_run(taxon_ncbi_ids, pfitmap_release, proteins, rank_hash)
+	calculate_logger.info "#{Time.now} Dry run finished."
+	
+	# Second iteration, count hits
+	second_run_count_hits(tree, pfitmap_release,loadable_db)
+	calculate_logger.info "#{Time.now} Second_run_count_hits finished."
+
+	# Save tree to database
+	save_to_db(tree, loadable_db)
+      end
+      calculate_logger.info "#{Time.now} Everything finished, saved protein counts to db.\n"
     end
-    calculate_logger.info "#{Time.now} Everything finished, saved protein counts to db.\n"
   end
 
   def calculate_logger
@@ -136,6 +138,7 @@ class PfitmapRelease < ActiveRecord::Base
   end
 
   private
+
   def dry_run(taxon_ncbi_ids, pfitmap_release, proteins, rank_hash)
     ## Dry run of the calculate_main method
     #  Pulls one taxon hierarchy from biosqlweb at a time and iteratively
