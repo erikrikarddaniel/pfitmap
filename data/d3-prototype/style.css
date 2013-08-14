@@ -1,0 +1,31 @@
+body {
+
+}
+
+#heat_map table {
+	font-size: 10px;
+	border: thin solid;
+	border-bottom-style: solid;  
+}
+#organism_selector {
+	display: inline-block;
+}
+#protein_selector li {
+	display: inline-block;
+}
+#organism_selector ul {
+}
+.link_selector li {
+	text-decoration: underline;
+	color: blue;
+	list-style: none;
+}
+
+div.bar {
+	display: inline-block;
+	
+	width: 20px;
+	height: 75px;
+	margin-right: 2px;
+	background-color: red;
+}

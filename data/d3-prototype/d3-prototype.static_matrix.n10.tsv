@@ -1,9 +1,0 @@
-domain	phylum	class	order	family	genus	species	strain	rank	protein0	protein1	protein2	protein3	protein4	enzyme0	enzyme1	enzyme2	enzyme3	enzyme4	no_genomes	no_proteins	no_genomes_with_protein
-Viruses			Caudovirales	Siphoviridae		Clostridium phage phiCD38-2		species	NrdB	NrdF				RNR I	RNR Ib				1	1	1
-Bacteria	Proteobacteria	Betaproteobacteria	Burkholderiales	Oxalobacteraceae	Collimonas	Collimonas fungivorans	Collimonas fungivorans Ter331	no rank	NrdG					RNR III	RNR IIId	RNR IIId2			1	1	1
-Bacteria	Firmicutes	Bacilli	Lactobacillales	Streptococcaceae	Streptococcus	Streptococcus suis		no rank	NrdG					RNR III	RNR IIId	RNR IIId2			1	2	1
-Bacteria							Gluconacetobacter sp. SXCC-1	species	NrdG					RNR III	RNR IIId	RNR IIId2			1	1	1
-Bacteria							Mycobacterium bovis BCG str. ATCC 35743	no rank	NrdA	NrdE				RNR I	RNR Ib				1	1	1
-Bacteria							Pseudomonas aeruginosa 138244	no rank	NrdA	NrdE				RNR I	RNR Ib				1	1	1
-Bacteria							Mycobacterium bovis BCG str. ATCC 35740	no rank	NrdD	NrdDa	NrdDa1			RNR III	RNR IIIa	RNR IIIa1			1	2	1
-Bacteria							Pseudomonas aeruginosa 138244	no rank	NrdD	NrdDa				RNR III	RNR IIIa				1	1	1

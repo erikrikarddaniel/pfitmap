@@ -4,29 +4,49 @@
 		<meta charset="utf-8">
 		<title>D3 page template</title>
 		<script type="text/javascript" src="d3.v3.js"></script>
-		<style type="text/css">
-			div.bar {
-				display: inline-block;
-				width: 20px;
-				height: 75px;
-				margin-right: 2px;
-				background-color: teal;
-			}
-		</style>
+		<script type="text/javascript" src="scripts.js"></script>
+		<link rel="stylesheet" type="text/css" href="style.css"/>
+		<script>load_data();</script>
 	</head>
 	<body>
-		<script type="text/javascript">
-			var dataset;
-			d3.tsv("d3-prototype.static_matrix.n100.tsv", function(data) {
-				dataset = data;
-				console.log(dataset);
-				d3.select("body").selectAll("div")
-					.data(dataset)
-					.enter()
-					.append("div")
-					.attr("class","bar")
-					.style("height",function(d) {var bar_height = d.no_proteins * 10; return bar_height + "px"});
-			});
-		</script>
+		<div id="heat_map"></div>
+		<div id="protein_selector" class="link_selector">
+			<ul>
+				<li onclick="sum_protein('p0')">
+					p0
+				</li>
+				<li onclick="sum_protein('p1')">
+					p1
+				</li>
+			</ul>
+		</div>
+		<div id="organism_selector" class="link_selector">
+			<ul>
+				<li onclick="sum_organism('domain')">
+					Domain
+				</li>
+				<li onclick="sum_organism('phylum')">
+					Phylum
+				</li>
+				<li onclick="sum_organism('class')">
+					Class
+				</li>
+				<li onclick="sum_organism('order')">
+					Order
+				</li>
+				<li onclick="sum_organism('family')">
+					Family
+				</li>
+				<li onclick="sum_organism('genus')">
+					Genus
+				</li>
+				<li onclick="sum_organism('species')">
+					Species
+				</li>
+				<li onclick="sum_organism('strain')">
+					Strain
+				</li>
+			</ul>
+		</div>
 	</body>
 </html>
