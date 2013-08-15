@@ -8,7 +8,9 @@ var pfitmap = {
 	row_height : 25,
 	column_width : 25, 
 	organisms_count : null,
-	columns_names : []
+	columns_names : [],
+	taxa_names : ["domain", "kingdom","phylum", "class", "order", "family", "genus", "species", "strain"],
+	protein_names : []
 };
 
 function load_data() {
@@ -16,6 +18,8 @@ function load_data() {
 	pfitmap.dataset = data;
 	for (var k in pfitmap.dataset[0]) {
 		pfitmap.columns_names.push(k);
+		//if (k.startsWith("protein")) {pfitmap.protein_names.push(k.split(":").slice(1)); };
+		if (k.startsWith("protein")) {pfitmap.protein_names.push(k); };
 	};
 	pfitmap.organisms_count = pfitmap.dataset.length;
 	pfitmap.svg_height = (pfitmap.organisms_count + 1) * pfitmap.row_height;
@@ -88,9 +92,26 @@ function div_bar() {
 		.style("height",function(d) {var bar_height = d.no_proteins * 10; return bar_height + "px"});
 };
 function sum_organism(level) {
-	console.log(level);
-	console.log(pfitmap.dataset[0].n_genomes)
+	var ind = pfitmap.taxa_names.indexOf(level);
+	var nest = d3.nest()
+		.key(function(d) { return d["domain"]})
+		.rollup(function(d) { return {
+			n_genomes : d3.sum(d,function(g) {return +g["n_genomes"]; } )
+			}
+		})
+		.entries(pfitmap.dataset);
+	console.log(nest);
 };
 function sum_protein(level) {
 	console.log(level);
 };
+
+function sumArrays(group) {
+  return group.reduce(function(prev, cur, index, arr) {
+    return {
+      values: prev.values.map(function(d, i) {
+        return d + cur.values[i];
+      })
+    };
+  });
+}
