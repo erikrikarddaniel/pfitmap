@@ -32,8 +32,24 @@ Bacteria	unspecified kingdom	Actinobacteria	Actinobacteria	Bifidobacteriales	Bif
 Bacteria	unspecified kingdom	Actinobacteria	Actinobacteria	Coriobacteriales	Coriobacteriaceae	Collinsella	Collinsella intestinalis	Collinsella intestinalis DSM 13280	NrdB	NrdBh				1	1
 Bacteria	unspecified kingdom	Actinobacteria	Actinobacteria	Coriobacteriales	Coriobacteriaceae	Collinsella	Collinsella intestinalis	Collinsella intestinalis DSM 13280	NrdD	NrdDc	NrdDc2			1	1
 Bacteria	unspecified kingdom	Actinobacteria	Actinobacteria	Coriobacteriales	Coriobacteriaceae	Collinsella	Collinsella intestinalis	Collinsella intestinalis DSM 13280	NrdA	NrdAh				1	1
+Bacteria	Bacteroidetes/Chlorobi group	Bacteroidetes	Cytophagia	Cytophagales	Cyclobacteriaceae	Cyclobacterium	Cyclobacterium marinum	Cyclobacterium marinum DSM 745	NrdB	NrdBe				1	1
+Bacteria	Bacteroidetes/Chlorobi group	Bacteroidetes	Cytophagia	Cytophagales	Cyclobacteriaceae	Cyclobacterium	Cyclobacterium marinum	Cyclobacterium marinum DSM 746	NrdA	NrdAe				1	1
 Bacteria	Bacteroidetes/Chlorobi group	Bacteroidetes	Cytophagia	Cytophagales	Cytophagaceae	Runella	Runella slithyformis	Runella slithyformis DSM 19594	NrdB	NrdBe				1	1
 Bacteria	Bacteroidetes/Chlorobi group	Bacteroidetes	Cytophagia	Cytophagales	Cytophagaceae	Runella	Runella slithyformis	Runella slithyformis DSM 19594	NrdA	NrdAe				1	1
+Bacteria	Bacteroidetes/Chlorobi group	Bacteroidetes	Flavobacteriia	Flavobacteriales	Flavobacteriaceae	Cellulophaga	Cellulophaga lytica	Cellulophaga lytica DSM 7489	NrdB	NrdBe				1	1
+Bacteria	Bacteroidetes/Chlorobi group	Bacteroidetes	Flavobacteriia	Flavobacteriales	Flavobacteriaceae	Cellulophaga	Cellulophaga lytica	Cellulophaga lytica DSM 7490	NrdA	NrdAe				1	1
+Bacteria	Bacteroidetes/Chlorobi group	Bacteroidetes	Flavobacteriia	Flavobacteriales	Flavobacteriaceae	Weeksella	Weeksella virosa	Weeksella virosa DSM 16922	NrdB	NrdBe				1	1
+Bacteria	Bacteroidetes/Chlorobi group	Bacteroidetes	Flavobacteriia	Flavobacteriales	Flavobacteriaceae	Weeksella	Weeksella virosa	Weeksella virosa DSM 16922	NrdB	NrdBi				1	1
+Bacteria	Bacteroidetes/Chlorobi group	Bacteroidetes	Flavobacteriia	Flavobacteriales	Flavobacteriaceae	Weeksella	Weeksella virosa	Weeksella virosa DSM 16922	NrdA	NrdAe				1	1
+Bacteria	Bacteroidetes/Chlorobi group	Bacteroidetes	Flavobacteriia	Flavobacteriales	Flavobacteriaceae	Weeksella	Weeksella virosa	Weeksella virosa DSM 16922	NrdA	NrdAi				1	1
+Bacteria	Bacteroidetes/Chlorobi group	Bacteroidetes	Sphingobacteriia	Sphingobacteriales	Saprospiraceae	Saprospira	Saprospira grandis	Saprospira grandis str. Lewin	NrdB	NrdBe				1	1
+Bacteria	Bacteroidetes/Chlorobi group	Bacteroidetes	Sphingobacteriia	Sphingobacteriales	Saprospiraceae	Saprospira	Saprospira grandis	Saprospira grandis str. Lewin	NrdA	NrdAe				1	1
+Bacteria	Bacteroidetes/Chlorobi group	Bacteroidetes	Sphingobacteriia	Sphingobacteriales	Sphingobacteriaceae	Solitalea	Solitalea canadensis	Solitalea canadensis DSM 3403	NrdB	NrdBe				1	1
+Bacteria	Bacteroidetes/Chlorobi group	Bacteroidetes	Sphingobacteriia	Sphingobacteriales	Sphingobacteriaceae	Solitalea	Solitalea canadensis	Solitalea canadensis DSM 3403	NrdB	NrdBi				1	1
+Bacteria	Bacteroidetes/Chlorobi group	Bacteroidetes	Sphingobacteriia	Sphingobacteriales	Sphingobacteriaceae	Solitalea	Solitalea canadensis	Solitalea canadensis DSM 3403	NrdA	NrdAe				1	1
+Bacteria	Bacteroidetes/Chlorobi group	Bacteroidetes	Sphingobacteriia	Sphingobacteriales	Sphingobacteriaceae	Solitalea	Solitalea canadensis	Solitalea canadensis DSM 3403	NrdA	NrdAi				1	1
+Bacteria	Bacteroidetes/Chlorobi group	Bacteroidetes	Sphingobacteriia	Sphingobacteriales	Sphingobacteriaceae	Solitalea	Solitalea canadensis	Solitalea canadensis DSM 3403	NrdJ	NrdJd				1	1
+Bacteria	Bacteroidetes/Chlorobi group	Bacteroidetes	Sphingobacteriia	Sphingobacteriales	Sphingobacteriaceae	Solitalea	Solitalea canadensis	Solitalea canadensis DSM 3403	NrdD	NrdDd	NrdDd1	NrdDd1a		1	1
 Bacteria	Bacteroidetes/Chlorobi group	Bacteroidetes	unspecified class	Bacteroidetes Order II. Incertae sedis	Rhodothermaceae	Rhodothermus	Rhodothermus marinus	Rhodothermus marinus DSM 4252	NrdB	NrdBc				1	1
 Bacteria	Bacteroidetes/Chlorobi group	Bacteroidetes	unspecified class	Bacteroidetes Order II. Incertae sedis	Rhodothermaceae	Rhodothermus	Rhodothermus marinus	Rhodothermus marinus DSM 4252	NrdJ	NrdJf				1	1
 Bacteria	Bacteroidetes/Chlorobi group	Bacteroidetes	unspecified class	Bacteroidetes Order II. Incertae sedis	Rhodothermaceae	Rhodothermus	Rhodothermus marinus	Rhodothermus marinus DSM 4252	NrdA	NrdAc				1	1
@@ -68,6 +84,8 @@ Bacteria	unspecified kingdom	Proteobacteria	Alphaproteobacteria	Rickettsiales	An
 Bacteria	unspecified kingdom	Proteobacteria	Alphaproteobacteria	Rickettsiales	Anaplasmataceae	Anaplasma	Anaplasma marginale		NrdA	NrdAk				2	2
 Bacteria	unspecified kingdom	Proteobacteria	Alphaproteobacteria	Sphingomonadales	Sphingomonadaceae	Citromicrobium	Citromicrobium sp. JLT1363		NrdB	NrdBk				1	1
 Bacteria	unspecified kingdom	Proteobacteria	Alphaproteobacteria	Sphingomonadales	Sphingomonadaceae	Citromicrobium	Citromicrobium sp. JLT1363		NrdA	NrdAk				1	1
+Bacteria	unspecified kingdom	Proteobacteria	Alphaproteobacteria	unspecified order	unspecified family	Micavibrio	Micavibrio aeruginosavorus	Micavibrio aeruginosavorus ARL-13	NrdB	NrdBk				1	1
+Bacteria	unspecified kingdom	Proteobacteria	Alphaproteobacteria	unspecified order	unspecified family	Micavibrio	Micavibrio aeruginosavorus	Micavibrio aeruginosavorus ARL-13	NrdA	NrdAk				1	1
 Bacteria	unspecified kingdom	Proteobacteria	Betaproteobacteria	Burkholderiales	Oxalobacteraceae	Collimonas	Collimonas fungivorans	Collimonas fungivorans Ter331	NrdG					1	1
 Bacteria	unspecified kingdom	Proteobacteria	Betaproteobacteria	Neisseriales	Neisseriaceae	Neisseria	Neisseria elongata	Neisseria elongata subsp. glycolytica ATCC 29315	NrdB	NrdBg				1	1
 Bacteria	unspecified kingdom	Proteobacteria	Betaproteobacteria	Neisseriales	Neisseriaceae	Neisseria	Neisseria elongata	Neisseria elongata subsp. glycolytica ATCC 29315	NrdA	NrdAg				1	1
@@ -80,6 +98,8 @@ Bacteria	unspecified kingdom	Proteobacteria	Betaproteobacteria	Neisseriales	Neis
 Bacteria	unspecified kingdom	Proteobacteria	Betaproteobacteria	Rhodocyclales	Rhodocyclaceae	Methyloversatilis	Methyloversatilis universalis	Methyloversatilis universalis FAM5	NrdB	NrdBc				1	1
 Bacteria	unspecified kingdom	Proteobacteria	Betaproteobacteria	Rhodocyclales	Rhodocyclaceae	Methyloversatilis	Methyloversatilis universalis	Methyloversatilis universalis FAM5	NrdJ	NrdJf				1	1
 Bacteria	unspecified kingdom	Proteobacteria	Betaproteobacteria	Rhodocyclales	Rhodocyclaceae	Methyloversatilis	Methyloversatilis universalis	Methyloversatilis universalis FAM5	NrdA	NrdAc				1	1
+Bacteria	delta/epsilon subdivisions	Proteobacteria	Deltaproteobacteria	Bdellovibrionales	Bacteriovoracaceae	Bacteriovorax	Bacteriovorax marinus	Bacteriovorax marinus SJ	NrdB	NrdBe				1	1
+Bacteria	delta/epsilon subdivisions	Proteobacteria	Deltaproteobacteria	Bdellovibrionales	Bacteriovoracaceae	Bacteriovorax	Bacteriovorax marinus	Bacteriovorax marinus SJ	NrdA	NrdAe				1	1
 Bacteria	delta/epsilon subdivisions	Proteobacteria	Epsilonproteobacteria	unspecified order	unspecified family	Nitratiruptor	Nitratiruptor sp. SB155-2		NrdB					1	1
 Bacteria	delta/epsilon subdivisions	Proteobacteria	Epsilonproteobacteria	unspecified order	unspecified family	Nitratiruptor	Nitratiruptor sp. SB155-2		NrdA					1	1
 Bacteria	delta/epsilon subdivisions	Proteobacteria	Epsilonproteobacteria	unspecified order	unspecified family	Nitratiruptor	Nitratiruptor sp. SB155-2		NrdJ	NrdJm	NrdJm1			1	1
@@ -93,6 +113,9 @@ Bacteria	unspecified kingdom	Proteobacteria	Gammaproteobacteria	Aeromonadales	Ae
 Bacteria	unspecified kingdom	Proteobacteria	Gammaproteobacteria	Aeromonadales	Aeromonadaceae	Aeromonas	Aeromonas salmonicida	Aeromonas salmonicida subsp. salmonicida A449	NrdJ	NrdJf				1	1
 Bacteria	unspecified kingdom	Proteobacteria	Gammaproteobacteria	Aeromonadales	Aeromonadaceae	Aeromonas	Aeromonas salmonicida	Aeromonas salmonicida subsp. salmonicida A449	NrdD	NrdDc	NrdDc1			1	1
 Bacteria	unspecified kingdom	Proteobacteria	Gammaproteobacteria	Aeromonadales	Aeromonadaceae	Aeromonas	Aeromonas salmonicida	Aeromonas salmonicida subsp. salmonicida A449	NrdA	NrdAg				1	1
+Bacteria	unspecified kingdom	Proteobacteria	Gammaproteobacteria	Alteromonadales	Pseudoalteromonadaceae	Pseudoalteromonas	Pseudoalteromonas tunicata	Pseudoalteromonas tunicata D2	NrdB	NrdBg				1	1
+Bacteria	unspecified kingdom	Proteobacteria	Gammaproteobacteria	Alteromonadales	Pseudoalteromonadaceae	Pseudoalteromonas	Pseudoalteromonas tunicata	Pseudoalteromonas tunicata D2	NrdB	NrdBk				1	1
+Bacteria	unspecified kingdom	Proteobacteria	Gammaproteobacteria	Alteromonadales	Pseudoalteromonadaceae	Pseudoalteromonas	Pseudoalteromonas tunicata	Pseudoalteromonas tunicata D2	NrdA	NrdAg				1	1
 Bacteria	unspecified kingdom	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli K-12	NrdA	NrdAg				1	1
 Bacteria	unspecified kingdom	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli K-12	NrdB	NrdBg				1	1
 Bacteria	unspecified kingdom	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli K-12	NrdA	NrdE				1	1
@@ -149,6 +172,11 @@ Bacteria	unspecified kingdom	Proteobacteria	Gammaproteobacteria	Pseudomonadales	
 Bacteria	unspecified kingdom	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Pseudomonas	Pseudomonas aeruginosa	Pseudomonas aeruginosa PA7	NrdD	NrdDd	NrdDd1			1	1
 Bacteria	unspecified kingdom	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Pseudomonas	Pseudomonas entomophila	Pseudomonas entomophila L48	NrdB	NrdBc				1	1
 Bacteria	unspecified kingdom	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Pseudomonas	Pseudomonas entomophila	Pseudomonas entomophila L48	NrdA	NrdAc				1	1
+Bacteria	unspecified kingdom	Proteobacteria	Gammaproteobacteria	Vibrionales	Vibrionaceae	Vibrio	Vibrio rotiferianus	Vibrio rotiferianus DAT722	NrdB	NrdBe				1	1
+Bacteria	unspecified kingdom	Proteobacteria	Gammaproteobacteria	Vibrionales	Vibrionaceae	Vibrio	Vibrio rotiferianus	Vibrio rotiferianus DAT722	NrdB	NrdBg				1	1
+Bacteria	unspecified kingdom	Proteobacteria	Gammaproteobacteria	Vibrionales	Vibrionaceae	Vibrio	Vibrio rotiferianus	Vibrio rotiferianus DAT722	NrdD	NrdDc	NrdDc1			1	1
+Bacteria	unspecified kingdom	Proteobacteria	Gammaproteobacteria	Vibrionales	Vibrionaceae	Vibrio	Vibrio rotiferianus	Vibrio rotiferianus DAT722	NrdA	NrdAe				1	1
+Bacteria	unspecified kingdom	Proteobacteria	Gammaproteobacteria	Vibrionales	Vibrionaceae	Vibrio	Vibrio rotiferianus	Vibrio rotiferianus DAT722	NrdA	NrdAg				1	1
 Bacteria	unspecified kingdom	Proteobacteria	Gammaproteobacteria	Xanthomonadales	Xanthomonadaceae	Xanthomonas	Xanthomonas oryzae	Xanthomonas oryzae pv. oryzicola BLS256	NrdB					1	1
 Bacteria	unspecified kingdom	Proteobacteria	Gammaproteobacteria	Xanthomonadales	Xanthomonadaceae	Xanthomonas	Xanthomonas oryzae	Xanthomonas oryzae pv. oryzicola BLS256	NrdA	NrdAh				1	1
 Bacteria	unspecified kingdom	Spirochaetes	Spirochaetia	Spirochaetales	Spirochaetaceae	Borrelia	Borrelia burgdorferi							0	0
@@ -169,16 +197,35 @@ Bacteria	unspecified kingdom	Thermotogae	Thermotogae	Thermotogales	Thermotogacea
 Bacteria	unspecified kingdom	Thermotogae	Thermotogae	Thermotogales	Thermotogaceae	Thermotoga	Thermotoga naphthophila	Thermotoga naphthophila RKU-10	NrdJ	NrdJf				1	1
 Bacteria	unspecified kingdom	Thermotogae	Thermotogae	Thermotogales	Thermotogaceae	Thermotoga	Thermotoga naphthophila	Thermotoga naphthophila RKU-10	NrdD	NrdDh				1	1
 Bacteria	unspecified kingdom	unspecified phylum	unspecified class	unspecified order	unspecified family	unspecified genus	candidate division TM7 genomosp. GTL1							0	0
+Eukaryota	Fungi	Ascomycota	Eurotiomycetes	Onygenales	unspecified family	Coccidioides	Coccidioides posadasii	Coccidioides posadasii C735 delta SOWgp	NrdB	NrdBe				1	1
+Eukaryota	Fungi	Ascomycota	Eurotiomycetes	Onygenales	unspecified family	Coccidioides	Coccidioides posadasii	Coccidioides posadasii C735 delta SOWgp	NrdA	NrdAe				1	1
+Eukaryota	Fungi	Basidiomycota	Tremellomycetes	Tremellales	Tremellaceae	Cryptococcus	Cryptococcus neoformans	Cryptococcus neoformans var. neoformans JEC21	NrdB	NrdBe				1	1
+Eukaryota	Fungi	Basidiomycota	Tremellomycetes	Tremellales	Tremellaceae	Cryptococcus	Cryptococcus neoformans	Cryptococcus neoformans var. neoformans JEC22	NrdA	NrdAe				1	1
+Eukaryota	Fungi	Microsporidia	unspecified class	unspecified order	Unikaryonidae	Encephalitozoon	Encephalitozoon intestinalis	Encephalitozoon intestinalis ATCC 50506	NrdB	NrdBe				1	1
+Eukaryota	Fungi	Microsporidia	unspecified class	unspecified order	Unikaryonidae	Encephalitozoon	Encephalitozoon intestinalis	Encephalitozoon intestinalis ATCC 50507	NrdA	NrdAe				1	1
+Eukaryota	Metazoa	Arthropoda	Insecta	Diptera	Culicidae	Anopheles	Anopheles gambiae	Anopheles gambiae str. PEST	NrdB	NrdBe				1	1
+Eukaryota	Metazoa	Arthropoda	Insecta	Diptera	Culicidae	Anopheles	Anopheles gambiae	Anopheles gambiae str. PEST	NrdA	NrdAe				1	1
+Eukaryota	Metazoa	Chordata	Amphibia	Anura	Pipidae	Silurana	Xenopus (Silurana) tropicalis		NrdB	NrdBe				1	1
+Eukaryota	Metazoa	Chordata	Amphibia	Anura	Pipidae	Silurana	Xenopus (Silurana) tropicalis		NrdA	NrdAe				1	1
+Eukaryota	Metazoa	Chordata	Amphibia	Anura	Pipidae	Silurana	Xenopus (Silurana) tropicalis		NrdA	NrdAc				2	2
 Eukaryota	Metazoa	Chordata	Ascidiacea	Enterogona	Cionidae	Ciona	Ciona intestinalis		NrdB	NrdBe				1	1
 Eukaryota	Metazoa	Chordata	Ascidiacea	Enterogona	Cionidae	Ciona	Ciona intestinalis		NrdA	NrdAe				1	1
+Eukaryota	Metazoa	Chordata	Aves	Galliformes	Phasianidae	Gallus	Gallus gallus		NrdB	NrdBe				1	1
+Eukaryota	Metazoa	Chordata	Aves	Galliformes	Phasianidae	Gallus	Gallus gallus		NrdA	NrdAe				1	1
 Eukaryota	Metazoa	Chordata	Mammalia	Carnivora	Canidae	Canis	Canis lupus		NrdB	NrdBe				3	1
 Eukaryota	Metazoa	Chordata	Mammalia	Carnivora	Canidae	Canis	Canis lupus		NrdA	NrdAe				1	1
+Eukaryota	Metazoa	Chordata	Mammalia	Didelphimorphia	Didelphidae	Monodelphis	Monodelphis domestica		NrdB	NrdBe				5	1
+Eukaryota	Metazoa	Chordata	Mammalia	Didelphimorphia	Didelphidae	Monodelphis	Monodelphis domestica		NrdA	NrdAe				1	1
 Eukaryota	Metazoa	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens		NrdB	NrdBe				5	1
 Eukaryota	Metazoa	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens		NrdA	NrdAe				1	1
 Eukaryota	Metazoa	Chordata	Mammalia	Primates	Hominidae	Pongo	Pongo abelii		NrdB	NrdBe				2	1
 Eukaryota	Metazoa	Chordata	Mammalia	Primates	Hominidae	Pongo	Pongo abelii		NrdA	NrdAe				1	1
 Eukaryota	Metazoa	Chordata	Mammalia	Rodentia	Muridae	Mus	Mus musculus		NrdB	NrdBe				2	1
 Eukaryota	Metazoa	Chordata	Mammalia	Rodentia	Muridae	Mus	Mus musculus		NrdA	NrdAe				1	1
+Eukaryota	Viridiplantae	Streptophyta	Bryopsida	Funariales	Funariaceae	Physcomitrella	Physcomitrella patens		NrdB	NrdBe				2	1
+Eukaryota	Viridiplantae	Streptophyta	Bryopsida	Funariales	Funariaceae	Physcomitrella	Physcomitrella patens		NrdA	NrdAe				1	1
+Eukaryota	Viridiplantae	Streptophyta	Isoetopsida	Selaginellales	Selaginellaceae	Selaginella	Selaginella moellendorffii		NrdB	NrdBe				2	1
+Eukaryota	Viridiplantae	Streptophyta	Isoetopsida	Selaginellales	Selaginellaceae	Selaginella	Selaginella moellendorffii		NrdA	NrdAe				1	1
 Eukaryota	Viridiplantae	Streptophyta	unspecified class	Brassicales	Brassicaceae	Arabidopsis	Arabidopsis lyrata		NrdB	NrdBe				2	1
 Eukaryota	Viridiplantae	Streptophyta	unspecified class	Brassicales	Brassicaceae	Arabidopsis	Arabidopsis lyrata		NrdA	NrdAe				1	1
 Viruses	dsDNA viruses, no RNA stage	unspecified phylum	unspecified class	Caudovirales	Myoviridae	FelixO1likevirus	Escherichia phage wV8		NrdA	NrdAg				1	1
