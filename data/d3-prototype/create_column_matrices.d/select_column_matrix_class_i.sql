@@ -34,200 +34,200 @@ SELECT
   COALESCE(NrdBn.n_genomes_w_protein,0) AS "protein:RNR In:NrdBn:n_genomes_w_protein"
 FROM
   (
-    SELECT domain, phylum, class, "order", family, genus, species, strain, COUNT(*) AS n_genomes
-    FROM ( SELECT DISTINCT domain, phylum, class, "order", family, genus, species, strain FROM row_matrix ) t
-    GROUP BY 1,2,3,4,5,6,7,8
+    SELECT domain, kingdom, phylum, class, "order", family, genus, species, strain, COUNT(*) AS n_genomes
+    FROM ( SELECT DISTINCT domain, kingdom, phylum, class, "order", family, genus, species, strain FROM row_matrix ) t
+    GROUP BY 1,2,3,4,5,6,7,8,9
   ) taxa 
   LEFT JOIN
   (
     SELECT 
-      domain, phylum, class, "order", family, genus, species, strain, SUM(n_proteins) AS n_proteins, CASE WHEN SUM(n_proteins) > 0 THEN 1 ELSE 0 END AS n_genomes_w_protein
+      domain, kingdom, phylum, class, "order", family, genus, species, strain, SUM(n_proteins) AS n_proteins, CASE WHEN SUM(n_proteins) > 0 THEN 1 ELSE 0 END AS n_genomes_w_protein
     FROM
       row_matrix
     WHERE
       protein1 = 'NrdE'
     GROUP BY
-      1,2,3,4,5,6,7,8
+      1,2,3,4,5,6,7,8,9
   ) NrdE ON
     taxa.species = NrdE.species AND taxa.strain = NrdE.strain
   LEFT JOIN
   (
     SELECT 
-      domain, phylum, class, "order", family, genus, species, strain, SUM(n_proteins) AS n_proteins, CASE WHEN SUM(n_proteins) > 0 THEN 1 ELSE 0 END AS n_genomes_w_protein
+      domain, kingdom, phylum, class, "order", family, genus, species, strain, SUM(n_proteins) AS n_proteins, CASE WHEN SUM(n_proteins) > 0 THEN 1 ELSE 0 END AS n_genomes_w_protein
     FROM
       row_matrix
     WHERE
       protein1 = 'NrdF'
     GROUP BY
-      1,2,3,4,5,6,7,8
+      1,2,3,4,5,6,7,8,9
   ) NrdF ON
     taxa.species = NrdF.species AND taxa.strain = NrdF.strain
   LEFT JOIN
   (
     SELECT 
-      domain, phylum, class, "order", family, genus, species, strain, SUM(n_proteins) AS n_proteins, CASE WHEN SUM(n_proteins) > 0 THEN 1 ELSE 0 END AS n_genomes_w_protein
+      domain, kingdom, phylum, class, "order", family, genus, species, strain, SUM(n_proteins) AS n_proteins, CASE WHEN SUM(n_proteins) > 0 THEN 1 ELSE 0 END AS n_genomes_w_protein
     FROM
       row_matrix
     WHERE
       protein1 = 'NrdAc'
     GROUP BY
-      1,2,3,4,5,6,7,8
+      1,2,3,4,5,6,7,8,9
   ) NrdAc ON
     taxa.species = NrdAc.species AND taxa.strain = NrdAc.strain
   LEFT JOIN
   (
     SELECT 
-      domain, phylum, class, "order", family, genus, species, strain, SUM(n_proteins) AS n_proteins, CASE WHEN SUM(n_proteins) > 0 THEN 1 ELSE 0 END AS n_genomes_w_protein
+      domain, kingdom, phylum, class, "order", family, genus, species, strain, SUM(n_proteins) AS n_proteins, CASE WHEN SUM(n_proteins) > 0 THEN 1 ELSE 0 END AS n_genomes_w_protein
     FROM
       row_matrix
     WHERE
       protein1 = 'NrdBc'
     GROUP BY
-      1,2,3,4,5,6,7,8
+      1,2,3,4,5,6,7,8,9
   ) NrdBc ON
     taxa.species = NrdBc.species AND taxa.strain = NrdBc.strain
   LEFT JOIN
   (
     SELECT 
-      domain, phylum, class, "order", family, genus, species, strain, SUM(n_proteins) AS n_proteins, CASE WHEN SUM(n_proteins) > 0 THEN 1 ELSE 0 END AS n_genomes_w_protein
+      domain, kingdom, phylum, class, "order", family, genus, species, strain, SUM(n_proteins) AS n_proteins, CASE WHEN SUM(n_proteins) > 0 THEN 1 ELSE 0 END AS n_genomes_w_protein
     FROM
       row_matrix
     WHERE
       protein1 = 'NrdAe'
     GROUP BY
-      1,2,3,4,5,6,7,8
+      1,2,3,4,5,6,7,8,9
   ) NrdAe ON
     taxa.species = NrdAe.species AND taxa.strain = NrdAe.strain
   LEFT JOIN
   (
     SELECT 
-      domain, phylum, class, "order", family, genus, species, strain, SUM(n_proteins) AS n_proteins, CASE WHEN SUM(n_proteins) > 0 THEN 1 ELSE 0 END AS n_genomes_w_protein
+      domain, kingdom, phylum, class, "order", family, genus, species, strain, SUM(n_proteins) AS n_proteins, CASE WHEN SUM(n_proteins) > 0 THEN 1 ELSE 0 END AS n_genomes_w_protein
     FROM
       row_matrix
     WHERE
       protein1 = 'NrdBe'
     GROUP BY
-      1,2,3,4,5,6,7,8
+      1,2,3,4,5,6,7,8,9
   ) NrdBe ON
     taxa.species = NrdBe.species AND taxa.strain = NrdBe.strain
   LEFT JOIN
   (
     SELECT 
-      domain, phylum, class, "order", family, genus, species, strain, SUM(n_proteins) AS n_proteins, CASE WHEN SUM(n_proteins) > 0 THEN 1 ELSE 0 END AS n_genomes_w_protein
+      domain, kingdom, phylum, class, "order", family, genus, species, strain, SUM(n_proteins) AS n_proteins, CASE WHEN SUM(n_proteins) > 0 THEN 1 ELSE 0 END AS n_genomes_w_protein
     FROM
       row_matrix
     WHERE
       protein1 = 'NrdAg'
     GROUP BY
-      1,2,3,4,5,6,7,8
+      1,2,3,4,5,6,7,8,9
   ) NrdAg ON
     taxa.species = NrdAg.species AND taxa.strain = NrdAg.strain
   LEFT JOIN
   (
     SELECT 
-      domain, phylum, class, "order", family, genus, species, strain, SUM(n_proteins) AS n_proteins, CASE WHEN SUM(n_proteins) > 0 THEN 1 ELSE 0 END AS n_genomes_w_protein
+      domain, kingdom, phylum, class, "order", family, genus, species, strain, SUM(n_proteins) AS n_proteins, CASE WHEN SUM(n_proteins) > 0 THEN 1 ELSE 0 END AS n_genomes_w_protein
     FROM
       row_matrix
     WHERE
       protein1 = 'NrdBg'
     GROUP BY
-      1,2,3,4,5,6,7,8
+      1,2,3,4,5,6,7,8,9
   ) NrdBg ON
     taxa.species = NrdBg.species AND taxa.strain = NrdBg.strain
   LEFT JOIN
   (
     SELECT 
-      domain, phylum, class, "order", family, genus, species, strain, SUM(n_proteins) AS n_proteins, CASE WHEN SUM(n_proteins) > 0 THEN 1 ELSE 0 END AS n_genomes_w_protein
+      domain, kingdom, phylum, class, "order", family, genus, species, strain, SUM(n_proteins) AS n_proteins, CASE WHEN SUM(n_proteins) > 0 THEN 1 ELSE 0 END AS n_genomes_w_protein
     FROM
       row_matrix
     WHERE
       protein1 = 'NrdAh'
     GROUP BY
-      1,2,3,4,5,6,7,8
+      1,2,3,4,5,6,7,8,9
   ) NrdAh ON
     taxa.species = NrdAh.species AND taxa.strain = NrdAh.strain
   LEFT JOIN
   (
     SELECT 
-      domain, phylum, class, "order", family, genus, species, strain, SUM(n_proteins) AS n_proteins, CASE WHEN SUM(n_proteins) > 0 THEN 1 ELSE 0 END AS n_genomes_w_protein
+      domain, kingdom, phylum, class, "order", family, genus, species, strain, SUM(n_proteins) AS n_proteins, CASE WHEN SUM(n_proteins) > 0 THEN 1 ELSE 0 END AS n_genomes_w_protein
     FROM
       row_matrix
     WHERE
       protein1 = 'NrdBh'
     GROUP BY
-      1,2,3,4,5,6,7,8
+      1,2,3,4,5,6,7,8,9
   ) NrdBh ON
     taxa.species = NrdBh.species AND taxa.strain = NrdBh.strain
   LEFT JOIN
   (
     SELECT 
-      domain, phylum, class, "order", family, genus, species, strain, SUM(n_proteins) AS n_proteins, CASE WHEN SUM(n_proteins) > 0 THEN 1 ELSE 0 END AS n_genomes_w_protein
+      domain, kingdom, phylum, class, "order", family, genus, species, strain, SUM(n_proteins) AS n_proteins, CASE WHEN SUM(n_proteins) > 0 THEN 1 ELSE 0 END AS n_genomes_w_protein
     FROM
       row_matrix
     WHERE
       protein1 = 'NrdAi'
     GROUP BY
-      1,2,3,4,5,6,7,8
+      1,2,3,4,5,6,7,8,9
   ) NrdAi ON
     taxa.species = NrdAi.species AND taxa.strain = NrdAi.strain
   LEFT JOIN
   (
     SELECT 
-      domain, phylum, class, "order", family, genus, species, strain, SUM(n_proteins) AS n_proteins, CASE WHEN SUM(n_proteins) > 0 THEN 1 ELSE 0 END AS n_genomes_w_protein
+      domain, kingdom, phylum, class, "order", family, genus, species, strain, SUM(n_proteins) AS n_proteins, CASE WHEN SUM(n_proteins) > 0 THEN 1 ELSE 0 END AS n_genomes_w_protein
     FROM
       row_matrix
     WHERE
       protein1 = 'NrdBi'
     GROUP BY
-      1,2,3,4,5,6,7,8
+      1,2,3,4,5,6,7,8,9
   ) NrdBi ON
     taxa.species = NrdBi.species AND taxa.strain = NrdBi.strain
   LEFT JOIN
   (
     SELECT 
-      domain, phylum, class, "order", family, genus, species, strain, SUM(n_proteins) AS n_proteins, CASE WHEN SUM(n_proteins) > 0 THEN 1 ELSE 0 END AS n_genomes_w_protein
+      domain, kingdom, phylum, class, "order", family, genus, species, strain, SUM(n_proteins) AS n_proteins, CASE WHEN SUM(n_proteins) > 0 THEN 1 ELSE 0 END AS n_genomes_w_protein
     FROM
       row_matrix
     WHERE
       protein1 = 'NrdAk'
     GROUP BY
-      1,2,3,4,5,6,7,8
+      1,2,3,4,5,6,7,8,9
   ) NrdAk ON
     taxa.species = NrdAk.species AND taxa.strain = NrdAk.strain
   LEFT JOIN
   (
     SELECT 
-      domain, phylum, class, "order", family, genus, species, strain, SUM(n_proteins) AS n_proteins, CASE WHEN SUM(n_proteins) > 0 THEN 1 ELSE 0 END AS n_genomes_w_protein
+      domain, kingdom, phylum, class, "order", family, genus, species, strain, SUM(n_proteins) AS n_proteins, CASE WHEN SUM(n_proteins) > 0 THEN 1 ELSE 0 END AS n_genomes_w_protein
     FROM
       row_matrix
     WHERE
       protein1 = 'NrdBk'
     GROUP BY
-      1,2,3,4,5,6,7,8
+      1,2,3,4,5,6,7,8,9
   ) NrdBk ON
     taxa.species = NrdBk.species AND taxa.strain = NrdBk.strain
   LEFT JOIN
   (
     SELECT 
-      domain, phylum, class, "order", family, genus, species, strain, SUM(n_proteins) AS n_proteins, CASE WHEN SUM(n_proteins) > 0 THEN 1 ELSE 0 END AS n_genomes_w_protein
+      domain, kingdom, phylum, class, "order", family, genus, species, strain, SUM(n_proteins) AS n_proteins, CASE WHEN SUM(n_proteins) > 0 THEN 1 ELSE 0 END AS n_genomes_w_protein
     FROM
       row_matrix
     WHERE
       protein1 = 'NrdAn'
     GROUP BY
-      1,2,3,4,5,6,7,8
+      1,2,3,4,5,6,7,8,9
   ) NrdAn ON
     taxa.species = NrdAn.species AND taxa.strain = NrdAn.strain
   LEFT JOIN
   (
     SELECT 
-      domain, phylum, class, "order", family, genus, species, strain, SUM(n_proteins) AS n_proteins, CASE WHEN SUM(n_proteins) > 0 THEN 1 ELSE 0 END AS n_genomes_w_protein
+      domain, kingdom, phylum, class, "order", family, genus, species, strain, SUM(n_proteins) AS n_proteins, CASE WHEN SUM(n_proteins) > 0 THEN 1 ELSE 0 END AS n_genomes_w_protein
     FROM
       row_matrix
     WHERE
       protein1 = 'NrdBn'
     GROUP BY
-      1,2,3,4,5,6,7,8
+      1,2,3,4,5,6,7,8,9
   ) NrdBn ON
     taxa.species = NrdBn.species AND taxa.strain = NrdBn.strain
 ;

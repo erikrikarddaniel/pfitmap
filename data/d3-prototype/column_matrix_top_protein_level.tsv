@@ -1,66 +1,80 @@
-domain	phylum	class	order	family	genus	species	strain	n_genomes	protein:RNR I:NrdA:n_proteins	protein:RNR I:NrdA:n_genomes_w_protein	protein:RNR I:NrdB:n_proteins	protein:RNR I:NrdB:n_genomes_w_protein	protein:RNR III:NrdD:n_proteins	protein:RNR III:NrdD:n_genomes_w_protein	protein:RNR III:NrdG:n_proteins	protein:RNR III:NrdG:n_genomes_w_protein	protein:RNR II:NrdJ:n_proteins	protein:RNR II:NrdJ:n_genomes_w_protein 
-Bacteria	Actinobacteria	Actinobacteria	Coriobacteriales	Coriobacteriaceae	Collinsella	Collinsella intestinalis	Collinsella intestinalis DSM 13280	1	1	1	1	1	1	1	0	0	0	0
-Bacteria	Thermotogae	Thermotogae	Thermotogales	Thermotogaceae	Thermosipho	Thermosipho melanesiensis	Thermosipho melanesiensis BI429	1	0	0	0	0	1	1	0	0	1	1
-Archaea	Euryarchaeota	Halobacteria	Halobacteriales	Halobacteriaceae	Halorhabdus	Halorhabdus utahensis	Halorhabdus utahensis DSM 12940	1	1	1	1	1	1	1	0	0	1	1
-Bacteria	Actinobacteria	Actinobacteria	Actinomycetales	Pseudonocardiaceae	Amycolatopsis	Amycolatopsis sp. ATCC 39116		1	1	1	1	1	0	0	0	0	1	1
-Viruses			Caudovirales	Myoviridae	T4-like viruses	Enterobacteria phage T4		1	1	1	1	1	1	1	0	0	0	0
-Bacteria	Proteobacteria	Betaproteobacteria	Neisseriales	Neisseriaceae	Neisseria	Neisseria gonorrhoeae	Neisseria gonorrhoeae NCCP11945	1	1	1	1	1	0	0	0	0	0	0
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Yersinia	Yersinia pestis	Yersinia pestis Pestoides F	1	3	1	3	1	1	1	0	0	0	0
-Bacteria	Thermotogae	Thermotogae	Thermotogales	Thermotogaceae	Fervidobacterium	Fervidobacterium nodosum	Fervidobacterium nodosum Rt17-B1	1	0	0	0	0	1	1	0	0	1	1
-Viruses			Caudovirales	Siphoviridae		Clostridium phage phiCD38-2		1	0	0	1	1	0	0	0	0	0	0
-Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Moraxellaceae	Moraxella	Moraxella catarrhalis	Moraxella catarrhalis RH4	1	2	1	2	1	0	0	0	0	0	0
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Shigella	Shigella flexneri	Shigella flexneri 5a str. M90T	1	2	1	2	1	1	1	0	0	0	0
-Archaea	Euryarchaeota	Methanococci	Methanococcales	Methanococcaceae	Methanococcus	Methanococcus maripaludis	Methanococcus maripaludis X1	1	0	0	0	0	1	1	0	0	0	0
-Archaea	Thaumarchaeota		Nitrosopumilales	Nitrosopumilaceae	Nitrosopumilus	Nitrosopumilus maritimus	Nitrosopumilus maritimus SCM1	1	0	0	0	0	0	0	0	0	0	0
-Bacteria	Actinobacteria	Actinobacteria	Bifidobacteriales	Bifidobacteriaceae	Bifidobacterium	Bifidobacterium breve	Bifidobacterium breve DSM 20213 = JCM 1192	1	1	1	1	1	1	1	0	0	0	0
-Bacteria	Proteobacteria	Betaproteobacteria	Neisseriales	Neisseriaceae	Neisseria	Neisseria flavescens	Neisseria flavescens NRL30031/H210	1	1	1	1	1	1	1	0	0	0	0
-Bacteria	Bacteroidetes		Bacteroidetes Order II. Incertae sedis	Rhodothermaceae	Rhodothermus	Rhodothermus marinus	Rhodothermus marinus DSM 4252	1	1	1	1	1	0	0	0	0	2	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Moraxellaceae	Acinetobacter	Acinetobacter baumanii	Acinetobacter baumannii ATCC 17978	1	1	1	1	1	0	0	0	0	0	0
-Bacteria	Thermotogae	Thermotogae	Thermotogales	Thermotogaceae	Fervidobacterium	Fervidobacterium pennivorans	Fervidobacterium pennivorans DSM 9078	1	0	0	0	0	2	1	0	0	1	1
-Viruses			Caudovirales	Myoviridae	FelixO1likevirus	Escherichia phage wV8		1	1	1	0	0	1	1	0	0	0	0
-Bacteria	Firmicutes	Clostridia	Clostridiales	Clostridiaceae	Clostridium	Clostridium asparagiforme	Clostridium asparagiforme DSM 15981	1	1	1	1	1	1	1	0	0	0	0
-Bacteria	Proteobacteria	Alphaproteobacteria	Rhizobiales	Bartonellaceae	Bartonella	Bartonella tribocorum	Bartonella tribocorum CIP 105476	1	1	1	1	1	0	0	0	0	0	0
-Bacteria	Thermotogae	Thermotogae	Thermotogales	Thermotogaceae	Thermotoga	Thermotoga neapolitana	Thermotoga neapolitana DSM 4359	1	0	0	0	0	1	1	0	0	1	1
-Bacteria	Proteobacteria	Epsilonproteobacteria	Campylobacterales	Helicobacteraceae	Helicobacter	Helicobacter acinonychis	Helicobacter acinonychis str. Sheeba	1	1	1	1	1	0	0	0	0	0	0
-Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens		1	1	1	5	1	0	0	0	0	0	0
-Archaea	Crenarchaeota	Thermoprotei	Thermoproteales	Thermoproteaceae	Pyrobaculum	Pyrobaculum islandicum	Pyrobaculum islandicum DSM 4184	1	0	0	0	0	1	1	0	0	1	1
-Bacteria	Proteobacteria	Epsilonproteobacteria			Nitratiruptor	Nitratiruptor sp. SB155-2		1	1	1	1	1	1	1	0	0	1	1
-Eukaryota	Chordata	Mammalia	Primates	Hominidae	Pongo	Pongo abelii		1	1	1	2	1	0	0	0	0	0	0
-Bacteria	Firmicutes	Bacilli	Bacillales	Listeriaceae	Listeria	Listeria welshimeri	Listeria welshimeri serovar 6b str. SLCC5334	1	1	1	1	1	1	1	0	0	0	0
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli O157:H7 str. Sakai	1	2	1	2	1	1	1	0	0	0	0
-Bacteria	Thermotogae	Thermotogae	Thermotogales	Thermotogaceae	Thermotoga	Thermotoga maritima	Thermotoga maritima MSB8	1	0	0	0	0	2	1	0	0	2	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli PCN033	1	2	1	2	1	1	1	0	0	0	0
-Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Pseudomonas	Pseudomonas entomophila	Pseudomonas entomophila L48	1	1	1	1	1	0	0	0	0	0	0
-Bacteria	Thermotogae	Thermotogae	Thermotogales	Thermotogaceae	Thermotoga	Thermotoga thermarum	Thermotoga thermarum DSM 5069	1	0	0	0	0	1	1	0	0	1	1
-Bacteria	Firmicutes	Bacilli	Lactobacillales	Streptococcaceae	Streptococcus	Streptococcus suis		1	0	0	0	0	0	0	2	1	0	0
-Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Pseudomonas	Pseudomonas aeruginosa	Pseudomonas aeruginosa PA7	1	1	1	1	1	1	1	0	0	1	1
-Viruses			Caudovirales	Myoviridae	T4-like viruses	Enterobacteria phage RB51		1	1	1	1	1	1	1	0	0	0	0
-Bacteria	Proteobacteria	Epsilonproteobacteria			Sulfurovum	Sulfurovum sp. NBC37-1		1	0	0	1	1	0	0	0	0	0	0
-Bacteria	Actinobacteria	Actinobacteria	Actinomycetales	Mycobacteriaceae	Mycobacterium	Mycobacterium bovis	Mycobacterium bovis BCG str. ATCC 35743	1	1	1	0	0	0	0	0	0	0	0
-Bacteria	Actinobacteria	Actinobacteria	Bifidobacteriales	Bifidobacteriaceae	Bifidobacterium	Bifidobacterium angulatum	Bifidobacterium angulatum DSM 20098 = JCM 7096	1	0	0	0	0	1	1	0	0	0	0
-Bacteria	Proteobacteria	Betaproteobacteria	Burkholderiales	Oxalobacteraceae	Collimonas	Collimonas fungivorans	Collimonas fungivorans Ter331	1	0	0	0	0	0	0	1	1	0	0
-Bacteria	Chloroflexi	Chloroflexi	Chloroflexales	Chloroflexaceae	Roseiflexus	Roseiflexus castenholzii	Roseiflexus castenholzii DSM 13941	1	0	0	0	0	0	0	0	0	1	1
-Bacteria	Proteobacteria	Betaproteobacteria	Neisseriales	Neisseriaceae	Neisseria	Neisseria elongata	Neisseria elongata subsp. glycolytica ATCC 29315	1	1	1	1	1	1	1	0	0	0	0
-Bacteria	Proteobacteria	Epsilonproteobacteria			Sulfurovum	Sulfurovum sp. NBC371		1	0	0	0	0	1	1	0	0	0	0
-Bacteria	Proteobacteria	Gammaproteobacteria	Xanthomonadales	Xanthomonadaceae	Xanthomonas	Xanthomonas oryzae	Xanthomonas oryzae pv. oryzicola BLS256	1	1	1	1	1	0	0	0	0	0	0
-Bacteria	Proteobacteria	Alphaproteobacteria	Rhodospirillales	Acetobacteraceae	Gluconacetobacter	Gluconacetobacter sp. SXCC-1		1	0	0	0	0	0	0	1	1	0	0
-Bacteria	Proteobacteria	Epsilonproteobacteria			Sulfurovum	Sulfurovum sp. NBC370		1	1	1	0	0	0	0	0	0	0	0
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Pantotea	Pantoea sp. aB		1	2	1	2	1	1	1	0	0	0	0
-Archaea	Euryarchaeota	Halobacteria	Halobacteriales	Halobacteriaceae	Halobacterium	Halobacterium salinarum	Halobacterium salinarum R1	1	1	1	1	1	0	0	0	0	1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Azotobacter	Azotobacter vinelandii	Azotobacter vinelandii DJ	1	1	1	1	1	0	0	0	0	1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli K-12	1	2	1	2	1	1	1	1	1	0	0
-Bacteria	Thermotogae	Thermotogae	Thermotogales	Thermotogaceae	Thermotoga	Thermotoga naphthophila	Thermotoga naphthophila RKU-10	1	0	0	0	0	1	1	0	0	1	1
-Viruses			Caudovirales	Myoviridae	T4-like viruses	Enterobacteria phage T4 sensu lato		1	1	1	1	1	1	1	0	0	0	0
-Bacteria	Firmicutes	Clostridia	Clostridiales	Clostridiaceae	Clostridium	Clostridium novyi	Clostridium novyi NT	1	1	1	1	1	1	1	0	0	0	0
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Providencia	Providencia rettgeri	Providencia rettgeri DSM 1131	1	2	1	2	1	1	1	0	0	0	0
-Bacteria	Proteobacteria	Gammaproteobacteria	Aeromonadales	Aeromonadaceae	Aeromonas	Aeromonas salmonicida	Aeromonas salmonicida subsp. salmonicida A449	1	1	1	1	1	1	1	0	0	1	1
-Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Providencia	Providencia alcalifaciens	Providencia alcalifaciens DSM 30120	1	2	1	2	1	1	1	0	0	0	0
-Archaea	Euryarchaeota	Halobacteria	Halobacteriales	Halobacteriaceae	Natronomonas	Natronomonas pharaonis	Natronomonas pharaonis DSM 2160	1	1	1	1	1	0	0	0	0	1	1
-Bacteria	Fusobacteria	Fusobacteriia	Fusobacteriales	Leptotrichiaceae	Streptobacillus	Streptobacillus moniliformis	Streptobacillus moniliformis DSM 12112	1	1	1	1	1	1	1	0	0	0	0
-Bacteria	Proteobacteria	Alphaproteobacteria	Sphingomonadales	Sphingomonadaceae	Citromicrobium	Citromicrobium sp. JLT1363		1	1	1	1	1	0	0	0	0	0	0
-Bacteria	Actinobacteria	Actinobacteria	Actinomycetales	Mycobacteriaceae	Mycobacterium	Mycobacterium bovis	Mycobacterium bovis BCG str. ATCC 35740	1	0	0	0	0	2	1	0	0	0	0
-Bacteria	Firmicutes	Erysipelotrichi	Erysipelotrichales	Erysipelotrichaceae	Eubacterium	Eubacterium biforme	Eubacterium biforme DSM 3989	1	0	0	0	0	1	1	0	0	0	0
-Eukaryota	Chordata	Mammalia	Carnivora	Canidae	Canis	Canis lupus		1	1	1	3	1	0	0	0	0	0	0
-Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Pseudomonas	Pseudomonas aeruginosa	Pseudomonas aeruginosa 138244	1	1	1	0	0	1	1	0	0	0	0
-Bacteria	Spirochaetes	Spirochaetia	Spirochaetales	Spirochaetaceae	Borrelia	Borrelia burgdorferi		1	0	0	0	0	0	0	0	0	0	0
-Bacteria	Thermotogae	Thermotogae	Thermotogales	Thermotogaceae	Thermosipho	Thermosipho africanus	Thermosipho africanus TCF52B	1	0	0	0	0	1	1	0	0	1	1
+domain	kingdom	phylum	class	order	family	genus	species	strain	n_genomes	protein:RNR I:NrdA:n_proteins	protein:RNR I:NrdA:n_genomes_w_protein	protein:RNR I:NrdB:n_proteins	protein:RNR I:NrdB:n_genomes_w_protein	protein:RNR III:NrdD:n_proteins	protein:RNR III:NrdD:n_genomes_w_protein	protein:RNR III:NrdG:n_proteins	protein:RNR III:NrdG:n_genomes_w_protein	protein:RNR II:NrdJ:n_proteins	protein:RNR II:NrdJ:n_genomes_w_protein 
+Bacteria	unspecified kingdom	Spirochaetes	Spirochaetia	Spirochaetales	Spirochaetaceae	Borrelia	Borrelia burgdorferi		1	0	0	0	0	0	0	0	0	0	0
+Bacteria	unspecified kingdom	Firmicutes	Clostridia	Clostridiales	Clostridiaceae	Clostridium	Clostridium novyi	Clostridium novyi NT	1	1	1	1	1	1	1	0	0	0	0
+Bacteria	unspecified kingdom	Proteobacteria	Gammaproteobacteria	Aeromonadales	Aeromonadaceae	Aeromonas	Aeromonas salmonicida	Aeromonas salmonicida subsp. salmonicida A449	1	1	1	1	1	1	1	0	0	1	1
+Bacteria	unspecified kingdom	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Providencia	Providencia alcalifaciens	Providencia alcalifaciens DSM 30120	1	2	1	2	1	1	1	0	0	0	0
+Viruses	dsDNA viruses, no RNA stage	unspecified phylum	unspecified class	Caudovirales	Myoviridae	T4-like viruses	Enterobacteria phage T4 sensu lato		1	1	1	1	1	1	1	0	0	0	0
+Bacteria	unspecified kingdom	Fusobacteria	Fusobacteriia	Fusobacteriales	Leptotrichiaceae	Streptobacillus	Streptobacillus moniliformis	Streptobacillus moniliformis DSM 12112	1	1	1	1	1	1	1	0	0	0	0
+Bacteria	unspecified kingdom	Proteobacteria	Alphaproteobacteria	Sphingomonadales	Sphingomonadaceae	Citromicrobium	Citromicrobium sp. JLT1363		1	1	1	1	1	0	0	0	0	0	0
+Bacteria	unspecified kingdom	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Pantotea	Pantoea sp. aB		1	2	1	2	1	1	1	0	0	0	0
+Bacteria	unspecified kingdom	Chloroflexi	Chloroflexi	Chloroflexales	Chloroflexaceae	Roseiflexus	Roseiflexus castenholzii	Roseiflexus castenholzii DSM 13941	1	0	0	0	0	0	0	0	0	1	1
+Archaea	unspecified kingdom	Euryarchaeota	Halobacteria	Halobacteriales	Halobacteriaceae	Halobacterium	Halobacterium salinarum	Halobacterium salinarum R1	1	1	1	1	1	0	0	0	0	1	1
+Bacteria	unspecified kingdom	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Pseudomonas	Pseudomonas entomophila	Pseudomonas entomophila L48	1	1	1	1	1	0	0	0	0	0	0
+Bacteria	delta/epsilon subdivisions	Proteobacteria	Epsilonproteobacteria	unspecified order	unspecified family	Sulfurovum	Sulfurovum sp. NBC37-1		1	0	0	1	1	0	0	0	0	0	0
+Archaea	unspecified kingdom	Euryarchaeota	Methanococci	Methanococcales	Methanococcaceae	Methanococcus	Methanococcus maripaludis	Methanococcus maripaludis X1	1	0	0	0	0	1	1	0	0	0	0
+Bacteria	unspecified kingdom	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli PCN033	1	2	1	2	1	1	1	0	0	0	0
+Bacteria	unspecified kingdom	Thermotogae	Thermotogae	Thermotogales	Thermotogaceae	Thermotoga	Thermotoga neapolitana	Thermotoga neapolitana DSM 4359	1	0	0	0	0	1	1	0	0	1	1
+Bacteria	unspecified kingdom	Firmicutes	Clostridia	Clostridiales	Streptococcaceae	Streptococcus	Streptococcus dysgalactiae	Streptococcus dysgalactiae subsp. equisimilis SK1251	1	1	1	0	0	0	0	0	0	0	0
+Bacteria	unspecified kingdom	Thermotogae	Thermotogae	Thermotogales	Thermotogaceae	Fervidobacterium	Fervidobacterium pennivorans	Fervidobacterium pennivorans DSM 9078	1	0	0	0	0	2	1	0	0	1	1
+Bacteria	Bacteroidetes/Chlorobi group	Bacteroidetes	Cytophagia	Cytophagales	Cytophagaceae	Runella	Runella slithyformis	Runella slithyformis DSM 19594	1	1	1	1	1	0	0	0	0	0	0
+Bacteria	delta/epsilon subdivisions	Proteobacteria	Epsilonproteobacteria	unspecified order	unspecified family	Sulfurovum	Sulfurovum sp. NBC370		1	1	1	0	0	0	0	0	0	0	0
+Viruses	dsDNA viruses, no RNA stage	unspecified phylum	unspecified class	Caudovirales	Siphoviridae		Clostridium phage phiCD38-2		1	0	0	1	1	0	0	0	0	0	0
+Bacteria	unspecified kingdom	Proteobacteria	Betaproteobacteria	Neisseriales	Neisseriaceae	Neisseria	Neisseria gonorrhoeae	Neisseria gonorrhoeae NCCP11945	1	1	1	1	1	0	0	0	0	0	0
+Bacteria	unspecified kingdom	Firmicutes	Clostridia	Clostridiales	Streptococcaceae	Streptococcus	Streptococcus dysgalactiae	Streptococcus dysgalactiae subsp. equisimilis SK1249	1	0	0	1	1	0	0	0	0	0	0
+Bacteria	unspecified kingdom	Thermotogae	Thermotogae	Thermotogales	Thermotogaceae	Thermosipho	Thermosipho africanus	Thermosipho africanus TCF52B	1	0	0	0	0	1	1	0	0	1	1
+Eukaryota	Metazoa	Chordata	Mammalia	Primates	Hominidae	Pongo	Pongo abelii		1	1	1	2	1	0	0	0	0	0	0
+Bacteria	unspecified kingdom	Thermotogae	Thermotogae	Thermotogales	Thermotogaceae	Thermotoga	Thermotoga naphthophila	Thermotoga naphthophila RKU-10	1	0	0	0	0	1	1	0	0	1	1
+Eukaryota	Metazoa	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens		1	1	1	5	1	0	0	0	0	0	0
+Bacteria	unspecified kingdom	Proteobacteria	Alphaproteobacteria	Rhodospirillales	Acetobacteraceae	Gluconacetobacter	Gluconacetobacter sp. SXCC-1		1	0	0	0	0	0	0	1	1	0	0
+Bacteria	unspecified kingdom	Actinobacteria	Actinobacteria	Bifidobacteriales	Bifidobacteriaceae	Bifidobacterium	Bifidobacterium angulatum	Bifidobacterium angulatum DSM 20098 = JCM 7096	1	0	0	0	0	1	1	0	0	0	0
+Archaea	unspecified kingdom	Euryarchaeota	Halobacteria	Halobacteriales	Halobacteriaceae	Natronomonas	Natronomonas pharaonis	Natronomonas pharaonis DSM 2160	1	1	1	1	1	0	0	0	0	1	1
+Bacteria	unspecified kingdom	Proteobacteria	Betaproteobacteria	Neisseriales	Neisseriaceae	Neisseria	Neisseria elongata	Neisseria elongata subsp. glycolytica ATCC 29315	1	1	1	1	1	1	1	0	0	0	0
+Eukaryota	Metazoa	Chordata	Mammalia	Carnivora	Canidae	Canis	Canis lupus		1	1	1	3	1	0	0	0	0	0	0
+Bacteria	unspecified kingdom	Firmicutes	Bacilli	Bacillales	Listeriaceae	Listeria	Listeria welshimeri	Listeria welshimeri serovar 6b str. SLCC5334	1	1	1	1	1	1	1	0	0	0	0
+Bacteria	unspecified kingdom	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli O157:H7 str. Sakai	1	2	1	2	1	1	1	0	0	0	0
+Bacteria	unspecified kingdom	Proteobacteria	Betaproteobacteria	Rhodocyclales	Rhodocyclaceae	Methyloversatilis	Methyloversatilis universalis	Methyloversatilis universalis FAM5	1	1	1	1	1	0	0	0	0	1	1
+Archaea	unspecified kingdom	Euryarchaeota	Halobacteria	Halobacteriales	Halobacteriaceae	Halorhabdus	Halorhabdus utahensis	Halorhabdus utahensis DSM 12940	1	1	1	1	1	1	1	0	0	1	1
+Bacteria	unspecified kingdom	Firmicutes	Clostridia	Clostridiales	Clostridiaceae	Clostridium	Clostridium asparagiforme	Clostridium asparagiforme DSM 15981	1	1	1	1	1	1	1	0	0	0	0
+Bacteria	unspecified kingdom	Proteobacteria	Alphaproteobacteria	Rhizobiales	Bartonellaceae	Bartonella	Bartonella tribocorum	Bartonella tribocorum CIP 105476	1	1	1	1	1	0	0	0	0	0	0
+Eukaryota	Metazoa	Chordata	Ascidiacea	Enterogona	Cionidae	Ciona	Ciona intestinalis		1	1	1	1	1	0	0	0	0	0	0
+Bacteria	Bacteroidetes/Chlorobi group	Bacteroidetes	unspecified class	Bacteroidetes Order II. Incertae sedis	Rhodothermaceae	Rhodothermus	Rhodothermus marinus	Rhodothermus marinus DSM 4252	1	1	1	1	1	0	0	0	0	2	1
+Viruses	dsDNA viruses, no RNA stage	unspecified phylum	unspecified class	Caudovirales	Myoviridae	T4-like viruses	Enterobacteria phage T4		1	1	1	1	1	1	1	0	0	0	0
+Bacteria	unspecified kingdom	Actinobacteria	Actinobacteria	Actinomycetales	Corynebacterineae	Rhodococcus	Rhodococcus jostii	Rhodococcus jostii RHA1	1	1	1	1	1	0	0	0	0	0	0
+Archaea	unspecified kingdom	Thaumarchaeota	unspecified class	Nitrosopumilales	Nitrosopumilaceae	Nitrosopumilus	Nitrosopumilus maritimus	Nitrosopumilus maritimus SCM1	1	0	0	0	0	0	0	0	0	0	0
+Bacteria	unspecified kingdom	Actinobacteria	Actinobacteria	Coriobacteriales	Coriobacteriaceae	Collinsella	Collinsella intestinalis	Collinsella intestinalis DSM 13280	1	1	1	1	1	1	1	0	0	0	0
+Bacteria	unspecified kingdom	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Providencia	Providencia rettgeri	Providencia rettgeri DSM 1131	1	2	1	2	1	1	1	0	0	0	0
+Bacteria	unspecified kingdom	Firmicutes	Clostridia	Clostridiales	Streptococcaceae	Streptococcus	Streptococcus dysgalactiae	Streptococcus dysgalactiae subsp. equisimilis SK1250	1	0	0	0	0	1	1	0	0	0	0
+Bacteria	unspecified kingdom	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli	Escherichia coli K-12	1	2	1	2	1	1	1	1	1	0	0
+Bacteria	unspecified kingdom	Proteobacteria	Gammaproteobacteria	Xanthomonadales	Xanthomonadaceae	Xanthomonas	Xanthomonas oryzae	Xanthomonas oryzae pv. oryzicola BLS256	1	1	1	1	1	0	0	0	0	0	0
+Viruses	dsDNA viruses, no RNA stage	unspecified phylum	unspecified class	Caudovirales	Myoviridae	T4-like viruses	Enterobacteria phage RB51		1	1	1	1	1	1	1	0	0	0	0
+Eukaryota	Metazoa	Chordata	Mammalia	Rodentia	Muridae	Mus	Mus musculus		1	1	1	2	1	0	0	0	0	0	0
+Bacteria	unspecified kingdom	Firmicutes	Negativicutes	Selenomonadales	Veillonellaceae	Megasphaera	Megasphaera sp. UPII 199-6		1	0	0	0	0	1	1	0	0	0	0
+Bacteria	unspecified kingdom	Thermotogae	Thermotogae	Thermotogales	Thermotogaceae	Thermotoga	Thermotoga thermarum	Thermotoga thermarum DSM 5069	1	0	0	0	0	1	1	0	0	1	1
+Bacteria	unspecified kingdom	Thermotogae	Thermotogae	Thermotogales	Thermotogaceae	Thermotoga	Thermotoga maritima	Thermotoga maritima MSB8	1	0	0	0	0	2	1	0	0	2	1
+Bacteria	unspecified kingdom	Firmicutes	Clostridia	Clostridiales	Streptococcaceae	Streptococcus	Streptococcus anginosus	Streptococcus anginosus SK52 = DSM 20563	1	1	1	1	1	1	1	0	0	0	0
+Bacteria	delta/epsilon subdivisions	Proteobacteria	Epsilonproteobacteria	unspecified order	unspecified family	Sulfurovum	Sulfurovum sp. NBC371		1	0	0	0	0	1	1	0	0	0	0
+Archaea	unspecified kingdom	unspecified phylum	unspecified class	unspecified order	unspecified family	unspecified genus	halophilic archaeon DL31		1	1	1	1	1	0	0	0	0	1	1
+Bacteria	unspecified kingdom	Actinobacteria	Actinobacteria	Bifidobacteriales	Bifidobacteriaceae	Bifidobacterium	Bifidobacterium breve	Bifidobacterium breve DSM 20213 = JCM 1192	1	1	1	1	1	1	1	0	0	0	0
+Bacteria	unspecified kingdom	Proteobacteria	Betaproteobacteria	Neisseriales	Neisseriaceae	Neisseria	Neisseria flavescens	Neisseria flavescens NRL30031/H210	1	1	1	1	1	1	1	0	0	0	0
+Bacteria	unspecified kingdom	Proteobacteria	Alphaproteobacteria	Rickettsiales	Anaplasmataceae	Anaplasma	Anaplasma marginale		1	2	1	2	1	0	0	0	0	0	0
+Bacteria	unspecified kingdom	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Shigella	Shigella flexneri	Shigella flexneri 5a str. M90T	1	2	1	2	1	1	1	0	0	0	0
+Bacteria	unspecified kingdom	Thermotogae	Thermotogae	Thermotogales	Thermotogaceae	Fervidobacterium	Fervidobacterium nodosum	Fervidobacterium nodosum Rt17-B1	1	0	0	0	0	1	1	0	0	1	1
+Viruses	dsDNA viruses, no RNA stage	unspecified phylum	unspecified class	Caudovirales	Myoviridae	FelixO1likevirus	Escherichia phage wV8		1	1	1	0	0	1	1	0	0	0	0
+Bacteria	unspecified kingdom	Actinobacteria	Actinobacteria	Actinomycetales	Mycobacteriaceae	Mycobacterium	Mycobacterium bovis	Mycobacterium bovis BCG str. ATCC 35740	1	0	0	0	0	2	1	0	0	0	0
+Bacteria	unspecified kingdom	Firmicutes	Erysipelotrichi	Erysipelotrichales	Erysipelotrichaceae	Eubacterium	Eubacterium biforme	Eubacterium biforme DSM 3989	1	0	0	0	0	1	1	0	0	0	0
+Bacteria	unspecified kingdom	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Pseudomonas	Pseudomonas aeruginosa	Pseudomonas aeruginosa 138244	1	1	1	0	0	1	1	0	0	0	0
+Bacteria	delta/epsilon subdivisions	Proteobacteria	Epsilonproteobacteria	Campylobacterales	Helicobacteraceae	Helicobacter	Helicobacter acinonychis	Helicobacter acinonychis str. Sheeba	1	1	1	1	1	0	0	0	0	0	0
+Bacteria	unspecified kingdom	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Azotobacter	Azotobacter vinelandii	Azotobacter vinelandii DJ	1	1	1	1	1	0	0	0	0	1	1
+Bacteria	delta/epsilon subdivisions	Proteobacteria	Epsilonproteobacteria	unspecified order	unspecified family	Nitratiruptor	Nitratiruptor sp. SB155-2		1	1	1	1	1	1	1	0	0	1	1
+Bacteria	unspecified kingdom	Proteobacteria	Betaproteobacteria	Burkholderiales	Oxalobacteraceae	Collimonas	Collimonas fungivorans	Collimonas fungivorans Ter331	1	0	0	0	0	0	0	1	1	0	0
+Eukaryota	Viridiplantae	Streptophyta	unspecified class	Brassicales	Brassicaceae	Arabidopsis	Arabidopsis lyrata		1	1	1	2	1	0	0	0	0	0	0
+Bacteria	unspecified kingdom	Actinobacteria	Actinobacteria	Actinomycetales	Mycobacteriaceae	Mycobacterium	Mycobacterium bovis	Mycobacterium bovis BCG str. ATCC 35743	1	1	1	0	0	0	0	0	0	0	0
+Bacteria	unspecified kingdom	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Pseudomonas	Pseudomonas aeruginosa	Pseudomonas aeruginosa PA7	1	1	1	1	1	1	1	0	0	1	1
+Bacteria	unspecified kingdom	Firmicutes	Bacilli	Lactobacillales	Streptococcaceae	Streptococcus	Streptococcus suis		1	0	0	0	0	0	0	2	1	0	0
+Bacteria	unspecified kingdom	unspecified phylum	unspecified class	unspecified order	unspecified family	unspecified genus	candidate division TM7 genomosp. GTL1		1	0	0	0	0	0	0	0	0	0	0
+Bacteria	unspecified kingdom	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Moraxellaceae	Acinetobacter	Acinetobacter baumanii	Acinetobacter baumannii ATCC 17978	1	1	1	1	1	0	0	0	0	0	0
+Bacteria	unspecified kingdom	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Moraxellaceae	Moraxella	Moraxella catarrhalis	Moraxella catarrhalis RH4	1	2	1	2	1	0	0	0	0	0	0
+Archaea	unspecified kingdom	Crenarchaeota	Thermoprotei	Thermoproteales	Thermoproteaceae	Pyrobaculum	Pyrobaculum islandicum	Pyrobaculum islandicum DSM 4184	1	0	0	0	0	1	1	0	0	1	1
+Bacteria	unspecified kingdom	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Yersinia	Yersinia pestis	Yersinia pestis Pestoides F	1	3	1	3	1	1	1	0	0	0	0
+Bacteria	unspecified kingdom	Thermotogae	Thermotogae	Thermotogales	Thermotogaceae	Thermosipho	Thermosipho melanesiensis	Thermosipho melanesiensis BI429	1	0	0	0	0	1	1	0	0	1	1
+Bacteria	unspecified kingdom	Actinobacteria	Actinobacteria	Actinomycetales	Pseudonocardiaceae	Amycolatopsis	Amycolatopsis sp. ATCC 39116		1	1	1	1	1	0	0	0	0	1	1

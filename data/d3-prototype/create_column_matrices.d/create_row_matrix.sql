@@ -5,6 +5,7 @@
 
 CREATE TABLE row_matrix (
   domain		text,
+  kingdom		text,
   phylum		text,
   class			text,
   "order"		text,
