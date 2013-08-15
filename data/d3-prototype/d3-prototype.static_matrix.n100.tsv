@@ -1,3 +1,5 @@
+Archaea	unspecified kingdom	Crenarchaeota	Thermoprotei	Fervidicoccales	Fervidicoccaceae	Fervidicoccus	Fervidicoccus fontis	Fervidicoccus fontis Kam940	NrdJ	NrdJf				1	1
+Archaea	unspecified kingdom	Crenarchaeota	Thermoprotei	Fervidicoccales	Fervidicoccaceae	Fervidicoccus	Fervidicoccus fontis	Fervidicoccus fontis Kam941	NrdD	NrdDi				1	1
 Archaea	unspecified kingdom	Crenarchaeota	Thermoprotei	Thermoproteales	Thermoproteaceae	Pyrobaculum	Pyrobaculum islandicum	Pyrobaculum islandicum DSM 4184	NrdJ	NrdJf				1	1
 Archaea	unspecified kingdom	Crenarchaeota	Thermoprotei	Thermoproteales	Thermoproteaceae	Pyrobaculum	Pyrobaculum islandicum	Pyrobaculum islandicum DSM 4184	NrdD	NrdDi				1	1
 Archaea	unspecified kingdom	Euryarchaeota	Halobacteria	Halobacteriales	Halobacteriaceae	Halobacterium	Halobacterium salinarum	Halobacterium salinarum R1	NrdB	NrdBc				1	1
@@ -12,6 +14,9 @@ Archaea	unspecified kingdom	Euryarchaeota	Halobacteria	Halobacteriales	Halobacte
 Archaea	unspecified kingdom	Euryarchaeota	Halobacteria	Halobacteriales	Halobacteriaceae	Natronomonas	Natronomonas pharaonis	Natronomonas pharaonis DSM 2160	NrdJ	NrdJf				1	1
 Archaea	unspecified kingdom	Euryarchaeota	Halobacteria	Halobacteriales	Halobacteriaceae	Natronomonas	Natronomonas pharaonis	Natronomonas pharaonis DSM 2160	NrdA	NrdAi				1	1
 Archaea	unspecified kingdom	Euryarchaeota	Methanococci	Methanococcales	Methanococcaceae	Methanococcus	Methanococcus maripaludis	Methanococcus maripaludis X1	NrdD	NrdDa				1	1
+Archaea	unspecified kingdom	Euryarchaeota	Thermococci	Thermococcales	Thermococcaceae	Thermococcus	Thermococcus sp. 4557		NrdD	NrdDi				1	1
+Archaea	unspecified kingdom	Korarchaeota	unspecified class	unspecified order	unspecified family	Candidatus Korarchaeum	Candidatus Korarchaeum cryptofilum	Candidatus Korarchaeum cryptofilum OPF8	NrdJ	NrdJf				1	1
+Archaea	unspecified kingdom	Korarchaeota	unspecified class	unspecified order	unspecified family	Candidatus Korarchaeum	Candidatus Korarchaeum cryptofilum	Candidatus Korarchaeum cryptofilum OPF8	NrdD	NrdDf				1	1
 Archaea	unspecified kingdom	Thaumarchaeota	unspecified class	Nitrosopumilales	Nitrosopumilaceae	Nitrosopumilus	Nitrosopumilus maritimus	Nitrosopumilus maritimus SCM1	NrdJf	NrdJf				1	1
 Archaea	unspecified kingdom	unspecified phylum	unspecified class	unspecified order	unspecified family	unspecified genus	halophilic archaeon DL31		NrdB	NrdBc				1	1
 Archaea	unspecified kingdom	unspecified phylum	unspecified class	unspecified order	unspecified family	unspecified genus	halophilic archaeon DL31		NrdJ	NrdJf				1	1
@@ -32,6 +37,17 @@ Bacteria	unspecified kingdom	Actinobacteria	Actinobacteria	Bifidobacteriales	Bif
 Bacteria	unspecified kingdom	Actinobacteria	Actinobacteria	Coriobacteriales	Coriobacteriaceae	Collinsella	Collinsella intestinalis	Collinsella intestinalis DSM 13280	NrdB	NrdBh				1	1
 Bacteria	unspecified kingdom	Actinobacteria	Actinobacteria	Coriobacteriales	Coriobacteriaceae	Collinsella	Collinsella intestinalis	Collinsella intestinalis DSM 13280	NrdD	NrdDc	NrdDc2			1	1
 Bacteria	unspecified kingdom	Actinobacteria	Actinobacteria	Coriobacteriales	Coriobacteriaceae	Collinsella	Collinsella intestinalis	Collinsella intestinalis DSM 13280	NrdA	NrdAh				1	1
+Bacteria	unspecified kingdom	Aquificae	Aquificae	Aquificales	Hydrogenothermaceae	Sulfurihydrogenibium	Sulfurihydrogenibium sp. YO3AOP1		NrdB					1	1
+Bacteria	unspecified kingdom	Aquificae	Aquificae	Aquificales	Hydrogenothermaceae	Sulfurihydrogenibium	Sulfurihydrogenibium sp. YO3AOP1		NrdA					1	1
+Bacteria	unspecified kingdom	Aquificae	Aquificae	Aquificales	Hydrogenothermaceae	Sulfurihydrogenibium	Sulfurihydrogenibium sp. YO3AOP1		NrdD	NrdDd	NrdDd1	NrdDd1a		1	1
+Bacteria	unspecified kingdom	Aquificae	Aquificae	Aquificales	Hydrogenothermaceae	Sulfurihydrogenibium	Sulfurihydrogenibium sp. YO3AOP1		NrdD	NrdDf				1	1
+Bacteria	unspecified kingdom	Aquificae	Aquificae	Aquificales	Desulfurobacteriaceae	Desulfurobacterium	Desulfurobacterium thermolithotrophum	Desulfurobacterium thermolithotrophum DSM 11699	NrdB					1	1
+Bacteria	unspecified kingdom	Aquificae	Aquificae	Aquificales	Desulfurobacteriaceae	Desulfurobacterium	Desulfurobacterium thermolithotrophum	Desulfurobacterium thermolithotrophum DSM 11700	NrdA					1	1
+Bacteria	unspecified kingdom	Aquificae	Aquificae	Aquificales	Desulfurobacteriaceae	Desulfurobacterium	Desulfurobacterium thermolithotrophum	Desulfurobacterium thermolithotrophum DSM 11701	NrdD	NrdDf				1	1
+Bacteria	Bacteroidetes/Chlorobi group	Bacteroidetes	Bacteroidia	Bacteroidales	Porphyromonadaceae	Porphyromonas	Porphyromonas asaccharolytica	Porphyromonas asaccharolytica DSM 20707	NrdJ	NrdJf				1	1
+Bacteria	Bacteroidetes/Chlorobi group	Bacteroidetes	Bacteroidia	Bacteroidales	Porphyromonadaceae	Porphyromonas	Porphyromonas asaccharolytica	Porphyromonas asaccharolytica DSM 20708	NrdD	NrdDb				1	1
+Bacteria	Bacteroidetes/Chlorobi group	Bacteroidetes	Bacteroidia	Bacteroidales	Prevotellaceae	Prevotella	Prevotella buccae	Prevotella buccae ATCC 33574	NrdJ	NrdJf				1	1
+Bacteria	Bacteroidetes/Chlorobi group	Bacteroidetes	Bacteroidia	Bacteroidales	Prevotellaceae	Prevotella	Prevotella buccae	Prevotella buccae ATCC 33574	NrdD	NrdDb				1	1
 Bacteria	Bacteroidetes/Chlorobi group	Bacteroidetes	Cytophagia	Cytophagales	Cyclobacteriaceae	Cyclobacterium	Cyclobacterium marinum	Cyclobacterium marinum DSM 745	NrdB	NrdBe				1	1
 Bacteria	Bacteroidetes/Chlorobi group	Bacteroidetes	Cytophagia	Cytophagales	Cyclobacteriaceae	Cyclobacterium	Cyclobacterium marinum	Cyclobacterium marinum DSM 746	NrdA	NrdAe				1	1
 Bacteria	Bacteroidetes/Chlorobi group	Bacteroidetes	Cytophagia	Cytophagales	Cytophagaceae	Runella	Runella slithyformis	Runella slithyformis DSM 19594	NrdB	NrdBe				1	1
@@ -74,6 +90,7 @@ Bacteria	unspecified kingdom	Firmicutes	Clostridia	Clostridiales	Streptococcacea
 Bacteria	unspecified kingdom	Firmicutes	Clostridia	Clostridiales	Streptococcaceae	Streptococcus	Streptococcus dysgalactiae	Streptococcus dysgalactiae subsp. equisimilis SK1251	NrdA	NrdE				1	1
 Bacteria	unspecified kingdom	Firmicutes	Erysipelotrichi	Erysipelotrichales	Erysipelotrichaceae	Eubacterium	Eubacterium biforme	Eubacterium biforme DSM 3989	NrdD	NrdDc	NrdDc2			1	1
 Bacteria	unspecified kingdom	Firmicutes	Negativicutes	Selenomonadales	Veillonellaceae	Megasphaera	Megasphaera sp. UPII 199-6		NrdD	NrdDc	NrdDc2			1	1
+Bacteria	unspecified kingdom	Firmicutes	Negativicutes	Selenomonadales	Veillonellaceae	Selenomonas	Selenomonas sp. oral taxon 137	Selenomonas sp. oral taxon 137 str. F0430	NrdD	NrdDb				1	1
 Bacteria	unspecified kingdom	Fusobacteria	Fusobacteriia	Fusobacteriales	Leptotrichiaceae	Streptobacillus	Streptobacillus moniliformis	Streptobacillus moniliformis DSM 12112	NrdB	NrdF				1	1
 Bacteria	unspecified kingdom	Fusobacteria	Fusobacteriia	Fusobacteriales	Leptotrichiaceae	Streptobacillus	Streptobacillus moniliformis	Streptobacillus moniliformis DSM 12112	NrdD	NrdDc	NrdDc2			1	1
 Bacteria	unspecified kingdom	Fusobacteria	Fusobacteriia	Fusobacteriales	Leptotrichiaceae	Streptobacillus	Streptobacillus moniliformis	Streptobacillus moniliformis DSM 12112	NrdA	NrdE				1	1
