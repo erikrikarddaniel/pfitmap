@@ -95,9 +95,10 @@ function sum_organism(level) {
 	var ind = pfitmap.taxa_names.indexOf(level);
 	var nest = d3.nest()
 		.key(function(d) { return d["domain"]})
-		.rollup(function(d) { return {
-			n_genomes : d3.sum(d,function(g) {return +g["n_genomes"]; } )
-			}
+//		.key(function(d) {return d["kingdom"]})
+		.rollup(function(d) { 
+			var result = pfitmap.protein_names.map(function(protein) { return d3.sum(d,function(g) {return +g[protein]; } ) } );
+			console.log(result)
 		})
 		.entries(pfitmap.dataset);
 	console.log(nest);
