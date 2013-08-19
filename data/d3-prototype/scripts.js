@@ -10,8 +10,11 @@ var pfitmap = {
 	organisms_count : null,
 	columns_names : [],
 	taxa_names : ["domain", "kingdom","phylum", "class", "order", "family", "genus", "species", "strain"],
+	taxa_level : "strain",	
 	protein_names : []
+	
 };
+var tmp_nest;
 
 function load_data() {
 	d3.tsv(" column_matrix_top_protein_level.tsv", function(data) {
@@ -65,7 +68,6 @@ function table_it() {
 		.enter()
 		.append("th")
 		.text(function(column) { return column;})
-		
 	var rows = tbody.selectAll("tr")
 		.data(pfitmap.dataset)
 		.enter()
@@ -93,15 +95,56 @@ function div_bar() {
 };
 function sum_organism(level) {
 	var ind = pfitmap.taxa_names.indexOf(level);
-	var nest = d3.nest()
-		.key(function(d) { return d["domain"]})
-//		.key(function(d) {return d["kingdom"]})
-		.rollup(function(d) { 
-			var result = pfitmap.protein_names.map(function(protein) { return d3.sum(d,function(g) {return +g[protein]; } ) } );
-			console.log(result)
-		})
-		.entries(pfitmap.dataset);
+	if (level == "domain") {
+		var nest = d3.nest()
+			.key(function(d) { return d["domain"]})
+			.rollup(function(d) { return {
+				n_genomes : d3.sum(d,function(g) {return +g["n_genomes"]}),
+				proteins : pfitmap.protein_names.map(function(protein) { return d3.sum(d,function(g) {return +g[protein]; } ) } )
+			}
+			})
+			.entries(pfitmap.dataset);
+	} else if (level == "kingdom") {
+		var nest = d3.nest()
+			.key(function(d) { return d["domain"]})
+			.key(function(d) {return d["kingdom"]})
+			.rollup(function(d) { return {
+					n_genomes : d3.sum(d,function(g) {return +g["n_genomes"]}),
+					proteins : pfitmap.protein_names.map(function(protein) { return d3.sum(d,function(g) {return +g[protein]; } ) } )
+				}
+			})
+			.entries(pfitmap.dataset);
+	} else if (level == "phylum") {
+		var nest = d3.nest()
+			.key(function(d) { return d["domain"]})
+			.key(function(d) {return d["kingdom"]})
+			.key(function(d) {return d["phylum"]})
+			.rollup(function(d) { return { 
+					n_genomes : d3.sum(d,function(g) {return +g["n_genomes"]}),
+					proteins : pfitmap.protein_names.map(function(protein) { return d3.sum(d,function(g) {return +g[protein]; } ) } )
+				}
+			})
+			.entries(pfitmap.dataset);
+	} else if (level == "strain") {
+		var nest = d3.nest()
+			.key(function(d) { return d["domain"]})
+			.key(function(d) {return d["kingdom"]})
+			.key(function(d) {return d["phylum"]})
+			.key(function(d) {return d["class"]})
+			.key(function(d) {return d["order"]})
+			.key(function(d) {return d["family"]})
+			.key(function(d) {return d["genus"]})
+			.key(function(d) {return d["species"]})
+			.key(function(d) {return d["strain"]})
+			.rollup(function(d) { return {
+					n_genomes : d3.sum(d,function(g) {return +g[n_genomes]}),
+					proteins : pfitmap.protein_names.map(function(protein) { return d3.sum(d,function(g) {return +g[protein]; } ) } )
+				}
+			})
+			.entries(pfitmap.dataset);
+	};
 	console.log(nest);
+	tmp_nest = nest
 };
 function sum_protein(level) {
 	console.log(level);
