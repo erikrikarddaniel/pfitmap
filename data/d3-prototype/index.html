@@ -6,7 +6,7 @@
 		<script type="text/javascript" src="d3.v3.js"></script>
 		<script type="text/javascript" src="scripts.js"></script>
 		<link rel="stylesheet" type="text/css" href="style.css"/>
-		<script>load_data();</script>
+		<script>load_data(null);</script>
 	</head>
 	<body>
 		<div id="heat_map"></div>
@@ -22,31 +22,31 @@
 		</div>
 		<div id="organism_selector" class="link_selector">
 			<ul>
-				<li onclick="sum_organism('domain')">
+				<li onclick="load_organism('domain')">
 					Domain
 				</li>
-				<li onclick="sum_organism('kingdom')">
+				<li onclick="load_organism('kingdom')">
 					Kingdom
 				</li>
-				<li onclick="sum_organism('phylum')">
+				<li onclick="load_organism('phylum')">
 					Phylum
 				</li>
-				<li onclick="sum_organism('class')">
+				<li onclick="load_organism('class')">
 					Class
 				</li>
-				<li onclick="sum_organism('order')">
+				<li onclick="load_organism('order')">
 					Order
 				</li>
-				<li onclick="sum_organism('family')">
+				<li onclick="load_organism('family')">
 					Family
 				</li>
-				<li onclick="sum_organism('genus')">
+				<li onclick="load_organism('genus')">
 					Genus
 				</li>
-				<li onclick="sum_organism('species')">
+				<li onclick="load_organism('species')">
 					Species
 				</li>
-				<li onclick="sum_organism('strain')">
+				<li onclick="load_organism('strain')">
 					Strain
 				</li>
 			</ul>
