@@ -1,0 +1,5 @@
+Domain	NrdA	NrdB	NrdJ	NrdD	NrdG
+Archaea	4	4	7	6	0
+Bacteria	50	48	19	42	4
+Eukar	15	15	0	0	0
+Viruses	4	3	0	4	0
