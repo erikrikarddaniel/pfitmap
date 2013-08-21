@@ -1,3 +1,6 @@
+a:link {color:#0000FF;}      /* unvisited link */
+a:hover {color:#00FF00;}  /* mouse over link */
+a:active {color:#FF0000;}  /* selected link */ 
 
 #heat_map
 {
@@ -10,25 +13,26 @@
 	border-bottom-style: solid;  
 }
 
-#protein_selector {
+#enzyme_selector {
 	width: 100%;	
 }
-#protein_selector li {
+#enzyme_selector li {
 	padding-right: 4px;
 	display: inline-block;
 	text-decoration: underline;
 }
 
-#organism_selector {
+#taxa_selector {
 	position: relative;
 	float: left;
 	padding: 3px;
 }
 
-#organism_selector ul {
+#taxa_selector ul {
 }
 .link_selector ul {
 	text-decoration: underline;
 	color: blue;
 	list-style: none;
 }
+
