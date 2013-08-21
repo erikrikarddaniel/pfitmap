@@ -15,6 +15,13 @@ var pfitmap = {
 	base_data_file : "column_matrix_top_protein_level.tsv"
 };
 
+var colorLow = 'white', colorMed = 'yellow', colorHigh = 'red';
+  
+var colorScale = d3.scale.linear()
+     .domain([0, 0.5, 1])
+     .range([colorLow, colorMed, colorHigh]);
+
+
 function load_data(datafile) {
 	pfitmap.columns_names = [];
 	pfitmap.proteins_names = [];
@@ -24,7 +31,6 @@ function load_data(datafile) {
 
 	d3.tsv(datafile, function(data) {
 	pfitmap.dataset = data;
-	console.log(pfitmap.dataset);
 	for (var attrib in pfitmap.dataset[0]) {		
 		//if (k.startsWith("protein")) {pfitmap.proteins_names.push(k.split(":").slice(1)); };
 		if (attrib.startsWith("protein")) {  
@@ -88,6 +94,7 @@ function table_it() {
 		})
 		.enter()
 		.append("td")
+		.style("background-color",function(d) { if (d.hasOwnProperty("value")) { return colorScale(d.value.n_genomes_w_protein/ d.value.n_genomes);} else {return "None"; }})
 		.text(function(d) { return d.value_text; });
 }
 
