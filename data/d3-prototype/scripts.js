@@ -10,7 +10,7 @@ var pfitmap = {
 	organisms_count : null,
 	columns_names : [],
 	proteins_names : [],
-	enzyme_names : [],
+
 	taxa_names : ["domain", "kingdom","phylum", "class", "order", "family", "genus", "species", "strain"],
 	taxa_level : "domain",
 	base_data_file : "column_matrix_top_protein_level.tsv"
@@ -26,7 +26,7 @@ var colorScale = d3.scale.linear()
 function load_data(query) {
 	pfitmap.columns_names = [];
 	pfitmap.proteins_names = [];
-	pfitmap.enzyme_names = [];
+
 	d3.tsv(query, function(data) {
 	pfitmap.dataset = data;
 	for (var attrib in pfitmap.dataset[0]) {		
@@ -36,26 +36,13 @@ function load_data(query) {
 			if (pfitmap.proteins_names.indexOf(attrib)==-1) {
 				pfitmap.proteins_names.push(attrib);
 			}
-			var enzyme = attrib.split(":")[0];
-			if (pfitmap.enzyme_names.indexOf(enzyme) == -1) {
-				pfitmap.enzyme_names.push(enzyme);
-			}
 		};
 		
 		if (pfitmap.columns_names.indexOf(attrib)==-1) {
 			pfitmap.columns_names.push(attrib);
 		}
 	};
-	pfitmap.enzyme_names = pfitmap.enzyme_names.sort()
-	d3.select("#enzyme_selector").select("ul").remove();
-	d3.select("#enzyme_selector").append("ul")
-		.selectAll("li")
-		.data(pfitmap.enzyme_names)		
-		.enter()
-		.append("li")
-		.append("a")
-		.attr("href", function(d) {return ["javascript:get_enzyme('",d.split(" ").join("_").toLowerCase(),"')"].join(""); })
-		.text(function(d) { return d });
+
 	d3.select("#taxa_selector").select("ul").remove();
 	d3.select("#taxa_selector").append("ul")
 		.selectAll("li")
