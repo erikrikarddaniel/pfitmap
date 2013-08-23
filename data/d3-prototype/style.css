@@ -1,6 +1,17 @@
-a:link {color:#0000FF;}      /* unvisited link */
-a:hover {color:#00FF00;}  /* mouse over link */
-a:active {color:#FF0000;}  /* selected link */ 
+a:link { /* unvisited link */
+	color:#0000FF;
+}
+a:hover { /* mouse over link */
+	color:#00FF00;
+}
+a:active { /* selected link */
+	color:#FF0000;
+}   
+
+body {
+	font-size: 12px;
+	font: Arial;
+}
 
 #heat_map
 {
@@ -8,7 +19,6 @@ a:active {color:#FF0000;}  /* selected link */
 	float: left;	
 }
 #heat_map table {
-	font-size: 10px;
 	border: thin solid;
 	border-bottom-style: solid;  
 }
@@ -19,7 +29,6 @@ a:active {color:#FF0000;}  /* selected link */
 #enzyme_selector li {
 	padding-right: 4px;
 	display: inline-block;
-	text-decoration: underline;
 }
 
 #taxa_selector {
@@ -31,8 +40,14 @@ a:active {color:#FF0000;}  /* selected link */
 #taxa_selector ul {
 }
 .link_selector ul {
-	text-decoration: underline;
-	color: blue;
 	list-style: none;
 }
+#circos_link {
+	clear: both;	
+}
 
+.chord path {
+  fill-opacity: .67;
+  stroke: #000;
+  stroke-width: .5px;
+}
