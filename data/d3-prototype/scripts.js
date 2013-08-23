@@ -158,6 +158,10 @@ function getProteinName(protein) {
 }
 
 function generate_circos() {
+	d3.select("#html_view").style("display","None");
+	d3.select("#circos").style("display","block");
+	d3.select("#circos_svg").select("svg").remove();
+
 var chord = d3.layout.chord()
     .padding(.05)
     .sortSubgroups(d3.descending)
@@ -237,6 +241,7 @@ function groupTicks(d) {
 // Returns an event handler for fading a given chord group.
 function fade(opacity) {
   return function(g, i) {
+  	svg = d3.select("#circos_svg").select("svg");
     svg.selectAll(".chord path")
         .filter(function(d) { return d.source.index != i && d.target.index != i; })
       .transition()

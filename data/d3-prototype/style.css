@@ -42,8 +42,12 @@ body {
 .link_selector ul {
 	list-style: none;
 }
-#circos_link {
+#to_circos {
 	clear: both;	
+	
+}
+#circos {
+	display: none;
 }
 
 .chord path {
