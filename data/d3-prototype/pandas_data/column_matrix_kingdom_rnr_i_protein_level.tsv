@@ -1,0 +1,9 @@
+domain	kingdom	n_genomes	protein:RNR Ib:NrdE:n_proteins	protein:RNR Ib:NrdE:n_genomes_w_protein	protein:RNR Ib:NrdF:n_proteins	protein:RNR Ib:NrdF:n_genomes_w_protein	protein:RNR Ic:NrdAc:n_proteins	protein:RNR Ic:NrdAc:n_genomes_w_protein	protein:RNR Ic:NrdBc:n_proteins	protein:RNR Ic:NrdBc:n_genomes_w_protein	protein:RNR Ie:NrdAe:n_proteins	protein:RNR Ie:NrdAe:n_genomes_w_protein	protein:RNR Ie:NrdBe:n_proteins	protein:RNR Ie:NrdBe:n_genomes_w_protein	protein:RNR Ig:NrdAg:n_proteins	protein:RNR Ig:NrdAg:n_genomes_w_protein	protein:RNR Ig:NrdBg:n_proteins	protein:RNR Ig:NrdBg:n_genomes_w_protein	protein:RNR Ih:NrdAh:n_proteins	protein:RNR Ih:NrdAh:n_genomes_w_protein	protein:RNR Ih:NrdBh:n_proteins	protein:RNR Ih:NrdBh:n_genomes_w_protein	protein:RNR Ii:NrdAi:n_proteins	protein:RNR Ii:NrdAi:n_genomes_w_protein	protein:RNR Ii:NrdBi:n_proteins	protein:RNR Ii:NrdBi:n_genomes_w_protein	protein:RNR Ik:NrdAk:n_proteins	protein:RNR Ik:NrdAk:n_genomes_w_protein	protein:RNR Ik:NrdBk:n_proteins	protein:RNR Ik:NrdBk:n_genomes_w_protein	protein:RNR In:NrdAn:n_proteins	protein:RNR In:NrdAn:n_genomes_w_protein	protein:RNR In:NrdBn:n_proteins	protein:RNR In:NrdBn:n_genomes_w_protein
+Archaea	unspecified kingdom	11	0	0	0	0	6	3	6	3	0	0	0	0	0	0	0	0	0	0	0	0	2	1	2	1	0	0	0	0	0	0	0	0
+Bacteria	Bacteroidetes/Chlorobi group	12	0	0	0	0	2	1	2	1	12	6	12	6	0	0	0	0	0	0	0	0	4	2	4	2	0	0	0	0	0	0	0	0
+Bacteria	delta/epsilon subdivisions	6	0	0	0	0	0	0	0	0	2	1	2	1	0	0	0	0	0	0	2	1	0	0	0	0	0	0	0	0	0	0	0	0
+Bacteria	unspecified kingdom	62	28	14	24	12	16	7	16	7	2	1	2	1	30	14	30	14	10	5	6	3	0	0	0	0	8	3	10	4	0	0	0	0
+Eukaryota	Fungi	5	0	0	0	0	0	0	0	0	6	3	6	3	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+Eukaryota	Metazoa	9	0	0	0	0	4	1	0	0	18	9	42	9	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+Eukaryota	Viridiplantae	3	0	0	0	0	0	0	0	0	6	3	12	3	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+Viruses	dsDNA viruses, no RNA stage	5	0	0	2	1	0	0	0	0	0	0	0	0	8	4	6	3	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0

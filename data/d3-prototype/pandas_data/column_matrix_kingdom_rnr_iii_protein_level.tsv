@@ -1,0 +1,9 @@
+domain	kingdom	n_genomes	protein:RNR IIIa:NrdDa:n_proteins	protein:RNR IIIa:NrdDa:n_genomes_w_protein	protein:RNR IIIb:NrdDb:n_proteins	protein:RNR IIIb:NrdDb:n_genomes_w_protein	protein:RNR IIIc:NrdDc:n_proteins	protein:RNR IIIc:NrdDc:n_genomes_w_protein	protein:RNRIIId:NrdDd:n_proteins	protein:RNRIIId:NrdDd:n_genomes_w_protein	protein:RNR IIIf:NrdDf:n_proteins	protein:RNR IIIf:NrdDf:n_genomes_w_protein	protein:RNR IIIh:NrdDh:n_proteins	protein:RNR IIIh:NrdDh:n_genomes_w_protein	protein:RNRIIIi:NrdDi:n_proteins	protein:RNRIIIi:NrdDi:n_genomes_w_protein
+Archaea	unspecified kingdom	11	2	1	0	0	0	0	2	1	2	1	0	0	6	3
+Bacteria	Bacteroidetes/Chlorobi group	12	0	0	4	2	0	0	2	1	0	0	0	0	0	0
+Bacteria	delta/epsilon subdivisions	6	0	0	0	0	0	0	4	2	0	0	0	0	0	0
+Bacteria	unspecified kingdom	62	6	2	4	2	38	19	4	2	4	2	24	10	0	0
+Eukaryota	Fungi	5	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+Eukaryota	Metazoa	9	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+Eukaryota	Viridiplantae	3	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+Viruses	dsDNA viruses, no RNA stage	5	0	0	0	0	8	4	0	0	0	0	0	0	0	0

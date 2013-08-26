@@ -1,0 +1,9 @@
+domain	kingdom	n_genomes	protein:RNR I:NrdA:n_proteins	protein:RNR I:NrdA:n_genomes_w_protein	protein:RNR I:NrdB:n_proteins	protein:RNR I:NrdB:n_genomes_w_protein	protein:RNR III:NrdD:n_proteins	protein:RNR III:NrdD:n_genomes_w_protein	protein:RNR III:NrdG:n_proteins	protein:RNR III:NrdG:n_genomes_w_protein	protein:RNR II:NrdJ:n_proteins	protein:RNR II:NrdJ:n_genomes_w_protein
+Archaea	unspecified kingdom	11	8	4	8	4	12	6	0	0	14	7
+Bacteria	Bacteroidetes/Chlorobi group	12	18	7	18	7	6	3	0	0	10	4
+Bacteria	delta/epsilon subdivisions	6	8	4	8	4	4	2	0	0	2	1
+Bacteria	unspecified kingdom	62	102	39	100	37	82	37	10	4	30	14
+Eukaryota	Fungi	5	6	3	6	3	0	0	0	0	0	0
+Eukaryota	Metazoa	9	22	9	42	9	0	0	0	0	0	0
+Eukaryota	Viridiplantae	3	6	3	12	3	0	0	0	0	0	0
+Viruses	dsDNA viruses, no RNA stage	5	8	4	8	4	8	4	0	0	0	0

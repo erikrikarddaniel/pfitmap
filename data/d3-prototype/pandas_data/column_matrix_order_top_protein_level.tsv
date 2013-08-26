@@ -1,0 +1,60 @@
+domain	kingdom	phylum	class	order	n_genomes	protein:RNR I:NrdA:n_proteins	protein:RNR I:NrdA:n_genomes_w_protein	protein:RNR I:NrdB:n_proteins	protein:RNR I:NrdB:n_genomes_w_protein	protein:RNR III:NrdD:n_proteins	protein:RNR III:NrdD:n_genomes_w_protein	protein:RNR III:NrdG:n_proteins	protein:RNR III:NrdG:n_genomes_w_protein	protein:RNR II:NrdJ:n_proteins	protein:RNR II:NrdJ:n_genomes_w_protein
+Archaea	unspecified kingdom	Crenarchaeota	Thermoprotei	Fervidicoccales	2	0	0	0	0	2	1	0	0	2	1
+Archaea	unspecified kingdom	Crenarchaeota	Thermoprotei	Thermoproteales	1	0	0	0	0	2	1	0	0	2	1
+Archaea	unspecified kingdom	Euryarchaeota	Halobacteria	Halobacteriales	3	6	3	6	3	2	1	0	0	6	3
+Archaea	unspecified kingdom	Euryarchaeota	Methanococci	Methanococcales	1	0	0	0	0	2	1	0	0	0	0
+Archaea	unspecified kingdom	Euryarchaeota	Thermococci	Thermococcales	1	0	0	0	0	2	1	0	0	0	0
+Archaea	unspecified kingdom	Korarchaeota	unspecified class	unspecified order	1	0	0	0	0	2	1	0	0	2	1
+Archaea	unspecified kingdom	Thaumarchaeota	unspecified class	Nitrosopumilales	1	0	0	0	0	0	0	0	0	0	0
+Archaea	unspecified kingdom	unspecified phylum	unspecified class	unspecified order	1	2	1	2	1	0	0	0	0	2	1
+Bacteria	Bacteroidetes/Chlorobi group	Bacteroidetes	Bacteroidia	Bacteroidales	3	0	0	0	0	4	2	0	0	4	2
+Bacteria	Bacteroidetes/Chlorobi group	Bacteroidetes	Cytophagia	Cytophagales	3	4	2	4	2	0	0	0	0	0	0
+Bacteria	Bacteroidetes/Chlorobi group	Bacteroidetes	Flavobacteriia	Flavobacteriales	3	6	2	6	2	0	0	0	0	0	0
+Bacteria	Bacteroidetes/Chlorobi group	Bacteroidetes	Sphingobacteriia	Sphingobacteriales	2	6	2	6	2	2	1	0	0	2	1
+Bacteria	Bacteroidetes/Chlorobi group	Bacteroidetes	unspecified class	Bacteroidetes Order II. Incertae sedis	1	2	1	2	1	0	0	0	0	4	1
+Bacteria	delta/epsilon subdivisions	Proteobacteria	Deltaproteobacteria	Bdellovibrionales	1	2	1	2	1	0	0	0	0	0	0
+Bacteria	delta/epsilon subdivisions	Proteobacteria	Epsilonproteobacteria	Campylobacterales	1	2	1	2	1	0	0	0	0	0	0
+Bacteria	delta/epsilon subdivisions	Proteobacteria	Epsilonproteobacteria	unspecified order	4	4	2	4	2	4	2	0	0	2	1
+Bacteria	unspecified kingdom	Actinobacteria	Actinobacteria	Actinomycetales	4	6	3	4	2	4	1	0	0	2	1
+Bacteria	unspecified kingdom	Actinobacteria	Actinobacteria	Bifidobacteriales	2	2	1	2	1	4	2	0	0	0	0
+Bacteria	unspecified kingdom	Actinobacteria	Actinobacteria	Coriobacteriales	1	2	1	2	1	2	1	0	0	0	0
+Bacteria	unspecified kingdom	Aquificae	Aquificae	Aquificales	4	4	2	4	2	6	2	0	0	0	0
+Bacteria	unspecified kingdom	Chloroflexi	Chloroflexi	Chloroflexales	1	0	0	0	0	0	0	0	0	2	1
+Bacteria	unspecified kingdom	Firmicutes	Bacilli	Bacillales	1	2	1	2	1	2	1	0	0	0	0
+Bacteria	unspecified kingdom	Firmicutes	Bacilli	Lactobacillales	1	0	0	0	0	0	0	4	1	0	0
+Bacteria	unspecified kingdom	Firmicutes	Clostridia	Clostridiales	6	8	4	8	4	8	4	0	0	0	0
+Bacteria	unspecified kingdom	Firmicutes	Erysipelotrichi	Erysipelotrichales	1	0	0	0	0	2	1	0	0	0	0
+Bacteria	unspecified kingdom	Firmicutes	Negativicutes	Selenomonadales	2	0	0	0	0	4	2	0	0	0	0
+Bacteria	unspecified kingdom	Fusobacteria	Fusobacteriia	Fusobacteriales	1	2	1	2	1	2	1	0	0	0	0
+Bacteria	unspecified kingdom	Proteobacteria	Alphaproteobacteria	Rhizobiales	1	2	1	2	1	0	0	0	0	0	0
+Bacteria	unspecified kingdom	Proteobacteria	Alphaproteobacteria	Rhodospirillales	1	0	0	0	0	0	0	2	1	0	0
+Bacteria	unspecified kingdom	Proteobacteria	Alphaproteobacteria	Rickettsiales	1	4	1	4	1	0	0	0	0	0	0
+Bacteria	unspecified kingdom	Proteobacteria	Alphaproteobacteria	Sphingomonadales	1	2	1	2	1	0	0	0	0	0	0
+Bacteria	unspecified kingdom	Proteobacteria	Alphaproteobacteria	unspecified order	1	2	1	2	1	0	0	0	0	0	0
+Bacteria	unspecified kingdom	Proteobacteria	Betaproteobacteria	Burkholderiales	1	0	0	0	0	0	0	2	1	0	0
+Bacteria	unspecified kingdom	Proteobacteria	Betaproteobacteria	Neisseriales	3	6	3	6	3	4	2	0	0	0	0
+Bacteria	unspecified kingdom	Proteobacteria	Betaproteobacteria	Rhodocyclales	1	2	1	2	1	0	0	0	0	2	1
+Bacteria	unspecified kingdom	Proteobacteria	Gammaproteobacteria	Aeromonadales	1	2	1	2	1	2	1	0	0	2	1
+Bacteria	unspecified kingdom	Proteobacteria	Gammaproteobacteria	Alteromonadales	1	2	1	4	1	0	0	0	0	0	0
+Bacteria	unspecified kingdom	Proteobacteria	Gammaproteobacteria	Enterobacteriales	8	34	8	34	8	16	8	2	1	0	0
+Bacteria	unspecified kingdom	Proteobacteria	Gammaproteobacteria	Pseudomonadales	6	14	6	12	5	4	2	0	0	4	2
+Bacteria	unspecified kingdom	Proteobacteria	Gammaproteobacteria	Vibrionales	1	4	1	4	1	2	1	0	0	0	0
+Bacteria	unspecified kingdom	Proteobacteria	Gammaproteobacteria	Xanthomonadales	1	2	1	2	1	0	0	0	0	0	0
+Bacteria	unspecified kingdom	Spirochaetes	Spirochaetia	Spirochaetales	1	0	0	0	0	0	0	0	0	0	0
+Bacteria	unspecified kingdom	Thermotogae	Thermotogae	Thermotogales	8	0	0	0	0	20	8	0	0	18	8
+Bacteria	unspecified kingdom	unspecified phylum	unspecified class	unspecified order	1	0	0	0	0	0	0	0	0	0	0
+Eukaryota	Fungi	Ascomycota	Eurotiomycetes	Onygenales	1	2	1	2	1	0	0	0	0	0	0
+Eukaryota	Fungi	Basidiomycota	Tremellomycetes	Tremellales	2	2	1	2	1	0	0	0	0	0	0
+Eukaryota	Fungi	Microsporidia	unspecified class	unspecified order	2	2	1	2	1	0	0	0	0	0	0
+Eukaryota	Metazoa	Arthropoda	Insecta	Diptera	1	2	1	2	1	0	0	0	0	0	0
+Eukaryota	Metazoa	Chordata	Amphibia	Anura	1	6	1	2	1	0	0	0	0	0	0
+Eukaryota	Metazoa	Chordata	Ascidiacea	Enterogona	1	2	1	2	1	0	0	0	0	0	0
+Eukaryota	Metazoa	Chordata	Aves	Galliformes	1	2	1	2	1	0	0	0	0	0	0
+Eukaryota	Metazoa	Chordata	Mammalia	Carnivora	1	2	1	6	1	0	0	0	0	0	0
+Eukaryota	Metazoa	Chordata	Mammalia	Didelphimorphia	1	2	1	10	1	0	0	0	0	0	0
+Eukaryota	Metazoa	Chordata	Mammalia	Primates	2	4	2	14	2	0	0	0	0	0	0
+Eukaryota	Metazoa	Chordata	Mammalia	Rodentia	1	2	1	4	1	0	0	0	0	0	0
+Eukaryota	Viridiplantae	Streptophyta	Bryopsida	Funariales	1	2	1	4	1	0	0	0	0	0	0
+Eukaryota	Viridiplantae	Streptophyta	Isoetopsida	Selaginellales	1	2	1	4	1	0	0	0	0	0	0
+Eukaryota	Viridiplantae	Streptophyta	unspecified class	Brassicales	1	2	1	4	1	0	0	0	0	0	0
+Viruses	dsDNA viruses, no RNA stage	unspecified phylum	unspecified class	Caudovirales	5	8	4	8	4	8	4	0	0	0	0

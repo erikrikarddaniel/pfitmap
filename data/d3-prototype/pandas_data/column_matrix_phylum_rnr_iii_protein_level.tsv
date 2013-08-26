@@ -1,0 +1,24 @@
+domain	kingdom	phylum	n_genomes	protein:RNR IIIa:NrdDa:n_proteins	protein:RNR IIIa:NrdDa:n_genomes_w_protein	protein:RNR IIIb:NrdDb:n_proteins	protein:RNR IIIb:NrdDb:n_genomes_w_protein	protein:RNR IIIc:NrdDc:n_proteins	protein:RNR IIIc:NrdDc:n_genomes_w_protein	protein:RNRIIId:NrdDd:n_proteins	protein:RNRIIId:NrdDd:n_genomes_w_protein	protein:RNR IIIf:NrdDf:n_proteins	protein:RNR IIIf:NrdDf:n_genomes_w_protein	protein:RNR IIIh:NrdDh:n_proteins	protein:RNR IIIh:NrdDh:n_genomes_w_protein	protein:RNRIIIi:NrdDi:n_proteins	protein:RNRIIIi:NrdDi:n_genomes_w_protein
+Archaea	unspecified kingdom	Crenarchaeota	3	0	0	0	0	0	0	0	0	0	0	0	0	4	2
+Archaea	unspecified kingdom	Euryarchaeota	5	2	1	0	0	0	0	2	1	0	0	0	0	2	1
+Archaea	unspecified kingdom	Korarchaeota	1	0	0	0	0	0	0	0	0	2	1	0	0	0	0
+Archaea	unspecified kingdom	Thaumarchaeota	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+Archaea	unspecified kingdom	unspecified phylum	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+Bacteria	Bacteroidetes/Chlorobi group	Bacteroidetes	12	0	0	4	2	0	0	2	1	0	0	0	0	0	0
+Bacteria	delta/epsilon subdivisions	Proteobacteria	6	0	0	0	0	0	0	4	2	0	0	0	0	0	0
+Bacteria	unspecified kingdom	Actinobacteria	7	4	1	0	0	6	3	0	0	0	0	0	0	0	0
+Bacteria	unspecified kingdom	Aquificae	4	0	0	0	0	0	0	2	1	4	2	0	0	0	0
+Bacteria	unspecified kingdom	Chloroflexi	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+Bacteria	unspecified kingdom	Firmicutes	11	0	0	4	2	10	5	0	0	0	0	0	0	0	0
+Bacteria	unspecified kingdom	Fusobacteria	1	0	0	0	0	2	1	0	0	0	0	0	0	0	0
+Bacteria	unspecified kingdom	Proteobacteria	28	2	1	0	0	20	10	2	1	0	0	4	2	0	0
+Bacteria	unspecified kingdom	Spirochaetes	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+Bacteria	unspecified kingdom	Thermotogae	8	0	0	0	0	0	0	0	0	0	0	20	8	0	0
+Bacteria	unspecified kingdom	unspecified phylum	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+Eukaryota	Fungi	Ascomycota	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+Eukaryota	Fungi	Basidiomycota	2	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+Eukaryota	Fungi	Microsporidia	2	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+Eukaryota	Metazoa	Arthropoda	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+Eukaryota	Metazoa	Chordata	8	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+Eukaryota	Viridiplantae	Streptophyta	3	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+Viruses	dsDNA viruses, no RNA stage	unspecified phylum	5	0	0	0	0	8	4	0	0	0	0	0	0	0	0

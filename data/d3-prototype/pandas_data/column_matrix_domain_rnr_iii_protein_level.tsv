@@ -1,0 +1,5 @@
+domain	n_genomes	protein:RNR IIIa:NrdDa:n_proteins	protein:RNR IIIa:NrdDa:n_genomes_w_protein	protein:RNR IIIb:NrdDb:n_proteins	protein:RNR IIIb:NrdDb:n_genomes_w_protein	protein:RNR IIIc:NrdDc:n_proteins	protein:RNR IIIc:NrdDc:n_genomes_w_protein	protein:RNRIIId:NrdDd:n_proteins	protein:RNRIIId:NrdDd:n_genomes_w_protein	protein:RNR IIIf:NrdDf:n_proteins	protein:RNR IIIf:NrdDf:n_genomes_w_protein	protein:RNR IIIh:NrdDh:n_proteins	protein:RNR IIIh:NrdDh:n_genomes_w_protein	protein:RNRIIIi:NrdDi:n_proteins	protein:RNRIIIi:NrdDi:n_genomes_w_protein
+Archaea	11	2	1	0	0	0	0	2	1	2	1	0	0	6	3
+Bacteria	80	6	2	8	4	38	19	10	5	4	2	24	10	0	0
+Eukaryota	17	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+Viruses	5	0	0	0	0	8	4	0	0	0	0	0	0	0	0
