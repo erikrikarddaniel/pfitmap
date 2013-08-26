@@ -6,7 +6,7 @@
 		<script type="text/javascript" src="d3.v3.js"></script>
 		<script type="text/javascript" src="scripts.js"></script>
 		<link rel="stylesheet" type="text/css" href="style.css"/>
-		<script>get_taxa('domain');</script>
+		<script>get_data('domain','top');</script>
 	</head>
 	<body>
 		<div id="circos">
@@ -17,10 +17,10 @@
 			<div id="to_circos" class="link_selector"><a href="javascript:generate_circos()">Circos</a></div>
 			<div id="enzyme_selector" class="link_selector" >
 				<ul>
-					<li><a href="javascript:get_enzyme('rnr_i')">RNR I</a></li>
+					<li><a href="javascript:get_data(null,'rnr_i')">RNR I</a></li>
 					<!--<li><a href="javascript:get_enzyme('rnr_ii')">RNR II</a></li>-->
 					<li>RNR II</li>
-					<li><a href="javascript:get_enzyme('rnr_iii')">RNR III</a></li>
+					<li><a href="javascript:get_data(null,'rnr_iii')">RNR III</a></li>
 				</ul>
 			</div>
 		

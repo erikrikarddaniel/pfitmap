@@ -16,11 +16,13 @@ body {
 #heat_map
 {
 	position: relative;
-	float: left;	
+	float: left;
+	overflow: visible;
 }
 #heat_map table {
 	border: thin solid;
-	border-bottom-style: solid;  
+	border-bottom-style: solid;
+	overflow: visible;
 }
 
 #enzyme_selector {

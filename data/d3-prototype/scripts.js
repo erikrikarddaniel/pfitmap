@@ -12,13 +12,14 @@ var pfitmap = {
 	proteins_names : [],
 	circos_matrix : [],
 	taxa_names : ["domain", "kingdom","phylum", "class", "order", "family", "genus", "species", "strain"],
-	taxa_level : "domain",
+	taxa : "domain",
+	enzyme : "top",
 	base_data_file : "column_matrix_top_protein_level.tsv"
 };
 
 var colorLow = 'white', colorMed = 'yellow', colorHigh = 'red';
   
-var colorScale = d3.scale.linear()
+var colorHeatmap = d3.scale.linear()
      .domain([0, 0.5, 1])
      .range([colorLow, colorMed, colorHigh]);
 
@@ -50,7 +51,7 @@ function load_data(query) {
 		.enter()
 		.append("li")
 		.append("a")
-		.attr("href", function(d) {return ["javascript:get_taxa('",d.split(" ").join("_").toLowerCase(),"')"].join(""); })
+		.attr("href", function(d) {return ["javascript:get_data('",d.split(" ").join("_").toLowerCase(),"',null)"].join(""); })
 		.text(function(d) { return d });
 		
 	
@@ -80,7 +81,8 @@ function table_it() {
 	pfitmap.circos_matrix = [];
 	d3.select("#heat_map").select("table").remove();
 	var table = d3.select("#heat_map")
-		.append("table");
+		.append("table")
+		.attr("class","rnr_table");
 		
 	var thead = table.append("thead");
 	var tbody = table.append("tbody");
@@ -112,7 +114,7 @@ function table_it() {
 		})
 		.enter()
 		.append("td")
-		.style("background-color",function(d) { if (d.hasOwnProperty("value")) { return colorScale(d.value.n_genomes_w_protein/ d.value.n_genomes);} else {return "None"; }})
+		.style("background-color",function(d) { if (d.hasOwnProperty("value")) { return colorHeatmap(d.value.n_genomes_w_protein/ d.value.n_genomes);} else {return "None"; }})
 		.text(function(d) { return d.value_text; });
 }
 
@@ -126,22 +128,14 @@ function div_bar() {
 		.style("height",function(d) {var bar_height = d.no_proteins * 10; return bar_height + "px"});
 };
 
-function get_enzyme(level) {
-	var query = ["column_matrix_",level,".tsv"].join("")
+function get_data(taxa,enzyme) {
+	taxa = (taxa == null) ? pfitmap.taxa : taxa;
+	enzyme = (enzyme == null) ? pfitmap.enzyme : enzyme;
+	pfitmap.taxa = taxa;
+	pfitmap.enzyme = enzyme;
+	var query = ["pandas_data/column_matrix_",taxa,"_",enzyme,"_protein_level.tsv"].join("")
 	load_data(query);
-};
-
-function get_taxa(level) {
-	var query
-
-	if ([null,"strain"].indexOf(level) != -1) {
-		query = ["column_matrix_","top","_protein_level.tsv"].join("");
-	}
-	else {
-		query = ["column_matrix_",level,"_protein_level.tsv"].join("");
-	}
-	load_data(query);
-};
+}
 
 function sumArrays(group) {
   return group.reduce(function(prev, cur, index, arr) {
