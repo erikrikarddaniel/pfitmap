@@ -9,8 +9,7 @@ describe "HmmDbHits" do
   let!(:hmm_result_row) { FactoryGirl.create(:hmm_result_row, hmm_result: hmm_result, db_sequence: db_sequence) }
   
   it "works! (now write some real specs)" do
-    get hmm_db_hits_path
-    response.status.should be(200)
+    visit hmm_db_hits_path
   end
 
   describe "Index page" do

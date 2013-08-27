@@ -8,8 +8,7 @@ describe "DbSequences" do
   let!(:hmm_result_row) { FactoryGirl.create(:hmm_result_row, hmm_result: hmm_result, db_sequence: db_sequence) }
 
   it "works! (now write some real specs)" do
-    get db_sequences_path
-    response.status.should be(200)
+    visit db_sequences_path
   end
 
   describe "Index page" do
