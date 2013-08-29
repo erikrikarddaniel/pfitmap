@@ -92,6 +92,7 @@ describe "ProteinCounts" do
         click_link "-"
       end
       page.should_not have_content(@second_child.name)
+      page.should_not have_content(@first_child.name)
     end
 
     it "only show root enzymes" do
@@ -129,7 +130,8 @@ describe "ProteinCounts" do
 
       it "and expand taxon", :js => true do
         visit protein_counts_with_enzymes_path
-        within('table.enzyme-header') do
+#        within('table.enzyme-header') do
+        within("#enzyme#{class1.id}") do
           click_link "+"
         end
         parent_row = find_by_id("taxon#{@parent_taxon.id}")

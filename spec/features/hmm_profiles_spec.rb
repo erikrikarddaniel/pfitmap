@@ -14,7 +14,7 @@ describe "Hmm Profile Pages" do
     before{ visit hmm_profiles_path } 
 
     it { should have_selector('h1', text: 'Listing HMM-Profiles')}
-    it { should have_selector('title', text: full_title('HMM Profiles')) }
+    it { should have_title(full_title('HMM Profiles')) }
     it { should have_content('') } 
     
     it "should list each profile" do
@@ -54,7 +54,7 @@ describe "Hmm Profile Pages" do
     subject{ page }
     
     it { should have_selector('h1', text: hmm_profile.name) }
-    it { should have_selector('title', text: full_title(hmm_profile.name)) }
+    it { should have_title(full_title(hmm_profile.name)) }
     
     it { should have_content(hmm_profile.hmm_results.count) }
     it "displays one result" do
