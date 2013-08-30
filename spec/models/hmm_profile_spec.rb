@@ -234,6 +234,14 @@ describe HmmProfile do
         HmmProfile.last_parents.should == [@hmm_profile, hmm_profile1, hmm_profile2]
       end
     end
+    describe "sorted" do
+      it "is in sorted order" do
+        @hmm_profiles_hierarchy = HmmProfile.all.sort_by{ |p| p.hierarchy }
+        @sorted_hierarchy = HmmProfile.all.map {|p| p.hierarchy}.sort
+        @sorted_hierarchy.should == @hmm_profiles_hierarchy.map {|p| p.hierarchy}
+	@sorted_hierarchy.should_not == HmmProfile.all.map {|p| p.hierarchy}
+      end
+    end
   end
   describe "big factory" do
     before do
