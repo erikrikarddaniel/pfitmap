@@ -199,7 +199,7 @@ describe PfitmapRelease do
       @pfitmap_release.pfitmap_sequences.length.should_not == 0
     end
     
-    it "should be succesful to call calculate_main", :heavy => true do
+    it "should be successful to call calculate_main", :heavy => true do
       @pfitmap_release.calculate_main("GOLDWGStest10",FactoryGirl.create(:user_admin))
       Taxon.all.length.should == 51
       HmmProfile.all.length.should == 4
@@ -239,12 +239,12 @@ describe PfitmapRelease do
       @sequence_source.evaluate(@pfitmap_release,nil)
     end
 
-    it "should succesfuly calculate the release" do
+    it "should successfuly calculate the release" do
       @pfitmap_release.calculate_main("GOLDWGStest100", FactoryGirl.create(:user_admin))
       Protein.all.length.should == 4
 
       ProteinCount.sum("no_proteins").should == 194
-      ProteinCount.sum("no_genomes").should ==  3528 
+      ProteinCount.sum("no_genomes").should ==  3384 
       ProteinCount.sum("no_genomes_with_proteins").should == 86
       # Check specific values (human nrdb)
       nrdb_protein = Protein.find_by_name('NrdB')
@@ -255,14 +255,14 @@ describe PfitmapRelease do
       human_nrdb_protein_count.no_genomes_with_proteins.should == 1
       
 
-      ProteinCount.all.length.should == 1376
+      ProteinCount.all.length.should == 1352
       # Check the root
       root_taxon = Taxon.find_by_name('root')
       root_nrdb_pc = ProteinCount.find(:first, :conditions => ["protein_id = ? AND taxon_id = ? AND pfitmap_release_id = ?", nrdb_protein.id, root_taxon.id, @pfitmap_release.id])
 
       # These values are not checked and may change
       root_nrdb_pc.no_proteins.should == 8
-      root_nrdb_pc.no_genomes.should == 100
+      root_nrdb_pc.no_genomes.should == 96
       root_nrdb_pc.no_genomes_with_proteins.should == 4
       # no loose branches in the tree of life:
       root_taxons = Taxon.find_all_by_parent_ncbi_id(nil)
