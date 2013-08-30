@@ -5,7 +5,7 @@ class HmmProfilesController < ApplicationController
   # GET /hmm_profiles
   # GET /hmm_profiles.json
   def index
-    @hmm_profiles = HmmProfile.all.sort_by {|p| p.hierarcy}
+    @hmm_profiles = HmmProfile.all.sort_by {|p| p.hierarchy}
     @hmm_profiles_last_parents = HmmProfile.last_parents.sort_by{ |p| p.hierarchy }
     @first_last_parent = @hmm_profiles_last_parents.first
     
