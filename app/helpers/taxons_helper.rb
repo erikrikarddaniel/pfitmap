@@ -32,6 +32,7 @@ end
 
 # Returns lists of children nodes recursively.
 def list_children(taxons_collection)
+  taxons_collection.sort_by {|p| p.hierarchy}
   html_var = ""
   taxons_collection.each do |t|
     if not t.children.empty?
