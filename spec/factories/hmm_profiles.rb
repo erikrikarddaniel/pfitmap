@@ -37,6 +37,18 @@ FactoryGirl.define do
     end
   end
   
+  factory :hmm_profile_nrdban, class: HmmProfile do
+    name "Class I RNR radical generating subunit, eukaryotes and sister group-test sorting"
+    protein_name "NrdBan"
+    version "20120401"
+    parent { |hmm_profile| get_hmm_profile_named(:hmm_profile_nrdb) }
+    after_create do |profile|
+      FactoryGirl.create(:hmm_score_criterion, 
+                         :hmm_profile => profile,
+                         :min_fullseq_score => 400.0)
+    end
+  end
+  
   factory :hmm_profile_nrdbe, class: HmmProfile do
     name "Class I RNR radical generating subunit, eukaryotes"
     protein_name "NrdBe"
@@ -83,6 +95,7 @@ def get_hmm_profile_named(factory_name)
     :hmm_profile_nrdbr2lox => "RNR R2 and R2lox", 
     :hmm_profile_nrdb => "Class I RNR radical generating subunit",
     :hmm_profile_nrdben => "Class I RNR radical generating subunit, eukaryotes and sister group",
+    :hmm_profile_nrdban => "Class I RNR radical generating subunit, eukaryotes and sister group-for sorting test",
     :hmm_profile_nrdbe => "Class I RNR radical generating subunit, eukaryotes",
     :hmm_profile_nrdbn => "Class I RNR radical generating subunit, eukaryotic sister-group",
     :hmm_profile_r2lox => "R2lox protein",
