@@ -42,8 +42,9 @@ gem 'pg'
 gem 'google_visualr'
 
 group :development, :test do
-	gem 'rspec-rails', '2.14.0'
-	gem 'annotate', '~> 2.4.1.beta'
+  gem 'byebug'
+  gem 'rspec-rails', '2.14.0'
+  gem 'annotate', '~> 2.4.1.beta'
 end
 
 group :test do
@@ -85,4 +86,3 @@ gem 'jquery-rails'
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
-gem 'bio'

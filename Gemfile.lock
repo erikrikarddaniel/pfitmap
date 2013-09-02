@@ -40,6 +40,9 @@ GEM
     bootstrap-will_paginate (0.0.5)
       will_paginate
     builder (3.0.4)
+    byebug (2.0.0)
+      columnize (~> 0.3.6)
+      debugger-linecache (~> 1.2.0)
     cancan (1.6.10)
     capistrano (2.15.5)
       highline
@@ -67,8 +70,10 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.3)
+    columnize (0.3.6)
     daemons (1.1.9)
     database_cleaner (1.1.1)
+    debugger-linecache (1.2.0)
     delayed_job (3.0.5)
       activesupport (~> 3.0)
     delayed_job_active_record (0.3.2)
@@ -221,6 +226,7 @@ DEPENDENCIES
   bio
   bootstrap-sass (= 2.0.3.1)
   bootstrap-will_paginate (= 0.0.5)
+  byebug
   cancan
   capistrano
   capybara-webkit (~> 1.0.0)
