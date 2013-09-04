@@ -29,5 +29,5 @@ class HmmAlignment < ActiveRecord::Base
   belongs_to :hmm_result_row
   belongs_to :hmm_result
   belongs_to :db_sequence
-  has_many :hmm_db_hits, :through => :hmm_result_row
+  has_many :db_entries, :through => :hmm_result_row
 end

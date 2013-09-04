@@ -23,14 +23,14 @@ require 'spec_helper'
 # Message expectations are only used when there is no simpler way to specify
 # that an instance is receiving a specific message.
 
- describe HmmDbHitsController do
+ describe DbEntriesController do
   let!(:db_sequence) { FactoryGirl.create(:db_sequence)}
   let!(:db_entry) { FactoryGirl.create(:db_entry, db_sequence: db_sequence) }
   before do
     @user = get_admin_user
   end
   #This should return the minimal set of attributes required to create a vali
-  #HmmDbHit. As you add validations to HmmDbHit, be sure to
+  #DbEntry. As you add validations to DbEntry, be sure to
   #update the return value of this method accordingly.
   def valid_attributes
     {gi: '1234', db_sequence_id: db_sequence.id}
@@ -38,71 +38,71 @@ require 'spec_helper'
   
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
-  # HmmDbHitsController. Be sure to keep this updated too.
+  # DbEntriesController. Be sure to keep this updated too.
   def valid_session
     {:user_id => @user}
   end
 
   describe "GET index" do
-    it "assigns all hmm_db_hits as @db_entries" do
+    it "assigns all db_entries as @db_entries" do
       get :index, {}, valid_session
-      assigns(:hmm_db_hits).should eq([db_entry])
+      assigns(:db_entries).should eq([db_entry])
     end
   end
 
   describe "GET show" do
-    it "assigns the requested hmm_db_hit as @db_entry" do
+    it "assigns the requested db_entry as @db_entry" do
       get :show, {:id => db_entry.to_param}, valid_session
-      assigns(:hmm_db_hit).should eq(db_entry)
+      assigns(:db_entry).should eq(db_entry)
     end
   end
 
   describe "GET new" do
-    it "assigns a new hmm_db_hit as @hmm_db_hit" do
+    it "assigns a new db_entry as @db_entry" do
       get :new, {}, valid_session
-      assigns(:hmm_db_hit).should be_a_new(HmmDbHit)
+      assigns(:db_entry).should be_a_new(DbEntry)
     end
   end
 
   describe "GET edit" do
-    it "assigns the requested hmm_db_hit as @db_entry" do
+    it "assigns the requested db_entry as @db_entry" do
       get :edit, {:id => db_entry.to_param}, valid_session
-      assigns(:hmm_db_hit).should eq(db_entry)
+      assigns(:db_entry).should eq(db_entry)
     end
   end
 
   describe "POST create" do
     describe "with valid params" do
-      it "creates a new HmmDbHit" do
+      it "creates a new DbEntry" do
         expect {
-          post :create, {hmm_db_hit: valid_attributes}, valid_session
-        }.to change(HmmDbHit, :count).by(1)
+          post :create, {db_entry: valid_attributes}, valid_session
+        }.to change(DbEntry, :count).by(1)
       end
 
-      it "assigns a newly created hmm_db_hit as @hmm_db_hit" do
-        post :create, {:hmm_db_hit => valid_attributes}, valid_session
-        assigns(:hmm_db_hit).should be_a(HmmDbHit)
-        assigns(:hmm_db_hit).should be_persisted
+      it "assigns a newly created db_entry as @db_entry" do
+        post :create, {:db_entry => valid_attributes}, valid_session
+        assigns(:db_entry).should be_a(DbEntry)
+        assigns(:db_entry).should be_persisted
       end
 
-      it "redirects to the created hmm_db_hit" do
-        post :create, {:hmm_db_hit => valid_attributes}, valid_session
-        response.should redirect_to(HmmDbHit.last)
+      it "redirects to the created db_entry" do
+        post :create, {:db_entry => valid_attributes}, valid_session
+        response.should redirect_to(DbEntry.last)
       end
     end
 
     describe "with invalid params" do
-      it "assigns a newly created but unsaved hmm_db_hit as @hmm_db_hit" do
+      it "assigns a newly created but unsaved db_entry as @db_entry" do
         # Trigger the behavior that occurs when invalid params are submitted
-        HmmDbHit.any_instance.stub(:save).and_return(false)
-        post :create, {:hmm_db_hit => {}}, valid_session
-        assigns(:hmm_db_hit).should be_a_new(HmmDbHit)
+        DbEntry.any_instance.stub(:save).and_return(false)
+        post :create, {:db_entry => {}}, valid_session
+        assigns(:db_entry).should be_a_new(DbEntry)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
-        HmmDbHit.any_instance.stub(:save).and_return(false)
-        post :create, {:hmm_db_hit => {}}, valid_session
+        DbEntry.any_instance.stub(:save).and_return(false)
+        post :create, {:db_entry => {}}, valid_session
         response.should render_template("new")
       end
     end
@@ -110,60 +110,60 @@ require 'spec_helper'
 
   describe "PUT update" do
     describe "with valid params" do
-      it "updates the requested hmm_db_hit" do
-        hmm_db_hit = HmmDbHit.create! valid_attributes
-        # Assuming there are no other hmm_db_hits in the database, this
-        # specifies that the HmmDbHit created on the previous line
+      it "updates the requested db_entry" do
+        db_entry = DbEntry.create! valid_attributes
+        # Assuming there are no other db_entries in the database, this
+        # specifies that the DbEntry created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        HmmDbHit.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, {:id => hmm_db_hit.to_param, :hmm_db_hit => {'these' => 'params'}}, valid_session
+        DbEntry.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
+        put :update, {:id => db_entry.to_param, :db_entry => {'these' => 'params'}}, valid_session
       end
 
-      it "assigns the requested hmm_db_hit as @hmm_db_hit" do
-        hmm_db_hit = HmmDbHit.create! valid_attributes
-        put :update, {:id => hmm_db_hit.to_param, :hmm_db_hit => valid_attributes}, valid_session
-        assigns(:hmm_db_hit).should eq(hmm_db_hit)
+      it "assigns the requested db_entrycontrollers/db_entries_controller_spec.rb as @db_entry" do
+        db_entry = DbEntry.create! valid_attributes
+        put :update, {:id => db_entry.to_param, :db_entry => valid_attributes}, valid_session
+        assigns(:db_entry).should eq(db_entry)
       end
 
-      it "redirects to the hmm_db_hit" do
-        hmm_db_hit = HmmDbHit.create! valid_attributes
-        put :update, {:id => hmm_db_hit.to_param, :hmm_db_hit => valid_attributes}, valid_session
-        response.should redirect_to(hmm_db_hit)
+      it "redirects to the db_entry" do
+        db_entry = DbEntry.create! valid_attributes
+        put :update, {:id => db_entry.to_param, :db_entry => valid_attributes}, valid_session
+        response.should redirect_to(db_entry)
       end
     end
 
     describe "with invalid params" do
-      it "assigns the hmm_db_hit as @hmm_db_hit" do
-        hmm_db_hit = HmmDbHit.create! valid_attributes
+      it "assigns the db_entry as @db_entry" do
+        db_entry = DbEntry.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
-        HmmDbHit.any_instance.stub(:save).and_return(false)
-        put :update, {:id => hmm_db_hit.to_param, :hmm_db_hit => {}}, valid_session
-        assigns(:hmm_db_hit).should eq(hmm_db_hit)
+        DbEntry.any_instance.stub(:save).and_return(false)
+        put :update, {:id => db_entry.to_param, :db_entry => {}}, valid_session
+        assigns(:db_entry).should eq(db_entry)
       end
 
       it "re-renders the 'edit' template" do
-        hmm_db_hit = HmmDbHit.create! valid_attributes
+        db_entry = DbEntry.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
-        HmmDbHit.any_instance.stub(:save).and_return(false)
-        put :update, {:id => hmm_db_hit.to_param, :hmm_db_hit => {}}, valid_session
+        DbEntry.any_instance.stub(:save).and_return(false)
+        put :update, {:id => db_entry.to_param, :db_entry => {}}, valid_session
         response.should render_template("edit")
       end
     end
   end
 
   describe "DELETE destroy" do
-    it "destroys the requested hmm_db_hit" do
-      hmm_db_hit = HmmDbHit.create! valid_attributes
+    it "destroys the requested db_entry" do
+      db_entry = DbEntry.create! valid_attributes
       expect {
-        delete :destroy, {:id => hmm_db_hit.to_param}, valid_session
-      }.to change(HmmDbHit, :count).by(-1)
+        delete :destroy, {:id => db_entry.to_param}, valid_session
+      }.to change(DbEntry, :count).by(-1)
     end
 
-    it "redirects to the hmm_db_hits list" do
-      hmm_db_hit = HmmDbHit.create! valid_attributes
-      delete :destroy, {:id => hmm_db_hit.to_param}, valid_session
-      response.should redirect_to(hmm_db_hits_url)
+    it "redirects to the db_entries list" do
+      db_entry = DbEntry.create! valid_attributes
+      delete :destroy, {:id => db_entry.to_param}, valid_session
+      response.should redirect_to(db_entries_url)
     end
   end
 

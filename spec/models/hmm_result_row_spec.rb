@@ -64,7 +64,7 @@ describe HmmResultRow do
 
   it {should_not respond_to(:db_sequences) }
   it {should respond_to(:db_sequence) }
-  it {should respond_to(:hmm_db_hits) }
+  it {should respond_to(:db_entries) }
   it {should respond_to(:best_hit_evalue?) }
   it {should respond_to(:best_hit_score?) }
   it {should respond_to(:dbs_included) }
@@ -91,7 +91,7 @@ describe HmmResultRow do
   end
 
   describe "association through DbSequence" do
-    its(:hmm_db_hits) { should include(db_entry) }
+    its(:db_entries) { should include(db_entry) }
   end
 
   describe "calculation of best hit" do

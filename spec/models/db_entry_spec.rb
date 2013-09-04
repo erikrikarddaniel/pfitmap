@@ -19,17 +19,17 @@
 
 require 'spec_helper'
 
-describe HmmDbHit do
+describe DbEntry do
   let(:profile) { FactoryGirl.create(:hmm_profile) }
   let(:result) { FactoryGirl.create(:hmm_result, hmm_profile: profile) }
   let!(:db_sequence) { FactoryGirl.create(:db_sequence) }
   let!(:result_row) { FactoryGirl.create(:hmm_result_row, hmm_result: result, db_sequence: db_sequence) }
   let!(:db_entry) { FactoryGirl.create(:db_entry, db_sequence: db_sequence) }
   before do
-    @db_hit2 = HmmDbHit.new(gi: "99999", db: "ref" , acc: "ex9999", desc: "Some name blabla", db_sequence_id: db_sequence.id)
+    @db_entry2 = DbEntry.new(gi: "99999", db: "ref" , acc: "ex9999", desc: "Some name blabla", db_sequence_id: db_sequence.id)
   end
 
-  subject { @db_hit2 }
+  subject { @db_entry2 }
   
   it { should respond_to(:gi) }
   it { should respond_to(:db) }
@@ -44,12 +44,12 @@ describe HmmDbHit do
   end
   
   describe "when gi is not present" do
-    before {@db_hit2.gi= nil }
+    before {@db_entry2.gi= nil }
     it { should_not be_valid }
   end
   
   describe "when db sequence is not present" do
-    before {@db_hit2.db_sequence = nil}
+    before {@db_entry2.db_sequence = nil}
     it { should_not be_valid }
   end
   
@@ -64,7 +64,7 @@ describe HmmDbHit do
     let!(:db_entry1) { FactoryGirl.create(:db_entry, db: "ref", acc: "ex9999") }
     it { should be_valid }
     it "should be saveable" do
-      @db_hit2.save.should be_true
+      @db_entry2.save.should be_true
     end
   end
 end
