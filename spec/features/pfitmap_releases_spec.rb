@@ -165,15 +165,15 @@ describe "PfitmapReleases" do
     let!(:db_sequence4) { FactoryGirl.create(:db_sequence) }
     let!(:db_sequence5) { FactoryGirl.create(:db_sequence) }
     
-    let!(:hmm_db_hit1) { FactoryGirl.create(:hmm_db_hit, gi: 341588351, db_sequence: db_sequence1)}
+    let!(:db_entry1) { FactoryGirl.create(:db_entry, gi: 341588351, db_sequence: db_sequence1)}
     # Hit 2 and 3 are from the same species, but will match different profiles
-    let!(:hmm_db_hit2) { FactoryGirl.create(:hmm_db_hit, gi: 333757513, db_sequence: db_sequence2)}
-    let!(:hmm_db_hit3) { FactoryGirl.create(:hmm_db_hit, gi: 333757514, db_sequence: db_sequence3)}
+    let!(:db_entry2) { FactoryGirl.create(:db_entry, gi: 333757513, db_sequence: db_sequence2)}
+    let!(:db_entry3) { FactoryGirl.create(:db_entry, gi: 333757514, db_sequence: db_sequence3)}
     # Hit 4 and 5 are from the same species and same sequence 
-    let!(:hmm_db_hit4) { FactoryGirl.create(:hmm_db_hit, gi: 342827622, db_sequence: db_sequence4)}
-    let!(:hmm_db_hit5) { FactoryGirl.create(:hmm_db_hit, gi: 342827623, db_sequence: db_sequence4)}
+    let!(:db_entry4) { FactoryGirl.create(:db_entry, gi: 342827622, db_sequence: db_sequence4)}
+    let!(:db_entry5) { FactoryGirl.create(:db_entry, gi: 342827623, db_sequence: db_sequence4)}
     # One hit without hmm_result_row
-    let!(:hmm_db_hit_not_included) { FactoryGirl.create(:hmm_db_hit, gi: 88888888, db_sequence: db_sequence5) }
+    let!(:db_entry_not_included) { FactoryGirl.create(:db_entry, gi: 88888888, db_sequence: db_sequence5) }
     
     let!(:hmm_result_row) { FactoryGirl.create(:hmm_result_row, hmm_result: hmm_result1, db_sequence: db_sequence1) }
     let!(:hmm_result_row1) { FactoryGirl.create(:hmm_result_row2, hmm_result: hmm_result1, db_sequence: db_sequence2 ) }
@@ -193,7 +193,7 @@ describe "PfitmapReleases" do
     end
 
     it "evaluated correclty" do
-      pfitmap_release.hmm_db_hits.should include(hmm_db_hit1)
+      pfitmap_release.hmm_db_hits.should include(db_entry1)
     end
     it "can calculate" do
       visit pfitmap_release_path(pfitmap_release)
@@ -214,7 +214,7 @@ describe "PfitmapReleases" do
     let!(:sequence_source) { FactoryGirl.create(:sequence_source) }
     let!(:hmm_result1) { FactoryGirl.create(:hmm_result, hmm_profile: hmm_profile1, sequence_source: sequence_source) }
     let!(:db_sequence1) { FactoryGirl.create(:db_sequence) }
-    let!(:hmm_db_hit1) { FactoryGirl.create(:hmm_db_hit, gi: 341588351, db_sequence: db_sequence1)}
+    let!(:db_entry1) { FactoryGirl.create(:db_entry, gi: 341588351, db_sequence: db_sequence1)}
     let!(:hmm_result_row) { FactoryGirl.create(:hmm_result_row, hmm_result: hmm_result1, db_sequence: db_sequence1 ) }
     let!(:pfitmap_release) { FactoryGirl.create(:pfitmap_release, sequence_source: sequence_source) }
 

@@ -1,8 +1,13 @@
 require 'spec_helper'
+# ========================================================================
+# !!!!!TODO Note that this test was generated for table named HmmDBHit but
+# has been altered since that table will be renamed to DBEntry.
+# Go over the test and change references to HmmDBHit when renaming is done
+# ========================================================================
 
 describe "HmmDbHits" do
   let!(:db_sequence) { FactoryGirl.create(:db_sequence) }
-  let!(:hmm_db_hit) { FactoryGirl.create(:hmm_db_hit, db_sequence: db_sequence) }    
+  let!(:db_entry) { FactoryGirl.create(:db_entry, db_sequence: db_sequence) }    
   let!(:hmm_profile) { FactoryGirl.create(:hmm_profile) }
   let!(:sequence_source) { FactoryGirl.create(:sequence_source) }
   let!(:hmm_result) { FactoryGirl.create(:hmm_result, sequence_source: sequence_source, hmm_profile: hmm_profile) }
@@ -21,23 +26,23 @@ describe "HmmDbHits" do
       page.should have_content("Listing")
     end
     it "should display som information" do
-      page.should have_content(hmm_db_hit.gi)
-      page.should have_content(hmm_db_hit.desc)
+      page.should have_content(db_entry.gi)
+      page.should have_content(db_entry.desc)
     end
     
   end
 
   describe "Show page" do
     before do
-      visit hmm_db_hit_path(hmm_db_hit)
+      visit hmm_db_hit_path(db_entry)
     end
     it "should display some information headers" do
       page.should have_content("Gi")
       page.should have_content("Desc")
     end
     it "should display som information" do
-      page.should have_content(hmm_db_hit.gi)
-      page.should have_content(hmm_db_hit.desc)
+      page.should have_content(db_entry.gi)
+      page.should have_content(db_entry.desc)
     end
   end
   describe "Form page" do
@@ -47,9 +52,9 @@ describe "HmmDbHits" do
     end
       
     describe "edit page" do
-      let!(:hmm_db_hit) { FactoryGirl.create(:hmm_db_hit) }
+      let!(:db_entry) { FactoryGirl.create(:db_entry) }
       before do
-        visit edit_hmm_db_hit_path(hmm_db_hit)
+        visit edit_hmm_db_hit_path(db_entry)
       end
       it "can handle invalid parameters" do
         page.fill_in 'Gi', :with => ""

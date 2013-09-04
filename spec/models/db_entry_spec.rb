@@ -11,6 +11,11 @@
 #  db_sequence_id :integer
 #  desc           :text
 #
+# ========================================================================
+# !!!!!TODO Note that this test was generated for table named HmmDBHit but
+# has been altered since that table will be renamed to DBEntry.
+# Go over the test and change references to HmmDBHit when renaming is done
+# ========================================================================
 
 require 'spec_helper'
 
@@ -19,7 +24,7 @@ describe HmmDbHit do
   let(:result) { FactoryGirl.create(:hmm_result, hmm_profile: profile) }
   let!(:db_sequence) { FactoryGirl.create(:db_sequence) }
   let!(:result_row) { FactoryGirl.create(:hmm_result_row, hmm_result: result, db_sequence: db_sequence) }
-  let!(:db_hit) { FactoryGirl.create(:hmm_db_hit, db_sequence: db_sequence) }
+  let!(:db_entry) { FactoryGirl.create(:db_entry, db_sequence: db_sequence) }
   before do
     @db_hit2 = HmmDbHit.new(gi: "99999", db: "ref" , acc: "ex9999", desc: "Some name blabla", db_sequence_id: db_sequence.id)
   end
@@ -49,14 +54,14 @@ describe HmmDbHit do
   end
   
   describe "with an added relation" do
-    subject { db_hit }
+    subject { db_entry }
     its(:hmm_result_rows) { should_not be_empty }
     its(:hmm_result_rows) { should include(result_row) }
     its(:db_sequence) { should == db_sequence }
   end
   
   describe "when adding duplicate combination of db and acc" do
-    let!(:db_hit1) { FactoryGirl.create(:hmm_db_hit, db: "ref", acc: "ex9999") }
+    let!(:db_entry1) { FactoryGirl.create(:db_entry, db: "ref", acc: "ex9999") }
     it { should be_valid }
     it "should be saveable" do
       @db_hit2.save.should be_true

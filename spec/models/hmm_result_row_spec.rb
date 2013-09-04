@@ -34,7 +34,7 @@ describe HmmResultRow do
   let(:sequence_source) { FactoryGirl.create(:sequence_source) }
   let!(:result) { FactoryGirl.create(:hmm_result, hmm_profile: profile) }
   let!(:db_sequence) { FactoryGirl.create(:db_sequence) }
-  let!(:db_hit) { FactoryGirl.create(:hmm_db_hit, db_sequence: db_sequence) }
+  let!(:db_entry) { FactoryGirl.create(:db_entry, db_sequence: db_sequence) }
   let(:hmmp001) { FactoryGirl.create(:hmm_profile_nrdbr2lox) }
   let(:hmmp00100) { FactoryGirl.create(:hmm_profile, parent: hmmp001) }
   let!(:result1) { FactoryGirl.create(:hmm_result, hmm_profile: hmmp001, sequence_source: sequence_source) }
@@ -91,7 +91,7 @@ describe HmmResultRow do
   end
 
   describe "association through DbSequence" do
-    its(:hmm_db_hits) { should include(db_hit) }
+    its(:hmm_db_hits) { should include(db_entry) }
   end
 
   describe "calculation of best hit" do

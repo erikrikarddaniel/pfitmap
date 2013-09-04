@@ -1,4 +1,9 @@
 require "spec_helper"
+# ========================================================================
+# !!!!!TODO Note that this test was generated for table named HmmDBHit but
+# has been altered since that table will be renamed to DBEntry.
+# Go over the test and change references to HmmDBHit when renaming is done
+# ========================================================================
 
 describe HmmDbHitsController do
   describe "routing" do
