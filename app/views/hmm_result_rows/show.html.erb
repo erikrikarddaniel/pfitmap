@@ -162,8 +162,8 @@
     </div>
     <% end %>
     <br/>
-    <%  if @hmm_result_row.hmm_db_hits.any? %>
-    <h3> Listing HMM database hits </h3>
+    <%  if @hmm_result_row.db_entries.any? %>
+    <h3> Listing database entries </h3>
     <table class="standard">
       <thead>
 	<tr>
@@ -172,12 +172,12 @@
 	</tr>
       </thead>
       <tbody class>
-	<%= render @hmm_db_hits %>
+	<%= render @db_entries %>
       </tbody>
     </table>
-    <%= will_paginate @hmm_db_hits%>
+    <%= will_paginate @db_entries%>
     <% else %>
-    <h3>No HMM database hits</h3>
+    <h3>No database entries</h3>
     <% end %>
   </div>
 </div>

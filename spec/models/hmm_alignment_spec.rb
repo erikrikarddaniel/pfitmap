@@ -98,8 +98,8 @@ describe HmmAlignment do
     it "should correctly import a file with a single sequence" do
       parse_hmmout(@hmm_result_nrdb, fixture_file_upload("/NrdB-5alignments.hmmout"))
       @hmm_result_nrdb.hmm_alignments.length.should == 5
-      @hit1 = HmmDbHit.find_by_gi(161525957)
-      a = @hit1.hmm_alignments.first
+      @entry1 = DbEntry.find_by_gi(161525957)
+      a = @entry1.hmm_alignments.first
       a.domain_num == 1
       a.score.should == 431.4
       a.bias.should == 0.0

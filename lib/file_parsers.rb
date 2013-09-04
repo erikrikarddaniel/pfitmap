@@ -3,8 +3,8 @@ module FileParsers
     updated = 0
     DbSequence.transaction do
       @db_seq_to_update = {}
-      DbSequence.includes(:hmm_db_hits).where("sequence IS NULL").each do |dbs|
-	dbs.hmm_db_hits.each do |hdb|
+      DbSequence.includes(:db_entries).where("sequence IS NULL").each do |dbs|
+	dbs.db_entries.each do |hdb|
 	  @db_seq_to_update[hdb.gi] = dbs
 	end
       end
@@ -32,10 +32,10 @@ module FileParsers
   def parse_hmm_tblout(result, uploaded_file)
     HmmResult.transaction do
       @hmm_result_rows = []
-      @db_hits = []	# This will become an array of arrays, with one array per hmm_result_row (i.e. infile row). This is in preparation for a smart way of updating all objects with db_sequence.id...
-      @db_hit_cache = {}
-      HmmDbHit.all.each do |dbh|
-	@db_hit_cache[dbh.gi] = dbh
+      @db_entries = []	# This will become an array of arrays, with one array per hmm_result_row (i.e. infile row). This is in preparation for a smart way of updating all objects with db_sequence.id...
+      @db_entry_cache = {}
+      DbEntry.all.each do |dbe|
+	@db_entry_cache[dbe.gi] = dbe
       end
       #File.open("#{uploaded_file.path}", "r").each_with_index do |line, index|
       _get_io(uploaded_file.path).each_with_index do |line, index|
@@ -48,20 +48,20 @@ module FileParsers
 
 	# Try to find an old sequence object that's connected to any gi in this line
 	seqgi = individual_db_entries.map { |e| e.split("|")[1].to_i }.detect do |gi| 
-	  @db_hit_cache[gi] ? true : false
+	  @db_entry_cache[gi] ? true : false
 	end
 
-	present_sequence_id = ( seqgi ? @db_hit_cache[seqgi].db_sequence_id : DbSequence.create.id )	# How does the .db_sequence method call work? Does it do a select always? Can we do that in preparation?
+	present_sequence_id = ( seqgi ? @db_entry_cache[seqgi].db_sequence_id : DbSequence.create.id )	# How does the .db_sequence method call work? Does it do a select always? Can we do that in preparation?
 	
-	@db_hits << []
+	@db_entries << []
 	individual_db_entries.each do |entry|
 	  entry_fields = entry.split("|")
 
-	  #If any db_hit with the same gi exists, then they share sequence.
-	  present_db_hit = @db_hit_cache[entry_fields[1].to_i]
+	  #If any db_entry with the same gi exists, then they share sequence.
+	  present_db_entry = @db_entry_cache[entry_fields[1].to_i]
 	  
-	  unless present_db_hit
-	    @db_hits << HmmDbHit.new(
+	  unless present_db_entry
+	    @db_entries << DbEntry.new(
 	      :gi => entry_fields[1].to_i,
 	      :db => entry_fields[2],
 	      :acc => entry_fields[3],
@@ -72,13 +72,13 @@ module FileParsers
 	end
 	@hmm_result_rows << add_hmm_result_row(fields,result,present_sequence_id)
         if index % 1000 == 0
-          HmmDbHit.import @db_hits.flatten
+          DbEntry.import @db_entries.flatten
           HmmResultRow.import @hmm_result_rows
-          @db_hits = []
+          @db_entries = []
           @hmm_result_rows = []
         end
       end
-      HmmDbHit.import @db_hits.flatten
+      DbEntry.import @db_entries.flatten
       HmmResultRow.import @hmm_result_rows
     end
   end
@@ -118,9 +118,9 @@ module FileParsers
 
   def gi_to_result_row_hash(result)
     h = {}
-    result.hmm_result_rows.all(:include => :hmm_db_hits).each do |rr|
-      rr.hmm_db_hits.each do |db_hit|
-        h[db_hit.gi] = rr.id
+    result.hmm_result_rows.all(:include => :db_entries).each do |rr|
+      rr.db_entries.each do |db_entry|
+        h[db_entry.gi] = rr.id
       end
     end
     return h

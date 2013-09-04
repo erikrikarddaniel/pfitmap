@@ -1,0 +1,32 @@
+<div class="pageheader1">
+  <h1>Listing Database Hits</h1>
+</div>
+<div class="main-content">
+  <table class="standard">
+    <tr>
+      <th>Gi</th>
+      <th>Db</th>
+      <th>Acc</th>
+      <th>Desc</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+
+    <% @db_entries.each do |db_entry| %>
+    <tr>
+      <td><%= db_entry.gi %></td>
+      <td><%= db_entry.db %></td>
+      <td><%= db_entry.acc %></td>
+      <td><%= db_entry.desc %></td>
+      <td><%= link_to 'Show', db_entry %></td>
+      <td><%= link_to 'Edit', edit_db_entry_path(db_entry) %></td>
+      <td><%= link_to 'Destroy', db_entry, data: { confirm: 'Are you sure?'}, method: :delete %></td>
+    </tr>
+    <% end %>
+  </table>
+  <%= will_paginate @db_entries %>
+  <br />
+
+  <%= link_to 'New DB entry', new_db_entry_path %>
+</div>

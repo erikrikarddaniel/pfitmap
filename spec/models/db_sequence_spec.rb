@@ -25,7 +25,7 @@ describe DbSequence do
 
   it { should respond_to(:id) }
   it { should respond_to(:hmm_result_rows)}
-  it { should respond_to(:hmm_db_hits) }
+  it { should respond_to(:db_entries) }
   it { should respond_to(:pfitmap_sequences) }
   it { should respond_to(:db_sequence_best_profiles) }
 
@@ -43,9 +43,9 @@ describe DbSequence do
     let(:db_sequence) { FactoryGirl.create(:db_sequence) }
     let(:hmm_result_row) { FactoryGirl.create(:hmm_result_row, hmm_result: hmm_result, db_sequence: db_sequence) }
     before do
-      @hmm_db_hit = HmmDbHit.create(gi: "9999", db: "ref", acc: "ABCD", db_sequence_id: db_sequence.id)
+      @db_entry = DbEntry.create(gi: "9999", db: "ref", acc: "ABCD", db_sequence_id: db_sequence.id)
     end
-    subject{ @hmm_db_hit }
+    subject{ @db_entry }
     it { should be_valid}
   end
 

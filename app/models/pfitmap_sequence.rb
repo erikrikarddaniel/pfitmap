@@ -15,14 +15,14 @@ class PfitmapSequence < ActiveRecord::Base
   belongs_to :db_sequence
   belongs_to :pfitmap_release
   belongs_to :hmm_profile
-  has_many :hmm_db_hits, :through => :db_sequence
+  has_many :db_entries, :through => :db_sequence
   has_one :sequence_source, :through => :pfitmap_release
 
-  def db_hits_from(db_string)
+  def db_entries_from(db_string)
     if db_string
-      self.hmm_db_hits.where("db = ?", db_string)
+      self.db_entries.where("db = ?", db_string)
     else
-      self.hmm_db_hits
+      self.db_entries
     end
   end
 

@@ -5,35 +5,35 @@ require "spec_helper"
 # Go over the test and change references to HmmDBHit when renaming is done
 # ========================================================================
 
-describe HmmDbHitsController do
+describe DbEntriesController do
   describe "routing" do
 
     it "routes to #index" do
-      get("/hmm_db_hits").should route_to("hmm_db_hits#index")
+      get("/db_entries").should route_to("db_entries#index")
     end
 
     it "routes to #new" do
-      get("/hmm_db_hits/new").should route_to("hmm_db_hits#new")
+      get("/db_entries/new").should route_to("db_entries#new")
     end
 
     it "routes to #show" do
-      get("/hmm_db_hits/1").should route_to("hmm_db_hits#show", :id => "1")
+      get("/db_entries/1").should route_to("db_entries#show", :id => "1")
     end
 
     it "routes to #edit" do
-      get("/hmm_db_hits/1/edit").should route_to("hmm_db_hits#edit", :id => "1")
+      get("/db_entries/1/edit").should route_to("db_entries#edit", :id => "1")
     end
 
     it "routes to #create" do
-      post("/hmm_db_hits").should route_to("hmm_db_hits#create")
+      post("/db_entries").should route_to("db_entries#create")
     end
 
     it "routes to #update" do
-      put("/hmm_db_hits/1").should route_to("hmm_db_hits#update", :id => "1")
+      put("/db_entries/1").should route_to("db_entries#update", :id => "1")
     end
 
     it "routes to #destroy" do
-      delete("/hmm_db_hits/1").should route_to("hmm_db_hits#destroy", :id => "1")
+      delete("/db_entries/1").should route_to("db_entries#destroy", :id => "1")
     end
 
   end

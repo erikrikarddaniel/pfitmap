@@ -31,7 +31,7 @@ class HmmResultRow < ActiveRecord::Base
   # Could be a reason to add hmm_result_id to this list
   attr_protected :id, :created_at, :updated_at
   belongs_to :hmm_result
-  has_many :hmm_db_hits, :through => :db_sequence
+  has_many :db_entries, :through => :db_sequence
   has_many :view_db_sequence_best_profiles
   belongs_to :db_sequence
   has_many :hmm_alignments, dependent: :destroy
@@ -61,10 +61,10 @@ class HmmResultRow < ActiveRecord::Base
   end
 
   def dbs_included
-    db_hits = DbSequence.find(self.db_sequence_id).hmm_db_hits
+    db_entries = DbSequence.find(self.db_sequence_id).db_entries
     all_dbs = []
-    db_hits.each do |db_hit|
-      all_dbs.append(db_hit.db)
+    db_entries.each do |db_entry|
+      all_dbs.append(db_entry.db)
     end
     return all_dbs.uniq
   end

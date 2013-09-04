@@ -16,7 +16,7 @@ class PfitmapRelease < ActiveRecord::Base
   attr_accessible :release, :release_date, :sequence_source_id
   has_many :pfitmap_sequences, :dependent => :destroy
   has_many :db_sequences, :through => :pfitmap_sequences
-  has_many :hmm_db_hits, :through => :db_sequences
+  has_many :db_entries, :through => :db_sequences
   has_many :taxons
   has_many :protein_counts
   has_many :hmm_profile_release_statistics
@@ -193,8 +193,8 @@ class PfitmapRelease < ActiveRecord::Base
     pfitmap_release.pfitmap_sequences.each do |p_sequence|
       best_profile = p_sequence.hmm_profile
       proteins = best_profile.all_proteins_including_parents
-      p_sequence.hmm_db_hits.where("db = ?", db_string).select(:gi).each do |hit|
-        ncbi_taxon_id = BiosqlWeb.gi2ncbi_taxon_id(hit.gi)
+      p_sequence.db_entries.where("db = ?", db_string).select(:gi).each do |entry|
+        ncbi_taxon_id = BiosqlWeb.gi2ncbi_taxon_id(entry.gi)
         tree_item = tree[ncbi_taxon_id]
 
         unless tree_item.nil? || (not tree_item.last) # Valid taxon to hit?

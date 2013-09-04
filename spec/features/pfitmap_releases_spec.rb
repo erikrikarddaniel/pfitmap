@@ -193,7 +193,7 @@ describe "PfitmapReleases" do
     end
 
     it "evaluated correclty" do
-      pfitmap_release.hmm_db_hits.should include(db_entry1)
+      pfitmap_release.db_entries.should include(db_entry1)
     end
     it "can calculate" do
       visit pfitmap_release_path(pfitmap_release)
