@@ -11,7 +11,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130118122617) do
+ActiveRecord::Schema.define(:version => 20130904163500) do
+
+  create_table "db_entries", :force => true do |t|
+    t.integer  "gi"
+    t.string   "db"
+    t.string   "acc"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.integer  "db_sequence_id"
+    t.text     "desc"
+    t.index ["db", "acc"], :name => "index_db_entries_on_db_and_acc", :order => {"db" => :asc, "acc" => :asc}
+    t.index ["db_sequence_id"], :name => "index_db_entries_on_db_sequence_id", :order => {"db_sequence_id" => :asc}
+    t.index ["gi"], :name => "index_db_entries_on_gi", :order => {"gi" => :asc}
+  end
 
   create_table "hmm_result_rows", :force => true do |t|
     t.string   "target_name"
@@ -146,19 +159,6 @@ ActiveRecord::Schema.define(:version => 20130118122617) do
     t.integer  "domain_num"
     t.index ["hmm_result_row_id"], :name => "fk__hmm_alignments_hmm_result_row_id", :order => {"hmm_result_row_id" => :asc}
     t.foreign_key ["hmm_result_row_id"], "hmm_result_rows", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "hmm_alignments_hmm_result_row_id_fkey"
-  end
-
-  create_table "hmm_db_hits", :force => true do |t|
-    t.integer  "gi"
-    t.string   "db"
-    t.string   "acc"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
-    t.integer  "db_sequence_id"
-    t.text     "desc"
-    t.index ["db", "acc"], :name => "index_hmm_db_hits_on_db_and_acc", :order => {"db" => :asc, "acc" => :asc}
-    t.index ["db_sequence_id"], :name => "index_hmm_db_hits_on_db_sequence_id", :order => {"db_sequence_id" => :asc}
-    t.index ["gi"], :name => "index_hmm_db_hits_on_gi", :order => {"gi" => :asc}
   end
 
   create_table "pfitmap_sequences", :force => true do |t|
