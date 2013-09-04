@@ -20,14 +20,14 @@ FactoryGirl.define do
   factory :db_sequence do
   end
   
-  factory :hmm_db_hit do
+  factory :db_entry do
     sequence(:gi){|n| n}
     db "ref"
-    desc "This is an example hit"
+    desc "This is an example entry"
     db_sequence
   end
 
-  factory :hmm_db_hit_pdb, class: HmmDbHit do
+  factory :db_entry_pdb, class: DbEntry do
     gi '13'
     db 'pdb'
     acc '1mxl'
