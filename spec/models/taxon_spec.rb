@@ -16,6 +16,36 @@
 require 'spec_helper'
 
 describe Taxon do
+  describe "taxon in one row" do
+    let!(:taxon_flat) { FactoryGirl.create( :taxon, 
+                                     domain: "Bacteria",
+                                     kingdom: "Proteobacteria",
+                                     phylum: "Alphaproteobacteria",
+                                     taxclass: "ClassTax",
+                                     taxorder: "OrderTax",
+                                     family: "FamilyTax",
+                                     genus: "GenusTax",
+                                     species: "SpeciesTax",
+                                     strain: "StrainTax") }
+    let!(:taxon_flat2) { FactoryGirl.create( :taxon, 
+                                     domain: "Archaea",
+                                     kingdom: "KingdomTax",
+                                     phylum: "PhylumTax",
+                                     taxclass: "ClassTax",
+                                     taxorder: "OrderTax",
+                                     family: "FamilyTax",
+                                     genus: "GenusTax",
+                                     species: "SpeciesTax",
+                                     strain: "StrainTax") }
+    describe "hierarchical order" do
+      before do
+        @taxons = Taxon.find(:all, :order => 'hierarchy')
+      end
+      it "sorts correctly" do
+        @taxons.should == [taxon_flat2, taxon_flat]
+      end
+    end
+  end
   let!(:taxon) { FactoryGirl.create(:taxon, hierarchy: "root:Bacteria") }
   let!(:taxon2) { FactoryGirl.create(:taxon, 
                                      hierarchy: "root:Bacteria:Proteobacteria", 
