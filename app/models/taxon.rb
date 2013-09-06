@@ -11,6 +11,15 @@
 #  updated_at     :datetime        not null
 #  parent_ncbi_id :integer
 #  hierarchy      :text
+#  domain         :string(255)
+#  kingdom        :string(255)
+#  phylum         :string(255)
+#  taxclass       :string(255)
+#  taxorder       :string(255)
+#  family         :string(255)
+#  genus          :string(255)
+#  species        :string(255)
+#  strain         :string(255)
 #
 
 class Taxon < ActiveRecord::Base

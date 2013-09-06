@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130904163500) do
+ActiveRecord::Schema.define(:version => 20130905092048) do
 
   create_table "db_entries", :force => true do |t|
     t.integer  "gi"
@@ -210,6 +210,15 @@ ActiveRecord::Schema.define(:version => 20130904163500) do
     t.datetime "updated_at",     :null => false
     t.integer  "parent_ncbi_id"
     t.text     "hierarchy"
+    t.string   "domain"
+    t.string   "kingdom"
+    t.string   "phylum"
+    t.string   "taxclass"
+    t.string   "taxorder"
+    t.string   "family"
+    t.string   "genus"
+    t.string   "species"
+    t.string   "strain"
     t.index ["hierarchy"], :name => "index_taxons_on_hierarchy", :order => {"hierarchy" => :asc}
     t.index ["ncbi_taxon_id"], :name => "index_taxons_on_ncbi_taxon_id", :unique => true, :order => {"ncbi_taxon_id" => :asc}
   end

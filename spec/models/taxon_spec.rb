@@ -11,13 +11,21 @@
 #  updated_at     :datetime        not null
 #  parent_ncbi_id :integer
 #  hierarchy      :text
+#  domain         :string(255)
+#  kingdom        :string(255)
+#  phylum         :string(255)
+#  taxclass       :string(255)
+#  taxorder       :string(255)
+#  family         :string(255)
+#  genus          :string(255)
+#  species        :string(255)
+#  strain         :string(255)
 #
 
 require 'spec_helper'
 
 describe Taxon do
-  describe "taxon in one row" do
-    let!(:taxon_flat) { FactoryGirl.create( :taxon, 
+  let!(:taxon_flat) { FactoryGirl.create( :taxon, 
                                      domain: "Bacteria",
                                      kingdom: "Proteobacteria",
                                      phylum: "Alphaproteobacteria",
@@ -27,7 +35,7 @@ describe Taxon do
                                      genus: "GenusTax",
                                      species: "SpeciesTax",
                                      strain: "StrainTax") }
-    let!(:taxon_flat2) { FactoryGirl.create( :taxon, 
+  let!(:taxon_flat2) { FactoryGirl.create( :taxon, 
                                      domain: "Archaea",
                                      kingdom: "KingdomTax",
                                      phylum: "PhylumTax",
@@ -37,15 +45,6 @@ describe Taxon do
                                      genus: "GenusTax",
                                      species: "SpeciesTax",
                                      strain: "StrainTax") }
-    describe "hierarchical order" do
-      before do
-        @taxons = Taxon.find(:all, :order => 'hierarchy')
-      end
-      it "sorts correctly" do
-        @taxons.should == [taxon_flat2, taxon_flat]
-      end
-    end
-  end
   let!(:taxon) { FactoryGirl.create(:taxon, hierarchy: "root:Bacteria") }
   let!(:taxon2) { FactoryGirl.create(:taxon, 
                                      hierarchy: "root:Bacteria:Proteobacteria", 
@@ -54,6 +53,14 @@ describe Taxon do
                                      hierarchy: "root:Bacteria:Proteobacteria:Alphaproteobacteria", 
                                      parent: taxon2) }
   let!(:taxon4) { FactoryGirl.create(:taxon, hierarchy: "root:Eukaryota" ) }
+  describe "hierarchical order" do
+    before do
+      @taxons = Taxon.find([taxon_flat.id,taxon_flat2.id], :order => ["domain","kingdom","phylum","taxclass","taxorder","family","genus","species","strain"])
+    end
+    it "sorts correctly" do
+      @taxons.should == [taxon_flat2, taxon_flat]
+    end
+  end
   describe "self_and_ancestors" do
     it "works for bottom level taxon" do
       taxon3.self_and_ancestors.should include(taxon3)
@@ -78,7 +85,7 @@ describe Taxon do
       taxon.should respond_to(:hierarchy)
     end
     before do
-      @taxons = Taxon.find(:all, :order => 'hierarchy')
+      @taxons = Taxon.find([taxon4.id,taxon3.id,taxon2.id,taxon.id], :order => 'hierarchy')
     end
     it "sorts correctly" do
       @taxons.should == [taxon, taxon2, taxon3, taxon4]
