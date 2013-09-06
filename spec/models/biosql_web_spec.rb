@@ -42,4 +42,17 @@ describe BiosqlWeb do
       @taxons1.last["scientific_name"].should == "root"
     end
   end
+  describe "ncbi_taxon_ids2full_taxon_hierarchies" do
+    before do
+      @taxons1 = BiosqlWeb.ncbi_taxon_id2full_taxon_hierarchy(504728)
+      @taxons2 = BiosqlWeb.ncbi_taxon_id2full_taxon_hierarchy(329726)
+      @taxons3 = BiosqlWeb.ncbi_taxon_id2full_taxon_hierarchy(759272)
+      @taxons_list = BiosqlWeb.ncbi_taxon_ids2full_taxon_hierarchies([504728,329726,759272])
+    end
+    
+    it "works" do
+      @taxons_list.length.should == 3
+      @taxons_list.map {|t| t["scientific_name"]}.should == [@taxons1.scientific_name, @taxons2.scientific_name, @taxons3.scientific_name]
+    end
+  end
 end
