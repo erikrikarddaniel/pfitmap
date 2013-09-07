@@ -51,8 +51,13 @@ describe BiosqlWeb do
     end
     
     it "works" do
+      @taxons_list.should be_an(Array)
+      @taxons_list.should_not == nil
       @taxons_list.length.should == 3
-      @taxons_list.map {|t| t["scientific_name"]}.should == [@taxons1.scientific_name, @taxons2.scientific_name, @taxons3.scientific_name]
+      @tl = [@taxons1.map {|t| t['scientific_name']}, @taxons2.map {|t| t['scientific_name']}, @taxons3.map {|t| t['scientific_name']}]
+      @taxons_list.each do |taxon|
+         taxon.map {|t| t["scientific_name"]}.should be_in(@tl)
+      end
     end
   end
 end
