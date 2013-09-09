@@ -3,8 +3,6 @@
 # Table name: proteins
 #
 #  id             :integer         not null, primary key
-#  name           :string(255)
-#  rank           :string(255)
 #  hmm_profile_id :integer
 #  created_at     :datetime        not null
 #  updated_at     :datetime        not null
@@ -38,6 +36,8 @@ describe Protein do
       it {should respond_to(:group)}
       it {should respond_to(:subgroup)}
       it {should respond_to(:subsubgroup)}
+      it {should_not respond_to(:name) }
+      it {should_not respond_to(:rank) }
         
     end
     describe "with multiple enzymes" do

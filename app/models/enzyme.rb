@@ -3,10 +3,8 @@
 # Table name: enzymes
 #
 #  id           :integer         not null, primary key
-#  name         :string(255)
 #  created_at   :datetime        not null
 #  updated_at   :datetime        not null
-#  parent_id    :integer
 #  abbreviation :string(255)
 #  enzymeclass  :string(255)
 #  subclass     :string(255)

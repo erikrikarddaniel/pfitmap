@@ -3,10 +3,8 @@
 # Table name: enzymes
 #
 #  id           :integer         not null, primary key
-#  name         :string(255)
 #  created_at   :datetime        not null
 #  updated_at   :datetime        not null
-#  parent_id    :integer
 #  abbreviation :string(255)
 #  enzymeclass  :string(255)
 #  subclass     :string(255)
@@ -23,7 +21,10 @@ describe Enzyme do
   end
   subject{ @enzyme }
 
-  it { should respond_to(:name) }
+  it { should_not respond_to(:name) }
+  it { should_not respond_to(:parent_id) }
+  it { should_not respond_to(:parent) }
+  it { should_not respond_to(:children) }
   it { should respond_to(:hmm_profiles) }
   it { should respond_to(:enzyme_profiles) }
   it { should respond_to(:abbreviation) }
