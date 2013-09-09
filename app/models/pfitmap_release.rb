@@ -145,8 +145,8 @@ class PfitmapRelease < ActiveRecord::Base
     # {taxon_ncbi_id => [parent_ncbi_id, taxon_hash, {protein_id => protein_count_vector}]}
     tree = {}
     # First iterate over whole genome sequenced organisms
-    taxon_ncbi_ids.each do |ncbi_taxon_id|
-      taxons = BiosqlWeb.ncbi_taxon_id2full_taxon_hierarchy(ncbi_taxon_id)
+    taxons_list = BiosqlWeb.ncbi_taxon_ids2full_taxon_hierarchies(taxon_ncbi_ids)
+    taxons_list.each do |taxons|
       hierarchy_name_list = hierarchy_names(taxons, rank_hash)
       # Special case for the leaf node
       first = true

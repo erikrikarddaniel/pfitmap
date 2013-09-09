@@ -40,7 +40,7 @@ GEM
     bootstrap-will_paginate (0.0.5)
       will_paginate
     builder (3.0.4)
-    byebug (2.0.0)
+    byebug (2.1.0)
       columnize (~> 0.3.6)
       debugger-linecache (~> 1.2.0)
     cancan (1.6.10)
@@ -110,7 +110,7 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.25)
     mini_portile (0.5.1)
-    multi_json (1.7.9)
+    multi_json (1.8.0)
     multi_xml (0.5.5)
     net-scp (1.1.2)
       net-ssh (>= 2.6.5)
