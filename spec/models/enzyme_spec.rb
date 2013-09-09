@@ -8,6 +8,11 @@
 #  updated_at   :datetime        not null
 #  parent_id    :integer
 #  abbreviation :string(255)
+#  enzymeclass  :string(255)
+#  subclass     :string(255)
+#  group        :string(255)
+#  subgroup     :string(255)
+#  subsubgroup  :string(255)
 #
 
 require 'spec_helper'
@@ -24,6 +29,12 @@ describe Enzyme do
   it { should respond_to(:abbreviation) }
   it { should respond_to(:hierarchy) }
 
+  it { should respond_to(:enzymeclass) }
+  it { should respond_to(:subclass) }
+  it { should respond_to(:group) }
+  it { should respond_to(:subgroup) }
+  it { should respond_to(:subsubgroup) }
+  
   describe "relations" do
     let!(:hmm_profile) { FactoryGirl.create(:hmm_profile) }
     let!(:enzyme) { FactoryGirl.create(:enzyme) }
@@ -42,5 +53,11 @@ describe Enzyme do
       enzyme2.hierarchy.should == "EX:ENZ"
     end
   end
-
+  describe "fills row enzyme information" do
+    #let!(:enzyme_row) { Enzyme.create(name: "Test", abbreviation: "T", enzymeclass: "EnzClass", subclass: "EnzSubClass", group: "EnzGroup", subgroup: "EnzSubGroup", subsubgroup: "EnzSubSubGroup" )}
+    let!(:enzyme_row) { FactoryGirl.create(:enzyme_row) }
+    it "should be created " do
+      enzyme_row.group.should == "EnzGroup"
+    end
+  end
 end

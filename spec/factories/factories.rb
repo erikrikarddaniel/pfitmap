@@ -102,6 +102,16 @@ FactoryGirl.define do
     abbreviation "ENZ"
   end
 
+  factory :enzyme_row, class: Enzyme do
+    name "Example row enzyme"
+    abbreviation "RENZ"
+    enzymeclass "EnzClass"
+    subclass "EnzSubClass"
+    group "EnzGroup"
+    subgroup "EnzSubGroup"
+    subsubgroup "EnzSubSubGroup"
+  end
+
   factory :taxon do |t|
     sequence(:name) { |n|  "example_taxon_name " + n.to_s }
     sequence(:ncbi_taxon_id) { |n| n} 

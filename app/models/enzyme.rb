@@ -8,10 +8,15 @@
 #  updated_at   :datetime        not null
 #  parent_id    :integer
 #  abbreviation :string(255)
+#  enzymeclass  :string(255)
+#  subclass     :string(255)
+#  group        :string(255)
+#  subgroup     :string(255)
+#  subsubgroup  :string(255)
 #
 
 class Enzyme < ActiveRecord::Base
-  attr_accessible :name, :parent_id, :abbreviation
+  attr_accessible :name, :parent_id, :abbreviation, :enzymeclass, :subclass, :group, :subgroup, :subsubgroup
   has_many :enzyme_profiles, dependent: :destroy
   has_many :hmm_profiles, through: :enzyme_profiles
   has_many :enzyme_proteins
