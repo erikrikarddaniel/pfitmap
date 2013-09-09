@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130905092048) do
+ActiveRecord::Schema.define(:version => 20130909104949) do
 
   create_table "db_entries", :force => true do |t|
     t.integer  "gi"
@@ -99,6 +99,11 @@ ActiveRecord::Schema.define(:version => 20130905092048) do
     t.datetime "updated_at",   :null => false
     t.integer  "parent_id"
     t.string   "abbreviation"
+    t.string   "enzymeclass"
+    t.string   "subclass"
+    t.string   "group"
+    t.string   "subgroup"
+    t.string   "subsubgroup"
     t.index ["parent_id"], :name => "fk__enzymes_parent_id", :order => {"parent_id" => :asc}
     t.foreign_key ["parent_id"], "enzymes", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "enzymes_parent_id_fkey"
   end
@@ -122,6 +127,11 @@ ActiveRecord::Schema.define(:version => 20130905092048) do
     t.integer  "hmm_profile_id"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
+    t.string   "protclass"
+    t.string   "subclass"
+    t.string   "group"
+    t.string   "subgroup"
+    t.string   "subsubgroup"
     t.index ["hmm_profile_id"], :name => "index_proteins_on_hmm_profile_id", :order => {"hmm_profile_id" => :asc}
     t.foreign_key ["hmm_profile_id"], "hmm_profiles", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "proteins_hmm_profile_id_fkey"
   end

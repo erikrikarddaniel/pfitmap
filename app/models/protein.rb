@@ -8,6 +8,11 @@
 #  hmm_profile_id :integer
 #  created_at     :datetime        not null
 #  updated_at     :datetime        not null
+#  protclass      :string(255)
+#  subclass       :string(255)
+#  group          :string(255)
+#  subgroup       :string(255)
+#  subsubgroup    :string(255)
 #
 
 class Protein < ActiveRecord::Base
