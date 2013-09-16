@@ -5,7 +5,7 @@ class RemoveColumnsFromEnzyme < ActiveRecord::Migration
   end
 
   def down
-    add_column :enzymes, :parent_id, :string
+    add_column :enzymes, :parent_id, :integer
     add_column :enzymes, :name, :string
   end
 end

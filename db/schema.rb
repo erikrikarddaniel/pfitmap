@@ -97,11 +97,10 @@ ActiveRecord::Schema.define(:version => 20130911101001) do
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
     t.string   "abbreviation"
-    t.string   "enzymeclass"
-    t.string   "subclass"
-    t.string   "group"
-    t.string   "subgroup"
-    t.string   "subsubgroup"
+    t.integer  "parent_id"
+    t.string   "name"
+    t.index ["parent_id"], :name => "fk__enzymes_parent_id", :order => {"parent_id" => :asc}
+    t.foreign_key ["parent_id"], "enzymes", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_enzymes_parent_id"
   end
 
   create_table "hmm_profiles", :force => true do |t|
