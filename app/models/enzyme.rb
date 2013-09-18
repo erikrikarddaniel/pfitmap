@@ -3,15 +3,15 @@
 # Table name: enzymes
 #
 #  id           :integer         not null, primary key
-#  name         :string(255)
 #  created_at   :datetime        not null
 #  updated_at   :datetime        not null
-#  parent_id    :integer
 #  abbreviation :string(255)
+#  parent_id    :integer
+#  name         :string(255)
 #
 
 class Enzyme < ActiveRecord::Base
-  attr_accessible :name, :parent_id, :abbreviation
+  attr_accessible :name, :parent_id, :abbreviation, :enzymeclass, :subclass, :group, :subgroup, :subsubgroup
   has_many :enzyme_profiles, dependent: :destroy
   has_many :hmm_profiles, through: :enzyme_profiles
   has_many :enzyme_proteins
