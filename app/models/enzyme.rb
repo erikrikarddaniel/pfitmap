@@ -6,11 +6,8 @@
 #  created_at   :datetime        not null
 #  updated_at   :datetime        not null
 #  abbreviation :string(255)
-#  enzymeclass  :string(255)
-#  subclass     :string(255)
-#  group        :string(255)
-#  subgroup     :string(255)
-#  subsubgroup  :string(255)
+#  parent_id    :integer
+#  name         :string(255)
 #
 
 class Enzyme < ActiveRecord::Base
