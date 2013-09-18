@@ -14,29 +14,51 @@
 #
 
 class Protein < ActiveRecord::Base
-  attr_accessible :name, :rank
+  attr_accessible :protclass, :subclass, :group, :subgroup, :subsubgroup
   belongs_to :hmm_profile
   has_many :enzyme_proteins, dependent: :destroy
   has_many :enzymes, through: :enzyme_proteins, dependent: :destroy
   has_many :protein_counts, dependent: :destroy
 
   def self.initialize_proteins
-    profiles = HmmProfile.all
+    #Find all lowest level profiles. Each contains its hierarcy
+    profiles = HmmProfile.all.select {|h| h.children==[]} 
+
     profiles.each do |profile|
-      if profile.enzymes != []
-        enzymes = profile.enzymes
-        add_if_not_existing(enzymes,profile)
-      else
-        add_if_not_existing(nil,profile)
-      end
+      add_new_protein(profile)
     end
   end
 
   def to_s
-    "#{name} (#{rank})"
+    "#{protclass}#{subclass}:#{group}:#{subgroup}:#{subsubgroup}"
   end
 
   private
+  def self.add_new_protein(profile)
+    #Create a new protein based on the hierarchy of the profile.
+    #nil is added to levels where there is no hierarchy.
+    #Then add all the enzymes found in profiles in the hierarchy
+    protein = find_by_belongs_to(profile).first
+    if not protein
+      protein = new()
+      protein.hmm_profile_id = profile.id
+    end
+    ['protclass','subclass','group','subgroup','subsubgroup'].zip(profile.hierarchy.split(':')).map {|k,j| protein[k] = j}
+    protein.save
+    add_enzymes_protein(protein,profile)
+  end
+
+  def self.add_enzymes_protein(protein,profile)
+    #For the given protein and profile, add enzyme_protein relation if enzymes exist
+    #If profile has parent profiles, add those enzymes as well
+    profile.enzymes.each do |e|
+      EnzymeProtein.find_or_create_by_enzyme_id_and_protein_id(e.id, protein.id)
+    end
+    if profile.parent_id
+      add_enzymes_protein(protein,HmmProfile.find(profile.parent_id))
+    end
+  end
+
   def self.add_if_not_existing(enzymes, profile)
     protein =  find_by_belongs_to(profile).first
     if not protein
@@ -44,9 +66,8 @@ class Protein < ActiveRecord::Base
       protein.hmm_profile_id = profile.id
     end
     # Update eventual changes in protein_name
-    protein.name = profile.protein_name
+    ['protclass','subclass','group','subgroup','subsubgroup'].zip(profile.hierarchy.split(':')).map {|k,j| protein[k] = j}
     protein.save
-    
     if enzymes
       enzymes.each do |e|
         EnzymeProtein.find_or_create_by_enzyme_id_and_protein_id(e.id, protein.id)

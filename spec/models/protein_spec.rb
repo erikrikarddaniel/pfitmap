@@ -28,7 +28,7 @@ describe Protein do
       end
       it "should have created some proteins" do
         Protein.all.should_not == []
-        Protein.count.should == 3
+        Protein.count.should == 2
       end
       subject { @protein}
       it {should respond_to(:protclass)}
@@ -48,7 +48,7 @@ describe Protein do
       end
       it "should have created some proteins" do
         Protein.all.should_not == []
-        Protein.count.should == 3
+        Protein.count.should == 2
       end
       it "gets the associations right" do
         enzyme2.proteins.count.should == 1
