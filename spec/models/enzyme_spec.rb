@@ -3,11 +3,11 @@
 # Table name: enzymes
 #
 #  id           :integer         not null, primary key
-#  name         :string(255)
 #  created_at   :datetime        not null
 #  updated_at   :datetime        not null
-#  parent_id    :integer
 #  abbreviation :string(255)
+#  parent_id    :integer
+#  name         :string(255)
 #
 
 require 'spec_helper'
@@ -42,5 +42,4 @@ describe Enzyme do
       enzyme2.hierarchy.should == "EX:ENZ"
     end
   end
-
 end

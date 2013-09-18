@@ -6,7 +6,8 @@ class TaxonsController < ApplicationController
   # GET /taxons.json
   def index
     @taxons = Taxon.all
-    @taxon_roots = Taxon.roots
+#TODO remove taxon_roots since we send over all taxon and create tree from that
+#    @taxon_roots = Taxon.roots
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @taxons }

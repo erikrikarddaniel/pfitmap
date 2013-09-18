@@ -103,12 +103,14 @@ FactoryGirl.define do
   end
 
   factory :taxon do |t|
-    sequence(:name) { |n|  "example_taxon_name " + n.to_s }
+    sequence(:domain) { |n|  "example_domain_name " + n.to_s }
     sequence(:ncbi_taxon_id) { |n| n} 
   end
-
+  factory :taxon_flat, class: Taxon do |t|
+    sequence(:ncbi_taxon_id) {|n| n}
+  end
   factory :protein do
-    sequence(:name) { |n| "ex_protein " + n.to_s }
+    sequence(:protclass) { |n| "ex_protein " + n.to_s }
     hmm_profile
  end
 

@@ -42,4 +42,22 @@ describe BiosqlWeb do
       @taxons1.last["scientific_name"].should == "root"
     end
   end
+  describe "ncbi_taxon_ids2full_taxon_hierarchies" do
+    before do
+      @taxons1 = BiosqlWeb.ncbi_taxon_id2full_taxon_hierarchy(504728)
+      @taxons2 = BiosqlWeb.ncbi_taxon_id2full_taxon_hierarchy(329726)
+      @taxons3 = BiosqlWeb.ncbi_taxon_id2full_taxon_hierarchy(759272)
+      @taxons_list = BiosqlWeb.ncbi_taxon_ids2full_taxon_hierarchies([504728,329726,759272])
+    end
+    
+    it "works" do
+      @taxons_list.should be_an(Array)
+      @taxons_list.should_not == nil
+      @taxons_list.length.should == 3
+      @tl = [@taxons1.map {|t| t['scientific_name']}, @taxons2.map {|t| t['scientific_name']}, @taxons3.map {|t| t['scientific_name']}]
+      @taxons_list.each do |taxon|
+         taxon.map {|t| t["scientific_name"]}.should be_in(@tl)
+      end
+    end
+  end
 end

@@ -113,13 +113,13 @@ class PfitmapRelease < ActiveRecord::Base
       # Initialize dry run, count genomes
       tree = dry_run(taxon_ncbi_ids, pfitmap_release, proteins, rank_hash)
       calculate_logger.info "#{Time.now} Dry run finished."
-      
+
       # Second iteration, count hits
       second_run_count_hits(tree, pfitmap_release,db_string)
       calculate_logger.info "#{Time.now} Second_run_count_hits finished."
 
       # Save tree to database
-      save_to_db(tree)
+      save_pc_to_db(tree)
       calculate_logger.info "#{Time.now} Everything finished, saved protein counts to db.\n"
     end
   end
@@ -131,48 +131,21 @@ class PfitmapRelease < ActiveRecord::Base
   private
   def dry_run(taxon_ncbi_ids, pfitmap_release, proteins, rank_hash)
     ## Dry run of the calculate_main method
-    #  Pulls one taxon hierarchy from biosqlweb at a time and iteratively
-    #  adds taxons that are either 
-    #      a) from ranks in rank_hash
-    #      b) The leaf for that hierarchy
-    #      c) The node named "root"
-    #  If the taxon is the leaf node for that hieararchy, it also makes sure 
+    #  Pulls taxon hierarchies from biosqlweb and adds 1 to no_genomes attribute 
     #  that it is marked with wgs = true. 
     #  For all taxons, it visits (or initializes) all its protein_counts and 
     #  adds 1 to the no_genomes attribute.
 
     # Tree structure for protein_counts
-    # {taxon_ncbi_id => [parent_ncbi_id, taxon_hash, {protein_id => protein_count_vector}]}
+    # {taxon_ncbi_id => [taxon_names, {protein_id => protein_count_vector}]}
     tree = {}
     # First iterate over whole genome sequenced organisms
-    taxon_ncbi_ids.each do |ncbi_taxon_id|
-      taxons = BiosqlWeb.ncbi_taxon_id2full_taxon_hierarchy(ncbi_taxon_id)
+    taxons_list = BiosqlWeb.ncbi_taxon_ids2full_taxon_hierarchies(taxon_ncbi_ids)
+    taxons_list.zip(taxon_ncbi_ids).each do |taxons,ncbi|
       hierarchy_name_list = hierarchy_names(taxons, rank_hash)
-      # Special case for the leaf node
-      first = true
-      current_taxon, *rest = *taxons
-      rest += [nil] # So that the last taxon also is added
-      rest.each do |next_taxon|
-        if next_taxon and
-            not rank_hash[next_taxon["node_rank"]] and
-            not next_taxon["scientific_name"] == "root"
-          next
-        end
-
-        if tree[current_taxon["ncbi_taxon_id"]]
-          pv_hash = {}
-          proteins.each { |p| pv_hash[p.id] = Vector[1,0,0] }
-          add_pc_recursively(tree, current_taxon["ncbi_taxon_id"], pv_hash, first)
-          break
-        elsif current_taxon["ncbi_taxon_id"]
-          new_taxon_to_tree(tree, current_taxon, next_taxon, proteins, first, hierarchy_name_list)
-          hierarchy_name_list.pop
-          current_taxon = next_taxon
-          first = false
-        else
-          calculate_logger.error "#{Time.now} Error, could not add taxon with taxon_ncbi_id: #{ncbi_taxon_id}"
-        end
-      end
+      pv_hash = {}
+      proteins.each { |p| pv_hash[p.id] = Vector[1,0,0] }
+      tree[ncbi] = [hierarchy_name_list,pv_hash]
     end
     return tree
   end
@@ -211,9 +184,22 @@ class PfitmapRelease < ActiveRecord::Base
               obs_as_genome[ncbi_taxon_id][p.id] = true
             end
           end
-          add_pc_recursively(tree, ncbi_taxon_id, protein_vector_hash, false)
+          add_pc(tree, ncbi_taxon_id, protein_vector_hash)
         end
       end
+    end
+  end
+
+  def save_pc_to_db(tree)
+    tree.each do |ncbi_id,value_list|
+      taxon = value_list[0]
+      protein_pc_hash = value_list[1]
+      taxon_id = save_taxon(taxon,ncbi_id)
+      protein_counts = []
+      protein_pc_hash.each do |protein, vec|
+        protein_counts << save_protein_count(protein, taxon_id, vec)
+      end
+      ProteinCount.import protein_counts
     end
   end
 
@@ -229,6 +215,12 @@ class PfitmapRelease < ActiveRecord::Base
       end
       ProteinCount.import protein_counts
     end 
+  end
+  def add_pc(tree, ncbi_id, pv_hash)
+    protein_hash = tree[ncbi_id][1]
+    pv_hash.each do |p,v|
+      protein_hash[p] += v
+    end
   end
 
   def add_pc_recursively(tree, ncbi_id, pv_hash, first)
@@ -262,34 +254,57 @@ class PfitmapRelease < ActiveRecord::Base
   end
 
   def hierarchy_names(taxons, rank_hash)
+    # Returns a list with values for each hierarchy column in Taxon
     # Some taxons-lists will be an html-error page
     begin
+      name_hash = {"domain" => nil, "kingdom" => "no kingdom", "phylum" => "no phylum", "class" => "no class", "order" => "no order","family" =>"no family", "genus" => "no genus", "species" => "no species", "strain" => nil}      
       # Filter on accepted ranks, re-add first and root
-      accepted_taxons = taxons.select {|taxon_hash| rank_hash[taxon_hash["node_rank"]]}
-      if not rank_hash[taxons.first["node_rank"]]
-        accepted_taxons.unshift(taxons.first)
+      accepted_taxons = taxons.select {|taxon_hash| taxon_hash["node_rank"].in?(rank_hash)}
+      accepted_taxons.each do |at|
+        rank = at['node_rank']
+        name = at['scientific_name']
+        if rank.in?(name_hash)
+          name_hash[rank] = name
+        elsif rank == "superkingdom"
+          name_hash["domain"] = name
+        end
       end
-      accepted_taxons << taxons.last
+      # if the lowest level in the taxon hierarchy is not used, add it as strain if strain not used already
+      if not taxons.first.in?(accepted_taxons)
+        if name_hash['strain'] == nil
+          name_hash['strain'] = taxons.first['scientific_name']
+        else
+          calculate_logger.error "#{Time.now} Error, strain was already in use so the lowest taxon not added: #{taxons.first['ncbi_taxon_id']}"
+        end
+      end
+      # If kingdom is missing, use the taxon below superkingdom as kingdom (if it has
+      # not already been used 
+      if not "kingdom".in?(accepted_taxons.map {|t| t['node_rank']})
+        #Pick out the index of super kingdom and go down the hierarchy by one
+        kingdom = taxons[taxons.find_index {|t| t['node_rank'] =="superkingdom" } - 1]
+        #If the taxon picked out already in the accepted list, don't use it again
+        if not kingdom.in?(accepted_taxons)
+          name_hash["kingdom"] = kingdom['scientific_name']
+        else
+          calculate_logger.error "#{Time.now} Error, kingdom was missing, and the first level below superkingdom was already used: #{taxons.first['ncbi_taxon_id']}"
+        end
+      end
       # Pick out the names
-      name_list = accepted_taxons.map { |taxon_hash| taxon_hash["scientific_name"] }
-      return name_list.reverse
+      return [name_hash['domain'],name_hash['kingdom'],name_hash['phylum'],name_hash['class'],name_hash['order'],name_hash['family'],name_hash['genus'],name_hash['species'],name_hash['strain']]
     rescue
       []
     end
   end
 
-  def save_taxon(taxon_hash, parent_taxon_id)
-    taxon_in_db = Taxon.find_by_ncbi_taxon_id(taxon_hash["ncbi_taxon_id"])
+  def save_taxon(taxon_hash,ncbi_taxon_id)
+    taxon_in_db = Taxon.find_by_ncbi_taxon_id(ncbi_taxon_id)
     if taxon_in_db
       taxon = taxon_in_db
     else
       taxon = Taxon.new
     end
-    taxon.ncbi_taxon_id = taxon_hash["ncbi_taxon_id"]
-    taxon.name = taxon_hash["scientific_name"]
-    taxon.rank = taxon_hash["node_rank"]
-    taxon.hierarchy = taxon_hash["hierarchy"]
-    taxon.parent_ncbi_id = parent_taxon_id
+    taxon.ncbi_taxon_id = ncbi_taxon_id
+    ["domain","kingdom","phylum","taxclass","taxorder","family","genus","species","strain"].zip(taxon_hash).map {|ta,ha| taxon[ta] = ha}
     taxon.save
     return taxon.id
   end
