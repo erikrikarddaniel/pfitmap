@@ -37,10 +37,10 @@ GEM
     autotest-standalone (4.5.11)
     bio (1.4.3.0001)
     bootstrap-sass (2.0.3.1)
-    bootstrap-will_paginate (0.0.5)
+    bootstrap-will_paginate (0.0.10)
       will_paginate
     builder (3.0.4)
-    byebug (2.1.1)
+    byebug (2.2.0)
       columnize (~> 0.3.6)
       debugger-linecache (~> 1.2.0)
     cancan (1.6.10)
@@ -71,6 +71,8 @@ GEM
       execjs
     coffee-script-source (1.6.3)
     columnize (0.3.6)
+    d3_rails (3.3.5)
+      railties (>= 3.1.0)
     daemons (1.1.9)
     database_cleaner (1.1.1)
     debugger-linecache (1.2.0)
@@ -167,7 +169,7 @@ GEM
       rspec-expectations (~> 2.14.0)
       rspec-mocks (~> 2.14.0)
     rspec-core (2.14.5)
-    rspec-expectations (2.14.2)
+    rspec-expectations (2.14.3)
       diff-lcs (>= 1.1.3, < 2.0)
     rspec-html-matchers (0.4.3)
       nokogiri (>= 1.4.4)
@@ -202,7 +204,7 @@ GEM
       libv8 (~> 3.3.10)
     thor (0.18.1)
     tilt (1.4.1)
-    tins (0.9.0)
+    tins (0.10.0)
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
@@ -211,7 +213,7 @@ GEM
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
     valuable (0.9.8)
-    will_paginate (3.0.3)
+    will_paginate (3.0.5)
     xpath (2.0.0)
       nokogiri (~> 1.3)
 
@@ -225,12 +227,13 @@ DEPENDENCIES
   autotest-standalone
   bio
   bootstrap-sass (= 2.0.3.1)
-  bootstrap-will_paginate (= 0.0.5)
+  bootstrap-will_paginate
   byebug
   cancan
   capistrano
   capybara-webkit (~> 1.0.0)
   coffee-rails (~> 3.2.1)
+  d3_rails
   daemons
   database_cleaner
   delayed_job_active_record (= 0.3.2)
@@ -253,4 +256,4 @@ DEPENDENCIES
   term-ansicolor
   therubyracer (= 0.10.1)
   uglifier (>= 1.0.3)
-  will_paginate (= 3.0.3)
+  will_paginate
