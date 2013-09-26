@@ -91,6 +91,9 @@ GEM
       railties (>= 3.0.0)
     faker (1.0.1)
       i18n (~> 0.4)
+    gon (4.1.1)
+      actionpack (>= 2.3.0)
+      json
     google_visualr (2.1.9)
     hashie (2.0.5)
     highline (1.6.19)
@@ -239,6 +242,7 @@ DEPENDENCIES
   delayed_job_active_record (= 0.3.2)
   factory_girl_rails (= 1.4.0)
   faker (= 1.0.1)
+  gon
   google_visualr
   httparty
   jquery-rails

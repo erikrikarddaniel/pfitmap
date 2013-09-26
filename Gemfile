@@ -8,7 +8,11 @@ gem 'bootstrap-will_paginate'
 gem 'bio'
 gem 'schema_plus'
 gem 'activerecord-import'
+#d3 javascript library to render protein statistics
 gem 'd3_rails'
+#gon gem to simply make variables from controller available to the javascript in the views
+gem 'gon'
+
 # Authentication and Authorization
 gem 'omniauth-openid'
 gem 'cancan'
