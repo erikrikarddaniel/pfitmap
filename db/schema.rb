@@ -219,6 +219,7 @@ ActiveRecord::Schema.define(:version => 20130911101001) do
     t.string   "species"
     t.string   "strain"
     t.index ["ncbi_taxon_id"], :name => "index_taxons_on_ncbi_taxon_id", :unique => true, :order => {"ncbi_taxon_id" => :asc}
+    t.index ["domain", "kingdom", "phylum", "taxclass", "taxorder", "family", "genus", "species", "strain"], :name => "taxhierarchy", :unique => true, :order => {"domain" => :asc, "kingdom" => :asc, "phylum" => :asc, "taxclass" => :asc, "taxorder" => :asc, "family" => :asc, "genus" => :asc, "species" => :asc, "strain" => :asc}
   end
 
   create_table "protein_counts", :force => true do |t|
