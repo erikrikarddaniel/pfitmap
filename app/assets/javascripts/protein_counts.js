@@ -24,9 +24,10 @@ function toHex(N) {
 }
 
 $(document).ready(function(){
-    colorHeatmap();
-    IndentTaxons();
-    initTips();
+//    colorHeatmap();
+//    IndentTaxons();
+//    initTips();
+    d3_table_it(gon.taxons_proteins_protein_counts,gon.columns);
 });
 
 function initTips(){
@@ -82,4 +83,28 @@ function IndentTaxons() {
 	var indent_magnitude = indent_int*10
 	$(this).css({textIndent: indent_magnitude});
     });
+}
+function d3_table_it(dataset,columns) {
+    d3.select("#heat_map").select("table").remove();
+    var table = d3.select("#heat_map")
+        .append("table")
+        .attr("class","rnr_table");
+    
+    var thead = table.append("thead");
+    var tbody = table.append("tbody");
+    
+    var rows = tbody.selectAll("tr")
+        .data(dataset)
+        .enter()
+        .append("tr");
+    
+    var cells = rows.selectAll("td")
+        .data(function(row) {
+          return columns.map( function(column) {
+            return {column: column, value: row[column]} 
+          })
+        })
+        .enter()
+        .append("td")
+        .text(function(d) {return d.value } );
 }

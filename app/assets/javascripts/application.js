@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require d3
 //= require_tree .
 //= require bootstrap-dropdown.js
 //= require bootstrap-tooltip.js
