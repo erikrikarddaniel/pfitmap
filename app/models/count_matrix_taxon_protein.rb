@@ -6,7 +6,7 @@ class CountMatrixTaxonProtein
   attribute :group
   attribute :subgroup
   attribute :subsubgroup
-  attribute :n_proteins
-  attribute :n_genomes_with_proteins
+  attribute :no_proteins
+  attribute :no_genomes_with_proteins
 
 end

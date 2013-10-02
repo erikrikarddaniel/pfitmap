@@ -11,7 +11,7 @@ class CountMatrixTaxon
   attribute :genus
   attribute :species
   attribute :strain
-  attribute :n_genomes
+  attribute :no_genomes
 
   attribute :proteins
 end

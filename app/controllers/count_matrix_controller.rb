@@ -42,7 +42,7 @@ class CountMatrixController < ApplicationController
       end
       filter = filter.join(" AND ")
 byebug
-      tax_genomes_counts = Taxon.joins(:protein_counts).select("#{gon.tax_levels.join(",")}, count(*) AS n_genomes").where(filter,filter_params).group(gon.tax_levels.join(","))
+      tax_genomes_counts = Taxon.joins(:protein_counts).select("#{gon.tax_levels.join(",")}, count(*) AS no_genomes").where(filter,filter_params).group(gon.tax_levels.join(","))
       tax_protein_counts = ProteinCount.joins(:protein,:taxon).select("SUM(no_proteins) AS no_proteins, SUM(no_genomes_with_proteins) AS no_genomes_with_proteins,#{gon.tax_levels.join(",")},#{gon.prot_levels.join(",")}").where(filter,filter_params).group("#{gon.tax_levels.join(",")},#{gon.prot_levels.join(",")}")
       gon.tax_genomes_counts = tax_genomes_counts     
 #      gon.taxons_proteins_protein_counts = ProteinCount.joins(:protein,:taxon).select("SUM(no_proteins) AS no_proteins,SUM(no_genomes) AS no_genomes,SUM(no_genomes_with_proteins) AS no_genomes_with_proteins,#{gon.protein_rank.join(",")},#{gon.taxon_rank.join(",")}").where("pfitmap_release_id=#{@pfitmap_release.id}").group("#{gon.taxon_rank.join(",")},#{gon.protein_rank.join(",")}")
