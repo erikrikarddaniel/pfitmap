@@ -18,11 +18,16 @@ class ProteinCountsController < ApplicationController
       #Selecting which protein ranks to inlcude in the query and putting it on the gon which is accessible in the DOM
       #TODO make it select similar to taxon_ranks
       gon.protein_rank = params[:protein_rank] ? ["protclass"] : ["protclass"]
-      gon.protein_sums =  ["no_genomes","no_proteins","no_genomes_with_proteins"]
-      #All columns sent over to the view
-      gon.columns = gon.taxon_rank + gon.protein_rank + gon.protein_sums
+      gon.protein_sums =  ["no_genomes"]
        
-      gon.taxons_proteins_protein_counts = ProteinCount.joins(:protein,:taxon).select("SUM(no_proteins) AS no_proteins,SUM(no_genomes) AS no_genomes,SUM(no_genomes_with_proteins) AS no_genomes_with_proteins,#{gon.protein_rank.join(",")},#{gon.taxon_rank.join(",")}").where("").group("#{gon.taxon_rank.join(",")},#{gon.protein_rank.join(",")}")
+      gon.taxons_proteins_protein_counts = ProteinCount.joins(:protein,:taxon).select("SUM(no_proteins) AS no_proteins,SUM(no_genomes) AS no_genomes,SUM(no_genomes_with_proteins) AS no_genomes_with_proteins,#{gon.protein_rank.join(",")},#{gon.taxon_rank.join(",")}").where("pfitmap_release_id=#{@pfitmap_release.id}").group("#{gon.taxon_rank.join(",")},#{gon.protein_rank.join(",")}")
+      
+      #get unique proteins to use as columns
+      gon.proteins=gon.taxons_proteins_protein_counts.map {|tppc| tppc[gon.protein_rank[-1]]}.to_set.to_a.sort
+      
+      #All columns sent over to the vie + gon.proteinsw
+      gon.columns = gon.taxon_rank + gon.protein_sums + gon.proteins
+      
       respond_to do |format|
         format.html { render 'with_enzymes' }
         format.json { render json: @taxons_proteins_protein_counts }

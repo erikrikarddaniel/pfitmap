@@ -27,7 +27,8 @@ $(document).ready(function(){
 //    colorHeatmap();
 //    IndentTaxons();
 //    initTips();
-    d3_table_it(gon.taxons_proteins_protein_counts,gon.columns);
+    var dataset = d3_prep_data(gon.taxons_proteins_protein_counts);
+    d3_table_it(dataset,gon.columns);
 });
 
 function initTips(){
@@ -84,7 +85,16 @@ function IndentTaxons() {
 	$(this).css({textIndent: indent_magnitude});
     });
 }
+
+function d3_prep_data(dataset,) {
+    var nest = d3.nest()
+        .key(function(d) {return d.domain;})
+        .key(function(d) {return d.protclass;})
+        .entries(gon.taxons_proteins_protein_counts)
+}
+
 function d3_table_it(dataset,columns) {
+
     d3.select("#heat_map").select("table").remove();
     var table = d3.select("#heat_map")
         .append("table")
@@ -93,6 +103,13 @@ function d3_table_it(dataset,columns) {
     var thead = table.append("thead");
     var tbody = table.append("tbody");
     
+    var head = thead.append("tr").selectAll("td")
+        .data(columns)
+        .enter()
+        .append("td")
+        .text(function(d) {return d} );
+
+
     var rows = tbody.selectAll("tr")
         .data(dataset)
         .enter()
