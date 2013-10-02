@@ -19,6 +19,7 @@ class Protein < ActiveRecord::Base
   has_many :enzyme_proteins, dependent: :destroy
   has_many :enzymes, through: :enzyme_proteins, dependent: :destroy
   has_many :protein_counts, dependent: :destroy
+  PROT_LEVELS = ["protclass","subclass","group","subgroup","subsubgroup"]
 
   def self.initialize_proteins
     #Find all lowest level profiles. Each contains its hierarcy

@@ -4,33 +4,47 @@ class CountMatrixController < ApplicationController
     p = params[:count_matrix] ? Hash[*params[:count_matrix].split("/")] : {}
     if p["release"]
       p["release"].sub!("_",".")
+      @pfr = PfitmapRelease.find(:first, conditions: {release: p["release"]})
     elsif session[:release_id]
-      p["release"] = PfitmapRelease.find(session[:release_id]).release
+      @pfr = PfitmapRelease.find(session[:release_id])
+      p["release"] = @pfr.release
     else
-      p["release"] = PfitmapRelease.find_current_release.release
+      @pfr = PfitmapRelease.find_current_release
+      p["release"] = @pfr.release
     end
     @cm = CountMatrix.new(p)
-    p = {"release" => @cm.release}
     
-    if @cm.valid? 
+    if @cm.valid?
       
-      @taxon_ranks = Taxon::TAXA
-
+      @tl = Taxon::TAXA
+      @pl = Protein::PROT_LEVELS
 
 
 #    if @pfitmap_release
 #      @enzyme_tree, @parent_enzyme_ids, @enzymes = Enzyme.find_standard_enzymes(params[:enzyme_ids])
 #      @level = 0
       #Selecting which taxon ranks to include in the query and putting it on gon which is accessible in the DOM
-      gon.taxon_rank = params[:taxon_rank] ? @taxon_ranks.slice(0..@taxon_ranks.index(params[:taxon_rank])) : ["domain"]
+      gon.tax_levels = @cm.taxon_level ? @tl.slice(0..@tl.index(@cm.taxon_level)) : @tl[0]
 #      #Selecting which protein ranks to inlcude in the query and putting it on the gon which is accessible in the DOM
-#      #TODO make it select similar to taxon_ranks
-      gon.protein_rank = params[:protein_rank] ? ["protclass"] : ["protclass"]
+      gon.prot_levels = @cm.protein_level ? @pl.slice(0..@pl.index(@cm.protein_level)) : @pl[0]
 
-      a = Taxon.select("#{tax_level.join(",")}, count(*) AS n_genomes").group(tax_level.join(","))
-      b = ProteinCount.joins(:protein,:taxon).select("SUM(no_proteins) AS no_proteins,SUM(no_genomes) AS no_genomes,SUM(no_genomes_with_proteins) AS no_genomes_with_proteins,#{tax_level.join(",")},#{prot_level.join(",")}").group("#{tax_level.join(",")},#{prot_level.join(",")}")
-            
-
+      filter = ["pfitmap_release_id=:release"]
+      filter_params = {release: @pfr.id}
+      if !@cm.taxon_filter.blank?
+        filter.append(":tax_level IN [:tax_filter]")
+        filter_params[:tax_level] = @cm.taxon_level
+        filter_params[:tax_filter] = @cm.taxon_filter
+      end
+      if !@cm.protein_filter.blank?
+        filter.append(":prot_level IN [:prot_filter]")
+        filter_params[:prot_level] = @cm.protein_level
+        filter_params[:prot_filter] = @cm.protein_filter
+      end
+      filter = filter.join(" AND ")
+byebug
+      tax_genomes_counts = Taxon.joins(:protein_counts).select("#{gon.tax_levels.join(",")}, count(*) AS n_genomes").where(filter,filter_params).group(gon.tax_levels.join(","))
+      tax_protein_counts = ProteinCount.joins(:protein,:taxon).select("SUM(no_proteins) AS no_proteins, SUM(no_genomes_with_proteins) AS no_genomes_with_proteins,#{gon.tax_levels.join(",")},#{gon.prot_levels.join(",")}").where(filter,filter_params).group("#{gon.tax_levels.join(",")},#{gon.prot_levels.join(",")}")
+      gon.tax_genomes_counts = tax_genomes_counts     
 #      gon.taxons_proteins_protein_counts = ProteinCount.joins(:protein,:taxon).select("SUM(no_proteins) AS no_proteins,SUM(no_genomes) AS no_genomes,SUM(no_genomes_with_proteins) AS no_genomes_with_proteins,#{gon.protein_rank.join(",")},#{gon.taxon_rank.join(",")}").where("pfitmap_release_id=#{@pfitmap_release.id}").group("#{gon.taxon_rank.join(",")},#{gon.protein_rank.join(",")}")
 #
 #      #get unique proteins to use as columns

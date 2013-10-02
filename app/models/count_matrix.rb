@@ -4,8 +4,11 @@ class CountMatrix
   validates_presence_of :release
 
   attribute :release, :default => nil, :type => Float
-  attribute :taxon_names, :default => []
-  attribute :protein_names, :default => []
+  attribute :taxon_level, :default => "domain"
+  attribute :protein_level, :default => "protclass"
+
+  attribute :taxon_filter
+  attribute :protein_filter
 
   validate :release_exists
 

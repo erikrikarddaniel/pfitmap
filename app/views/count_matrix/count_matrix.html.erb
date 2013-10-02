@@ -2,7 +2,7 @@
   <div class="pageheader1">
     <div>
       <h1>Listing Protein Counts</h1>
-      <h2>CM: <%= @cm.release %>, <%= @cm.taxon_names %>,  <%= @cm.taxon_names %></h2>
+      <h2>CM: <%= @cm.release %>, <%= @cm.taxon_level %>,  <%= @cm.taxon_filter %>, <%= @cm.protein_level %>,  <%= @cm.protein_filter %></h2>
     </div>
     <div>
       <h3> Instructions: </h3>
@@ -14,7 +14,8 @@
       <a href="#" rel="tooltip" title="The number of genomes with at least one of the specified protein present.">GP</a>)
     </div>
   </div>
-
+  <div id="heat_map">
+  </div>
 <% else %>
   <div class="pageheader1">
     <div>
