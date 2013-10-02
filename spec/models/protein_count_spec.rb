@@ -3,7 +3,6 @@
 # Table name: protein_counts
 #
 #  id                       :integer         not null, primary key
-#  no_genomes               :integer
 #  no_proteins              :integer
 #  no_genomes_with_proteins :integer
 #  protein_id               :integer

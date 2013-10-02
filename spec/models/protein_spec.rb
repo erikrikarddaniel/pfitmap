@@ -11,6 +11,7 @@
 #  group          :string(255)
 #  subgroup       :string(255)
 #  subsubgroup    :string(255)
+#  family         :string(255)
 #
 
 require 'spec_helper'
