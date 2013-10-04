@@ -1,7 +1,6 @@
 Pfitmap::Application.routes.draw do
 
-  get 'count_matrix', to: 'count_matrix#get_counts',  defaults: { count_matrix: nil }
-  get 'count_matrix/*count_matrix', to: 'count_matrix#get_counts'
+  get 'count_matrix', to: 'count_matrix#get_counts'
 
   get 'protein_counts_with_enzymes', to: 'protein_counts#with_enzymes'
   post 'protein_counts_with_enzymes', to: 'protein_counts#with_enzymes'

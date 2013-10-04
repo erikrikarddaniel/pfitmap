@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131002122844) do
+ActiveRecord::Schema.define(:version => 20131004171623) do
 
   create_table "db_entries", :force => true do |t|
     t.integer  "gi"
@@ -125,7 +125,7 @@ ActiveRecord::Schema.define(:version => 20131002122844) do
     t.string   "group"
     t.string   "subgroup"
     t.string   "subsubgroup"
-    t.string   "family"
+    t.string   "protfamily"
     t.index ["hmm_profile_id"], :name => "index_proteins_on_hmm_profile_id", :order => {"hmm_profile_id" => :asc}
     t.foreign_key ["hmm_profile_id"], "hmm_profiles", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "proteins_hmm_profile_id_fkey"
   end

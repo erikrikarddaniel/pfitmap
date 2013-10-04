@@ -110,12 +110,11 @@ FactoryGirl.define do
     sequence(:ncbi_taxon_id) {|n| n}
   end
   factory :protein do
-    sequence(:protclass) { |n| "ex_protein " + n.to_s }
+    sequence(:protfamily) { |n| "ex_protein " + n.to_s }
     hmm_profile
  end
 
   factory :protein_count do
-    no_genomes 1
     no_proteins 0
     no_genomes_with_proteins 0
     protein
