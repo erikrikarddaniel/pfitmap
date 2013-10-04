@@ -96,7 +96,6 @@ class PfitmapRelease < ActiveRecord::Base
       Taxon::RANKS.each do |r|
 	rank_hash[r] = true
       end 
-      
       # Destroy old protein counts rows for this release
       ProteinCount.delete_all(["pfitmap_release_id = ?",pfitmap_release.id])
       calculate_logger.info "#{Time.now} Deleted old protein_counts for this release."
@@ -304,7 +303,7 @@ class PfitmapRelease < ActiveRecord::Base
       taxon = Taxon.new
     end
     taxon.ncbi_taxon_id = ncbi_taxon_id
-    taxon.release_id = self.id
+    taxon.pfitmap_release_id = self.id
     ["domain","kingdom","phylum","taxclass","taxorder","family","genus","species","strain"].zip(taxon_hash).map {|ta,ha| taxon[ta] = ha}
     taxon.save
     return taxon.id

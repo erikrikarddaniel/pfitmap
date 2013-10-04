@@ -10,6 +10,8 @@ class CountMatrix
   attribute :taxon_filter
   attribute :protein_filter
 
+  attribute :taxons
+
   validate :release_exists
 
   def release_exists

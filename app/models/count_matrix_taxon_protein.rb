@@ -1,6 +1,6 @@
 class CountMatrixTaxonProtein
   include ActiveAttr::Model
-
+  attribute :protfamily
   attribute :protclass
   attribute :subclass
   attribute :group

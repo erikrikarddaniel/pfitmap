@@ -13,5 +13,9 @@ class CountMatrixTaxon
   attribute :strain
   attribute :no_genomes
 
-  attribute :proteins
+  attribute :proteins, :default=>[]
+  def hierarchy
+    "#{domain}:#{kingdom}:#{phylum}:#{taxclass}:#{taxorder}:#{family}:#{genus}:#{species}:#{strain}"
+  end
+
 end
