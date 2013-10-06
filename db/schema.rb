@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130911101001) do
+ActiveRecord::Schema.define(:version => 20131004171623) do
 
   create_table "db_entries", :force => true do |t|
     t.integer  "gi"
@@ -125,6 +125,7 @@ ActiveRecord::Schema.define(:version => 20130911101001) do
     t.string   "group"
     t.string   "subgroup"
     t.string   "subsubgroup"
+    t.string   "protfamily"
     t.index ["hmm_profile_id"], :name => "index_proteins_on_hmm_profile_id", :order => {"hmm_profile_id" => :asc}
     t.foreign_key ["hmm_profile_id"], "hmm_profiles", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "proteins_hmm_profile_id_fkey"
   end
@@ -207,8 +208,8 @@ ActiveRecord::Schema.define(:version => 20130911101001) do
   create_table "taxons", :force => true do |t|
     t.integer  "ncbi_taxon_id"
     t.boolean  "wgs"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
     t.string   "domain"
     t.string   "kingdom"
     t.string   "phylum"
@@ -218,11 +219,14 @@ ActiveRecord::Schema.define(:version => 20130911101001) do
     t.string   "genus"
     t.string   "species"
     t.string   "strain"
+    t.integer  "pfitmap_release_id"
+    t.index ["pfitmap_release_id"], :name => "fk__taxons_pfitmap_release_id", :order => {"pfitmap_release_id" => :asc}
     t.index ["ncbi_taxon_id"], :name => "index_taxons_on_ncbi_taxon_id", :unique => true, :order => {"ncbi_taxon_id" => :asc}
+    t.index ["domain", "kingdom", "phylum", "taxclass", "taxorder", "family", "genus", "species", "strain"], :name => "taxhierarchy", :unique => true, :order => {"domain" => :asc, "kingdom" => :asc, "phylum" => :asc, "taxclass" => :asc, "taxorder" => :asc, "family" => :asc, "genus" => :asc, "species" => :asc, "strain" => :asc}
+    t.foreign_key ["pfitmap_release_id"], "pfitmap_releases", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_taxons_pfitmap_release_id"
   end
 
   create_table "protein_counts", :force => true do |t|
-    t.integer  "no_genomes"
     t.integer  "no_proteins"
     t.integer  "no_genomes_with_proteins"
     t.integer  "protein_id"

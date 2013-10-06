@@ -11,6 +11,7 @@
 #  group          :string(255)
 #  subgroup       :string(255)
 #  subsubgroup    :string(255)
+#  protfamily     :string(255)
 #
 
 require 'spec_helper'
@@ -31,6 +32,7 @@ describe Protein do
         Protein.count.should == 2
       end
       subject { @protein}
+      it {should respond_to(:family)}
       it {should respond_to(:protclass)}
       it {should respond_to(:subclass)}
       it {should respond_to(:group)}

@@ -2,20 +2,21 @@
 #
 # Table name: taxons
 #
-#  id            :integer         not null, primary key
-#  ncbi_taxon_id :integer
-#  wgs           :boolean
-#  created_at    :datetime        not null
-#  updated_at    :datetime        not null
-#  domain        :string(255)
-#  kingdom       :string(255)
-#  phylum        :string(255)
-#  taxclass      :string(255)
-#  taxorder      :string(255)
-#  family        :string(255)
-#  genus         :string(255)
-#  species       :string(255)
-#  strain        :string(255)
+#  id                 :integer         not null, primary key
+#  ncbi_taxon_id      :integer
+#  wgs                :boolean
+#  created_at         :datetime        not null
+#  updated_at         :datetime        not null
+#  domain             :string(255)
+#  kingdom            :string(255)
+#  phylum             :string(255)
+#  taxclass           :string(255)
+#  taxorder           :string(255)
+#  family             :string(255)
+#  genus              :string(255)
+#  species            :string(255)
+#  strain             :string(255)
+#  pfitmap_release_id :integer
 #
 
 class Taxon < ActiveRecord::Base
@@ -23,7 +24,7 @@ class Taxon < ActiveRecord::Base
   has_many :protein_counts
 
   RANKS = ["superkingdom", "kingdom", "phylum", "class", "order", "family", "genus", "species"]
-
+  TAXA =  ["domain", "kingdom", "phylum", "taxclass", "taxorder", "family", "genus", "species","strain"]
 #TODO remove since we send over all taxons and do the tree structure in D3 or other
 #  def self_and_ancestors
 #    all_up_to_root_rec(self, [])

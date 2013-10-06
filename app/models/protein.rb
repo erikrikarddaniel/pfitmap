@@ -11,14 +11,16 @@
 #  group          :string(255)
 #  subgroup       :string(255)
 #  subsubgroup    :string(255)
+#  protfamily     :string(255)
 #
 
 class Protein < ActiveRecord::Base
-  attr_accessible :protclass, :subclass, :group, :subgroup, :subsubgroup
+  attr_accessible :protfamily, :protclass, :subclass, :group, :subgroup, :subsubgroup
   belongs_to :hmm_profile
   has_many :enzyme_proteins, dependent: :destroy
   has_many :enzymes, through: :enzyme_proteins, dependent: :destroy
   has_many :protein_counts, dependent: :destroy
+  PROT_LEVELS = ["protfamily","protclass","subclass","group","subgroup","subsubgroup"]
 
   def self.initialize_proteins
     #Find all lowest level profiles. Each contains its hierarcy
@@ -30,7 +32,7 @@ class Protein < ActiveRecord::Base
   end
 
   def to_s
-    "#{protclass}#{subclass}:#{group}:#{subgroup}:#{subsubgroup}"
+    "#{protfamily}#{protclass}#{subclass}:#{group}:#{subgroup}:#{subsubgroup}"
   end
 
   private
@@ -43,7 +45,7 @@ class Protein < ActiveRecord::Base
       protein = new()
       protein.hmm_profile_id = profile.id
     end
-    ['protclass','subclass','group','subgroup','subsubgroup'].zip(profile.hierarchy.split(':')).map {|k,j| protein[k] = j}
+    PROT_LEVELS.zip(profile.hierarchy.split(':')).map {|k,j| protein[k] = j}
     protein.save
     add_enzymes_protein(protein,profile)
   end
@@ -66,7 +68,7 @@ class Protein < ActiveRecord::Base
       protein.hmm_profile_id = profile.id
     end
     # Update eventual changes in protein_name
-    ['protclass','subclass','group','subgroup','subsubgroup'].zip(profile.hierarchy.split(':')).map {|k,j| protein[k] = j}
+    PROT_LEVELS.zip(profile.hierarchy.split(':')).map {|k,j| protein[k] = j}
     protein.save
     if enzymes
       enzymes.each do |e|
