@@ -15,9 +15,9 @@ class CountMatrixController < ApplicationController
       params[:release] = @pfr.release
     end    
     #Selecting which taxon ranks to include in the query
-    tax_levels = params[:taxon_level].in?(@tl) ? @tl.slice(0..@tl.index(params[:taxon_level])) : @tl[0]
+    tax_levels = params[:taxon_level].in?(@tl) ? @tl.slice(0..@tl.index(params[:taxon_level])) : [@tl[0]]
     #Selecting which protein ranks to inlcude in the query
-    prot_levels = params[:protein_level].in?(@pl) ? @pl.slice(0..@pl.index(params[:protein_level])) : @pl[0]
+    prot_levels = params[:protein_level].in?(@pl) ? @pl.slice(0..@pl.index(params[:protein_level])) : [@pl[0]]
 
     @cm.release = @pfr.release
     @cm.taxon_level = tax_levels[-1]
