@@ -24,11 +24,9 @@ function toHex(N) {
 }
 
 $(document).ready(function(){
-//    colorHeatmap();
-//    IndentTaxons();
-//    initTips();
-    var dataset = d3_prep_data(gon.taxons_proteins_protein_counts);
-    d3_table_it(dataset,gon.columns);
+    colorHeatmap();
+    IndentTaxons();
+    initTips();
 });
 
 function initTips(){
@@ -84,44 +82,4 @@ function IndentTaxons() {
 	var indent_magnitude = indent_int*10
 	$(this).css({textIndent: indent_magnitude});
     });
-}
-
-function d3_prep_data(dataset,) {
-    var nest = d3.nest()
-        .key(function(d) {return d.domain;})
-        .key(function(d) {return d.protclass;})
-        .entries(gon.taxons_proteins_protein_counts)
-}
-
-function d3_table_it(dataset,columns) {
-
-    d3.select("#heat_map").select("table").remove();
-    var table = d3.select("#heat_map")
-        .append("table")
-        .attr("class","rnr_table");
-    
-    var thead = table.append("thead");
-    var tbody = table.append("tbody");
-    
-    var head = thead.append("tr").selectAll("td")
-        .data(columns)
-        .enter()
-        .append("td")
-        .text(function(d) {return d} );
-
-
-    var rows = tbody.selectAll("tr")
-        .data(dataset)
-        .enter()
-        .append("tr");
-    
-    var cells = rows.selectAll("td")
-        .data(function(row) {
-          return columns.map( function(column) {
-            return {column: column, value: row[column]} 
-          })
-        })
-        .enter()
-        .append("td")
-        .text(function(d) {return d.value } );
 }
