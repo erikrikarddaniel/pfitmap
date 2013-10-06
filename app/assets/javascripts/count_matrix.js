@@ -1,15 +1,14 @@
 $(document).ready(function(){
-    d3_table_it(gon.taxon_genomes_counts,gon.columns);
+    d3_prep_dataset();
+    d3_table_it(gon.taxons);
 });
 
-function initTips(){
-    $('#explanations a').tooltip();
-    $('td.heat a').tooltip();
-    $('td.taxon a.name').tooltip();
+function d3_prep_dataset(){
+  gon.dataset = JSON.parse(gon.cm);
+  gon.taxons = gon.dataset.taxons
 }
 
-function d3_table_it(dataset,columns) {
-
+function d3_table_it(dataset) {
     d3.select("#heat_map").select("table").remove();
     var table = d3.select("#heat_map")
         .append("table")
@@ -19,7 +18,7 @@ function d3_table_it(dataset,columns) {
     var tbody = table.append("tbody");
     
     var head = thead.append("tr").selectAll("td")
-        .data(columns)
+        .data(gon.columns)
         .enter()
         .append("td")
         .text(function(d) {return d} );
@@ -28,13 +27,20 @@ function d3_table_it(dataset,columns) {
     var rows = tbody.selectAll("tr")
         .data(dataset)
         .enter()
-        .append("tr");
+        .append("tr")
     
     var cells = rows.selectAll("td")
-        .data(function(row) {
-          return columns.map( function(column) {
-            return {column: column, value: row[column]} 
-          })
+        .data(function(row) { 
+          //create dictionary of proteins for each row:
+          var proteins = row.proteins.reduce( 
+            function(obj,x) {
+              obj[x[gon.dataset.protein_level]] = {no_proteins: x["no_proteins"]}; no_proteins_with_genomes: x["no_proteins_with_genomes"];return obj;},
+            {}
+          );
+          //mapping and joining on the columns in the header
+          return gon.tax_columns.map( function(column) {
+            return {column: column, value: row[column]}
+          }).concat(gon.prot_columns.map(function(column) { p = proteins[column];return {column: column, value: p.no_proteins  }}))
         })
         .enter()
         .append("td")

@@ -55,18 +55,16 @@ class CountMatrixController < ApplicationController
         prot_levels.map{|p| cmtp[p] = tpc[p]}
         cmtp.no_proteins = tpc.no_proteins
         cmtp.no_genomes_with_proteins = tpc.no_genomes_with_proteins
-        @countmt[taxon].proteins.append(cmtp)
+        @countmt[taxon].proteins.append(cmtp.attributes)
       end
-      @cm.taxons = @countmt
+      @cm.taxons = @countmt.values.map{|c| c.attributes}
 
       #Set DOM variables to use in D3 Javascript
-      gon.tax_columns = tax_levels
-      gon.no_genomes_column = ["no_genomes"]
-      gon.prot_columns = tax_protein_counts.map{ |t| t[@cm.protein_level]}.to_set.to_a.sort
+      gon.tax_columns = [@cm.taxon_level, "no_genomes"]
+      gon.prot_columns = tax_protein_counts.map{ |t| t[@cm.protein_level]}.to_set.delete(nil).to_a.sort
+      gon.columns = gon.tax_columns + gon.prot_columns
 
-      gon.columns = gon.tax_columns + gon.no_genomes_column + gon.prot_columns
-
-      gon.count_matrix = @cm
+      gon.cm = @cm.attributes.to_json
     end
     if @cm.valid?
       respond_to do |format|
