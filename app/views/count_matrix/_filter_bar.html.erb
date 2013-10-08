@@ -1,0 +1,71 @@
+<ul class="nav nav-pills">
+  <li class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+      Taxon levels
+      <b class="caret" ></b>
+    </a>
+    <ul id="taxon_levels_menu" class="dropdown-menu">
+      <% @tl.each do |taxon_level| %>
+      <% if taxon_level %>
+      <li>
+	<%= link_to taxon_level, params.merge(taxon_level: taxon_level) %>
+      </li>
+      <% end %>
+      <% end %>
+    </ul>
+  </li>
+  <li class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+      Protein levels
+      <b class="caret" ></b>
+    </a>
+    <ul id="protein_levels_menu" class="dropdown-menu">
+      <% @pl.each do |protein_level| %>
+      <% if protein_level %>
+      <li>
+	<%= link_to protein_level, params.merge(protein_level: protein_level) %>
+      </li>
+      <% end %>
+      <% end %>
+    </ul>
+  </li>
+  <li class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+      Color by
+      <b class="caret" ></b>
+    </a>
+    <ul id="color_by_menu" class="dropdown-menu">
+      <% @tax_levels.each do |taxon_level| %>
+      <% if taxon_level %>
+      <li>
+	<%= link_to taxon_level, "javascript:d3_color_table('"+taxon_level+"');" %>
+      </li>
+      <% end %>
+      <% end %>
+    </ul>
+  </li>
+  <li class="dropdown">
+    <a href="#" id="dropdown-toggel" data-toggle="dropdown"> 
+      Database
+      <b class="caret" ></b>
+    </a>
+
+    <ul id="taxon_db_menu" class="dropdown-menu">
+      <li>
+	<%= link_to "Ref"%>
+      </li>
+    </ul>
+  </li>
+  <li class="dropdown">
+    <a href="#" id="dropdown-toggel" data-toggle="dropdown"> 
+      View
+      <b class="caret" ></b>
+    </a>
+
+    <ul id="taxon_view_menu" class="dropdown-menu">
+      <li>
+	<%= link_to "Matrix"%>
+      </li>
+    </ul>
+  </li>
+</ul>
