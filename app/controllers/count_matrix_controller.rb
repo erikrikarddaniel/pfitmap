@@ -69,6 +69,7 @@ class CountMatrixController < ApplicationController
     if @cm.valid?
       respond_to do |format|
         format.html { render 'count_matrix' }
+        format.json{ render json: @cm.attributes }
       end
     else
       respond_to do |format|
