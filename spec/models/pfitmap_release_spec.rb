@@ -215,7 +215,7 @@ describe PfitmapRelease do
       ProteinCount.count.should == 10
 # Used to say 10
       # Check specific values (human nrdb)
-      nrdb_protein = Protein.find(:first,:conditions => {:family => 'NrdB'})
+      nrdb_protein = Protein.find(:first,:conditions => {:protfamily => 'NrdB'})
       human_taxon = Taxon.find_by_species('Homo sapiens')
       human_nrdb_protein_count = ProteinCount.find(:first, :conditions => ["protein_id = ? AND taxon_id = ? AND pfitmap_release_id = ?", nrdb_protein.id, human_taxon.id, @pfitmap_release.id])
 #      human_nrdb_protein_count.no_proteins.should == 3

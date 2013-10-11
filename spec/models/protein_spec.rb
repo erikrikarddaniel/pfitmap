@@ -32,7 +32,7 @@ describe Protein do
         Protein.count.should == 2
       end
       subject { @protein}
-      it {should respond_to(:family)}
+      it {should respond_to(:protfamily)}
       it {should respond_to(:protclass)}
       it {should respond_to(:subclass)}
       it {should respond_to(:group)}
