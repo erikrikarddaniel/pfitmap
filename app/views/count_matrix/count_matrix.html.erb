@@ -5,6 +5,9 @@
       <h2>CM: <%= @cm.release %>, <%= @cm.taxon_level %>,  <%= @cm.taxon_filter %>, <%= @cm.protein_level %>,  <%= @cm.protein_filter %></h2>
     </div>
     <div>
+      <%= render partial: "filter_bar" %>
+    </div>
+    <div>
       <h3> Instructions: </h3>
       Choose what taxon rank you wish to browse statistics for, or click a taxon name to expand a given taxon and view statistics for the corresponding children.
     </div>
