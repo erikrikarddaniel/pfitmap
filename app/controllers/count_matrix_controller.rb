@@ -4,7 +4,6 @@ class CountMatrixController < ApplicationController
     @tl = Taxon::TAXA
     @pl = Protein::PROT_LEVELS
     @cm = CountMatrix.new
-
     if params[:release]
       @pfr = PfitmapRelease.find(:first, conditions: {release: params[:release]})
     elsif session[:release_id]
@@ -23,21 +22,22 @@ class CountMatrixController < ApplicationController
     @cm.taxon_level = @tax_levels[-1]
     @cm.protein_level = @prot_levels[-1]
 
-    @cm.taxon_filter = params[:taxon_filter] ? params[:taxon_filter].split(",") : nil
-    @cm.protein_filter = params[:protein_filter] ? params[:protein_filter].split(",") : nil
-
     if @cm.valid?
 
       filter_params = {release: @pfr.id}
       taxon_filter = ["taxons.pfitmap_release_id=:release"]
       protein_filter = []
-      if !@cm.taxon_filter.blank?
-        filter_params[:tax_filter] = @cm.taxon_filter
-        taxon_filter.append("taxons.#{@cm.taxon_level} IN (:tax_filter)")
+      @tax_levels.each do |t|
+        if t.in?(params)
+          filter_params[t.to_sym] = params[t].split("(,)")
+          taxon_filter.append("taxons.#{t} IN (:#{t.to_sym})")
+        end
       end
-      if !@cm.protein_filter.blank?
-        filter_params[:prot_filter] = @cm.protein_filter
-        protein_filter.append("proteins.#{@cm.protein_level} IN (:prot_filter)")
+      @prot_levels.each do |p|
+        if p.in?(params)
+          filter_params[p.to_sym] = params[p].split("(,)")
+          protein_filter.append("proteins.#{p} IN (:#{p.to_sym})")
+        end
       end
       tax_genomes_counts = Taxon.select("#{@tax_levels.map{|t| "taxons.#{t}"}.join(",")}, count(*) AS no_genomes").where(taxon_filter.join(" AND "),filter_params).group(@tax_levels.map{|t| "taxons.#{t}"}.join(",")).order(@tax_levels.map{|t|"taxons.#{t}" }.join(","))
       @countmt = {}
@@ -64,7 +64,10 @@ class CountMatrixController < ApplicationController
       gon.prot_columns = tax_protein_counts.map{ |t| t[@cm.protein_level]}.to_set.delete(nil).to_a.sort
       gon.columns = gon.tax_columns + gon.prot_columns
       gon.taxon_levels = @tax_levels
+      gon.protein_levels = @prot_levels
       gon.cm = @cm.attributes.to_json
+      gon.tl = @tl
+      gon.pl = @pl
     end
     if @cm.valid?
       respond_to do |format|
