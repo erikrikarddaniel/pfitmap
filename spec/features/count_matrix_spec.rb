@@ -1,0 +1,146 @@
+require 'spec_helper'
+
+describe "ProteinCounts" do
+  let!(:sequence_source) { FactoryGirl.create(:sequence_source) }
+  let!(:pfitmap_release) { FactoryGirl.create(:pfitmap_release, current: true, sequence_source: sequence_source) }
+  let!(:nrdA) 		 { FactoryGirl.create(:protein, protclass: "Nrd A") }
+  let!(:nrdB) 		 { FactoryGirl.create(:protein, protclass: "Nrd B") }
+  let!(:nrdE) 		 { FactoryGirl.create(:protein, protclass: "Nrd E") }
+  let!(:nrdF) 		 { FactoryGirl.create(:protein, protclass: "Nrd F") }
+  let!(:nrdJ) 		 { FactoryGirl.create(:protein, protclass: "Nrd J") }
+  let!(:nrdG) 		 { FactoryGirl.create(:protein, protclass: "Nrd G") }
+  let!(:nrdD) 		 { FactoryGirl.create(:protein, protclass: "Nrd D") }
+  let!(:nrdxx) 		 { FactoryGirl.create(:protein, protclass: "Nrd xx") }
+  let!(:nrdyy) 		 { FactoryGirl.create(:protein, protclass: "Nrd yy") }
+
+  before do
+    50.times do |n|
+      species = n.modulo(5)
+      domain = n.modulo(2)
+      FactoryGirl.create(:taxon, domain: "Tdomain#{domain}",kingdom: "Tkingdom", phylum: "Tphylum", taxclass: "Tclass", taxorder: "Torder",family: "Tfamily",genus: "Tgenus",species: "Tspecies#{species}", strain: "Tstrain#{n}",pfitmap_release_id: pfitmap_release.id)
+    end
+    @protein_counts = []
+    Taxon.all.each_with_index do |taxon, i|
+      Protein.all.each_with_index do |protein, j|
+        @protein_counts << FactoryGirl.create(:protein_count, no_proteins: ( i + 1 ) * j * 2, no_genomes_with_proteins: ( i + 1 ) * j,  protein: protein, taxon: taxon, pfitmap_release: pfitmap_release)
+      end
+    end
+    @special_count = ProteinCount.find_by_protein_id_and_taxon_id(nrdxx.id,Taxon.where(domain: "Tdomain0").first)
+    @special_count.no_proteins = 33
+    @special_count.save
+  end
+
+  describe "with enzymes" do
+    before do 
+      make_mock_admin
+      login_with_oauth
+    end
+    
+    it "starts at top level", :js => true do
+      visit count_matrix_path
+      page.should have_css("thead tr",:count == 2)
+      page.should have_css("tbody tr",:count == 2)
+      page.should have_css("tr.Tdomain0")
+    end
+  end
+end
+##TODO Fix when new views have been done
+#    it "can expand by taxon", :js => true do
+#      visit protein_counts_with_enzymes_path
+#      page.should_not have_content(@first_child.name)
+#      page.should have_content(@parent_taxon.name)
+#      parent_row = find_by_id("taxon#{@parent_taxon.id}")
+#      page.should have_css('td.taxon', :count => 30)
+#      within parent_row do
+#        click_link "+"
+#      end
+#      page.should have_content(@first_child.name)
+#      page.should have_css('td.taxon', :count => 50)
+#      parent_row = find_by_id("taxon#{@parent_taxon.id}")
+#      within parent_row do
+#        click_link "-"
+#      end
+#      page.should_not have_content(@first_child.name)
+#    end
+#
+#    it "can collapse several levels of taxons", :js => true do
+#      visit protein_counts_with_enzymes_path
+#      parent_row = find_by_id("taxon#{@parent_taxon.id}")
+#      within parent_row do
+#        click_link "+"
+#      end
+#      second_parent_row = find_by_id("taxon#{@first_child.id}")
+#      within second_parent_row do
+#        click_link "+"
+#      end
+#      page.should have_content(@second_child.name)
+#      parent_row = find_by_id("taxon#{@parent_taxon.id}")
+#      #Collapsing grandparent should remove all relatives below"
+#      within parent_row do
+#        click_link "-"
+#      end
+#      page.should_not have_content(@second_child.name)
+#      page.should_not have_content(@first_child.name)
+#    end
+#
+#    it "only show root enzymes" do
+#      visit protein_counts_with_enzymes_path
+#      page.should have_content(class1.abbreviation)
+#      page.should have_content(class2.abbreviation)
+#      page.should have_content(class3.abbreviation)
+#      page.should_not have_content(class1b.abbreviation)
+#    end
+#
+#    describe "expand enzyme" do
+#      it "simply" do
+#        visit protein_counts_with_enzymes_path
+#        within("#taxon#{@parent_taxon.id}") do
+#          page.should have_css('td', :count => 7)
+#        end
+#        within("#enzyme#{class1.id}") do
+#          click_link "+"
+#        end
+#        page.should have_content(class1b.abbreviation)
+#        page.should have_content(class1x.abbreviation)
+#        page.should_not have_content(class1.proteins.first.name)
+#        within("#taxon#{@parent_taxon.id}") do
+#          page.should have_css('td', :count => 9)
+#        end
+#      end
+#
+#      it "without children" do
+#        visit protein_counts_with_enzymes_path
+#        within("#enzyme#{class2.id}") do
+#          click_link "-"
+#        end
+#        page.should have_content(class1.abbreviation)
+#      end
+#
+#      it "and expand taxon", :js => true do
+#        visit protein_counts_with_enzymes_path
+##        within('table.enzyme-header') do
+#        within("#enzyme#{class1.id}") do
+#          click_link "+"
+#        end
+#        parent_row = find_by_id("taxon#{@parent_taxon.id}")
+#        within parent_row do
+#          click_link "+"
+#        end
+#        page.should have_content(class1b.abbreviation)
+#        page.should have_content(class1x.abbreviation)
+#        page.should_not have_content(class1.proteins.first.name)
+#        page.should_not have_content("none")
+#        within("#taxon#{@parent_taxon.id}") do
+#          page.should have_css('td', :count => 9)
+#          page.should_not have_content("none")
+#        end
+#        page.should have_content(@first_child.name)
+#        within("#taxon#{@first_child.id}") do
+#          page.should have_css('td', :count => 9)
+#          page.should_not have_content("none")
+#          page.should have_content("33") # From @special_count
+#          # Should be nice to test the order of the columns 
+#          # for protein_counts. 
+#        end
+#      end
+#    end
