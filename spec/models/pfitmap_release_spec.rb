@@ -183,6 +183,23 @@ describe PfitmapRelease do
 #      Taxon.find_all_by_hierarchy(nil).should == []
 #      Taxon.find_all_by_name("Metazoa").should_not == nil
     end
+    it "should name the taxa levels correctly" do
+      @pfitmap_release.calculate_main("GOLDWGStest10", FactoryGirl.create(:user_admin))
+      t1 = Taxon.find(:first, conditions: {"strain" => "Acaryochloris marina MBIC11017"})
+      t1.domain.should == "Bacteria"
+      t1.kingdom.should == "Bacteria, no kingdom" 
+      t1.phylum.should ==  "Cyanobacteria"
+      t1.taxclass.should == "Cyanobacteria, no class"
+      t1.taxorder.should == "Chroococcales"
+      t1.family.should ==  "Chroococcales, no family"
+      t1.genus.should == "Acaryochloris"
+      t1.species.should == "Acaryochloris marina"
+      t1.strain.should == "Acaryochloris marina MBIC11017"
+      t2 = Taxon.find(:first, conditions: {"species" => "Homo sapiens"})
+      t2.domain.should == "Eukaryota"
+      t2.species.should == "Homo sapiens"
+      t2.strain.should == nil
+    end
   end
 
   describe "calculating a release for two results (medium)" do

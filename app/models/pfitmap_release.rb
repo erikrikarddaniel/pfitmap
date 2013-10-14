@@ -226,12 +226,11 @@ class PfitmapRelease < ActiveRecord::Base
     if tree[ncbi_id] and ncbi_id
       # Checkbox for taxons included in organism group
       if first and (not tree[ncbi_id][3])
-        tree[ncbi_id][3] == true
+	tree[ncbi_id][3] == true
       end
-
-      protein_hash = tree[ncbi_id][2]
+	      protein_hash = tree[ncbi_id][2]
       pv_hash.each do |p,v|
-        protein_hash[p] += v
+	protein_hash[p] += v
       end
       add_pc_recursively(tree, tree[ncbi_id].first, pv_hash, false)
     else
@@ -256,38 +255,46 @@ class PfitmapRelease < ActiveRecord::Base
     # Returns a list with values for each hierarchy column in Taxon
     # Some taxons-lists will be an html-error page
     begin
-      name_hash = {"domain" => nil, "kingdom" => "no kingdom", "phylum" => "no phylum", "class" => "no class", "order" => "no order","family" =>"no family", "genus" => "no genus", "species" => "no species", "strain" => nil}      
+      name_hash = Hash[Taxon::RANKS.map{ |r| [r,nil]}]
+      name_hash["strain"] = nil
       # Filter on accepted ranks, re-add first and root
       accepted_taxons = taxons.select {|taxon_hash| taxon_hash["node_rank"].in?(rank_hash)}
       accepted_taxons.each do |at|
-        rank = at['node_rank']
-        name = at['scientific_name']
-        if rank.in?(name_hash)
-          name_hash[rank] = name
-        elsif rank == "superkingdom"
-          name_hash["domain"] = name
-        end
+	rank = at['node_rank']
+	name = at['scientific_name']
+	if rank.in?(name_hash)
+	  name_hash[rank] = name
+	end
       end
       # if the lowest level in the taxon hierarchy is not used, add it as strain if strain not used already
       if not taxons.first.in?(accepted_taxons)
-        if name_hash['strain'] == nil
-          name_hash['strain'] = taxons.first['scientific_name']
-        else
-          calculate_logger.error "#{Time.now} Error, strain was already in use so the lowest taxon not added: #{taxons.first['ncbi_taxon_id']}"
-        end
+	if not name_hash['strain']
+	  name_hash['strain'] = taxons.first['scientific_name']
+	else
+	  calculate_logger.error "#{Time.now} Error, strain was already in use so the lowest taxon not added: #{taxons.first['ncbi_taxon_id']}"
+	end
       end
       # If kingdom is missing, use the taxon below superkingdom as kingdom (if it has
       # not already been used 
       if not "kingdom".in?(accepted_taxons.map {|t| t['node_rank']})
-        #Pick out the index of super kingdom and go down the hierarchy by one
-        kingdom = taxons[taxons.find_index {|t| t['node_rank'] =="superkingdom" } - 1]
-        #If the taxon picked out already in the accepted list, don't use it again
-        if not kingdom.in?(accepted_taxons)
-          name_hash["kingdom"] = kingdom['scientific_name']
-        else
-          calculate_logger.error "#{Time.now} Error, kingdom was missing, and the first level below superkingdom was already used: #{taxons.first['ncbi_taxon_id']}"
+	#Pick out the index of super kingdom and go down the hierarchy by one
+	kingdom = taxons[taxons.find_index {|t| t['node_rank'] =="superkingdom" } - 1]
+	#If the taxon picked out already in the accepted list, don't use it again
+	if not kingdom.in?(accepted_taxons)
+	  name_hash["kingdom"] = kingdom['scientific_name']
+	else
+	  calculate_logger.error "#{Time.now} Error, kingdom was missing, and the first level below superkingdom was already used: #{taxons.first['ncbi_taxon_id']}"
+	end
+      end
+      #Make missing taxas names unique: Each taxa below domain takes its parents name plus no level. So if kingdom of Bacteria is nil we get: "kingdom" => "Bacteria, no kingdom"
+      Taxon::RANKS[1..-1].each_with_index do |r,i|
+        if not name_hash[r]
+          name_hash[r] = "#{name_hash[Taxon::RANKS[i]]}, no #{r}"
         end
       end
+      #Top level should be called domain, not superkingdom
+      name_hash["domain"] = name_hash["superkingdom"]
+      name_hash.delete "superkingdom"
       # Pick out the names
       return [name_hash['domain'],name_hash['kingdom'],name_hash['phylum'],name_hash['class'],name_hash['order'],name_hash['family'],name_hash['genus'],name_hash['species'],name_hash['strain']]
     rescue
