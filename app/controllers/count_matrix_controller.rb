@@ -61,7 +61,7 @@ class CountMatrixController < ApplicationController
 
       #Set DOM variables to use in D3 Javascript
       gon.tax_columns = [@cm.taxon_level, "no_genomes"]
-      gon.prot_columns = tax_protein_counts.map{ |t| t[@cm.protein_level]}.to_set.delete(nil).to_a.sort
+      gon.prot_columns = [filter_params[@cm.protein_level.to_sym], tax_protein_counts.map{ |t| t[@cm.protein_level]}].compact.reduce([],:|).to_set.delete(nil).to_a.sort
       gon.columns = gon.tax_columns + gon.prot_columns
       gon.taxon_levels = @tax_levels
       gon.protein_levels = @prot_levels

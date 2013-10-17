@@ -100,19 +100,24 @@ function d3_table_it(dataset) {
     var cells = rows.selectAll("td")
         .data(function(row) { 
           //create dictionary of proteins for each row:
-          var proteins = row.proteins.reduce( 
-            function(obj,x) {
-              obj[x[gon.dataset.protein_level]] = {no_proteins: x.no_proteins,ratio: x.no_genomes_with_proteins / row.no_genomes, organism: row[gon.dataset.taxon_level], no_genomes_with_proteins: x.no_genomes_with_proteins} ;return obj;},
-            {}
-          );
+          var proteins = row.proteins.reduce( function(obj,x) {
+              obj[x[gon.dataset.protein_level]] = {no_proteins: x.no_proteins,ratio: x.no_genomes_with_proteins / row.no_genomes, no_genomes_with_proteins: x.no_genomes_with_proteins} ;
+              return obj;
+          },{});
           //mapping and joining on the columns in the header
           return gon.tax_columns.map( function(column) {
             return {column: column, value: row[column]}
-          }).concat(gon.prot_columns.map(function(column) { p = proteins[column];return {column: column, value: p.no_proteins, ratio: p.ratio, organism: p.organism, no_genomes_with_proteins: p.no_genomes_with_proteins }}))
+          })
+          .concat(
+            gon.prot_columns.map(function(column) { 
+              p = proteins[column];
+              return {column: column, value: p ? p.no_proteins : 0, ratio: p ? p.ratio : 0, organism: row[gon.dataset.taxon_level], no_genomes_with_proteins: p ? p.no_genomes_with_proteins : 0 }
+            })
+          )
         })
         .enter()
         .append("td")
-        .attr("class",function(d){ return d.hasOwnProperty("organism") ? "heat_label" : null })
+        .attr("class",function(d){ return d.hasOwnProperty("organism") ? "heat_label " + d.column : null })
         .text(function(d) {if (d.column != gon.dataset.taxon_level) {return d.value} } );
 
     var tlabel = rows.select("td").attr("class","taxon_label")

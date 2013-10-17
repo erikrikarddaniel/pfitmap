@@ -1,146 +1,96 @@
 require 'spec_helper'
 
-describe "ProteinCounts" do
-  let!(:sequence_source) { FactoryGirl.create(:sequence_source) }
-  let!(:pfitmap_release) { FactoryGirl.create(:pfitmap_release, current: true, sequence_source: sequence_source) }
-  let!(:nrdA) 		 { FactoryGirl.create(:protein, protclass: "Nrd A") }
-  let!(:nrdB) 		 { FactoryGirl.create(:protein, protclass: "Nrd B") }
-  let!(:nrdE) 		 { FactoryGirl.create(:protein, protclass: "Nrd E") }
-  let!(:nrdF) 		 { FactoryGirl.create(:protein, protclass: "Nrd F") }
-  let!(:nrdJ) 		 { FactoryGirl.create(:protein, protclass: "Nrd J") }
-  let!(:nrdG) 		 { FactoryGirl.create(:protein, protclass: "Nrd G") }
-  let!(:nrdD) 		 { FactoryGirl.create(:protein, protclass: "Nrd D") }
-  let!(:nrdxx) 		 { FactoryGirl.create(:protein, protclass: "Nrd xx") }
-  let!(:nrdyy) 		 { FactoryGirl.create(:protein, protclass: "Nrd yy") }
-
+describe "ProteinCounts 3 taxa, 2 proteins" do
+  let!(:ss)              { FactoryGirl.create(:sequence_source) }
+  let!(:pr)              { FactoryGirl.create(:pfitmap_release, current: true, sequence_source: ss) }
+  let!(:protA)           { FactoryGirl.create(:protein, protfamily: "protA") }
+  let!(:protB)           { FactoryGirl.create(:protein, protfamily: "protB") }
+  let!(:taxA)            { FactoryGirl.create(:taxon, domain: "TaxA", pfitmap_release_id: pr.id) }
+  let!(:taxB)            { FactoryGirl.create(:taxon, domain: "TaxB", pfitmap_release_id: pr.id) }
+  let!(:taxC)            { FactoryGirl.create(:taxon, domain: "TaxC", pfitmap_release_id: pr.id) }
   before do
-    50.times do |n|
-      species = n.modulo(5)
-      domain = n.modulo(2)
-      FactoryGirl.create(:taxon, domain: "Tdomain#{domain}",kingdom: "Tkingdom", phylum: "Tphylum", taxclass: "Tclass", taxorder: "Torder",family: "Tfamily",genus: "Tgenus",species: "Tspecies#{species}", strain: "Tstrain#{n}",pfitmap_release_id: pfitmap_release.id)
-    end
     @protein_counts = []
-    Taxon.all.each_with_index do |taxon, i|
-      Protein.all.each_with_index do |protein, j|
-        @protein_counts << FactoryGirl.create(:protein_count, no_proteins: ( i + 1 ) * j * 2, no_genomes_with_proteins: ( i + 1 ) * j,  protein: protein, taxon: taxon, pfitmap_release: pfitmap_release)
-      end
-    end
-    @special_count = ProteinCount.find_by_protein_id_and_taxon_id(nrdxx.id,Taxon.where(domain: "Tdomain0").first)
-    @special_count.no_proteins = 33
-    @special_count.save
+    @protein_counts << FactoryGirl.create(:protein_count, no_proteins: 2, no_genomes_with_proteins: 1,  protein: protA, taxon: taxA, pfitmap_release: pr)
+    @protein_counts << FactoryGirl.create(:protein_count, no_proteins: 4, no_genomes_with_proteins: 3,  protein: protA, taxon: taxB, pfitmap_release: pr)
+    @protein_counts << FactoryGirl.create(:protein_count, no_proteins: 8, no_genomes_with_proteins: 7,  protein: protB, taxon: taxC, pfitmap_release: pr)
   end
-
-  describe "with enzymes" do
-    before do 
+  describe "proteins and taxa have correct columns" do
+    before do
       make_mock_admin
       login_with_oauth
     end
-    
-    it "starts at top level", :js => true do
-      visit count_matrix_path
-      page.should have_css("thead tr",:count == 2)
-      page.should have_css("tbody tr",:count == 2)
-      page.should have_css("tr.Tdomain0")
+
+    it "has three taxa rows and two protein columns", :js => true do
+      visit count_matrix_path(params: {})
+      page.should have_css("thead")
+      page.should have_css("tbody tr", count: 3)
+      page.should have_css(".heat_label", count: 6)
+      page.should have_css(".protein_label", count: 2)
+    end
+    it "filter on TaxA and TaxB has two taxa rows and one protein column", :js => true do
+      visit count_matrix_path(params: {domain: "TaxA(,)TaxB"})
+      page.should have_css("tr.TaxA")
+      page.should have_css("tr.TaxB")
+      page.should_not have_css("tr.TaxC")
+      page.should have_css(".taxon_label", count: 2)
+      page.should have_css(".protein_label", count: 1)
+      page.should have_css(".heat_label", count: 2)
+      page.should have_css(".protA",count: 2)
+      page.should_not have_css(".protB")
+    end
+    it "filter on TaxA and TaxC has two taxa rows and two protein columns with zeros in relative missing protein column", :js => true do
+      visit count_matrix_path(params: {domain: "TaxA(,)TaxC"})
+      page.should have_css("tr.TaxA")
+      page.should have_css("tr.TaxC")
+      page.should_not have_css("tr.TaxB")
+      page.should have_css(".taxon_label", count: 2)
+      page.should have_css(".protein_label", count: 2)
+      page.should have_css(".heat_label", count: 4)
+      page.should have_css(".protA",count: 2)
+      page.should have_css(".protB",count: 2)
+    end
+    it "filter on TaxA and TaxB and protA and protB has two taxa rows and two protein column", :js => true do
+      visit count_matrix_path(params: {domain: "TaxA(,)TaxB", protfamily: "protA(,)protB"})
+      page.should have_css("tr.TaxA")
+      page.should have_css("tr.TaxB")
+      page.should_not have_css("tr.TaxC")
+      page.should have_css(".taxon_label", count: 2)
+      page.should have_css(".protein_label", count: 2)
+      page.should have_css(".heat_label", count: 4)
+      page.should have_css(".protA",count: 2)
+      page.should have_css(".protB", count: 2)
     end
   end
 end
-##TODO Fix when new views have been done
-#    it "can expand by taxon", :js => true do
-#      visit protein_counts_with_enzymes_path
-#      page.should_not have_content(@first_child.name)
-#      page.should have_content(@parent_taxon.name)
-#      parent_row = find_by_id("taxon#{@parent_taxon.id}")
-#      page.should have_css('td.taxon', :count => 30)
-#      within parent_row do
-#        click_link "+"
-#      end
-#      page.should have_content(@first_child.name)
-#      page.should have_css('td.taxon', :count => 50)
-#      parent_row = find_by_id("taxon#{@parent_taxon.id}")
-#      within parent_row do
-#        click_link "-"
-#      end
-#      page.should_not have_content(@first_child.name)
-#    end
-#
-#    it "can collapse several levels of taxons", :js => true do
-#      visit protein_counts_with_enzymes_path
-#      parent_row = find_by_id("taxon#{@parent_taxon.id}")
-#      within parent_row do
-#        click_link "+"
-#      end
-#      second_parent_row = find_by_id("taxon#{@first_child.id}")
-#      within second_parent_row do
-#        click_link "+"
-#      end
-#      page.should have_content(@second_child.name)
-#      parent_row = find_by_id("taxon#{@parent_taxon.id}")
-#      #Collapsing grandparent should remove all relatives below"
-#      within parent_row do
-#        click_link "-"
-#      end
-#      page.should_not have_content(@second_child.name)
-#      page.should_not have_content(@first_child.name)
-#    end
-#
-#    it "only show root enzymes" do
-#      visit protein_counts_with_enzymes_path
-#      page.should have_content(class1.abbreviation)
-#      page.should have_content(class2.abbreviation)
-#      page.should have_content(class3.abbreviation)
-#      page.should_not have_content(class1b.abbreviation)
-#    end
-#
-#    describe "expand enzyme" do
-#      it "simply" do
-#        visit protein_counts_with_enzymes_path
-#        within("#taxon#{@parent_taxon.id}") do
-#          page.should have_css('td', :count => 7)
-#        end
-#        within("#enzyme#{class1.id}") do
-#          click_link "+"
-#        end
-#        page.should have_content(class1b.abbreviation)
-#        page.should have_content(class1x.abbreviation)
-#        page.should_not have_content(class1.proteins.first.name)
-#        within("#taxon#{@parent_taxon.id}") do
-#          page.should have_css('td', :count => 9)
-#        end
-#      end
-#
-#      it "without children" do
-#        visit protein_counts_with_enzymes_path
-#        within("#enzyme#{class2.id}") do
-#          click_link "-"
-#        end
-#        page.should have_content(class1.abbreviation)
-#      end
-#
-#      it "and expand taxon", :js => true do
-#        visit protein_counts_with_enzymes_path
-##        within('table.enzyme-header') do
-#        within("#enzyme#{class1.id}") do
-#          click_link "+"
-#        end
-#        parent_row = find_by_id("taxon#{@parent_taxon.id}")
-#        within parent_row do
-#          click_link "+"
-#        end
-#        page.should have_content(class1b.abbreviation)
-#        page.should have_content(class1x.abbreviation)
-#        page.should_not have_content(class1.proteins.first.name)
-#        page.should_not have_content("none")
-#        within("#taxon#{@parent_taxon.id}") do
-#          page.should have_css('td', :count => 9)
-#          page.should_not have_content("none")
-#        end
-#        page.should have_content(@first_child.name)
-#        within("#taxon#{@first_child.id}") do
-#          page.should have_css('td', :count => 9)
-#          page.should_not have_content("none")
-#          page.should have_content("33") # From @special_count
-#          # Should be nice to test the order of the columns 
-#          # for protein_counts. 
-#        end
-#      end
-#    end
+describe "ProteinCounts 2 taxa, 2 proteins" do
+  let!(:ss)              { FactoryGirl.create(:sequence_source) }
+  let!(:pr)              { FactoryGirl.create(:pfitmap_release, current: true, sequence_source: ss) }
+  let!(:protA)           { FactoryGirl.create(:protein, protfamily: "protA") }
+  let!(:protB)           { FactoryGirl.create(:protein, protfamily: "protB") }
+  let!(:taxA)            { FactoryGirl.create(:taxon, domain: "TaxA", pfitmap_release_id: pr.id) }
+  let!(:taxB)            { FactoryGirl.create(:taxon, domain: "TaxB", pfitmap_release_id: pr.id) }
+  before do
+    @protein_counts = []
+    @protein_counts << FactoryGirl.create(:protein_count, no_proteins: 2, no_genomes_with_proteins: 1,  protein: protA, taxon: taxA, pfitmap_release: pr)
+    @protein_counts << FactoryGirl.create(:protein_count, no_proteins: 4, no_genomes_with_proteins: 3,  protein: protA, taxon: taxB, pfitmap_release: pr)
+    @protein_counts << FactoryGirl.create(:protein_count, no_proteins: 8, no_genomes_with_proteins: 7,  protein: protB, taxon: taxB, pfitmap_release: pr)
+  end
+  describe "proteins and taxa have correct columns" do
+    before do
+      make_mock_admin
+      login_with_oauth
+    end
+
+    it "has two taxa rows and two protein columns", :js => true do
+      visit count_matrix_path(params: {})
+      page.should have_css("thead")
+      page.should have_css("tbody tr", count: 2)
+      page.should have_css(".protein_label", count: 2)
+      page.should have_css(".heat_label", count: 4)
+      page.find(".TaxA").find(".protA").text
+      page.find(".TaxA").find(".protB").text.should have_content("0")
+      page.find(".TaxB").find(".protA").text.should have_content("4")
+      page.find(".TaxB").find(".protB").text.should have_content("8")
+    end
+  end
+end
