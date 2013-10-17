@@ -147,6 +147,9 @@ class PfitmapRelease < ActiveRecord::Base
       tree[ncbi] = [hierarchy_name_list,pv_hash]
     end
     return tree
+  rescue Exception => e
+    calculate_logger.error "#{Time.now} dry run failed. Error: .\n"+e.message
+    raise "Failed dry run"
   end
       
 
