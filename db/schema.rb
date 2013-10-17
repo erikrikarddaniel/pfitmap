@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131004171623) do
+ActiveRecord::Schema.define(:version => 20131017033251) do
 
   create_table "db_entries", :force => true do |t|
     t.integer  "gi"
@@ -114,6 +114,7 @@ ActiveRecord::Schema.define(:version => 20131004171623) do
     t.string   "hmm_logo_content_type"
     t.integer  "hmm_logo_file_size"
     t.datetime "hmm_logo_updated_at"
+    t.string   "rank"
   end
 
   create_table "proteins", :force => true do |t|
