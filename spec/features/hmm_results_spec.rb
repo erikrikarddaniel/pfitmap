@@ -13,7 +13,7 @@ describe "HmmResults" do
   let!(:db_sequence) { FactoryGirl.create(:db_sequence) }
   let!(:r1) { FactoryGirl.create(:hmm_result, hmm_profile: profile1, sequence_source: sequence_source, executed: 100.years.ago) }
   let!(:result_row) { FactoryGirl.create(:hmm_result_row, hmm_result: r1, db_sequence: db_sequence) }
-  let!(:hmm_db_hit) { FactoryGirl.create(:hmm_db_hit, db_sequence: db_sequence) }
+  let!(:db_entry) { FactoryGirl.create(:db_entry, db_sequence: db_sequence) }
 
   describe "show result" do
     before{ visit hmm_result_path(r1) }

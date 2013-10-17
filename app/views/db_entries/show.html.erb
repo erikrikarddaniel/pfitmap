@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Gi:</b>
+  <%= @db_entry.gi %>
+</p>
+
+<p>
+  <b>Db:</b>
+  <%= @db_entry.db %>
+</p>
+
+<p>
+  <b>Acc:</b>
+  <%= @db_entry.acc %>
+</p>
+
+<p>
+  <b>Desc:</b>
+  <%= @db_entry.desc %>
+</p>
+
+
+<%= link_to 'Edit', edit_db_entry_path(@db_entry) %> |
+<%= link_to 'Back', db_entries_path %>

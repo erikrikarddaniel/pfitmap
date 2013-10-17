@@ -20,14 +20,14 @@ FactoryGirl.define do
   factory :db_sequence do
   end
   
-  factory :hmm_db_hit do
+  factory :db_entry, class: DbEntry do
     sequence(:gi){|n| n}
     db "ref"
-    desc "This is an example hit"
+    desc "This is an example entry"
     db_sequence
   end
 
-  factory :hmm_db_hit_pdb, class: HmmDbHit do
+  factory :db_entry_pdb, class: DbEntry do
     gi '13'
     db 'pdb'
     acc '1mxl'
@@ -103,17 +103,18 @@ FactoryGirl.define do
   end
 
   factory :taxon do |t|
-    sequence(:name) { |n|  "example_taxon_name " + n.to_s }
+    sequence(:domain) { |n|  "example_domain_name " + n.to_s }
     sequence(:ncbi_taxon_id) { |n| n} 
   end
-
+  factory :taxon_flat, class: Taxon do |t|
+    sequence(:ncbi_taxon_id) {|n| n}
+  end
   factory :protein do
-    sequence(:name) { |n| "ex_protein " + n.to_s }
+    sequence(:protfamily) { |n| "ex_protein " + n.to_s }
     hmm_profile
  end
 
   factory :protein_count do
-    no_genomes 1
     no_proteins 0
     no_genomes_with_proteins 0
     protein

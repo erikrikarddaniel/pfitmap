@@ -13,6 +13,7 @@
 #  hmm_logo_content_type :string(255)
 #  hmm_logo_file_size    :integer
 #  hmm_logo_updated_at   :datetime
+#  rank                  :string(255)
 #
 
 class HmmProfile < ActiveRecord::Base

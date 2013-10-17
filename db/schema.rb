@@ -11,7 +11,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130118122617) do
+ActiveRecord::Schema.define(:version => 20131017033251) do
+
+  create_table "db_entries", :force => true do |t|
+    t.integer  "gi"
+    t.string   "db"
+    t.string   "acc"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.integer  "db_sequence_id"
+    t.text     "desc"
+    t.index ["db", "acc"], :name => "index_db_entries_on_db_and_acc", :order => {"db" => :asc, "acc" => :asc}
+    t.index ["db_sequence_id"], :name => "index_db_entries_on_db_sequence_id", :order => {"db_sequence_id" => :asc}
+    t.index ["gi"], :name => "index_db_entries_on_gi", :order => {"gi" => :asc}
+  end
 
   create_table "hmm_result_rows", :force => true do |t|
     t.string   "target_name"
@@ -81,13 +94,13 @@ ActiveRecord::Schema.define(:version => 20130118122617) do
   end
 
   create_table "enzymes", :force => true do |t|
-    t.string   "name"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
-    t.integer  "parent_id"
     t.string   "abbreviation"
+    t.integer  "parent_id"
+    t.string   "name"
     t.index ["parent_id"], :name => "fk__enzymes_parent_id", :order => {"parent_id" => :asc}
-    t.foreign_key ["parent_id"], "enzymes", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "enzymes_parent_id_fkey"
+    t.foreign_key ["parent_id"], "enzymes", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_enzymes_parent_id"
   end
 
   create_table "hmm_profiles", :force => true do |t|
@@ -101,14 +114,19 @@ ActiveRecord::Schema.define(:version => 20130118122617) do
     t.string   "hmm_logo_content_type"
     t.integer  "hmm_logo_file_size"
     t.datetime "hmm_logo_updated_at"
+    t.string   "rank"
   end
 
   create_table "proteins", :force => true do |t|
-    t.string   "name"
-    t.string   "rank"
     t.integer  "hmm_profile_id"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
+    t.string   "protclass"
+    t.string   "subclass"
+    t.string   "group"
+    t.string   "subgroup"
+    t.string   "subsubgroup"
+    t.string   "protfamily"
     t.index ["hmm_profile_id"], :name => "index_proteins_on_hmm_profile_id", :order => {"hmm_profile_id" => :asc}
     t.foreign_key ["hmm_profile_id"], "hmm_profiles", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "proteins_hmm_profile_id_fkey"
   end
@@ -146,19 +164,6 @@ ActiveRecord::Schema.define(:version => 20130118122617) do
     t.integer  "domain_num"
     t.index ["hmm_result_row_id"], :name => "fk__hmm_alignments_hmm_result_row_id", :order => {"hmm_result_row_id" => :asc}
     t.foreign_key ["hmm_result_row_id"], "hmm_result_rows", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "hmm_alignments_hmm_result_row_id_fkey"
-  end
-
-  create_table "hmm_db_hits", :force => true do |t|
-    t.integer  "gi"
-    t.string   "db"
-    t.string   "acc"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
-    t.integer  "db_sequence_id"
-    t.text     "desc"
-    t.index ["db", "acc"], :name => "index_hmm_db_hits_on_db_and_acc", :order => {"db" => :asc, "acc" => :asc}
-    t.index ["db_sequence_id"], :name => "index_hmm_db_hits_on_db_sequence_id", :order => {"db_sequence_id" => :asc}
-    t.index ["gi"], :name => "index_hmm_db_hits_on_gi", :order => {"gi" => :asc}
   end
 
   create_table "pfitmap_sequences", :force => true do |t|
@@ -203,19 +208,26 @@ ActiveRecord::Schema.define(:version => 20130118122617) do
 
   create_table "taxons", :force => true do |t|
     t.integer  "ncbi_taxon_id"
-    t.string   "name"
-    t.string   "rank"
     t.boolean  "wgs"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
-    t.integer  "parent_ncbi_id"
-    t.text     "hierarchy"
-    t.index ["hierarchy"], :name => "index_taxons_on_hierarchy", :order => {"hierarchy" => :asc}
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+    t.string   "domain"
+    t.string   "kingdom"
+    t.string   "phylum"
+    t.string   "taxclass"
+    t.string   "taxorder"
+    t.string   "family"
+    t.string   "genus"
+    t.string   "species"
+    t.string   "strain"
+    t.integer  "pfitmap_release_id"
+    t.index ["pfitmap_release_id"], :name => "fk__taxons_pfitmap_release_id", :order => {"pfitmap_release_id" => :asc}
     t.index ["ncbi_taxon_id"], :name => "index_taxons_on_ncbi_taxon_id", :unique => true, :order => {"ncbi_taxon_id" => :asc}
+    t.index ["domain", "kingdom", "phylum", "taxclass", "taxorder", "family", "genus", "species", "strain"], :name => "taxhierarchy", :unique => true, :order => {"domain" => :asc, "kingdom" => :asc, "phylum" => :asc, "taxclass" => :asc, "taxorder" => :asc, "family" => :asc, "genus" => :asc, "species" => :asc, "strain" => :asc}
+    t.foreign_key ["pfitmap_release_id"], "pfitmap_releases", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_taxons_pfitmap_release_id"
   end
 
   create_table "protein_counts", :force => true do |t|
-    t.integer  "no_genomes"
     t.integer  "no_proteins"
     t.integer  "no_genomes_with_proteins"
     t.integer  "protein_id"

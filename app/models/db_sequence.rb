@@ -10,7 +10,7 @@
 
 class DbSequence < ActiveRecord::Base
   has_many :hmm_result_rows
-  has_many :hmm_db_hits
+  has_many :db_entries
   has_many :pfitmap_sequences
   has_many :db_sequence_best_profiles
   has_many :best_hmm_profiles, :through => :db_sequence_best_profiles, :source => :hmm_profile

@@ -3,11 +3,15 @@
 # Table name: proteins
 #
 #  id             :integer         not null, primary key
-#  name           :string(255)
-#  rank           :string(255)
 #  hmm_profile_id :integer
 #  created_at     :datetime        not null
 #  updated_at     :datetime        not null
+#  protclass      :string(255)
+#  subclass       :string(255)
+#  group          :string(255)
+#  subgroup       :string(255)
+#  subsubgroup    :string(255)
+#  protfamily     :string(255)
 #
 
 require 'spec_helper'
@@ -21,11 +25,22 @@ describe Protein do
     describe "with maximum a single enzyme" do
       before do
         Protein.initialize_proteins
+        @protein = Protein.find(:first)
       end
       it "should have created some proteins" do
         Protein.all.should_not == []
-        Protein.count.should == 3
+        Protein.count.should == 2
       end
+      subject { @protein}
+      it {should respond_to(:protfamily)}
+      it {should respond_to(:protclass)}
+      it {should respond_to(:subclass)}
+      it {should respond_to(:group)}
+      it {should respond_to(:subgroup)}
+      it {should respond_to(:subsubgroup)}
+      it {should_not respond_to(:name) }
+      it {should_not respond_to(:rank) }
+        
     end
     describe "with multiple enzymes" do
       let!(:enzyme2) { FactoryGirl.create(:enzyme) }
@@ -35,7 +50,7 @@ describe Protein do
       end
       it "should have created some proteins" do
         Protein.all.should_not == []
-        Protein.count.should == 3
+        Protein.count.should == 2
       end
       it "gets the associations right" do
         enzyme2.proteins.count.should == 1

@@ -1,31 +1,3 @@
-<div class="heat-map">
-<table class="heat-map" id="heatmap" border="1">
-  <% if @enzymes %>
-  <thead>
-    <tr>
-      <th>&nbsp;</th>
-      <th>&nbsp;</th>
-      <% @parent_enzyme_ids.each do |parent_id| %>
-      <%= render :partial => 'header_table', :locals => {parent_id: parent_id, enzyme_tree: @enzyme_tree, enzyme_ids: @enzyme_tree.keys} %>
-      <% end %>
-    </tr>
-    <tr>
-      <th>Taxon</th>
-      <th>Genomes</th>
-      <% @parent_enzyme_ids.each do |enzyme_id| %>
-	<%= render :partial => 'protein_name_part', :locals => { enzyme_id: enzyme_id } %>
-      <% end %>
-    </tr>
-  </thead>
-  <div class="heat-body"> 
-    <tbody class="heat-body">
-      <% @taxons.each do |taxon| %>
-      <%= render :partial => 'row', :locals => {taxon: taxon} %>
-      <% end %>
-    </tbody>
-  <% end %>
-  </div>
-</table>
+<div id="heat_map" class="heat-map">
 </div>
-<%= will_paginate @taxons %>
 <br />

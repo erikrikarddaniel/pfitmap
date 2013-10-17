@@ -65,9 +65,9 @@ describe HmmResult do
 
     it "should correctly import a file with embedded '#':s on one row" do
       parse_hmm_tblout(@hmm_result_nrdb, fixture_file_upload("/problematic_rows00.tblout"))
-      hmm_db_hits = @hmm_result_nrdb.hmm_result_rows.map { |hrr| hrr.db_sequence.hmm_db_hits }.flatten
-      hmm_db_hits.length.should == 27
-      hmm_db_hits.map { |h| h.gi }.should include(15619738)
+      db_entries = @hmm_result_nrdb.hmm_result_rows.map { |hrr| hrr.db_sequence.db_entries }.flatten
+      db_entries.length.should == 27
+      db_entries.map { |h| h.gi }.should include(15619738)
     end
   end
 
@@ -85,10 +85,10 @@ describe HmmResult do
       @hmm_result_nrdb.hmm_result_rows.length.should == 241
     end
 
-    it 'should have the correct number of hmm_db_hits' do
-      hmm_db_hits = @hmm_result_nrdb.hmm_result_rows.map { |hrr| hrr.db_sequence.hmm_db_hits }.flatten
-      hmm_db_hits.map { |h| h.gi }.should include(95109514)
-      hmm_db_hits.length.should == 709
+    it 'should have the correct number of db_entries' do
+      db_entries = @hmm_result_nrdb.hmm_result_rows.map { |hrr| hrr.db_sequence.db_entries }.flatten
+      db_entries.map { |h| h.gi }.should include(95109514)
+      db_entries.length.should == 709
     end
   end
   describe "Calculate bins" do

@@ -3,7 +3,6 @@
 # Table name: protein_counts
 #
 #  id                       :integer         not null, primary key
-#  no_genomes               :integer
 #  no_proteins              :integer
 #  no_genomes_with_proteins :integer
 #  protein_id               :integer
@@ -15,9 +14,6 @@
 #
 
 
-## no_genomes is the number of genomes in the current taxon, not taking into 
-## account observations of this particular protein.
-
 ## no_proteins is the number of the current type of protein in the current taxon
 
 ## no_genomes_with_proteins is the number of genomes in the current taxon where
@@ -27,7 +23,7 @@
 ## as a genome together with a protein.
   
 class ProteinCount < ActiveRecord::Base
-  attr_accessible :no_genomes, :no_proteins, :no_genomes_with_proteins, :obs_as_genome
+  attr_accessible :no_proteins, :no_genomes_with_proteins, :obs_as_genome
   belongs_to :protein
   belongs_to :pfitmap_release
   belongs_to :taxon
@@ -62,13 +58,9 @@ class ProteinCount < ActiveRecord::Base
   end
 
   def to_s
-    "ProteinCount #{taxon} #{protein} n. genomes: #{no_genomes}, n. proteins: #{no_proteins}, n. genomes w. proteins: #{no_genomes_with_proteins}, obs. as genome: #{obs_as_genome}"
+    "ProteinCount #{taxon} #{protein}, n. proteins: #{no_proteins}, n. genomes w. proteins: #{no_genomes_with_proteins}, obs. as genome: #{obs_as_genome}"
   end
 
-  def add_genome
-    self.no_genomes += 1
-    self.save
-  end
   
   def self.add_hit(protein, taxons, pr)
     # Check if the genome refferred to have got a hit from before, meaning the number of genomes with proteins should be incremented. If not, then this is the first out of possibly many proteins to hit this protein_count.

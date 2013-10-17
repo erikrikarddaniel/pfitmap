@@ -5,10 +5,10 @@
 <div class="row">
   <aside class="span4">
     <p>
-      <b>Hmm db hits:</b>
-      <% if @hmm_db_hits != [] %>
-      <%  @hmm_db_hits.each do |hit| %>
-    <p> <%= link_to hit.gi, hmm_db_hit_path(hit) %> </p> 
+      <b>Db entries:</b>
+      <% if @db_entries != [] %>
+      <%  @db_entries.each do |entry| %>
+    <p> <%= link_to entry.gi, db_entry_path(entry) %> </p> 
     <% end %>
     <% else %>
     None

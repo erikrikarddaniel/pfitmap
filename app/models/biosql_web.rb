@@ -18,4 +18,9 @@ class BiosqlWeb < ActiveRecord::Base
     response = HTTParty.get(BASE_URL + '/ncbi_taxon_id2full_taxon_hierarchy.json', options)
     taxons = response.parsed_response
   end
+  def self.ncbi_taxon_ids2full_taxon_hierarchies(ncbi_taxon_ids)
+    options = {:headers => { 'Content-Type' => 'application/json', 'Accepts' => 'application/json'}, :body => {:ncbi_taxon_ids => ncbi_taxon_ids}.to_json}
+    response = HTTParty.get(BASE_URL + '/ncbi_taxon_ids2full_taxon_hierarchies.json', options)
+    taxons = response.parsed_response
+  end
 end

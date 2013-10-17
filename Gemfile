@@ -3,11 +3,17 @@ source 'https://rubygems.org'
 gem 'rails'
 gem 'bootstrap-sass', '2.0.3.1'
 gem 'faker', '1.0.1'
-gem 'will_paginate', '3.0.3'
-gem 'bootstrap-will_paginate', '0.0.5'
+gem 'will_paginate'
+gem 'bootstrap-will_paginate'
 gem 'bio'
 gem 'schema_plus'
 gem 'activerecord-import'
+#d3 javascript library to render protein statistics
+gem 'd3_rails'
+#gon gem to simply make variables from controller available to the javascript in the views
+gem 'gon'
+# Easy table less models with ActiveRecord cababilities
+gem "active_attr"
 
 # Authentication and Authorization
 gem 'omniauth-openid'
@@ -42,8 +48,9 @@ gem 'pg'
 gem 'google_visualr'
 
 group :development, :test do
-	gem 'rspec-rails', '2.14.0'
-	gem 'annotate', '~> 2.4.1.beta'
+  gem 'byebug'
+  gem 'rspec-rails', '2.14.0'
+  gem 'annotate', '~> 2.4.1.beta'
 end
 
 group :test do
@@ -85,4 +92,3 @@ gem 'jquery-rails'
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
-gem 'bio'

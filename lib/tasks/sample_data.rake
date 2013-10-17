@@ -6,7 +6,7 @@ namespace :db do
   task populate: :environment do
     Rake::Task['db:truncate'].invoke
     @dbsequences = {}	# Object hash indexed by acc number
-    @hmm_db_hits = {} 	# Object hash indexed by acc number
+    @db_entries = {} 	# Object hash indexed by acc number
     make_users
     make_hmm_profiles
     make_sequence_sources
@@ -48,7 +48,7 @@ SQL
 INSERT INTO users(provider, uid, name, email, role, created_at, updated_at)
 VALUES(
   'open_id', 
-  'https://www.google.com/accounts/o8/id?id=AItOawmxc-yxtf7vNz5OuIq8T2UoXRrqlxOUTFw',
+  'https://www.google.com/accounts/o8/id?id=AItOawlN94VEQwqUCD7g106aeMebnRpOlLYmGos',
   'Brynjar Smari Bjarnason',
   'binni@binnisb.com',
   'admin',
