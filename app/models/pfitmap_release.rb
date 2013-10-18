@@ -169,12 +169,12 @@ class PfitmapRelease < ActiveRecord::Base
         begin
           ncbi_taxon_id = BiosqlWeb.gi2ncbi_taxon_id(entry.gi)
         rescue SystemCallError, StandardError => e
-          calculate_logger.warning "#{Time.now} BiosqlWeb.gi2ncbi_taxon_id(#{entry.gi}) failed, will try again.\n"
+          calculate_logger.info "#{Time.now} BiosqlWeb.gi2ncbi_taxon_id(#{entry.gi}) failed, will try again.\n"
           sleep 10
           begin
             ncbi_taxon_id = BiosqlWeb.gi2ncbi_taxon_id(entry.gi)
           rescue SystemCallError, StandardError => e
-            calculate_logger.error "#{Time.now} BiosqlWeb.gi2ncbi_taxon_id(#{entry.gi}) failed twice, i give up.\n"
+            calculate_logger.info "#{Time.now} BiosqlWeb.gi2ncbi_taxon_id(#{entry.gi}) failed twice, i give up.\n"
             raise e
           end
         end
