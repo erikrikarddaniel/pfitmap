@@ -121,10 +121,6 @@ class PfitmapRelease < ActiveRecord::Base
       save_pc_to_db(tree)
       calculate_logger.info "#{Time.now} Everything finished, saved protein counts to db.\n"
     end
-  rescue => e
-    calculate_logger.error "#{Time.now} Calculate failed: .\n"+e.message
-    raise "Failed calculate"
-    
   end
 
   def calculate_logger
@@ -151,9 +147,6 @@ class PfitmapRelease < ActiveRecord::Base
       tree[ncbi] = [hierarchy_name_list,pv_hash]
     end
     return tree
-  rescue => e
-    calculate_logger.error "#{Time.now} dry run failed. Error: .\n"+e.message
-    raise "Failed dry run"
   end
       
 
@@ -194,9 +187,6 @@ class PfitmapRelease < ActiveRecord::Base
         end
       end
     end
-  rescue => e
-    calculate_logger.error "#{Time.now} second run failed: .\n"+e.message
-    raise "Failed second run"
   end
 
   def save_pc_to_db(tree)
@@ -210,9 +200,6 @@ class PfitmapRelease < ActiveRecord::Base
       end
       ProteinCount.import protein_counts
     end
-  rescue => e
-    calculate_logger.error "#{Time.now} save pc to db failed: .\n"+e.message
-    raise "Failed save pc to db"
   end
 
   def save_to_db(tree)
@@ -227,18 +214,12 @@ class PfitmapRelease < ActiveRecord::Base
       end
       ProteinCount.import protein_counts
     end 
-  rescue => e
-    calculate_logger.error "#{Time.now} save to db failed: .\n"+e.message
-    raise "Failed save to db"
   end
   def add_pc(tree, ncbi_id, pv_hash)
     protein_hash = tree[ncbi_id][1]
     pv_hash.each do |p,v|
       protein_hash[p] += v
     end
-  rescue => e
-    calculate_logger.error "#{Time.now} add pc failed: .\n"+e.message
-    raise "Failed add pc"
   end
 
   def add_pc_recursively(tree, ncbi_id, pv_hash, first)
@@ -255,9 +236,6 @@ class PfitmapRelease < ActiveRecord::Base
     else
       return tree
     end
-  rescue => e
-    calculate_logger.error "#{Time.now} add pc recursively failed: .\n"+e.message
-    raise "Failed add pc recursively"
   end
 
   def new_taxon_to_tree(tree, taxon_hash, parent_taxon_hash, proteins, first, hierarchy)
@@ -271,9 +249,6 @@ class PfitmapRelease < ActiveRecord::Base
     parent_id = parent_taxon_hash ? parent_taxon_hash["ncbi_taxon_id"] : nil
     tree[taxon_id] = [parent_id, taxon_hash, p_hash, first]
     
-  rescue => e
-    calculate_logger.error "#{Time.now} new taxon to tree failed: .\n"+e.message
-    raise "Failed new taxon to tree"
   end
 
   def hierarchy_names(taxons, rank_hash)
@@ -325,9 +300,6 @@ class PfitmapRelease < ActiveRecord::Base
     rescue
       []
     end
-  rescue => e
-    calculate_logger.error "#{Time.now} hierarcy names failed: .\n"+e.message
-    raise "Failed hierarcy names"
   end
 
   def save_taxon(taxon_hash,ncbi_taxon_id)
@@ -342,9 +314,6 @@ class PfitmapRelease < ActiveRecord::Base
     ["domain","kingdom","phylum","taxclass","taxorder","family","genus","species","strain"].zip(taxon_hash).map {|ta,ha| taxon[ta] = ha}
     taxon.save
     return taxon.id
-  rescue => e
-    calculate_logger.error "#{Time.now} save taxon failed: .\n"+e.message
-    raise "Failed save taxon"
   end
 
   def save_protein_count(protein_id, taxon_id, vec)
@@ -354,8 +323,5 @@ class PfitmapRelease < ActiveRecord::Base
     protein_count.protein_id = protein_id
     protein_count.taxon_id = taxon_id
     return protein_count
-  rescue => e
-    calculate_logger.error "#{Time.now} save protein count failed: .\n"+e.message
-    raise "Failed save proave protein count"
   end
 end
