@@ -166,7 +166,18 @@ class PfitmapRelease < ActiveRecord::Base
       best_profile = p_sequence.hmm_profile
       proteins = best_profile.all_proteins_including_parents
       p_sequence.db_entries.where("db = ?", db_string).select(:gi).each do |entry|
-        ncbi_taxon_id = BiosqlWeb.gi2ncbi_taxon_id(entry.gi)
+        begin
+          ncbi_taxon_id = BiosqlWeb.gi2ncbi_taxon_id(entry.gi)
+        rescue SystemCallError, StandardError => e
+          calculate_logger.warning "#{Time.now} BiosqlWeb.gi2ncbi_taxon_id(#{entry.gi}) failed, will try again.\n"
+          sleep 10
+          begin
+            ncbi_taxon_id = BiosqlWeb.gi2ncbi_taxon_id(entry.gi)
+          rescue SystemCallError, StandardError => e
+            calculate_logger.error "#{Time.now} BiosqlWeb.gi2ncbi_taxon_id(#{entry.gi}) failed twice, i give up.\n"
+            raise e
+          end
+        end
         tree_item = tree[ncbi_taxon_id]
 
         unless tree_item.nil? || (not tree_item.last) # Valid taxon to hit?
