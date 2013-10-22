@@ -326,7 +326,13 @@ aside {
   }
 }
 
-
+.heat_label {
+  text-align: center;
+}
+#heat_table, td{
+  padding-left: 5px;
+  padding-right: 5px;
+}
 /* From http://jasalguero.com/ledld/development/web/expandable-list/ */
 
 #expList ul, li {
