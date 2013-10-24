@@ -1,4 +1,5 @@
 class SequenceDatabasesController < ApplicationController
+  load_and_authorize_resource
   # GET /sequence_databases
   # GET /sequence_databases.json
   def index
