@@ -22,6 +22,7 @@ class Protein < ActiveRecord::Base
   has_many :protein_counts, dependent: :destroy
   PROT_LEVELS = ["protfamily","protclass","subclass","group","subgroup","subsubgroup"]
 
+  PROT_PROPER_NAMES = {"protfamily"=>"Family","protclass"=>"Class","subclass"=>"SubClass","group"=>"Group","subgroup"=>"SubGroup","subsubgroup"=>"SubSubGroup"}
   def self.initialize_proteins
     #Find all lowest level profiles. Each contains its hierarcy
     profiles = HmmProfile.all.select {|h| h.children==[]} 

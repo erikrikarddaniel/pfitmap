@@ -8,7 +8,7 @@
       <% @tl.each do |taxon_level| %>
       <% if taxon_level %>
       <li>
-	<%= link_to taxon_level, "javascript:d3_taxon_level('"+taxon_level+"');" %>
+	<%= link_to @column_names[taxon_level], "javascript:d3_taxon_level('"+taxon_level+"');" %>
       </li>
       <% end %>
       <% end %>
@@ -23,7 +23,7 @@
       <% @pl.each do |protein_level| %>
       <% if protein_level %>
       <li>
-	<%= link_to protein_level, "javascript:d3_protein_level('"+protein_level+"');" %>
+	<%= link_to @column_names[protein_level], "javascript:d3_protein_level('"+protein_level+"');" %>
       </li>
       <% end %>
       <% end %>
@@ -38,7 +38,7 @@
       <% @tax_levels.each do |taxon_level| %>
       <% if taxon_level %>
       <li>
-	<%= link_to taxon_level, "javascript:d3_color_table('"+taxon_level+"');" %>
+	<%= link_to @column_names[taxon_level], "javascript:d3_color_table('"+taxon_level+"');" %>
       </li>
       <% end %>
       <% end %>
