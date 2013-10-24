@@ -25,6 +25,7 @@ class Taxon < ActiveRecord::Base
 
   RANKS = ["superkingdom", "kingdom", "phylum", "class", "order", "family", "genus", "species"]
   TAXA =  ["domain", "kingdom", "phylum", "taxclass", "taxorder", "family", "genus", "species","strain"]
+  TAXA_PROPER_NAMES = {"domain"=>"Domain", "kingdom"=>"Kingdom", "phylum"=>"Phylum", "taxclass"=>"Class", "taxorder"=>"Order", "family"=>"Family", "genus"=>"Genus", "species"=>"Species","strain"=>"Strain"}
 #TODO remove since we send over all taxons and do the tree structure in D3 or other
 #  def self_and_ancestors
 #    all_up_to_root_rec(self, [])

@@ -63,6 +63,7 @@ class CountMatrixController < ApplicationController
       gon.tax_columns = [@cm.taxon_level, "no_genomes"]
       gon.prot_columns = [filter_params[@cm.protein_level.to_sym], tax_protein_counts.map{ |t| t[@cm.protein_level]}].compact.reduce([],:|).to_set.delete(nil).to_a.sort
       gon.columns = gon.tax_columns + gon.prot_columns
+      gon.column_names = Taxon::TAXA_PROPER_NAMES.merge({"no_genomes"=>"Nr Genomes"})
       gon.taxon_levels = @tax_levels
       gon.protein_levels = @prot_levels
       gon.cm = @cm.attributes.to_json

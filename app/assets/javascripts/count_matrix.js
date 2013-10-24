@@ -85,7 +85,7 @@ function d3_table_it(dataset) {
         .enter()
         .append("td")
         .attr("class", function(d) { if(gon.prot_columns.indexOf(d) != -1) {return "protein_label";} else {return null;} } )
-        .text(function(d) {return gon.prot_columns.indexOf(d) == -1 ? d : null} )
+        .text(function(d) {return gon.prot_columns.indexOf(d) == -1 ? gon.column_names[d] : null} )
 
     var plabel = d3.selectAll(".protein_label")
         plabel.append("input").attr("type","checkbox").attr("name","prot_filter").attr("value",function(d) {return d})
