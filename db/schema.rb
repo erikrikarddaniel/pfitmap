@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131017033251) do
+ActiveRecord::Schema.define(:version => 20131024193317) do
 
   create_table "db_entries", :force => true do |t|
     t.integer  "gi"
@@ -242,6 +242,15 @@ ActiveRecord::Schema.define(:version => 20131017033251) do
     t.foreign_key ["pfitmap_release_id"], "pfitmap_releases", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "protein_counts_pfitmap_release_id_fkey"
     t.foreign_key ["protein_id"], "proteins", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "protein_counts_protein_id_fkey"
     t.foreign_key ["taxon_id"], "taxons", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "protein_counts_taxon_id_fkey"
+  end
+
+  create_table "sequence_databases", :force => true do |t|
+    t.string   "db"
+    t.string   "abbreviation"
+    t.string   "home_page"
+    t.string   "accession_url"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   create_table "users", :force => true do |t|
