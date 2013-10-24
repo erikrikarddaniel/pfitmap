@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131024193317) do
+ActiveRecord::Schema.define(:version => 20131024201850) do
 
   create_table "db_entries", :force => true do |t|
     t.integer  "gi"
@@ -187,6 +187,29 @@ ActiveRecord::Schema.define(:version => 20131024193317) do
     t.index ["hmm_profile_id"], :name => "index_hmm_score_criterions_on_hmm_profile_id", :order => {"hmm_profile_id" => :asc}
   end
 
+  create_table "sequence_databases", :force => true do |t|
+    t.string   "db"
+    t.string   "abbreviation"
+    t.string   "home_page"
+    t.string   "accession_url"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  create_table "load_databases", :force => true do |t|
+    t.string   "taxonset"
+    t.string   "name"
+    t.string   "description"
+    t.boolean  "active"
+    t.integer  "sequence_database_id"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
+    t.index ["sequence_database_id"], :name => "fk__load_databases_sequence_database_id", :order => {"sequence_database_id" => :asc}
+    t.index ["name"], :name => "index_load_databases_on_name", :unique => true, :order => {"name" => :asc}
+    t.index ["sequence_database_id"], :name => "index_load_databases_on_sequence_database_id", :order => {"sequence_database_id" => :asc}
+    t.foreign_key ["sequence_database_id"], "sequence_databases", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_load_databases_sequence_database_id"
+  end
+
   create_table "sequence_sources", :force => true do |t|
     t.string   "source"
     t.string   "name"
@@ -242,15 +265,6 @@ ActiveRecord::Schema.define(:version => 20131024193317) do
     t.foreign_key ["pfitmap_release_id"], "pfitmap_releases", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "protein_counts_pfitmap_release_id_fkey"
     t.foreign_key ["protein_id"], "proteins", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "protein_counts_protein_id_fkey"
     t.foreign_key ["taxon_id"], "taxons", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "protein_counts_taxon_id_fkey"
-  end
-
-  create_table "sequence_databases", :force => true do |t|
-    t.string   "db"
-    t.string   "abbreviation"
-    t.string   "home_page"
-    t.string   "accession_url"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
   end
 
   create_table "users", :force => true do |t|

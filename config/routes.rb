@@ -1,5 +1,8 @@
 Pfitmap::Application.routes.draw do
 
+  resources :load_databases
+
+
   resources :sequence_databases
 
 

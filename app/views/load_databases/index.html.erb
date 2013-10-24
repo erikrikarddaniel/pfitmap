@@ -1,0 +1,31 @@
+<h1>Listing load_databases</h1>
+
+<table>
+  <tr>
+    <th>Taxonset</th>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Active</th>
+    <th>Sequence database</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @load_databases.each do |load_database| %>
+  <tr>
+    <td><%= load_database.taxonset %></td>
+    <td><%= load_database.name %></td>
+    <td><%= load_database.description %></td>
+    <td><%= load_database.active %></td>
+    <td><%= load_database.sequence_database %></td>
+    <td><%= link_to 'Show', load_database %></td>
+    <td><%= link_to 'Edit', edit_load_database_path(load_database) %></td>
+    <td><%= link_to 'Destroy', load_database, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Load database', new_load_database_path %>

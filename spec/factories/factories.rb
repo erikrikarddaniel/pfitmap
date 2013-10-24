@@ -121,5 +121,10 @@ FactoryGirl.define do
     pfitmap_release
     taxon
   end
-
+  factory :sequence_database do
+    db "ref"
+    abbreviation "refseq"
+    home_page "home"
+    accession_url "url"
+  end
 end

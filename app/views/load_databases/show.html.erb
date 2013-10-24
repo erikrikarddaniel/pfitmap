@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Taxonset:</b>
+  <%= @load_database.taxonset %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @load_database.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @load_database.description %>
+</p>
+
+<p>
+  <b>Active:</b>
+  <%= @load_database.active %>
+</p>
+
+<p>
+  <b>Sequence database:</b>
+  <%= @load_database.sequence_database %>
+</p>
+
+
+<%= link_to 'Edit', edit_load_database_path(@load_database) %> |
+<%= link_to 'Back', load_databases_path %>
