@@ -1,0 +1,29 @@
+<h1>Listing sequence_databases</h1>
+
+<table>
+  <tr>
+    <th>Db</th>
+    <th>Abbreviation</th>
+    <th>Home page</th>
+    <th>Accession url</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @sequence_databases.each do |sequence_database| %>
+  <tr>
+    <td><%= sequence_database.db %></td>
+    <td><%= sequence_database.abbreviation %></td>
+    <td><%= sequence_database.home_page %></td>
+    <td><%= sequence_database.accession_url %></td>
+    <td><%= link_to 'Show', sequence_database %></td>
+    <td><%= link_to 'Edit', edit_sequence_database_path(sequence_database) %></td>
+    <td><%= link_to 'Destroy', sequence_database, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Sequence database', new_sequence_database_path %>

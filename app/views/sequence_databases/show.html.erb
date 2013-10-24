@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Db:</b>
+  <%= @sequence_database.db %>
+</p>
+
+<p>
+  <b>Abbreviation:</b>
+  <%= @sequence_database.abbreviation %>
+</p>
+
+<p>
+  <b>Home page:</b>
+  <%= @sequence_database.home_page %>
+</p>
+
+<p>
+  <b>Accession url:</b>
+  <%= @sequence_database.accession_url %>
+</p>
+
+
+<%= link_to 'Edit', edit_sequence_database_path(@sequence_database) %> |
+<%= link_to 'Back', sequence_databases_path %>

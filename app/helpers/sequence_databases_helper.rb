@@ -1,0 +1,2 @@
+module SequenceDatabasesHelper
+end

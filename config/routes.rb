@@ -1,5 +1,8 @@
 Pfitmap::Application.routes.draw do
 
+  resources :sequence_databases
+
+
   get 'count_matrix', to: 'count_matrix#get_counts'
 
   get 'protein_counts_with_enzymes', to: 'protein_counts#with_enzymes'
