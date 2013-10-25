@@ -3,7 +3,6 @@
 # Table name: proteins
 #
 #  id             :integer         not null, primary key
-#  hmm_profile_id :integer
 #  created_at     :datetime        not null
 #  updated_at     :datetime        not null
 #  protclass      :string(255)
@@ -12,6 +11,7 @@
 #  subgroup       :string(255)
 #  subsubgroup    :string(255)
 #  protfamily     :string(255)
+#  released_db_id :integer
 #
 
 require 'spec_helper'

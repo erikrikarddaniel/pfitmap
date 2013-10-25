@@ -111,7 +111,6 @@ FactoryGirl.define do
   end
   factory :protein do
     sequence(:protfamily) { |n| "ex_protein " + n.to_s }
-    hmm_profile
  end
 
   factory :protein_count do
@@ -132,5 +131,9 @@ FactoryGirl.define do
     name "ref + wgs"
     description "refseq and wholegenomesequenced"
     active true
+  end
+  factory :released_db do
+    load_database
+    pfitmap_release
   end
 end

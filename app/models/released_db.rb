@@ -13,5 +13,8 @@ class ReleasedDb < ActiveRecord::Base
   attr_accessible :pfitmap_release_id, :load_database_id
   belongs_to :pfitmap_release
   belongs_to :load_database
+  has_many :taxons, dependent: :destroy
+  has_many :proteins, dependent: :destroy
+  has_many :protein_counts, dependent: :destroy
   # attr_accessible :title, :body
 end

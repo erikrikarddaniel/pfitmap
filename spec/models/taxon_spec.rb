@@ -2,21 +2,21 @@
 #
 # Table name: taxons
 #
-#  id                 :integer         not null, primary key
-#  ncbi_taxon_id      :integer
-#  wgs                :boolean
-#  created_at         :datetime        not null
-#  updated_at         :datetime        not null
-#  domain             :string(255)
-#  kingdom            :string(255)
-#  phylum             :string(255)
-#  taxclass           :string(255)
-#  taxorder           :string(255)
-#  family             :string(255)
-#  genus              :string(255)
-#  species            :string(255)
-#  strain             :string(255)
-#  pfitmap_release_id :integer
+#  id             :integer         not null, primary key
+#  ncbi_taxon_id  :integer
+#  wgs            :boolean
+#  created_at     :datetime        not null
+#  updated_at     :datetime        not null
+#  domain         :string(255)
+#  kingdom        :string(255)
+#  phylum         :string(255)
+#  taxclass       :string(255)
+#  taxorder       :string(255)
+#  family         :string(255)
+#  genus          :string(255)
+#  species        :string(255)
+#  strain         :string(255)
+#  released_db_id :integer
 #
 
 require 'spec_helper'
