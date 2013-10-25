@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Pfitmap release:</b>
+  <%= @released_db.pfitmap_release %>
+</p>
+
+<p>
+  <b>Load database:</b>
+  <%= @released_db.load_database %>
+</p>
+
+
+<%= link_to 'Edit', edit_released_db_path(@released_db) %> |
+<%= link_to 'Back', released_dbs_path %>

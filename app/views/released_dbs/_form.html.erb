@@ -1,0 +1,25 @@
+<%= form_for(@released_db) do |f| %>
+  <% if @released_db.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@released_db.errors.count, "error") %> prohibited this released_db from being saved:</h2>
+
+      <ul>
+      <% @released_db.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :pfitmap_release %><br />
+    <%= f.text_field :pfitmap_release %>
+  </div>
+  <div class="field">
+    <%= f.label :load_database %><br />
+    <%= f.text_field :load_database %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

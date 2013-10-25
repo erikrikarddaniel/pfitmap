@@ -1,5 +1,8 @@
 Pfitmap::Application.routes.draw do
 
+  resources :released_dbs
+
+
   resources :load_databases
 
 

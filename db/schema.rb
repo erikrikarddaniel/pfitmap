@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131024201850) do
+ActiveRecord::Schema.define(:version => 20131024224011) do
 
   create_table "db_entries", :force => true do |t|
     t.integer  "gi"
@@ -265,6 +265,19 @@ ActiveRecord::Schema.define(:version => 20131024201850) do
     t.foreign_key ["pfitmap_release_id"], "pfitmap_releases", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "protein_counts_pfitmap_release_id_fkey"
     t.foreign_key ["protein_id"], "proteins", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "protein_counts_protein_id_fkey"
     t.foreign_key ["taxon_id"], "taxons", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "protein_counts_taxon_id_fkey"
+  end
+
+  create_table "released_dbs", :force => true do |t|
+    t.integer  "pfitmap_release_id"
+    t.integer  "load_database_id"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+    t.index ["load_database_id"], :name => "fk__released_dbs_load_database_id", :order => {"load_database_id" => :asc}
+    t.index ["pfitmap_release_id"], :name => "fk__released_dbs_pfitmap_release_id", :order => {"pfitmap_release_id" => :asc}
+    t.index ["load_database_id"], :name => "index_released_dbs_on_load_database_id", :order => {"load_database_id" => :asc}
+    t.index ["pfitmap_release_id"], :name => "index_released_dbs_on_pfitmap_release_id", :order => {"pfitmap_release_id" => :asc}
+    t.foreign_key ["load_database_id"], "load_databases", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_released_dbs_load_database_id"
+    t.foreign_key ["pfitmap_release_id"], "pfitmap_releases", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_released_dbs_pfitmap_release_id"
   end
 
   create_table "users", :force => true do |t|

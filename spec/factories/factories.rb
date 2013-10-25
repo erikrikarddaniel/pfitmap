@@ -127,4 +127,10 @@ FactoryGirl.define do
     home_page "home"
     accession_url "url"
   end
+  factory :load_database do
+    taxonset "http://demo.url/test.json"
+    name "ref + wgs"
+    description "refseq and wholegenomesequenced"
+    active true
+  end
 end
