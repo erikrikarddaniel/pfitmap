@@ -13,6 +13,6 @@
 #
 
 class LoadDatabase < ActiveRecord::Base
-  attr_accessible :active, :description, :name, :taxonset, :sequence_database
+  attr_accessible :active, :description, :name, :taxonset, :sequence_database_id
   belongs_to :sequence_database
 end
