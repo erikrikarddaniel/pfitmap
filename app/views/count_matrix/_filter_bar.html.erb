@@ -54,7 +54,7 @@
       <% @load_dbs.each do |ld| %>
       <% if ld %>
       <li>
-	<%= link_to ld.name "javascript:d3_database('"+ld.id+"');"%>
+	<%= link_to ld.name, "javascript:d3_database('"+ld.name+"');"%>
       </li>
       <% end %>
       <% end %>

@@ -22,7 +22,7 @@
 class Taxon < ActiveRecord::Base
   # The hierarchy association uses ncbi_ids to make it easier to construct from retrieved data
   attr_accessible :domain, :kingdom, :phylum, :taxclass, :taxorder, :family, :genus, :species, :strain, :released_db_id, :ncbi_taxon_id
-  has_many :protein_counts
+  has_many :protein_counts, dependent: :destroy
   belongs_to :released_db
 
   RANKS = ["superkingdom", "kingdom", "phylum", "class", "order", "family", "genus", "species"]

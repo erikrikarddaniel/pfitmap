@@ -90,7 +90,8 @@ class PfitmapRelease < ActiveRecord::Base
       PfitmapRelease.transaction do
         # Delete old taxon, protein_count and protein rows
         # (Don't forget to implement cascading delete in taxon, protein and protein_count.)
-        ReleasedDb.find(:first, conditions: {pfitmap_release_id: self, load_database_id: load_db}).destroy
+        released_db = ReleasedDb.find(:first, conditions: {pfitmap_release_id: self, load_database_id: load_db})
+        released_db.destroy if released_db
         # Insert released_db
         released_db = ReleasedDb.new
         released_db.pfitmap_release = self
@@ -165,6 +166,7 @@ class PfitmapRelease < ActiveRecord::Base
     hpid2proteinids = {}
     
     hmm_p = Set.new(pfitmap_sequences.map {|p| p.hmm_profile}) 
+byebug
     hmm_p.each do |hp|
       hpid2proteinids[hp.id] = Protein.create(generate_protein_names(hp,released_db)).id
     end
@@ -180,7 +182,7 @@ class PfitmapRelease < ActiveRecord::Base
   end
 
   def generate_protein_names(hmm_profile,released_db)
-    protein_names = hmm_profile.all_parents_including_self.map {|h| h.protein_name}
+    protein_names = hmm_profile.all_parents_including_self.map {|h| h.protein_name}.reverse!
     protein_hash = Hash[Protein::PROT_COLUMNS.zip(protein_names)]
     protein_hash[:released_db_id] = released_db.id
     return protein_hash
