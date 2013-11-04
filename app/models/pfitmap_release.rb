@@ -68,6 +68,168 @@ class PfitmapRelease < ActiveRecord::Base
     ProteinCount.where(["pfitmap_release_id = ? AND taxon_id = ? AND protein_id = ?", self.id, taxon.id, protein.id])
   end
 
+  def calculate_released_dbs()
+    ## Calculate_main populates the protein_counts table with statistics:
+    #  There exists one row in protein_counts table for each combination of
+    #  taxon, protein and pfitmap_release (if it has been "calculated").
+    #  protein_counts row contains three values and one boolean:
+    #    - no_genomes
+    #    - no_proteins
+    #    - no_genomes_with_proteins
+    #    - obs_as_genome
+    #  See app/model/protein_count.rb for further information
+    #  
+    # The steps of the algorithm are explained below.
+
+    calculate_logger.info "#{Time.now} Started calculate_main."
+
+    require "matrix"
+
+    LoadDatabase.where(active: true).each do |load_db|
+      calculate_logger.info "#{Time.now}: Loading #{load_db}"
+      PfitmapRelease.transaction do
+        # Delete old taxon, protein_count and protein rows
+        # (Don't forget to implement cascading delete in taxon, protein and protein_count.)
+        ReleasedDb.find(:first, conditions: {pfitmap_release_id: self, load_database_id: load_db}).destroy
+        # Insert released_db
+        released_db = ReleasedDb.new
+        released_db.pfitmap_release = self
+        released_db.load_database = load_db
+        released_db.save
+
+        calculate_logger.info "#{Time.now}: Created released db for load database: #{load_db} and pfitmap release #{self}"
+        calculate_logger.info "#{Time.now}: Fetching pfitmap_sequence objects"
+
+        # Fetch all pfitmap_sequence objects for this release and its db_entries for the database selected
+        # when calling pfitmap_sequences.db_entries we get only the entries with db = load_db.sequence_database.db
+        pfitmap_sequences = PfitmapSequence.find(:all, include: [:db_entries,:hmm_profile], conditions: {pfitmap_release_id: self.id, db_entries: {db: load_db.sequence_database.db}})
+        gis = Set.new(pfitmap_sequences.map {|p| p.db_entries.map {|d| d.gi}.flatten}.flatten)
+        # Fetch and load all taxa, implement as method, return hash
+        taxon_map = save_and_fetch_taxonset(load_db.taxonset, gis, released_db)
+        # Create protein records, store in hash: gi -> protein.id
+        protein_map = save_and_fetch_proteins(pfitmap_sequences,released_db)
+
+        # Fetch all gi -> ncbi_taxon_id, count and batch insert
+        protein_counts = {}
+        
+        gis2tids = BiosqlWeb.gis2ncbi_taxon_ids(gis)
+        gis2tids.each do |gi2tid|
+          gi = gi2tid["protein_gi"]
+          tid = gi2tid["taxon_id"]
+
+          if not protein_counts[protein_map[gi]]
+             protein_counts[protein_map[gi]] = {}
+          end
+          if not protein_counts[protein_map[gi]][tid] 
+            protein_counts[protein_map[gi]][tid] = ProteinCount.new(
+              released_db_id: released_db.id,
+              taxon_id: taxon_map[tid],
+              protein_id: protein_map[gi],
+              no_proteins: 0,
+              no_genomes_with_proteins: 1
+            )
+          end
+          protein_counts[protein_map[gi]][tid].no_proteins += 1
+        end
+      ProteinCount.import protein_counts.values.map {|pc| pc.values}.flatten
+      end
+    end
+  end
+  # Inserts a list of unique taxons, fetched via the url in taxonseturl and a list of gis;
+  # returns a map from ncbi_taxon_id -> taxon.id.
+  def save_and_fetch_taxonset(taxonseturl, gis, released_db)
+    taxon_map = {}
+    taxon_names = []
+#    json_taxa = # Fetch load_db.taxonset with pfitmap_sequences...gis
+    #Should be replaced to handle different databases
+    #-----------------------
+    ncbi_taxon_ids = BiosqlWeb.organism_group2ncbi_taxon_ids("GOLDWGS")
+    json_taxa = BiosqlWeb.ncbi_taxon_ids2full_taxon_hierarchies(ncbi_taxon_ids)
+    json_taxa.zip(ncbi_taxon_ids).each do |taxons,ncbi|
+      taxon_names << generate_taxons_names(taxons,ncbi,released_db)
+    end
+    #-----------------------
+    # Bulk insert the taxons with released_db_id
+    Taxon.import taxon_names
+
+    Taxon.where(released_db_id: released_db.id).each do |taxon|
+      taxon_map[taxon.ncbi_taxon_id] = taxon.id
+    end
+    taxon_map
+  end
+
+  # Inserts a list of unique proteins and returns a hash with a map from gi to protein.id
+  def save_and_fetch_proteins(pfitmap_sequences,released_db)
+    protein_map = {}
+    # Save all distinct proteins
+    hpid2proteinids = {}
+    
+    hmm_p = Set.new(pfitmap_sequences.map {|p| p.hmm_profile}) 
+    hmm_p.each do |hp|
+      hpid2proteinids[hp.id] = Protein.create(generate_protein_names(hp,released_db)).id
+    end
+
+    # Create map from pfitmap_sequence...gi to its protein.id
+    pfitmap_sequences.each do |ps|
+      # The pfitmap_sequences should have filtered correct db_entries before being sent here.
+      ps.db_entries.each do |de|
+	protein_map[de.gi] = hpid2proteinids[ps.hmm_profile.id]
+      end
+    end
+    protein_map
+  end
+
+  def generate_protein_names(hmm_profile,released_db)
+    protein_names = hmm_profile.all_parents_including_self.map {|h| h.protein_name}
+    protein_hash = Hash[Protein::PROT_COLUMNS.zip(protein_names)]
+    protein_hash[:released_db_id] = released_db.id
+    return protein_hash
+  end
+
+  def generate_taxons_names(taxons,ncbi,released_db)
+    name_hash = Hash[Taxon::RANKS.map{ |r| [r,nil]}]
+    name_hash["strain"] = nil
+    # Filter on accepted ranks, re-add first and root
+    accepted_taxons = taxons.select {|taxon_hash| taxon_hash["node_rank"].in?(Taxon::RANKS)}
+    accepted_taxons.each do |at|
+      rank = at['node_rank']
+      name = at['scientific_name']
+      if rank.in?(name_hash)
+        name_hash[rank] = name
+      end
+    end
+    # if the lowest level in the taxon hierarchy is not used, add it as strain if strain not used already
+    if not taxons.first.in?(accepted_taxons)
+      if not name_hash['strain']
+        name_hash['strain'] = taxons.first['scientific_name']
+      else
+        calculate_logger.error "#{Time.now} Error, strain was already in use so the lowest taxon not added: #{taxons.first['ncbi_taxon_id']}"
+      end
+    end
+    # If kingdom is missing, use the taxon below superkingdom as kingdom (if it has
+    # not already been used 
+    if not "kingdom".in?(accepted_taxons.map {|t| t['node_rank']})
+      #Pick out the index of super kingdom and go down the hierarchy by one
+      kingdom = taxons[taxons.find_index {|t| t['node_rank'] =="superkingdom" } - 1]
+      #If the taxon picked out already in the accepted list, don't use it again
+      if not kingdom.in?(accepted_taxons)
+        name_hash["kingdom"] = kingdom['scientific_name']
+      else
+        calculate_logger.error "#{Time.now} Error, kingdom was missing, and the first level below superkingdom was already used: #{taxons.first['ncbi_taxon_id']}"
+      end
+    end
+    #Make missing taxas names unique: Each taxa below domain takes its parents name plus no level. So if kingdom of Bacteria is nil we get: "kingdom" => "Bacteria, no kingdom"
+    Taxon::RANKS[1..-1].each_with_index do |r,i|
+      if not name_hash[r]
+        name_hash[r] = "#{name_hash[Taxon::RANKS[i]]}, no #{r}"
+      end
+    end
+    #Top level should be called domain, not superkingdom
+    name_hash["domain"] = name_hash["superkingdom"]
+    name_hash.delete "superkingdom"
+    # Pick out the names
+    return Taxon.new(released_db_id: released_db.id, ncbi_taxon_id: ncbi,domain: name_hash['domain'],kingdom: name_hash['kingdom'],phylum: name_hash['phylum'],taxclass: name_hash['class'],taxorder: name_hash['order'],family: name_hash['family'], genus: name_hash['genus'], species: name_hash['species'],strain: name_hash['strain'])
+  end
   def calculate_main(organism_group, user)
     PfitmapRelease.transaction do
       ## Calculate_main populates the protein_counts table with statistics:
@@ -86,43 +248,6 @@ class PfitmapRelease < ActiveRecord::Base
 
       require "matrix"
 
-      load_database.where(active: true).each do |load_db|
-	PfitmapRelease.transaction do
-	  calculate_logger.info "#{Time.now}: Loading #{load_db}"
-
-	  # Delete old taxon, protein_count and protein rows
-	  # (Don't forget to implement cascading delete in taxon, protein and protein_count.)
-	  load_db.released_dbs.where(pfitmap_release_id: self.id).destroy
-
-	  # Insert released_db
-	  released_db = load_db.released_dbs.create!(pfitmap_release_id: self.id)
-
-	  # Fetch all pfitmap_sequence objects for this release and database
-	  calculate_logger.info "#{Time.now}: Fetching pfitmap_sequence objects"
-	  pfitmap_sequences = # Filter on pfitmap_release and load_db.sequence_db.db
-
-	  # Fetch and load all taxa, implement as method, return hash
-	  taxon_map = save_and_fetch_taxonset(load_db.taxonset, pfitmap_sequences...gis)
-
-	  # Create protein records, store in hash: gi -> protein.id
-	  gi_map = save_and_fetch_proteins(pfitmap_sequences)
-
-	  # Fetch all gi -> ncbi_taxon_id, count and batch insert
-	  protein_counts = {}
-	  JSON.parse(BioSqlWeb.gi2ncbi_taxon_ids(gis)).each do |gi2tid|
-	    protein_counts[protein_map[gi2tid["gi"]] |= {}
-	    protein_counts[protein_map[gi2tid["gi"]][gi2tid["ncbi_taxon_id"] |= ProteinCount.create(
-	      released_database_id: released_db.id,
-	      taxon_id: taxon_map[gi2tid["ncbi_taxon_id"]],
-	      protein_id: gi_map[gi2tid["gi"]],
-	      no_proteins: 0,
-	      no_genomes_with_proteins: 1
-	    )
-	    protein_counts[protein_map[gi2tid["gi"]][gi2tid["ncbi_taxon_id"].no_proteins += 1
-	  end
-	end
-      end
-      
       # Resets the protein_counts table for the release and 
       # fills it with new values.
       pfitmap_release = self
@@ -166,35 +291,6 @@ class PfitmapRelease < ActiveRecord::Base
 
   private
 
-  # Inserts a list of unique taxons, fetched via the url in taxonseturl and a list of gis;
-  # returns a map from ncbi_taxon_id -> taxon.id.
-  def save_and_fetch_taxonset(taxonseturl, gis)
-    json_taxa = # Fetch load_db.taxonset with pfitmap_sequences...gis
-    json_taxa.batch_insert
-    Taxon.where(released_db_id: released_db.id).each do |taxon|
-      taxon_map[taxon.ncbi_taxon_id] = taxon.id
-    end
-    taxon_map
-  end
-
-  # Inserts a list of unique proteins and returns a hash with a map from gi to protein.id
-  def save_and_fetch_proteins(pfitmap_sequences, db)
-    protein_map = {}
-
-    # Save all distinct proteins
-    hpid2proteinids = {}
-    pfitmap_sequences.hmm_profiles.unique.each do |hp|
-      hpid2proteinids[hp.id] = Protein.create(_data_for_protein(hp)).id
-    end
-
-    # Create map from pfitmap_sequence...gi to its protein.id
-    pfitmap_sequences.each do |ps|
-      ps...db_entries.where(db: db).gi.each do |gi|
-	protein_map[gi] = hpid2proteinids[ps.best_profile.id]
-      end
-    end
-    protein_map
-  end
 
 
   def dry_run(taxon_ncbi_ids, pfitmap_release, proteins, rank_hash)
