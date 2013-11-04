@@ -51,9 +51,13 @@
     </a>
 
     <ul id="taxon_db_menu" class="dropdown-menu">
+      <% @load_dbs.each do |ld| %>
+      <% if ld %>
       <li>
-	<%= link_to "Ref"%>
+	<%= link_to ld.name "javascript:d3_database('"+ld.id+"');"%>
       </li>
+      <% end %>
+      <% end %>
     </ul>
   </li>
   <li class="dropdown">
