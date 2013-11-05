@@ -147,9 +147,11 @@ class PfitmapRelease < ActiveRecord::Base
     taxon_names = []
 #    json_taxa = # Fetch load_db.taxonset with pfitmap_sequences...gis
     #Should be replaced to handle different databases
+    response = HTTParty.get(taxonseturl+gis.to_a.join(","))
+    json_taxa = response.parsed_response
     #-----------------------
-    ncbi_taxon_ids = BiosqlWeb.organism_group2ncbi_taxon_ids("GOLDWGS")
-    json_taxa = BiosqlWeb.ncbi_taxon_ids2full_taxon_hierarchies(ncbi_taxon_ids)
+    #ncbi_taxon_ids = BiosqlWeb.organism_group2ncbi_taxon_ids("GOLDWGS")
+    #json_taxa = BiosqlWeb.ncbi_taxon_ids2full_taxon_hierarchies(ncbi_taxon_ids)
     json_taxa.zip(ncbi_taxon_ids).each do |taxons,ncbi|
       taxon_names << generate_taxons_names(taxons,ncbi,released_db)
     end
