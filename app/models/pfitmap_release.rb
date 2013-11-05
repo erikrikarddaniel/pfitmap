@@ -147,13 +147,15 @@ class PfitmapRelease < ActiveRecord::Base
     taxon_names = []
 #    json_taxa = # Fetch load_db.taxonset with pfitmap_sequences...gis
     #Should be replaced to handle different databases
-    response = HTTParty.get(taxonseturl+gis.to_a.join(","))
+    options = {:headers => { 'Content-Type' => 'application/json', 'Accepts' => 'application/json'}, :body => {:gis => gis}.to_json}
+    response = HTTParty.get(taxonseturl,options)
     json_taxa = response.parsed_response
     #-----------------------
     #ncbi_taxon_ids = BiosqlWeb.organism_group2ncbi_taxon_ids("GOLDWGS")
     #json_taxa = BiosqlWeb.ncbi_taxon_ids2full_taxon_hierarchies(ncbi_taxon_ids)
-    json_taxa.zip(ncbi_taxon_ids).each do |taxons,ncbi|
-      taxon_names << generate_taxons_names(taxons,ncbi,released_db)
+byebug
+    json_taxa.each do |taxons|
+      taxon_names << generate_taxons_names(taxons,released_db)
     end
     #-----------------------
     # Bulk insert the taxons with released_db_id
@@ -172,7 +174,6 @@ class PfitmapRelease < ActiveRecord::Base
     hpid2proteinids = {}
     
     hmm_p = Set.new(pfitmap_sequences.map {|p| p.hmm_profile}) 
-byebug
     hmm_p.each do |hp|
       hpid2proteinids[hp.id] = Protein.create(generate_protein_names(hp,released_db)).id
     end
@@ -194,7 +195,7 @@ byebug
     return protein_hash
   end
 
-  def generate_taxons_names(taxons,ncbi,released_db)
+  def generate_taxons_names(taxons,released_db)
     name_hash = Hash[Taxon::RANKS.map{ |r| [r,nil]}]
     name_hash["strain"] = nil
     # Filter on accepted ranks, re-add first and root
@@ -236,7 +237,7 @@ byebug
     name_hash["domain"] = name_hash["superkingdom"]
     name_hash.delete "superkingdom"
     # Pick out the names
-    return Taxon.new(released_db_id: released_db.id, ncbi_taxon_id: ncbi,domain: name_hash['domain'],kingdom: name_hash['kingdom'],phylum: name_hash['phylum'],taxclass: name_hash['class'],taxorder: name_hash['order'],family: name_hash['family'], genus: name_hash['genus'], species: name_hash['species'],strain: name_hash['strain'])
+    return Taxon.new(released_db_id: released_db.id, ncbi_taxon_id: taxons.first["ncbi_taxon_id"],domain: name_hash['domain'],kingdom: name_hash['kingdom'],phylum: name_hash['phylum'],taxclass: name_hash['class'],taxorder: name_hash['order'],family: name_hash['family'], genus: name_hash['genus'], species: name_hash['species'],strain: name_hash['strain'])
   end
 #  def calculate_main(organism_group, user)
 #    PfitmapRelease.transaction do
