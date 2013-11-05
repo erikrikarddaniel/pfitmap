@@ -58,9 +58,15 @@ class LoadDatabasesController < ApplicationController
   # PUT /load_databases/1.json
   def update
     @load_database = LoadDatabase.find(params[:id])
-
+    ld = params[:load_database]
+    @load_database.taxonset = ld[:taxonset]
+    @load_database.name = ld[:name]
+    @load_database.description = ld[:description]
+    @load_database.active =ld[:active]
+    @load_database.sequence_database = SequenceDatabase.find(:first,ld[:sequence_database])
     respond_to do |format|
-      if @load_database.update_attributes(params[:load_database])
+      
+      if @load_database.save
         format.html { redirect_to @load_database, notice: 'Load database was successfully updated.' }
         format.json { head :no_content }
       else
