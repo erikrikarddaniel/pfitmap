@@ -117,8 +117,8 @@ FactoryGirl.define do
     no_proteins 0
     no_genomes_with_proteins 0
     protein
-    pfitmap_release
     taxon
+    released_db
   end
   factory :sequence_database do
     db "ref"

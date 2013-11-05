@@ -26,7 +26,6 @@ class HmmProfile < ActiveRecord::Base
   has_many :hmm_score_criteria, :dependent => :destroy
   has_many :enzyme_profiles, :dependent => :destroy
   has_many :enzymes, :through => :enzyme_profiles
-  has_many :proteins, :dependent => :destroy
   has_many :db_sequence_best_profiles, :dependent => :destroy
   has_many :best_profile_sequences, through: :db_sequence_best_profiles, source: :db_sequence, :dependent => :destroy
   has_many :pfitmap_sequences, :dependent => :destroy

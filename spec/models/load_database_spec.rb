@@ -18,7 +18,7 @@ describe LoadDatabase do
   let!(:sequence_database) {FactoryGirl.create(:sequence_database)}
 
   before do
-    @ld = LoadDatabase.create(taxonset: "restful_URL", name: "ref + wgs", description: "ref wgs description",active: true,sequence_database: sequence_database)
+    @ld = LoadDatabase.create(taxonset: "restful_URL", name: "ref + wgs", description: "ref wgs description",active: true,sequence_database_id: sequence_database.id)
   end
   it "should be valid" do
     @ld.should be_valid
