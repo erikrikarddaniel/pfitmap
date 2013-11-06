@@ -122,21 +122,22 @@ class PfitmapRelease < ActiveRecord::Base
           gi = gi2tid["protein_gi"]
           tid = gi2tid["taxon_id"]
 
-          if not protein_counts[protein_map[gi]]
-             protein_counts[protein_map[gi]] = {}
-          end
-          if not protein_counts[protein_map[gi]][tid] 
-            protein_counts[protein_map[gi]][tid] = ProteinCount.new(
-              released_db_id: released_db.id,
-              taxon_id: taxon_map[tid],
-              protein_id: protein_map[gi],
-              no_proteins: 0,
-              no_genomes_with_proteins: 1
-            )
-          end
+          # It happens that no taxon_id is returned for a gi, warn and continue with the next entry
+          unless taxon_map[tid] do
+            logger.warn "Found no taxon for gi: #{gi}, tid: #{tid}"
+            next
+	  end
+          protein_counts[protein_map[gi]] |= {}
+          protein_counts[protein_map[gi]][tid] |= ProteinCount.new(
+            released_db_id: released_db.id,
+            taxon_id: taxon_map[tid],
+            protein_id: protein_map[gi],
+            no_proteins: 0,
+            no_genomes_with_proteins: 1
+          )
           protein_counts[protein_map[gi]][tid].no_proteins += 1
         end
-      ProteinCount.import protein_counts.values.map {|pc| pc.values}.flatten
+        ProteinCount.import protein_counts.values.map {|pc| pc.values}.flatten
       end
     end
   end
@@ -153,7 +154,6 @@ class PfitmapRelease < ActiveRecord::Base
     #-----------------------
     #ncbi_taxon_ids = BiosqlWeb.organism_group2ncbi_taxon_ids("GOLDWGS")
     #json_taxa = BiosqlWeb.ncbi_taxon_ids2full_taxon_hierarchies(ncbi_taxon_ids)
-byebug
     json_taxa.each do |taxons|
       taxon_names << generate_taxons_names(taxons,released_db)
     end
