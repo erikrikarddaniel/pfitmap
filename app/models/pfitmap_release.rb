@@ -123,17 +123,17 @@ class PfitmapRelease < ActiveRecord::Base
           tid = gi2tid["taxon_id"]
 
           # It happens that no taxon_id is returned for a gi, warn and continue with the next entry
-          unless taxon_map[tid] do
+          unless taxon_map[tid] 
             logger.warn "Found no taxon for gi: #{gi}, tid: #{tid}"
             next
 	  end
-          protein_counts[protein_map[gi]] |= {}
+	  protein_counts[protein_map[gi]] |= {}
           protein_counts[protein_map[gi]][tid] |= ProteinCount.new(
-            released_db_id: released_db.id,
-            taxon_id: taxon_map[tid],
-            protein_id: protein_map[gi],
-            no_proteins: 0,
-            no_genomes_with_proteins: 1
+	    released_db_id: released_db.id,
+	    taxon_id: taxon_map[tid],
+	    protein_id: protein_map[gi],
+	    no_proteins: 0,
+	    no_genomes_with_proteins: 1
           )
           protein_counts[protein_map[gi]][tid].no_proteins += 1
         end
