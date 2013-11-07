@@ -99,6 +99,10 @@ class HmmProfile < ActiveRecord::Base
     all_parents_recursion([],self)
   end
 
+  def all_parents_with_acceptable_rank_including_self
+    all_parents_with_acceptable_rank_recursion([],self)
+  end
+
   def all_proteins_including_parents
     proteins = []
     profiles = all_parents_including_self
@@ -123,6 +127,18 @@ class HmmProfile < ActiveRecord::Base
     acc << profile
     if parent_profile
       all_parents_recursion(acc, parent_profile)
+    else
+      return acc
+    end
+  end
+
+  def all_parents_with_acceptable_rank_recursion(acc, profile)
+    parent_profile = profile.parent
+    if profile.rank.in?(Protein::PROT_LEVELS)
+      acc << profile
+    end
+    if parent_profile
+      all_parents_with_acceptable_rank_recursion(acc, parent_profile)
     else
       return acc
     end

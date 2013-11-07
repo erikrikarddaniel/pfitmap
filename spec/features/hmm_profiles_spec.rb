@@ -32,6 +32,17 @@ describe "Hmm Profile Pages" do
   describe "Showing a profile" do
     let!(:source1) { FactoryGirl.create(:sequence_source) }
     let!(:source2) { FactoryGirl.create(:sequence_source_older) }
+    let!(:hmm_profile) { FactoryGirl.create(:hmm_profile, rank: "protfamily") }
+    let!(:hmm_profile2) { FactoryGirl.create(:hmm_profile, parent_id: hmm_profile.id, rank: nil) }
+    let!(:hmm_profile3) { FactoryGirl.create(:hmm_profile, parent_id: hmm_profile.id, rank: "protclass") }
+    it "should ignore lowest level" do
+      parents = hmm_profile3.all_parents_with_acceptable_rank_including_self
+      parents.length.should == 2
+    end
+  end
+  describe "Showing a profile" do
+    let!(:source1) { FactoryGirl.create(:sequence_source) }
+    let!(:source2) { FactoryGirl.create(:sequence_source_older) }
     let!(:hmm_profile) { FactoryGirl.create(:hmm_profile) }
     let!(:hmm_profile2) { FactoryGirl.create(:hmm_profile, parent_id: hmm_profile.id) }
     # Results for profile 1
