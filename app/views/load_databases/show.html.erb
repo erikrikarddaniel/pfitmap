@@ -22,9 +22,9 @@
 
 <p>
   <b>Sequence database:</b>
-  <%= @load_database.sequence_database %>
+  <%= @load_database.sequence_database.db %>
 </p>
 
 
-<%= link_to 'Edit', edit_load_database_path(@load_database) %> |
-<%= link_to 'Back', load_databases_path %>
+<%= link_to 'Edit', edit_sequence_database_load_database_path(@sequence_database,@load_database) %> |
+<%= link_to 'Back', sequence_database_path(@sequence_database) %>

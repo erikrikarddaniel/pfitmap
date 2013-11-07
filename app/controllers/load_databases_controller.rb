@@ -1,5 +1,6 @@
 class LoadDatabasesController < ApplicationController
   load_and_authorize_resource
+  before_filter :get_sequence_database
   # GET /load_databases
   # GET /load_databases.json
   def index
@@ -26,7 +27,6 @@ class LoadDatabasesController < ApplicationController
   # GET /load_databases/new.json
   def new
     @load_database = LoadDatabase.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @load_database }
@@ -41,11 +41,11 @@ class LoadDatabasesController < ApplicationController
   # POST /load_databases
   # POST /load_databases.json
   def create
-    @load_database = LoadDatabase.new(params[:load_database])
+    @load_database = @sequence_database.load_databases.new(params[:load_database])
 
     respond_to do |format|
       if @load_database.save
-        format.html { redirect_to @load_database, notice: 'Load database was successfully created.' }
+        format.html { redirect_to @sequence_database, notice: 'Load database was successfully created.' }
         format.json { render json: @load_database, status: :created, location: @load_database }
       else
         format.html { render action: "new" }
@@ -63,11 +63,10 @@ class LoadDatabasesController < ApplicationController
     @load_database.name = ld[:name]
     @load_database.description = ld[:description]
     @load_database.active =ld[:active]
-    @load_database.sequence_database = SequenceDatabase.find(:first,ld[:sequence_database])
     respond_to do |format|
       
       if @load_database.save
-        format.html { redirect_to @load_database, notice: 'Load database was successfully updated.' }
+        format.html { redirect_to @sequence_database, notice: 'Load database was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -83,8 +82,14 @@ class LoadDatabasesController < ApplicationController
     @load_database.destroy
 
     respond_to do |format|
-      format.html { redirect_to load_databases_url }
+      format.html { redirect_to @sequence_database }
       format.json { head :no_content }
     end
+  end
+
+  private
+  
+  def get_sequence_database
+    @sequence_database = SequenceDatabase.find(params[:sequence_database_id])
   end
 end

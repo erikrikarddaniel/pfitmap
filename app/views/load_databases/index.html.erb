@@ -1,4 +1,4 @@
-<h1>Listing load_databases</h1>
+<h1>Listing Load Databases</h1>
 
 <table>
   <tr>
@@ -18,7 +18,7 @@
     <td><%= load_database.name %></td>
     <td><%= load_database.description %></td>
     <td><%= load_database.active %></td>
-    <td><%= load_database.sequence_database %></td>
+    <td><%= load_database.sequence_database.abbreviation %></td>
     <td><%= link_to 'Show', load_database %></td>
     <td><%= link_to 'Edit', edit_load_database_path(load_database) %></td>
     <td><%= link_to 'Destroy', load_database, method: :delete, data: { confirm: 'Are you sure?' } %></td>

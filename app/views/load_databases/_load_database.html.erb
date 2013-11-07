@@ -1,0 +1,10 @@
+  <tr>
+    <td><%= load_database.taxonset %></td>
+    <td><%= load_database.name %></td>
+    <td><%= load_database.description %></td>
+    <td><%= load_database.active %></td>
+    <td><%= load_database.sequence_database.abbreviation %></td>
+    <td><%= link_to 'Show', sequence_database_load_database_path(@sequence_database,load_database) %></td>
+    <td><%= link_to 'Edit', edit_sequence_database_load_database_path(@sequence_database,load_database) %></td>
+    <td><%= link_to 'Destroy', sequence_database_load_database_path(@sequence_database,load_database), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>

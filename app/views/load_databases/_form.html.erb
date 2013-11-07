@@ -1,4 +1,4 @@
-<%= form_for(@load_database) do |f| %>
+<%= form_for([@sequence_database,@load_database]) do |f| %>
   <% if @load_database.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@load_database.errors.count, "error") %> prohibited this load_database from being saved:</h2>
@@ -26,10 +26,6 @@
   <div class="field">
     <%= f.label :active %><br />
     <%= f.check_box :active %>
-  </div>
-  <div class="field">
-    <%= f.label :sequence_database %><br />
-    <%= f.text_field :sequence_database %>
   </div>
   <div class="actions">
     <%= f.submit %>
