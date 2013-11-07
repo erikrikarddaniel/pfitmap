@@ -72,7 +72,7 @@ class PfitmapRelease < ActiveRecord::Base
     @@calculate_logger ||= ActiveSupport::BufferedLogger.new(Rails.root.join('log/calculate.log'))
   end
 
-  def calculate_released_dbs()
+  def calculate_released_dbs(load_db)
     ## Calculate_main populates the protein_counts table with statistics:
     #  There exists one row in protein_counts table for each combination of
     #  taxon, protein and pfitmap_release (if it has been "calculated").
@@ -89,78 +89,78 @@ class PfitmapRelease < ActiveRecord::Base
 
     require "matrix"
 
-    LoadDatabase.where(active: true).each do |load_db|
-      calculate_logger.info "#{Time.now}: Loading #{load_db.name}"
-      PfitmapRelease.transaction do
-        # Delete old taxon, protein_count and protein rows
-        # (Don't forget to implement cascading delete in taxon, protein and protein_count.)
-        released_db = ReleasedDb.find(:first, conditions: {pfitmap_release_id: self, load_database_id: load_db})
-        released_db.destroy if released_db
-        # Insert released_db
-        released_db = ReleasedDb.new
-        released_db.pfitmap_release = self
-        released_db.load_database = load_db
-        released_db.save
+    calculate_logger.info "#{Time.now}: Loading #{load_db.name}"
+    PfitmapRelease.transaction do
+      # Delete old taxon, protein_count and protein rows
+      # (Don't forget to implement cascading delete in taxon, protein and protein_count.)
+      released_db = ReleasedDb.find(:first, conditions: {pfitmap_release_id: self, load_database_id: load_db})
+      released_db.destroy if released_db
+      # Insert released_db
+      released_db = ReleasedDb.new
+      released_db.pfitmap_release = self
+      released_db.load_database = load_db
+      released_db.save
 
-        calculate_logger.info "#{Time.now}: Created released db: (#{released_db.id}) for load database: #{load_db.name} and pfitmap release #{self.id}"
-        calculate_logger.info "#{Time.now}: Fetching pfitmap_sequence objects"
+      calculate_logger.info "#{Time.now}: Created released db: (#{released_db.id}) for load database: #{load_db.name} and pfitmap release #{self.id}"
+      calculate_logger.info "#{Time.now}: Fetching pfitmap_sequence objects"
 
-        # Fetch all pfitmap_sequence objects for this release and its db_entries for the database selected
-        # when calling pfitmap_sequences.db_entries we get only the entries with db = load_db.sequence_database.db
-        pfitmap_sequences = PfitmapSequence.find(:all, include: [:db_entries,:hmm_profile], conditions: {pfitmap_release_id: self.id, db_entries: {db: load_db.sequence_database.db}})
-        gis = Set.new(pfitmap_sequences.map {|p| p.db_entries.map {|d| d.gi}.flatten}.flatten)
+      # Fetch all pfitmap_sequence objects for this release and its db_entries for the database selected
+      # when calling pfitmap_sequences.db_entries we get only the entries with db = load_db.sequence_database.db
+      pfitmap_sequences = PfitmapSequence.find(:all, include: [:db_entries,:hmm_profile], conditions: {pfitmap_release_id: self.id, db_entries: {db: load_db.sequence_database.db}})
+      gis = Set.new(pfitmap_sequences.map {|p| p.db_entries.map {|d| d.gi}.flatten}.flatten)
 	
-        calculate_logger.info "#{Time.now}: Fetched #{gis.length} gis"
+      calculate_logger.info "#{Time.now}: Fetched #{gis.length} gis"
 	
-        # Fetch and load all taxa, implement as method, return hash
-        calculate_logger.info "#{Time.now}: Creating taxon mapping"
-        taxon_map = save_and_fetch_taxonset(load_db.taxonset, gis, released_db)
-        calculate_logger.info "#{Time.now}: Created #{taxon_map.length} taxon maps"
+      # Fetch and load all taxa, implement as method, return hash
+      calculate_logger.info "#{Time.now}: Creating taxon mapping"
+      taxon_map = save_and_fetch_taxonset(load_db.taxonset, gis, released_db)
+      calculate_logger.info "#{Time.now}: Created #{taxon_map.length} taxon maps"
         
-        # Create protein records, store in hash: gi -> protein.id
-	calculate_logger.info "#{Time.now}: Creating protein mapping"
-        protein_map = save_and_fetch_proteins(pfitmap_sequences,released_db)
-        calculate_logger.info "#{Time.now}: Created #{protein_map.length} protein maps"
+      # Create protein records, store in hash: gi -> protein.id
+      calculate_logger.info "#{Time.now}: Creating protein mapping"
+      protein_map = save_and_fetch_proteins(pfitmap_sequences,released_db)
+      calculate_logger.info "#{Time.now}: Created #{protein_map.length} protein maps"
 
-        # Fetch all gi -> ncbi_taxon_id, count and batch insert
-        protein_counts = {}
+      # Fetch all gi -> ncbi_taxon_id, count and batch insert
+      protein_counts = {}
         
-	calculate_logger.info "#{Time.now}: Getting ncbi taxon ids from gis"
-        gis2tids = BiosqlWeb.gis2ncbi_taxon_ids(gis)
-        calculate_logger.info "#{Time.now}: Fetched #{gis2tids.length} ncbi taxon ids maps"
+      calculate_logger.info "#{Time.now}: Getting ncbi taxon ids from gis"
+      gis2tids = BiosqlWeb.gis2ncbi_taxon_ids(gis)
+      calculate_logger.info "#{Time.now}: Fetched #{gis2tids.length} ncbi taxon ids maps"
 
-	calculate_logger.info "#{Time.now}: Generating protein counts"
-        gis2tids.each do |gi2tid|
-          gi = gi2tid["protein_gi"]
-          tid = gi2tid["taxon_id"]
+      calculate_logger.info "#{Time.now}: Generating protein counts"
+      gis2tids.each do |gi2tid|
+        gi = gi2tid["protein_gi"]
+        tid = gi2tid["taxon_id"]
 
-          # It happens that no taxon_id is returned for a gi, warn and continue with the next entry
-          unless taxon_map[tid] 
-	    calculate_logger.warn "#{Time.now}: Found no taxon for gi: #{gi}, tid: #{tid}"
-            next
-	  end
-	  unless protein_map[gi]
-	    calculate_logger.warn "#{Time.now}: Found no protein for gi: #{gi}, tid: #{tid}"
-            next
-	  end
-	  unless protein_counts[protein_map[gi]] 
-	    protein_counts[protein_map[gi]] = {}
-	  end
-          unless protein_counts[protein_map[gi]][tid]
-            protein_counts[protein_map[gi]][tid] = ProteinCount.new(
-	      released_db_id: released_db.id,
-	      taxon_id: taxon_map[tid],
-	      protein_id: protein_map[gi],
-	      no_proteins: 0,
-	      no_genomes_with_proteins: 1
-	    )
-          end
-          protein_counts[protein_map[gi]][tid].no_proteins += 1
+	# It happens that no taxon_id is returned for a gi, warn and continue with the next entry
+        unless taxon_map[tid] 
+	  calculate_logger.warn "#{Time.now}: Found no taxon for gi: #{gi}, tid: #{tid}"
+          next
+	end
+	unless protein_map[gi]
+	  calculate_logger.warn "#{Time.now}: Found no protein for gi: #{gi}, tid: #{tid}"
+          next
+	end
+	unless protein_counts[protein_map[gi]] 
+	  protein_counts[protein_map[gi]] = {}
+	end
+        unless protein_counts[protein_map[gi]][tid]
+          protein_counts[protein_map[gi]][tid] = ProteinCount.new(
+	    released_db_id: released_db.id,
+	    taxon_id: taxon_map[tid],
+	    protein_id: protein_map[gi],
+	    no_proteins: 0,
+	    no_genomes_with_proteins: 1
+	  )
         end
-	ProteinCount.import protein_counts.values.map {|pc| pc.values}.flatten
-        calculate_logger.info "#{Time.now}: Created #{ProteinCount.where(released_db_id: released_db.id).count} protein counts"
+        protein_counts[protein_map[gi]][tid].no_proteins += 1
       end
+      ProteinCount.import protein_counts.values.map {|pc| pc.values}.flatten
+      calculate_logger.info "#{Time.now}: Created #{ProteinCount.where(released_db_id: released_db.id).count} protein counts"
     end
+  rescue Exception => e
+    calculate_logger.error "#{Time.now}: Calculate FAILED for #{load_db.name} with error: #{e}"
   end
   # Inserts a list of unique taxons, fetched via the url in taxonseturl and a list of gis;
   # returns a map from ncbi_taxon_id -> taxon.id.
