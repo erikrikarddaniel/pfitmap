@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131025084632) do
+ActiveRecord::Schema.define(:version => 20131107203706) do
 
   create_table "db_entries", :force => true do |t|
     t.integer  "gi"
@@ -258,8 +258,6 @@ ActiveRecord::Schema.define(:version => 20131025084632) do
     t.string   "strain"
     t.integer  "released_db_id"
     t.index ["released_db_id"], :name => "fk__taxons_released_db_id", :order => {"released_db_id" => :asc}
-    t.index ["ncbi_taxon_id"], :name => "index_taxons_on_ncbi_taxon_id", :unique => true, :order => {"ncbi_taxon_id" => :asc}
-    t.index ["domain", "kingdom", "phylum", "taxclass", "taxorder", "family", "genus", "species", "strain"], :name => "taxhierarchy", :unique => true, :order => {"domain" => :asc, "kingdom" => :asc, "phylum" => :asc, "taxclass" => :asc, "taxorder" => :asc, "family" => :asc, "genus" => :asc, "species" => :asc, "strain" => :asc}
     t.foreign_key ["released_db_id"], "released_dbs", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_taxons_released_db_id"
   end
 
