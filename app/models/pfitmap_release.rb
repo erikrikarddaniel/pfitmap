@@ -90,7 +90,7 @@ class PfitmapRelease < ActiveRecord::Base
     require "matrix"
 
     LoadDatabase.where(active: true).each do |load_db|
-      calculate_logger.info "#{Time.now}: Loading #{load_db}"
+      calculate_logger.info "#{Time.now}: Loading #{load_db.name}"
       PfitmapRelease.transaction do
         # Delete old taxon, protein_count and protein rows
         # (Don't forget to implement cascading delete in taxon, protein and protein_count.)
@@ -139,17 +139,25 @@ class PfitmapRelease < ActiveRecord::Base
 	    calculate_logger.warn "#{Time.now}: Found no taxon for gi: #{gi}, tid: #{tid}"
             next
 	  end
-	  protein_counts[protein_map[gi]] |= {}
-          protein_counts[protein_map[gi]][tid] |= ProteinCount.new(
-	    released_db_id: released_db.id,
-	    taxon_id: taxon_map[tid],
-	    protein_id: protein_map[gi],
-	    no_proteins: 0,
-	    no_genomes_with_proteins: 1
-          )
+	  unless protein_map[gi]
+	    calculate_logger.warn "#{Time.now}: Found no protein for gi: #{gi}, tid: #{tid}"
+            next
+	  end
+	  unless protein_counts[protein_map[gi]] 
+	    protein_counts[protein_map[gi]] = {}
+	  end
+          unless protein_counts[protein_map[gi]][tid]
+            protein_counts[protein_map[gi]][tid] = ProteinCount.new(
+	      released_db_id: released_db.id,
+	      taxon_id: taxon_map[tid],
+	      protein_id: protein_map[gi],
+	      no_proteins: 0,
+	      no_genomes_with_proteins: 1
+	    )
+          end
           protein_counts[protein_map[gi]][tid].no_proteins += 1
         end
-        ProteinCount.import protein_counts.values.map {|pc| pc.values}.flatten
+	ProteinCount.import protein_counts.values.map {|pc| pc.values}.flatten
         calculate_logger.info "#{Time.now}: Created #{ProteinCount.where(released_db_id: released_db.id).count} protein counts"
       end
     end
@@ -195,15 +203,14 @@ class PfitmapRelease < ActiveRecord::Base
 
     calculate_logger.info "#{Time.now}: Creating proteins"
     hmm_p.each do |hp|
-      hpid2proteinids[hp.id] = Protein.new(generate_protein_names(hp,released_db))
+      hpid2proteinids[hp.id] = Protein.create(generate_protein_names(hp,released_db)).id
     end
-    Protein.import hpid2proteinids.values.flatten
     calculate_logger.info "#{Time.now}: Created #{hpid2proteinids.length} proteins"
     # Create map from pfitmap_sequence...gi to its protein.id
     pfitmap_sequences.each do |ps|
       # The pfitmap_sequences should have filtered correct db_entries before being sent here.
       ps.db_entries.each do |de|
-	protein_map[de.gi] = hpid2proteinids[ps.hmm_profile.id].id
+	protein_map[de.gi] = hpid2proteinids[ps.hmm_profile.id]
       end
     end
     calculate_logger.info "#{Time.now}: Mapped #{protein_map.length} db entries gis to protein id"
