@@ -85,7 +85,7 @@ class PfitmapRelease < ActiveRecord::Base
     #  
     # The steps of the algorithm are explained below.
 
-    calculate_logger.info "#{Time.now} Started calculate_main."
+    calculate_logger.info "#{Time.now}: Started calculate_main."
 
     require "matrix"
 
@@ -102,29 +102,41 @@ class PfitmapRelease < ActiveRecord::Base
         released_db.load_database = load_db
         released_db.save
 
-        calculate_logger.info "#{Time.now}: Created released db for load database: #{load_db} and pfitmap release #{self}"
+        calculate_logger.info "#{Time.now}: Created released db: (#{released_db.id}) for load database: #{load_db.name} and pfitmap release #{self.id}"
         calculate_logger.info "#{Time.now}: Fetching pfitmap_sequence objects"
 
         # Fetch all pfitmap_sequence objects for this release and its db_entries for the database selected
         # when calling pfitmap_sequences.db_entries we get only the entries with db = load_db.sequence_database.db
         pfitmap_sequences = PfitmapSequence.find(:all, include: [:db_entries,:hmm_profile], conditions: {pfitmap_release_id: self.id, db_entries: {db: load_db.sequence_database.db}})
         gis = Set.new(pfitmap_sequences.map {|p| p.db_entries.map {|d| d.gi}.flatten}.flatten)
+	
+        calculate_logger.info "#{Time.now}: Fetched #{gis.length} gis"
+	
         # Fetch and load all taxa, implement as method, return hash
+        calculate_logger.info "#{Time.now}: Creating taxon mapping"
         taxon_map = save_and_fetch_taxonset(load_db.taxonset, gis, released_db)
+        calculate_logger.info "#{Time.now}: Created #{taxon_map.length} taxon maps"
+        
         # Create protein records, store in hash: gi -> protein.id
+	calculate_logger.info "#{Time.now}: Creating protein mapping"
         protein_map = save_and_fetch_proteins(pfitmap_sequences,released_db)
+        calculate_logger.info "#{Time.now}: Created #{protein_map.length} protein maps"
 
         # Fetch all gi -> ncbi_taxon_id, count and batch insert
         protein_counts = {}
         
+	calculate_logger.info "#{Time.now}: Getting ncbi taxon ids from gis"
         gis2tids = BiosqlWeb.gis2ncbi_taxon_ids(gis)
+        calculate_logger.info "#{Time.now}: Fetched #{gis2tids.length} ncbi taxon ids maps"
+
+	calculate_logger.info "#{Time.now}: Generating protein counts"
         gis2tids.each do |gi2tid|
           gi = gi2tid["protein_gi"]
           tid = gi2tid["taxon_id"]
 
           # It happens that no taxon_id is returned for a gi, warn and continue with the next entry
           unless taxon_map[tid] 
-            logger.warn "Found no taxon for gi: #{gi}, tid: #{tid}"
+	    calculate_logger.warn "#{Time.now}: Found no taxon for gi: #{gi}, tid: #{tid}"
             next
 	  end
 	  protein_counts[protein_map[gi]] |= {}
@@ -138,6 +150,7 @@ class PfitmapRelease < ActiveRecord::Base
           protein_counts[protein_map[gi]][tid].no_proteins += 1
         end
         ProteinCount.import protein_counts.values.map {|pc| pc.values}.flatten
+        calculate_logger.info "#{Time.now}: Created #{ProteinCount.where(released_db_id: released_db.id).count} protein counts"
       end
     end
   end
@@ -148,9 +161,11 @@ class PfitmapRelease < ActiveRecord::Base
     taxon_names = []
 #    json_taxa = # Fetch load_db.taxonset with pfitmap_sequences...gis
     #Should be replaced to handle different databases
+    calculate_logger.info "#{Time.now}: Fetching json taxa"
     options = {:headers => { 'Content-Type' => 'application/json', 'Accepts' => 'application/json'}, :body => {:gis => gis}.to_json}
     response = HTTParty.get(taxonseturl,options)
     json_taxa = response.parsed_response
+    calculate_logger.info "#{Time.now}: Fetched #{json_taxa.length} taxa"
     #-----------------------
     #ncbi_taxon_ids = BiosqlWeb.organism_group2ncbi_taxon_ids("GOLDWGS")
     #json_taxa = BiosqlWeb.ncbi_taxon_ids2full_taxon_hierarchies(ncbi_taxon_ids)
@@ -164,6 +179,7 @@ class PfitmapRelease < ActiveRecord::Base
     Taxon.where(released_db_id: released_db.id).each do |taxon|
       taxon_map[taxon.ncbi_taxon_id] = taxon.id
     end
+    calculate_logger.info "#{Time.now}: Created #{taxon_map.length} taxa"
     taxon_map
   end
 
@@ -173,18 +189,24 @@ class PfitmapRelease < ActiveRecord::Base
     # Save all distinct proteins
     hpid2proteinids = {}
     
+    calculate_logger.info "#{Time.now}: Getting unique hmm profiles"
     hmm_p = Set.new(pfitmap_sequences.map {|p| p.hmm_profile}) 
-    hmm_p.each do |hp|
-      hpid2proteinids[hp.id] = Protein.create(generate_protein_names(hp,released_db)).id
-    end
+    calculate_logger.info "#{Time.now}: Found #{hmm_p.length} hmm profiles"
 
+    calculate_logger.info "#{Time.now}: Creating proteins"
+    hmm_p.each do |hp|
+      hpid2proteinids[hp.id] = Protein.new(generate_protein_names(hp,released_db))
+    end
+    Protein.import hpid2proteinids.values.flatten
+    calculate_logger.info "#{Time.now}: Created #{hpid2proteinids.length} proteins"
     # Create map from pfitmap_sequence...gi to its protein.id
     pfitmap_sequences.each do |ps|
       # The pfitmap_sequences should have filtered correct db_entries before being sent here.
       ps.db_entries.each do |de|
-	protein_map[de.gi] = hpid2proteinids[ps.hmm_profile.id]
+	protein_map[de.gi] = hpid2proteinids[ps.hmm_profile.id].id
       end
     end
+    calculate_logger.info "#{Time.now}: Mapped #{protein_map.length} db entries gis to protein id"
     protein_map
   end
 
