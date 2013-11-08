@@ -25,7 +25,8 @@ describe LoadDatabasesController do
   # This should return the minimal set of attributes required to create a valid
   # LoadDatabase. As you add validations to LoadDatabase, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { { "taxonset" => "MyString" } }
+  let!(:sequence_database) {FactoryGirl.create(:sequence_database) }
+  let(:valid_attributes) { { "taxonset" => "MyString", } }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -34,31 +35,31 @@ describe LoadDatabasesController do
 
   describe "GET index" do
     it "assigns all load_databases as @load_databases" do
-      load_database = LoadDatabase.create! valid_attributes
-      get :index, {}, valid_session
+      load_database = sequence_database.load_databases.create! valid_attributes
+      get :index, {sequence_database_id: sequence_database.to_param, id: load_database.to_param}, valid_session
       assigns(:load_databases).should eq([load_database])
     end
   end
 
   describe "GET show" do
     it "assigns the requested load_database as @load_database" do
-      load_database = LoadDatabase.create! valid_attributes
-      get :show, {:id => load_database.to_param}, valid_session
+      load_database = sequence_database.load_databases.create! valid_attributes
+      get :show, {sequence_database_id: sequence_database.to_param, id: load_database.to_param}, valid_session
       assigns(:load_database).should eq(load_database)
     end
   end
 
   describe "GET new" do
     it "assigns a new load_database as @load_database" do
-      get :new, {}, valid_session
+      get :new, {sequence_database_id: sequence_database.to_param}, valid_session
       assigns(:load_database).should be_a_new(LoadDatabase)
     end
   end
 
   describe "GET edit" do
     it "assigns the requested load_database as @load_database" do
-      load_database = LoadDatabase.create! valid_attributes
-      get :edit, {:id => load_database.to_param}, valid_session
+      load_database = sequence_database.load_databases.create! valid_attributes
+      get :edit, {sequence_database_id: sequence_database.to_param, id: load_database.to_param}, valid_session
       assigns(:load_database).should eq(load_database)
     end
   end
@@ -67,34 +68,35 @@ describe LoadDatabasesController do
     describe "with valid params" do
       it "creates a new LoadDatabase" do
         expect {
-          post :create, {:load_database => valid_attributes}, valid_session
+          post :create, {sequence_database_id: sequence_database.to_param, :load_database => valid_attributes}, valid_session
         }.to change(LoadDatabase, :count).by(1)
       end
 
       it "assigns a newly created load_database as @load_database" do
-        post :create, {:load_database => valid_attributes}, valid_session
+        post :create, {sequence_database_id: sequence_database.to_param,:load_database => valid_attributes}, valid_session
         assigns(:load_database).should be_a(LoadDatabase)
         assigns(:load_database).should be_persisted
       end
 
       it "redirects to the created load_database" do
-        post :create, {:load_database => valid_attributes}, valid_session
-        response.should redirect_to(LoadDatabase.last)
+        post :create, {sequence_database_id: sequence_database.to_param, :load_database => valid_attributes}, valid_session
+        response.should redirect_to(sequence_database)
       end
     end
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved load_database as @load_database" do
         # Trigger the behavior that occurs when invalid params are submitted
-        LoadDatabase.any_instance.stub(:save).and_return(false)
-        post :create, {:load_database => { "taxonset" => "invalid value" }}, valid_session
+        #LoadDatabase.any_instance.stub(:save).and_return(false)
+        sequence_database.load_databases.any_instance.stub(:save).and_return(false)
+        post :create, {sequence_database_id: sequence_database.to_param,:load_database => { "taxonset" => nil }}, valid_session
         assigns(:load_database).should be_a_new(LoadDatabase)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
-        LoadDatabase.any_instance.stub(:save).and_return(false)
-        post :create, {:load_database => { "taxonset" => "invalid value" }}, valid_session
+        sequence_database.load_databases.any_instance.stub(:save).and_return(false)
+        post :create, {sequence_database_id: sequence_database.to_param, :load_database => { "taxonset" => nil }}, valid_session
         response.should render_template("new")
       end
     end
@@ -103,42 +105,43 @@ describe LoadDatabasesController do
   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested load_database" do
-        load_database = LoadDatabase.create! valid_attributes
+        load_database = sequence_database.load_databases.create! valid_attributes
         # Assuming there are no other load_databases in the database, this
         # specifies that the LoadDatabase created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        LoadDatabase.any_instance.should_receive(:update_attributes).with({ "taxonset" => "MyString" })
-        put :update, {:id => load_database.to_param, :load_database => { "taxonset" => "MyString" }}, valid_session
+	#LoadDatabase.any_instance.should_receive(:update_attributes).with({ "taxonset" => "MyString" })
+        put :update, {sequence_database_id: sequence_database.to_param, :id => load_database.to_param, :load_database => { "taxonset" => "newMyString" }}, valid_session
+	LoadDatabase.where(taxonset: "newMyString").length.should == 1
       end
 
       it "assigns the requested load_database as @load_database" do
-        load_database = LoadDatabase.create! valid_attributes
-        put :update, {:id => load_database.to_param, :load_database => valid_attributes}, valid_session
+        load_database = sequence_database.load_databases.create! valid_attributes
+        put :update, {sequence_database_id: sequence_database.to_param, :id => load_database.to_param, :load_database => valid_attributes}, valid_session
         assigns(:load_database).should eq(load_database)
       end
 
       it "redirects to the load_database" do
-        load_database = LoadDatabase.create! valid_attributes
-        put :update, {:id => load_database.to_param, :load_database => valid_attributes}, valid_session
-        response.should redirect_to(load_database)
+        load_database = sequence_database.load_databases.create! valid_attributes
+        put :update, {sequence_database_id: sequence_database.to_param, :id => load_database.to_param, :load_database => valid_attributes}, valid_session
+        response.should redirect_to(sequence_database)
       end
     end
 
     describe "with invalid params" do
       it "assigns the load_database as @load_database" do
-        load_database = LoadDatabase.create! valid_attributes
+        load_database = sequence_database.load_databases.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
-        LoadDatabase.any_instance.stub(:save).and_return(false)
-        put :update, {:id => load_database.to_param, :load_database => { "taxonset" => "invalid value" }}, valid_session
+        sequence_database.load_databases.any_instance.stub(:save).and_return(false)
+        put :update, {sequence_database_id: sequence_database.to_param, :id => load_database.to_param, :load_database => { "taxonset" => nil }}, valid_session
         assigns(:load_database).should eq(load_database)
       end
 
       it "re-renders the 'edit' template" do
-        load_database = LoadDatabase.create! valid_attributes
+        load_database = sequence_database.load_databases.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
-        LoadDatabase.any_instance.stub(:save).and_return(false)
-        put :update, {:id => load_database.to_param, :load_database => { "taxonset" => "invalid value" }}, valid_session
+        sequence_database.load_databases.any_instance.stub(:save).and_return(false)
+        put :update, {sequence_database_id: sequence_database.to_param, :id => load_database.to_param, :load_database => { "taxonset" => nil }}, valid_session
         response.should render_template("edit")
       end
     end
@@ -146,16 +149,16 @@ describe LoadDatabasesController do
 
   describe "DELETE destroy" do
     it "destroys the requested load_database" do
-      load_database = LoadDatabase.create! valid_attributes
+      load_database = sequence_database.load_databases.create! valid_attributes
       expect {
-        delete :destroy, {:id => load_database.to_param}, valid_session
+        delete :destroy, {sequence_database_id: sequence_database.to_param, :id => load_database.to_param}, valid_session
       }.to change(LoadDatabase, :count).by(-1)
     end
 
     it "redirects to the load_databases list" do
-      load_database = LoadDatabase.create! valid_attributes
-      delete :destroy, {:id => load_database.to_param}, valid_session
-      response.should redirect_to(load_databases_url)
+      load_database = sequence_database.load_databases.create! valid_attributes
+      delete :destroy, {sequence_database_id: sequence_database.to_param, :id => load_database.to_param}, valid_session
+      response.should redirect_to(sequence_database)
     end
   end
 
