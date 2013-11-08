@@ -224,7 +224,7 @@ class PfitmapRelease < ActiveRecord::Base
         protein_map[de.gi] = hpid2proteinids[ps.hmm_profile.id]
       end
     end
-    calculate_logger.info "#{Time.now}: Mapped" +
+    calculate_logger.info "#{Time.now}: Mapped " +
       "#{protein_map.length} db entries gis to protein id"
     protein_map
   end
