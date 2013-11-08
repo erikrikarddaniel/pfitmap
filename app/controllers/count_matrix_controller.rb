@@ -3,6 +3,7 @@ class CountMatrixController < ApplicationController
   def get_counts
     @tl = Taxon::TAXA
     @pl = Protein::PROT_LEVELS
+    @column_names = Taxon::TAXA_PROPER_NAMES.merge({"no_genomes"=>"Nr Genomes"}).merge(Protein::PROT_PROPER_NAMES)
     @cm = CountMatrix.new
     if params[:release]
       @pfr = PfitmapRelease.find(:first, conditions: {release: params[:release]})
@@ -12,7 +13,10 @@ class CountMatrixController < ApplicationController
     else
       @pfr = PfitmapRelease.find_current_release
       params[:release] = @pfr.release
-    end    
+    end
+    @released_dbs = ReleasedDb.where(pfitmap_release_id: @pfr.id)
+    @load_dbs = LoadDatabase.where(id: @released_dbs.map {|rd| rd.load_database_id})
+    @rd = ReleasedDb.find(:first, conditions: {pfitmap_release_id: @pfr.id, load_database_id: @load_dbs.first.id})
     #Selecting which taxon ranks to include in the query
     @tax_levels = params[:taxon_level].in?(@tl) ? @tl.slice(0..@tl.index(params[:taxon_level])) : [@tl[0]]
     #Selecting which protein ranks to inlcude in the query
@@ -21,12 +25,12 @@ class CountMatrixController < ApplicationController
     @cm.release = @pfr.release
     @cm.taxon_level = @tax_levels[-1]
     @cm.protein_level = @prot_levels[-1]
-
+    
     if @cm.valid?
 
-      filter_params = {release: @pfr.id}
-      taxon_filter = ["taxons.pfitmap_release_id=:release"]
-      protein_filter = []
+      filter_params = {released_db_id: @rd.id}
+      taxon_filter = ["taxons.released_db_id=:released_db_id"]
+      protein_filter = ["proteins.released_db_id=:released_db_id"]
       @tax_levels.each do |t|
         if t.in?(params)
           filter_params[t.to_sym] = params[t].split("(,)")
@@ -63,6 +67,7 @@ class CountMatrixController < ApplicationController
       gon.tax_columns = [@cm.taxon_level, "no_genomes"]
       gon.prot_columns = [filter_params[@cm.protein_level.to_sym], tax_protein_counts.map{ |t| t[@cm.protein_level]}].compact.reduce([],:|).to_set.delete(nil).to_a.sort
       gon.columns = gon.tax_columns + gon.prot_columns
+      gon.column_names = @column_names
       gon.taxon_levels = @tax_levels
       gon.protein_levels = @prot_levels
       gon.cm = @cm.attributes.to_json

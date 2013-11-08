@@ -1,0 +1,33 @@
+<%= form_for(@sequence_database) do |f| %>
+  <% if @sequence_database.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@sequence_database.errors.count, "error") %> prohibited this sequence_database from being saved:</h2>
+
+      <ul>
+      <% @sequence_database.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :db %><br />
+    <%= f.text_field :db %>
+  </div>
+  <div class="field">
+    <%= f.label :abbreviation %><br />
+    <%= f.text_field :abbreviation %>
+  </div>
+  <div class="field">
+    <%= f.label :home_page %><br />
+    <%= f.text_field :home_page %>
+  </div>
+  <div class="field">
+    <%= f.label :accession_url %><br />
+    <%= f.text_field :accession_url %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

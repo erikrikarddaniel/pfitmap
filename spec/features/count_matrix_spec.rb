@@ -3,16 +3,19 @@ require 'spec_helper'
 describe "ProteinCounts 3 taxa, 2 proteins" do
   let!(:ss)              { FactoryGirl.create(:sequence_source) }
   let!(:pr)              { FactoryGirl.create(:pfitmap_release, current: true, sequence_source: ss) }
-  let!(:protA)           { FactoryGirl.create(:protein, protfamily: "protA") }
-  let!(:protB)           { FactoryGirl.create(:protein, protfamily: "protB") }
-  let!(:taxA)            { FactoryGirl.create(:taxon, domain: "TaxA", pfitmap_release_id: pr.id) }
-  let!(:taxB)            { FactoryGirl.create(:taxon, domain: "TaxB", pfitmap_release_id: pr.id) }
-  let!(:taxC)            { FactoryGirl.create(:taxon, domain: "TaxC", pfitmap_release_id: pr.id) }
+  let!(:sd)              { FactoryGirl.create(:sequence_database) }
+  let!(:ld)              { FactoryGirl.create(:load_database) }
+  let!(:rd)              { FactoryGirl.create(:released_db, pfitmap_release_id: pr.id, load_database_id: ld.id) }
+  let!(:protA)           { FactoryGirl.create(:protein, protfamily: "protA",released_db_id: rd.id) }
+  let!(:protB)           { FactoryGirl.create(:protein, protfamily: "protB",released_db_id: rd.id) }
+  let!(:taxA)            { FactoryGirl.create(:taxon, domain: "TaxA", released_db_id: rd.id) }
+  let!(:taxB)            { FactoryGirl.create(:taxon, domain: "TaxB", released_db_id: rd.id) }
+  let!(:taxC)            { FactoryGirl.create(:taxon, domain: "TaxC", released_db_id: rd.id) }
   before do
     @protein_counts = []
-    @protein_counts << FactoryGirl.create(:protein_count, no_proteins: 2, no_genomes_with_proteins: 1,  protein: protA, taxon: taxA, pfitmap_release: pr)
-    @protein_counts << FactoryGirl.create(:protein_count, no_proteins: 4, no_genomes_with_proteins: 3,  protein: protA, taxon: taxB, pfitmap_release: pr)
-    @protein_counts << FactoryGirl.create(:protein_count, no_proteins: 8, no_genomes_with_proteins: 7,  protein: protB, taxon: taxC, pfitmap_release: pr)
+    @protein_counts << FactoryGirl.create(:protein_count, no_proteins: 2, no_genomes_with_proteins: 1,  protein: protA, taxon: taxA, released_db_id: rd.id)
+    @protein_counts << FactoryGirl.create(:protein_count, no_proteins: 4, no_genomes_with_proteins: 3,  protein: protA, taxon: taxB, released_db_id: rd.id)
+    @protein_counts << FactoryGirl.create(:protein_count, no_proteins: 8, no_genomes_with_proteins: 7,  protein: protB, taxon: taxC, released_db_id: rd.id)
   end
   describe "proteins and taxa have correct columns" do
     before do
@@ -65,15 +68,18 @@ end
 describe "ProteinCounts 2 taxa, 2 proteins" do
   let!(:ss)              { FactoryGirl.create(:sequence_source) }
   let!(:pr)              { FactoryGirl.create(:pfitmap_release, current: true, sequence_source: ss) }
-  let!(:protA)           { FactoryGirl.create(:protein, protfamily: "protA") }
-  let!(:protB)           { FactoryGirl.create(:protein, protfamily: "protB") }
-  let!(:taxA)            { FactoryGirl.create(:taxon, domain: "TaxA", pfitmap_release_id: pr.id) }
-  let!(:taxB)            { FactoryGirl.create(:taxon, domain: "TaxB", pfitmap_release_id: pr.id) }
+  let!(:sd)              { FactoryGirl.create(:sequence_database) }
+  let!(:ld)              { FactoryGirl.create(:load_database) }
+  let!(:rd)              { FactoryGirl.create(:released_db, pfitmap_release_id: pr.id, load_database_id: ld.id) }
+  let!(:protA)           { FactoryGirl.create(:protein, protfamily: "protA",released_db_id: rd.id) }
+  let!(:protB)           { FactoryGirl.create(:protein, protfamily: "protB",released_db_id: rd.id) }
+  let!(:taxA)            { FactoryGirl.create(:taxon, domain: "TaxA", released_db_id: rd.id) }
+  let!(:taxB)            { FactoryGirl.create(:taxon, domain: "TaxB", released_db_id: rd.id) }
   before do
     @protein_counts = []
-    @protein_counts << FactoryGirl.create(:protein_count, no_proteins: 2, no_genomes_with_proteins: 1,  protein: protA, taxon: taxA, pfitmap_release: pr)
-    @protein_counts << FactoryGirl.create(:protein_count, no_proteins: 4, no_genomes_with_proteins: 3,  protein: protA, taxon: taxB, pfitmap_release: pr)
-    @protein_counts << FactoryGirl.create(:protein_count, no_proteins: 8, no_genomes_with_proteins: 7,  protein: protB, taxon: taxB, pfitmap_release: pr)
+    @protein_counts << FactoryGirl.create(:protein_count, no_proteins: 2, no_genomes_with_proteins: 1,  protein: protA, taxon: taxA, released_db: rd)
+    @protein_counts << FactoryGirl.create(:protein_count, no_proteins: 4, no_genomes_with_proteins: 3,  protein: protA, taxon: taxB, released_db: rd)
+    @protein_counts << FactoryGirl.create(:protein_count, no_proteins: 8, no_genomes_with_proteins: 7,  protein: protB, taxon: taxB, released_db: rd)
   end
   describe "proteins and taxa have correct columns" do
     before do

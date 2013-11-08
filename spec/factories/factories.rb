@@ -111,15 +111,29 @@ FactoryGirl.define do
   end
   factory :protein do
     sequence(:protfamily) { |n| "ex_protein " + n.to_s }
-    hmm_profile
  end
 
   factory :protein_count do
     no_proteins 0
     no_genomes_with_proteins 0
     protein
-    pfitmap_release
     taxon
+    released_db
   end
-
+  factory :sequence_database do
+    db "ref"
+    abbreviation "refseq"
+    home_page "home"
+    accession_url "url"
+  end
+  factory :load_database do
+    taxonset "http://demo.url/test.json"
+    name "ref + wgs"
+    description "refseq and wholegenomesequenced"
+    active true
+  end
+  factory :released_db do
+    load_database
+    pfitmap_release
+  end
 end

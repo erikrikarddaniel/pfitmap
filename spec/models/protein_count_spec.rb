@@ -6,11 +6,10 @@
 #  no_proteins              :integer
 #  no_genomes_with_proteins :integer
 #  protein_id               :integer
-#  pfitmap_release_id       :integer
 #  taxon_id                 :integer
 #  created_at               :datetime        not null
 #  updated_at               :datetime        not null
-#  obs_as_genome            :boolean
+#  released_db_id           :integer
 #
 
 require 'spec_helper'

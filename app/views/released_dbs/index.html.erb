@@ -1,0 +1,25 @@
+<h1>Listing released_dbs</h1>
+
+<table>
+  <tr>
+    <th>Pfitmap release</th>
+    <th>Load database</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @released_dbs.each do |released_db| %>
+  <tr>
+    <td><%= released_db.pfitmap_release %></td>
+    <td><%= released_db.load_database %></td>
+    <td><%= link_to 'Show', released_db %></td>
+    <td><%= link_to 'Edit', edit_released_db_path(released_db) %></td>
+    <td><%= link_to 'Destroy', released_db, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Released db', new_released_db_path %>

@@ -8,6 +8,12 @@ class BiosqlWeb < ActiveRecord::Base
     taxon_id = response.parsed_response["taxon_id"]
   end
 
+  def self.gis2ncbi_taxon_ids(gis)
+    options = {:headers => { 'Content-Type' => 'application/json', 'Accepts' => 'application/json'}, :body => {:gis => gis}.to_json}
+    response = HTTParty.get(BASE_URL + '/gis2ncbi_taxon_ids.json', options)
+    ncbi_taxons_ids = response.parsed_response
+  end
+
   def self.organism_group2ncbi_taxon_ids(name)
     response = HTTParty.get(BASE_URL + "/organism_group_by_name/#{name}.json")
     wgs_ids = response.parsed_response["organism_group_rows"].map{ |ogr_hash| ogr_hash["ncbi_taxon_id"] }

@@ -6,11 +6,10 @@
 #  no_proteins              :integer
 #  no_genomes_with_proteins :integer
 #  protein_id               :integer
-#  pfitmap_release_id       :integer
 #  taxon_id                 :integer
 #  created_at               :datetime        not null
 #  updated_at               :datetime        not null
-#  obs_as_genome            :boolean
+#  released_db_id           :integer
 #
 
 
@@ -23,11 +22,10 @@
 ## as a genome together with a protein.
   
 class ProteinCount < ActiveRecord::Base
-  attr_accessible :no_proteins, :no_genomes_with_proteins, :obs_as_genome
+  attr_accessible :no_proteins, :no_genomes_with_proteins, :obs_as_genome, :released_db_id, :taxon_id, :protein_id
   belongs_to :protein
-  belongs_to :pfitmap_release
   belongs_to :taxon
-
+  belongs_to :released_db
   def self.from_rank(rank)
     if rank
       self.joins(:taxon).where("Taxons.rank = ?", rank)

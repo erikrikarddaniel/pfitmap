@@ -140,12 +140,14 @@ class PfitmapReleasesController < ApplicationController
   def calculate
     @pfitmap_release = PfitmapRelease.find(params[:pfitmap_release_id])
     user = current_user
-    if Rails.env == "test" 
-      @pfitmap_release.calculate_main("GOLDWGStest10", user)
-    elsif Rails.env == "development"
-      @pfitmap_release.delay.calculate_main("GOLDWGS", user)
-    else
-      @pfitmap_release.delay.calculate_main("GOLDWGS",user)
+    LoadDatabase.where(active: true).each do |load_db|
+      if Rails.env == "test" 
+        @pfitmap_release.calculate_released_dbs(load_db)
+      elsif Rails.env == "development"
+	@pfitmap_release.delay.calculate_released_dbs(load_db)
+      else
+        @pfitmap_release.delay.calculate_released_dbs(load_db)
+      end
     end
 
     

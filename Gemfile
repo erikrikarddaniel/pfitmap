@@ -48,6 +48,7 @@ gem 'pg'
 gem 'google_visualr'
 
 group :development, :test do
+  gem 'rubocop'
   gem 'byebug'
   gem 'rspec-rails', '2.14.0'
   gem 'annotate', '~> 2.4.1.beta'
