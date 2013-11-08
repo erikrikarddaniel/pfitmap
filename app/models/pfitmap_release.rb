@@ -179,7 +179,8 @@ class PfitmapRelease < ActiveRecord::Base
       headers: {
         'Content-Type' => 'application/json',
         'Accepts' => 'application/json' },
-      body: { gis: gis }.to_json
+      body: { gis: gis }.to_json,
+      timeout: 300
       }
     response = HTTParty.get(taxonseturl, options)
     json_taxa = response.parsed_response
