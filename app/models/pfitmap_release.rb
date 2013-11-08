@@ -162,9 +162,10 @@ class PfitmapRelease < ActiveRecord::Base
         "#{ProteinCount.where(released_db_id: released_db.id).count} " +
         'protein counts'
     end
-  rescue Exception => e
+  rescue => e
     calculate_logger.error "#{Time.now}: Calculate FAILED for " +
       "#{load_db.name} with error: #{e}"
+    raise e
   end
 
   # Inserts a list of unique taxons, fetched via the url in taxonseturl
