@@ -133,54 +133,59 @@ class PfitmapRelease < ActiveRecord::Base
         gi = gi2tid["protein_gi"]
         tid = gi2tid["taxon_id"]
 
-	# It happens that no taxon_id is returned for a gi, warn and continue with the next entry
-        unless taxon_map[tid] 
-	  calculate_logger.warn "#{Time.now}: Found no taxon for gi: #{gi}, tid: #{tid}"
+	# It happens that no taxon_id is returned for a gi, warn and continue 
+	# with the next entry
+        unless taxon_map[tid]
+          calculate_logger.warn "#{Time.now}: Found no taxon for gi: #{gi}, tid: #{tid}"
           next
-	end
-	unless protein_map[gi]
-	  calculate_logger.warn "#{Time.now}: Found no protein for gi: #{gi}, tid: #{tid}"
-          next
-	end
-	unless protein_counts[protein_map[gi]] 
-	  protein_counts[protein_map[gi]] = {}
-	end
+        end
+        unless protein_map[gi]
+          calculate_logger.warn "#{Time.now}: Found no protein for gi: #{gi}, tid: #{tid}"
+        next
+        end
+        unless protein_counts[protein_map[gi]]
+          protein_counts[protein_map[gi]] = {}
+        end
         unless protein_counts[protein_map[gi]][tid]
           protein_counts[protein_map[gi]][tid] = ProteinCount.new(
-	    released_db_id: released_db.id,
-	    taxon_id: taxon_map[tid],
-	    protein_id: protein_map[gi],
-	    no_proteins: 0,
-	    no_genomes_with_proteins: 1
-	  )
+            released_db_id: released_db.id,
+            taxon_id: taxon_map[tid],
+            protein_id: protein_map[gi],
+            no_proteins: 0,
+            no_genomes_with_proteins: 1
+          )
         end
         protein_counts[protein_map[gi]][tid].no_proteins += 1
       end
-      ProteinCount.import protein_counts.values.map {|pc| pc.values}.flatten
-      calculate_logger.info "#{Time.now}: Created #{ProteinCount.where(released_db_id: released_db.id).count} protein counts"
+      ProteinCount.import protein_counts.values.map { |pc| pc.values }.flatten
+      calculate_logger.info "#{Time.now}: Created " +
+        "#{ProteinCount.where(released_db_id: released_db.id).count} " +
+        'protein counts'
     end
   rescue Exception => e
-    calculate_logger.error "#{Time.now}: Calculate FAILED for #{load_db.name} with error: #{e}"
+    calculate_logger.error "#{Time.now}: Calculate FAILED for " +
+      "#{load_db.name} with error: #{e}"
   end
-  # Inserts a list of unique taxons, fetched via the url in taxonseturl and a list of gis;
-  # returns a map from ncbi_taxon_id -> taxon.id.
+
+  # Inserts a list of unique taxons, fetched via the url in taxonseturl
+  # and a list of gis. Returns a map from ncbi_taxon_id -> taxon.id.
   def save_and_fetch_taxonset(taxonseturl, gis, released_db)
     taxon_map = {}
     taxon_names = []
-#    json_taxa = # Fetch load_db.taxonset with pfitmap_sequences...gis
-    #Should be replaced to handle different databases
+
     calculate_logger.info "#{Time.now}: Fetching json taxa"
-    options = {:headers => { 'Content-Type' => 'application/json', 'Accepts' => 'application/json'}, :body => {:gis => gis}.to_json}
-    response = HTTParty.get(taxonseturl,options)
+    options = {
+      headers: {
+        'Content-Type' => 'application/json',
+        'Accepts' => 'application/json' },
+      body: { gis: gis }.to_json
+      }
+    response = HTTParty.get(taxonseturl, options)
     json_taxa = response.parsed_response
     calculate_logger.info "#{Time.now}: Fetched #{json_taxa.length} taxa"
-    #-----------------------
-    #ncbi_taxon_ids = BiosqlWeb.organism_group2ncbi_taxon_ids("GOLDWGS")
-    #json_taxa = BiosqlWeb.ncbi_taxon_ids2full_taxon_hierarchies(ncbi_taxon_ids)
     json_taxa.each do |taxons|
-      taxon_names << generate_taxons_names(taxons,released_db)
+      taxon_names << generate_taxons_names(taxons, released_db)
     end
-    #-----------------------
     # Bulk insert the taxons with released_db_id
     Taxon.import taxon_names
 
@@ -191,81 +196,108 @@ class PfitmapRelease < ActiveRecord::Base
     taxon_map
   end
 
-  # Inserts a list of unique proteins and returns a hash with a map from gi to protein.id
-  def save_and_fetch_proteins(pfitmap_sequences,released_db)
+  # Inserts a list of unique proteins and returns a
+  # hash with a map from gi to protein.id
+  def save_and_fetch_proteins(pfitmap_sequences, released_db)
     protein_map = {}
     # Save all distinct proteins
     hpid2proteinids = {}
-    
+
     calculate_logger.info "#{Time.now}: Getting unique hmm profiles"
-    hmm_p = Set.new(pfitmap_sequences.map {|p| p.hmm_profile}) 
+    hmm_p = Set.new(pfitmap_sequences.map { |p| p.hmm_profile })
     calculate_logger.info "#{Time.now}: Found #{hmm_p.length} hmm profiles"
 
     calculate_logger.info "#{Time.now}: Creating proteins"
     hmm_p.each do |hp|
-      hpid2proteinids[hp.id] = Protein.create(generate_protein_names(hp,released_db)).id
+      hpid2proteinids[hp.id] =
+        Protein.create(generate_protein_names(hp, released_db)).id
     end
-    calculate_logger.info "#{Time.now}: Created #{hpid2proteinids.length} proteins"
+    calculate_logger.info "#{Time.now}: Created" +
+      " #{hpid2proteinids.length} proteins"
     # Create map from pfitmap_sequence...gi to its protein.id
     pfitmap_sequences.each do |ps|
-      # The pfitmap_sequences should have filtered correct db_entries before being sent here.
+      # The pfitmap_sequences should have filtered correct
+      # db_entries before being sent here.
       ps.db_entries.each do |de|
-	protein_map[de.gi] = hpid2proteinids[ps.hmm_profile.id]
+        protein_map[de.gi] = hpid2proteinids[ps.hmm_profile.id]
       end
     end
-    calculate_logger.info "#{Time.now}: Mapped #{protein_map.length} db entries gis to protein id"
+    calculate_logger.info "#{Time.now}: Mapped" +
+      "#{protein_map.length} db entries gis to protein id"
     protein_map
   end
 
-  def generate_protein_names(hmm_profile,released_db)
-    protein_names = hmm_profile.all_parents_with_acceptable_rank_including_self.map {|h| h.protein_name}.reverse!
+  def generate_protein_names(hmm_profile, released_db)
+    protein_names =
+      hmm_profile.all_parents_with_acceptable_rank_including_self.map do |h|
+        h.protein_name
+      end.reverse!
     protein_hash = Hash[Protein::PROT_COLUMNS.zip(protein_names)]
     protein_hash[:released_db_id] = released_db.id
-    return protein_hash
+    protein_hash
   end
 
-  def generate_taxons_names(taxons,released_db)
-    name_hash = Hash[Taxon::RANKS.map{ |r| [r,nil]}]
-    name_hash["strain"] = nil
+  def generate_taxons_names(taxons, released_db)
+    name_hash = Hash[Taxon::RANKS.map { |r| [r, nil] }]
+    name_hash['strain'] = nil
     # Filter on accepted ranks, re-add first and root
-    accepted_taxons = taxons.select {|taxon_hash| taxon_hash["node_rank"].in?(Taxon::RANKS)}
+    accepted_taxons = taxons.select do |taxon_hash|
+      taxon_hash['node_rank'].in?(Taxon::RANKS)
+    end
     accepted_taxons.each do |at|
       rank = at['node_rank']
       name = at['scientific_name']
-      if rank.in?(name_hash)
-        name_hash[rank] = name
-      end
+      name_hash[rank] = name if rank.in?(name_hash)
     end
-    # if the lowest level in the taxon hierarchy is not used, add it as strain if strain not used already
-    if not taxons.first.in?(accepted_taxons)
-      if not name_hash['strain']
+    # if the lowest level in the taxon hierarchy is not used, add it as
+    # strain if strain not used already
+    unless taxons.first.in?(accepted_taxons)
+      if name_hash['strain']
+        calculate_logger.error "#{Time.now} Error, strain was already in" +
+          "use so the lowest taxon not added: #{taxons.first['ncbi_taxon_id']}"
+      else
         name_hash['strain'] = taxons.first['scientific_name']
-      else
-        calculate_logger.error "#{Time.now} Error, strain was already in use so the lowest taxon not added: #{taxons.first['ncbi_taxon_id']}"
       end
     end
-    # If kingdom is missing, use the taxon below superkingdom as kingdom (if it has
-    # not already been used 
-    if not "kingdom".in?(accepted_taxons.map {|t| t['node_rank']})
-      #Pick out the index of super kingdom and go down the hierarchy by one
-      kingdom = taxons[taxons.find_index {|t| t['node_rank'] =="superkingdom" } - 1]
-      #If the taxon picked out already in the accepted list, don't use it again
-      if not kingdom.in?(accepted_taxons)
-        name_hash["kingdom"] = kingdom['scientific_name']
+    # If kingdom is missing, use the taxon below superkingdom as kingdom
+    # (if it has not already been used
+    unless 'kingdom'.in?(accepted_taxons.map { |t| t['node_rank'] })
+      # Pick out the index of super kingdom and go down the hierarchy by one
+      kingdom =
+        taxons[taxons.find_index { |t| t['node_rank'] == 'superkingdom' } - 1]
+      # If the taxon picked out already in the accepted list,don't use it again
+      if kingdom.in?(accepted_taxons)
+        calculate_logger.error "#{Time.now} Error, kingdom was missing, and" +
+          ' the first level below superkingdom was already used:' +
+          " #{taxons.first['ncbi_taxon_id']}"
       else
-        calculate_logger.error "#{Time.now} Error, kingdom was missing, and the first level below superkingdom was already used: #{taxons.first['ncbi_taxon_id']}"
+        name_hash['kingdom'] = kingdom['scientific_name']
       end
     end
-    #Make missing taxas names unique: Each taxa below domain takes its parents name plus no level. So if kingdom of Bacteria is nil we get: "kingdom" => "Bacteria, no kingdom"
-    Taxon::RANKS[1..-1].each_with_index do |r,i|
-      if not name_hash[r]
+    # Make missing taxas names unique: Each taxa below domain takes its parents
+    # name plus no level. So if kingdom of Bacteria is nil we get:
+    # "kingdom" => "Bacteria, no kingdom"
+    Taxon::RANKS[1..-1].each_with_index do |r, i|
+      unless name_hash[r]
         name_hash[r] = "#{name_hash[Taxon::RANKS[i]]}, no #{r}"
       end
     end
-    #Top level should be called domain, not superkingdom
-    name_hash["domain"] = name_hash["superkingdom"]
-    name_hash.delete "superkingdom"
+    # Top level should be called domain, not superkingdom
+    name_hash['domain'] = name_hash['superkingdom']
+    name_hash.delete 'superkingdom'
     # Pick out the names
-    return Taxon.new(released_db_id: released_db.id, ncbi_taxon_id: taxons.first["ncbi_taxon_id"],domain: name_hash['domain'],kingdom: name_hash['kingdom'],phylum: name_hash['phylum'],taxclass: name_hash['class'],taxorder: name_hash['order'],family: name_hash['family'], genus: name_hash['genus'], species: name_hash['species'],strain: name_hash['strain'])
+    Taxon.new(
+      released_db_id: released_db.id,
+      ncbi_taxon_id: taxons.first['ncbi_taxon_id'],
+      domain: name_hash['domain'],
+      kingdom: name_hash['kingdom'],
+      phylum: name_hash['phylum'],
+      taxclass: name_hash['class'],
+      taxorder: name_hash['order'],
+      family: name_hash['family'],
+      genus: name_hash['genus'],
+      species: name_hash['species'],
+      strain: name_hash['strain']
+    )
   end
 end
