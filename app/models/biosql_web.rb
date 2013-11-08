@@ -9,7 +9,7 @@ class BiosqlWeb < ActiveRecord::Base
   end
 
   def self.gis2ncbi_taxon_ids(gis)
-    options = {:headers => { 'Content-Type' => 'application/json', 'Accepts' => 'application/json'}, :body => {:gis => gis}.to_json, timeout: 300 }
+    options = {:headers => { 'Content-Type' => 'application/json', 'Accepts' => 'application/json'}, :body => {:gis => gis}.to_json, timeout: 600 }
     response = HTTParty.get(BASE_URL + '/gis2ncbi_taxon_ids.json', options)
     ncbi_taxons_ids = response.parsed_response
   end

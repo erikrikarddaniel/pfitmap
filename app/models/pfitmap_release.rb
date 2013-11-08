@@ -101,7 +101,7 @@ class PfitmapRelease < ActiveRecord::Base
       released_db.load_database = load_db
       released_db.save
 
-      calculate_logger.info "#{Time.now}: Created released db: (#{released_db.id}) for load database: #{load_db.name} and pfitmap release #{self.id}"
+      calculate_logger.info "#{Time.now}: Created released db: (#{released_db.id}) for load database: #{load_db.name} and pfitmap release #{self.release}"
       calculate_logger.info "#{Time.now}: Fetching pfitmap_sequence objects"
 
       # Fetch all pfitmap_sequence objects for this release and its db_entries for the database selected
