@@ -22,23 +22,32 @@ function d3_color_table(level) {
   var tr = d3.selectAll(".taxon_label").style("background-color",function(d) {return gon.taxa_color(d[level]);} ) 
 }
 
-function d3_taxon_level(level) {
-
+function d3_database(db) {
+  // Filter on different databases. Puts parameter db in url
   params = getParameters();
-  params["taxon_level"] = level;
-  console.log(gon.taxon_levels);
+  params["db"] = encodeURI(db);
+  window.location.search = $.param(params);
+
+}
+
+function d3_taxon_level(level) {
+  // Select specific taxa level. If there is filtering on lower levels in the hierarchy we delete that filtering.
+  params = getParameters();
+  params["taxon_level"] = encodeURI(level);
   for (var i = gon.tl.indexOf(level) + 1; i < gon.tl.length; i++) {delete params[gon.tl[i]];}
   window.location.search = $.param(params);
 }
 
 function d3_protein_level(level) {
+  // Select specific protein level. If there is filtering on lower levels in the hierarchy we delete that filtering.
   params = getParameters();
-  params["protein_level"] = level;
+  params["protein_level"] = encodeURI(level);
   for (var i = gon.pl.indexOf(level) + 1; i < gon.pl.length; i++) {delete params[gon.pl[i]];}
   window.location.search = $.param(params);
 }
 
 function d3_filter_table(filter) {
+  // Filter on selected taxa and protein
   params = getParameters();
   
   if (filter == "f_proteins_taxa") {
@@ -47,10 +56,10 @@ function d3_filter_table(filter) {
     var p = pfilter.map(function(d) {return d.value});
     var t = tfilter.map(function(d) {return d.value});
     if (p.length > 0) { 
-      params[gon.dataset.protein_level] = p.join("(,)");
+      params[gon.dataset.protein_level] = encodeURI(p.join("(,)"));
     }
     if (t.length > 0) {
-      params[gon.dataset.taxon_level] = t.join("(,)");
+      params[gon.dataset.taxon_level] = encodeURI(t.join("(,)"));
     }
   }
   else 
