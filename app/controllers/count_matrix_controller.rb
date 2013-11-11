@@ -5,7 +5,6 @@ class CountMatrixController < ApplicationController
     @tl = Taxon::TAXA		# Taxa column names
     @pl = Protein::PROT_LEVELS	# Protein column names
     @column_names = Taxon::TAXA_PROPER_NAMES.merge({"no_genomes"=>"Nr Genomes"}).merge(Protein::PROT_PROPER_NAMES) # Proper naming of columns
-
     # Unescape all parameter strings
     params.each do |k,v|
       params[k] = URI.unescape(v)
@@ -22,6 +21,7 @@ class CountMatrixController < ApplicationController
       @pfr = PfitmapRelease.find_current_release
       params[:release] = @pfr.release
     end
+
     # Get all released dbs for the current pfitmap release
     @released_dbs = ReleasedDb.where(pfitmap_release_id: @pfr.id)
     # Get all load databases for the relesed dbs
@@ -47,21 +47,33 @@ class CountMatrixController < ApplicationController
     if @cm.valid?
 
       filter_params = {released_db_id: @rd.id}
-      taxon_filter = ["taxons.released_db_id=:released_db_id"]
-      protein_filter = ["proteins.released_db_id=:released_db_id"]
+      taxon_filter = []
+      protein_filter = []
       @tax_levels.each do |t|
         if t.in?(params)
           filter_params[t.to_sym] = params[t].split("(,)")
-          taxon_filter.append("taxons.#{t} IN (:#{t.to_sym})")
+          taxon_filter.append("#{t} IN (:#{t.to_sym})")
         end
       end
+      taxon_filter_string = taxon_filter.join(" AND ")
+
       @prot_levels.each do |p|
         if p.in?(params)
           filter_params[p.to_sym] = params[p].split("(,)")
-          protein_filter.append("proteins.#{p} IN (:#{p.to_sym})")
+          protein_filter.append("#{p} IN (:#{p.to_sym})")
         end
       end
-      tax_genomes_counts = Taxon.select("#{@tax_levels.map{|t| "taxons.#{t}"}.join(",")}, count(*) AS no_genomes").where(taxon_filter.join(" AND "),filter_params).group(@tax_levels.map{|t| "taxons.#{t}"}.join(",")).order(@tax_levels.map{|t|"taxons.#{t}" }.join(","))
+      protein_filter_string = protein_filter.join(" AND ")
+
+      tax_levels_string = "#{@tax_levels.map{|t| "#{t}"}.join(",")}"
+      prot_levels_string = "#{@prot_levels.map{|p| "#{p}"}.join(",")}"
+
+      tax_genomes_counts = 
+        Taxon.select(tax_levels_string + ", count(*) AS no_genomes")
+	     .where(taxon_filter_string,filter_params)
+	     .group(tax_levels_string)
+	     .order(tax_levels_string)
+
       @countmt = {}
       tax_genomes_counts.each do |tgc|
         cmt = CountMatrixTaxon.new
@@ -69,7 +81,12 @@ class CountMatrixController < ApplicationController
         cmt.no_genomes = tgc.no_genomes
         @countmt[cmt.hierarchy] = cmt
       end
-      tax_protein_counts = ProteinCount.joins(:protein,:taxon).select("SUM(no_proteins) AS no_proteins, SUM(no_genomes_with_proteins) AS no_genomes_with_proteins,#{@tax_levels.map{|t| "taxons.#{t}"}.join(",")},#{@prot_levels.map{|p| "proteins.#{p}"}.join(",")}").where((taxon_filter+protein_filter).join(" AND "),filter_params).group("#{@tax_levels.map{|t| "taxons.#{t}"}.join(",")},#{@prot_levels.map{|p| "proteins.#{p}"}.join(",")}")
+      prot_count = {protfamily: ProteinFamilyCount}[:protfamily]
+      tax_protein_counts = 
+        prot_count.select("SUM(n_proteins) AS no_proteins, COUNT(n_genomes_w_protein) AS no_genomes_with_proteins,#{tax_levels_string},#{prot_levels_string}")
+		  .where((taxon_filter+protein_filter).join(" AND "),filter_params)
+		  .group("#{tax_levels_string},#{prot_levels_string}")
+		  .order(tax_levels_string)
 
       tax_protein_counts.each do |tpc| 
         cmtp = CountMatrixTaxonProtein.new
