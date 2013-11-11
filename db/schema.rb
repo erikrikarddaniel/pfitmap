@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131108093251) do
+ActiveRecord::Schema.define(:version => 20131111142600) do
 
   create_table "db_entries", :force => true do |t|
     t.integer  "gi"
@@ -277,6 +277,7 @@ ActiveRecord::Schema.define(:version => 20131108093251) do
     t.foreign_key ["taxon_id"], "taxons", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "protein_counts_taxon_id_fkey"
   end
 
+  create_view "protein_family_counts", "SELECT t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.family, t.genus, t.species, t.strain, p.protfamily, pc.released_db_id, sum(pc.no_proteins) AS n_proteins, 1 AS n_genomes_w_protein FROM ((taxons t JOIN protein_counts pc ON ((t.id = pc.taxon_id))) JOIN proteins p ON ((pc.protein_id = p.id))) GROUP BY t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.family, t.genus, t.species, t.strain, p.protfamily, pc.released_db_id ORDER BY t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.family, t.genus, t.species, t.strain, p.protfamily", :force => true
   create_table "users", :force => true do |t|
     t.string   "provider"
     t.string   "uid"
