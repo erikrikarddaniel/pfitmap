@@ -91,17 +91,8 @@ class PfitmapRelease < ActiveRecord::Base
 
     calculate_logger.info "#{Time.now}: Loading #{load_db.name}"
     PfitmapRelease.transaction do
-      # Delete old taxon, protein_count and protein rows
-      # (Don't forget to implement cascading delete in taxon, protein and protein_count.)
-      released_db = ReleasedDb.find(:first, conditions: {pfitmap_release_id: self, load_database_id: load_db})
-      released_db.destroy if released_db
-      # Insert released_db
-      released_db = ReleasedDb.new
-      released_db.pfitmap_release = self
-      released_db.load_database = load_db
-      released_db.save
-
-      calculate_logger.info "#{Time.now}: Created released db: (#{released_db.id}) for load database: #{load_db.name} and pfitmap release #{self.release}"
+      calculate_logger.info "#{Time.now}: Create released db"
+      released_db = create_released_db(load_db)
       calculate_logger.info "#{Time.now}: Fetching pfitmap_sequence objects"
 
       # Fetch all pfitmap_sequence objects for this release and its db_entries for the database selected
@@ -167,6 +158,20 @@ class PfitmapRelease < ActiveRecord::Base
       "#{load_db.name} with error: #{e}"
     raise e
   end
+
+  def create_released_db(load_db)
+    # Delete old taxon, protein_count and protein rows
+    # (Don't forget to implement cascading delete in taxon, protein and protein_count.)
+    released_db = ReleasedDb.find(:first, conditions: {pfitmap_release_id: self, load_database_id: load_db})
+    released_db.destroy if released_db
+    # Insert released_db
+    released_db = ReleasedDb.new
+    released_db.pfitmap_release = self
+    released_db.load_database = load_db
+    released_db.save
+    released_db
+  end
+
 
   # Inserts a list of unique taxons, fetched via the url in taxonseturl
   # and a list of gis. Returns a map from ncbi_taxon_id -> taxon.id.

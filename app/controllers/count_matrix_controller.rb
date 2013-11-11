@@ -1,9 +1,17 @@
 class CountMatrixController < ApplicationController
   load_and_authorize_resource
   def get_counts
-    @tl = Taxon::TAXA
-    @pl = Protein::PROT_LEVELS
-    @column_names = Taxon::TAXA_PROPER_NAMES.merge({"no_genomes"=>"Nr Genomes"}).merge(Protein::PROT_PROPER_NAMES)
+    # Initialize constants
+    @tl = Taxon::TAXA		# Taxa column names
+    @pl = Protein::PROT_LEVELS	# Protein column names
+    @column_names = Taxon::TAXA_PROPER_NAMES.merge({"no_genomes"=>"Nr Genomes"}).merge(Protein::PROT_PROPER_NAMES) # Proper naming of columns
+
+    # Unescape all parameter strings
+    params.each do |k,v|
+      params[k] = URI.unescape(v)
+    end
+
+    # Initialize new CountMatrix object
     @cm = CountMatrix.new
     if params[:release]
       @pfr = PfitmapRelease.find(:first, conditions: {release: params[:release]})
@@ -14,9 +22,19 @@ class CountMatrixController < ApplicationController
       @pfr = PfitmapRelease.find_current_release
       params[:release] = @pfr.release
     end
+    # Get all released dbs for the current pfitmap release
     @released_dbs = ReleasedDb.where(pfitmap_release_id: @pfr.id)
+    # Get all load databases for the relesed dbs
     @load_dbs = LoadDatabase.where(id: @released_dbs.map {|rd| rd.load_database_id})
-    @rd = ReleasedDb.find(:first, conditions: {pfitmap_release_id: @pfr.id, load_database_id: @load_dbs.first.id})
+    # Filter on specific db
+    unless params[:db]
+      params[:db] = @load_dbs[0].name
+    end
+    @load_db = LoadDatabase.find(:first, conditions: {name: params[:db]})
+    # Get the specific released db for the pfitmap release and the database
+    @rd = ReleasedDb.find(:first, conditions: {pfitmap_release_id: @pfr.id, load_database_id: @load_db})
+
+
     #Selecting which taxon ranks to include in the query
     @tax_levels = params[:taxon_level].in?(@tl) ? @tl.slice(0..@tl.index(params[:taxon_level])) : [@tl[0]]
     #Selecting which protein ranks to inlcude in the query
