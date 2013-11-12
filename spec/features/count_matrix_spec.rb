@@ -170,8 +170,8 @@ describe "ProteinCounts 4 taxa, 4 proteins" do
       page.find(".Tax1").find(".no_genomes").text.should have_content("2")
       page.find(".Tax2").find(".no_genomes").text.should have_content("1")
       page.find(".Tax3").find(".no_genomes").text.should have_content("1")
-      page.find(".Tax1").find(".prot1").hover
-      page.should have_content("Genomes w. proteins: 1")
+      page.find(".Tax1").find(".prot11").hover
+      page.should have_content("Genomes w. proteins: 2")
     end
   end
 end

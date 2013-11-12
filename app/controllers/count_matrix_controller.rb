@@ -81,7 +81,8 @@ class CountMatrixController < ApplicationController
         cmt.no_genomes = tgc.no_genomes
         @countmt[cmt.hierarchy] = cmt
       end
-      prot_count = {protfamily: ProteinFamilyCount}[:protfamily]
+      prot_count = {protfamily: ProteinFamilyCount, protclass: ProteinClassCount}[@cm.protein_level.to_sym]
+
       tax_protein_counts = 
         prot_count.select("SUM(n_proteins) AS no_proteins, COUNT(n_genomes_w_protein) AS no_genomes_with_proteins,#{tax_levels_string},#{prot_levels_string}")
 		  .where((taxon_filter+protein_filter).join(" AND "),filter_params)
