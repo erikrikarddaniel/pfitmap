@@ -126,7 +126,16 @@ function d3_table_it(dataset) {
         })
         .enter()
         .append("td")
-        .attr("class",function(d){ return d.hasOwnProperty("organism") ? "heat_label " + d.column : null })
+        .attr("class",function(d){ 
+	  cl ="";
+	  if (d.hasOwnProperty("organism") ) {
+	    cl = "heat_label " + d.column;
+	  }
+	  else if (d.column == "no_genomes") {
+	    cl = "no_genomes";
+	  }
+	  return cl;
+	})
         .text(function(d) {if (d.column != gon.dataset.taxon_level) {return d.value} } );
 
     var tlabel = rows.select("td").attr("class","taxon_label")
@@ -135,7 +144,7 @@ function d3_table_it(dataset) {
     //taxon tooltip
     $(".taxon_label").tooltip({"toggle":true,"title":function () {r=[];for (var i = 0; i < gon.taxon_levels.length; i++) {r.push(this.__data__[gon.taxon_levels[i]])};return r.join("<br/>")},"placement":"left"});
     //cell tooltip
-    $(".heat_label").tooltip({"toggle":true,"title":function() {return "Proteins: "+this.__data__.value+"<br/>Genomes w. proteins: "+this.__data__.no_genomes_with_proteins+"<br/>Organism: " + this.__data__.organism + "<br/>Protein: "+this.__data__.column} })
+    $(".heat_label").tooltip({"toggle":true,"title":function() {return "Proteins: "+this.__data__.value+"<br/>Genomes w. proteins: "+this.__data__.no_genomes_with_proteins+"<br/>Organism: " + this.__data__.organism + "<br/>Protein: "+this.__data__.column},"placement":"bottom" })
     d3_color_table(gon.taxon_levels[0]);
 }
 
