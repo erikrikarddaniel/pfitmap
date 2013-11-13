@@ -12,7 +12,7 @@
 #  phylum         :string(255)
 #  taxclass       :string(255)
 #  taxorder       :string(255)
-#  family         :string(255)
+#  taxfamily      :string(255)
 #  genus          :string(255)
 #  species        :string(255)
 #  strain         :string(255)
@@ -28,7 +28,7 @@ describe Taxon do
                                      phylum: "Alphaproteobacteria",
                                      taxclass: "ClassTax",
                                      taxorder: "OrderTax",
-                                     family: "FamilyTax",
+                                     taxfamily: "FamilyTax",
                                      genus: "GenusTax",
                                      species: "SpeciesTax",
                                      strain: "StrainTax") }
@@ -38,7 +38,7 @@ describe Taxon do
                                      phylum: "PhylumTax",
                                      taxclass: "ClassTax",
                                      taxorder: "OrderTax",
-                                     family: "FamilyTax",
+                                     taxfamily: "FamilyTax",
                                      genus: "GenusTax",
                                      species: "SpeciesTax",
                                      strain: "StrainTax") }
@@ -48,7 +48,7 @@ describe Taxon do
                                      phylum: "PhylumTax",
                                      taxclass: "ClassTax",
                                      taxorder: "OrderTax",
-                                     family: "FamilyTax",
+                                     taxfamily: "FamilyTax",
                                      genus: "GenusFirstTax",
                                      species: "SpeciesTax",
                                      strain: "StrainTax") }
@@ -58,7 +58,7 @@ describe Taxon do
                                      phylum: "PhylumTax",
                                      taxclass: "ClassTax",
                                      taxorder: "OrderTax",
-                                     family: "FamilyTax",
+                                     taxfamily: "FamilyTax",
                                      genus: "GenusTax",
                                      species: "SpeciesTax",
                                      strain: "StrainTax") }
@@ -75,7 +75,7 @@ describe Taxon do
       taxon.should_not respond_to(:hierarchy)
     end
     before do
-      @taxons = Taxon.find([taxon.id,taxon2.id,taxon3.id,taxon4.id], :order => ["domain","kingdom","phylum","taxclass","taxorder","family","genus","species","strain"])
+      @taxons = Taxon.find([taxon.id,taxon2.id,taxon3.id,taxon4.id], :order => ["domain","kingdom","phylum","taxclass","taxorder","taxfamily","genus","species","strain"])
     end
     it "sorts correctly" do
       @taxons.should == [taxon3,taxon2,taxon4, taxon]

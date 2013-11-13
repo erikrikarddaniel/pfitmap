@@ -7,7 +7,7 @@
 #  updated_at     :datetime        not null
 #  protclass      :string(255)
 #  subclass       :string(255)
-#  group          :string(255)
+#  protgroup      :string(255)
 #  subgroup       :string(255)
 #  subsubgroup    :string(255)
 #  protfamily     :string(255)
@@ -39,7 +39,7 @@ describe Protein do
       it {should respond_to(:protfamily)}
       it {should respond_to(:protclass)}
       it {should respond_to(:subclass)}
-      it {should respond_to(:group)}
+      it {should respond_to(:protgroup)}
       it {should respond_to(:subgroup)}
       it {should respond_to(:subsubgroup)}
       it {should respond_to(:released_db)}

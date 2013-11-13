@@ -7,7 +7,7 @@ class CountMatrixTaxon
   attribute :phylum
   attribute :taxclass
   attribute :taxorder
-  attribute :family
+  attribute :taxfamily
   attribute :genus
   attribute :species
   attribute :strain
@@ -15,7 +15,7 @@ class CountMatrixTaxon
 
   attribute :proteins, :default=>[]
   def hierarchy
-    "#{domain}:#{kingdom}:#{phylum}:#{taxclass}:#{taxorder}:#{family}:#{genus}:#{species}:#{strain}"
+    "#{domain}:#{kingdom}:#{phylum}:#{taxclass}:#{taxorder}:#{taxfamily}:#{genus}:#{species}:#{strain}"
   end
 
 end

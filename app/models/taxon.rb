@@ -12,7 +12,7 @@
 #  phylum         :string(255)
 #  taxclass       :string(255)
 #  taxorder       :string(255)
-#  family         :string(255)
+#  taxfamily      :string(255)
 #  genus          :string(255)
 #  species        :string(255)
 #  strain         :string(255)
@@ -21,13 +21,13 @@
 
 class Taxon < ActiveRecord::Base
   # The hierarchy association uses ncbi_ids to make it easier to construct from retrieved data
-  attr_accessible :domain, :kingdom, :phylum, :taxclass, :taxorder, :family, :genus, :species, :strain, :released_db_id, :ncbi_taxon_id
+  attr_accessible :domain, :kingdom, :phylum, :taxclass, :taxorder, :taxfamily, :genus, :species, :strain, :released_db_id, :ncbi_taxon_id
   has_many :protein_counts, dependent: :destroy
   belongs_to :released_db
 
-  RANKS = ["superkingdom", "kingdom", "phylum", "class", "order", "family", "genus", "species"]
-  TAXA =  ["domain", "kingdom", "phylum", "taxclass", "taxorder", "family", "genus", "species","strain"]
-  TAXA_PROPER_NAMES = {"domain"=>"Domain", "kingdom"=>"Kingdom", "phylum"=>"Phylum", "taxclass"=>"Class", "taxorder"=>"Order", "family"=>"Family", "genus"=>"Genus", "species"=>"Species","strain"=>"Strain"}
+  RANKS = ["superkingdom", "kingdom", "phylum", "class", "order", "taxfamily", "genus", "species"]
+  TAXA =  ["domain", "kingdom", "phylum", "taxclass", "taxorder", "taxfamily", "genus", "species","strain"]
+  TAXA_PROPER_NAMES = {"domain"=>"Domain", "kingdom"=>"Kingdom", "phylum"=>"Phylum", "taxclass"=>"Class", "taxorder"=>"Order", "taxfamily"=>"Family", "genus"=>"Genus", "species"=>"Species","strain"=>"Strain"}
 #TODO remove since we send over all taxons and do the tree structure in D3 or other
 #  def self_and_ancestors
 #    all_up_to_root_rec(self, [])

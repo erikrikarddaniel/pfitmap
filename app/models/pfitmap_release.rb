@@ -301,7 +301,7 @@ class PfitmapRelease < ActiveRecord::Base
       phylum: name_hash['phylum'],
       taxclass: name_hash['class'],
       taxorder: name_hash['order'],
-      family: name_hash['family'],
+      taxfamily: name_hash['taxfamily'],
       genus: name_hash['genus'],
       species: name_hash['species'],
       strain: name_hash['strain']

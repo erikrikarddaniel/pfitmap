@@ -3,7 +3,7 @@ class CountMatrixTaxonProtein
   attribute :protfamily
   attribute :protclass
   attribute :subclass
-  attribute :group
+  attribute :protgroup
   attribute :subgroup
   attribute :subsubgroup
   attribute :no_proteins

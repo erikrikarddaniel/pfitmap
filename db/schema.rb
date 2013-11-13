@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131112102600) do
+ActiveRecord::Schema.define(:version => 20131112212600) do
 
   create_table "db_entries", :force => true do |t|
     t.integer  "gi"
@@ -163,7 +163,7 @@ ActiveRecord::Schema.define(:version => 20131112102600) do
     t.datetime "updated_at",     :null => false
     t.string   "protclass"
     t.string   "subclass"
-    t.string   "group"
+    t.string   "protgroup"
     t.string   "subgroup"
     t.string   "subsubgroup"
     t.string   "protfamily"
@@ -252,7 +252,7 @@ ActiveRecord::Schema.define(:version => 20131112102600) do
     t.string   "phylum"
     t.string   "taxclass"
     t.string   "taxorder"
-    t.string   "family"
+    t.string   "taxfamily"
     t.string   "genus"
     t.string   "species"
     t.string   "strain"
@@ -277,8 +277,12 @@ ActiveRecord::Schema.define(:version => 20131112102600) do
     t.foreign_key ["taxon_id"], "taxons", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "protein_counts_taxon_id_fkey"
   end
 
-  create_view "protein_class_counts", "SELECT t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.family, t.genus, t.species, t.strain, p.protfamily, p.protclass, pc.released_db_id, sum(pc.no_proteins) AS n_proteins, 1 AS n_genomes_w_protein FROM ((taxons t JOIN protein_counts pc ON ((t.id = pc.taxon_id))) JOIN proteins p ON ((pc.protein_id = p.id))) GROUP BY t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.family, t.genus, t.species, t.strain, p.protfamily, p.protclass, pc.released_db_id ORDER BY t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.family, t.genus, t.species, t.strain, p.protfamily, p.protclass", :force => true
-  create_view "protein_family_counts", "SELECT t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.family, t.genus, t.species, t.strain, p.protfamily, pc.released_db_id, sum(pc.no_proteins) AS n_proteins, 1 AS n_genomes_w_protein FROM ((taxons t JOIN protein_counts pc ON ((t.id = pc.taxon_id))) JOIN proteins p ON ((pc.protein_id = p.id))) GROUP BY t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.family, t.genus, t.species, t.strain, p.protfamily, pc.released_db_id ORDER BY t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.family, t.genus, t.species, t.strain, p.protfamily", :force => true
+  create_view "protein_class_counts", "SELECT t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, p.protclass, pc.released_db_id, sum(pc.no_proteins) AS n_proteins, 1 AS n_genomes_w_protein FROM ((taxons t JOIN protein_counts pc ON ((t.id = pc.taxon_id))) JOIN proteins p ON ((pc.protein_id = p.id))) GROUP BY t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, p.protclass, pc.released_db_id ORDER BY t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, p.protclass", :force => true
+  create_view "protein_family_counts", "SELECT t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, pc.released_db_id, sum(pc.no_proteins) AS n_proteins, 1 AS n_genomes_w_protein FROM ((taxons t JOIN protein_counts pc ON ((t.id = pc.taxon_id))) JOIN proteins p ON ((pc.protein_id = p.id))) GROUP BY t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, pc.released_db_id ORDER BY t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily", :force => true
+  create_view "protein_group_counts", "SELECT t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, p.protclass, p.subclass, p.protgroup, pc.released_db_id, sum(pc.no_proteins) AS n_proteins, 1 AS n_genomes_w_protein FROM ((taxons t JOIN protein_counts pc ON ((t.id = pc.taxon_id))) JOIN proteins p ON ((pc.protein_id = p.id))) GROUP BY t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, p.protclass, p.subclass, p.protgroup, pc.released_db_id ORDER BY t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, p.protclass, p.subclass, p.protgroup", :force => true
+  create_view "protein_sub_class_counts", "SELECT t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, p.protclass, p.subclass, pc.released_db_id, sum(pc.no_proteins) AS n_proteins, 1 AS n_genomes_w_protein FROM ((taxons t JOIN protein_counts pc ON ((t.id = pc.taxon_id))) JOIN proteins p ON ((pc.protein_id = p.id))) GROUP BY t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, p.protclass, p.subclass, pc.released_db_id ORDER BY t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, p.protclass, p.subclass", :force => true
+  create_view "protein_sub_group_counts", "SELECT t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, p.protclass, p.subclass, p.protgroup, p.subgroup, pc.released_db_id, sum(pc.no_proteins) AS n_proteins, 1 AS n_genomes_w_protein FROM ((taxons t JOIN protein_counts pc ON ((t.id = pc.taxon_id))) JOIN proteins p ON ((pc.protein_id = p.id))) GROUP BY t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, p.protclass, p.subclass, p.protgroup, p.subgroup, pc.released_db_id ORDER BY t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, p.protclass, p.subclass, p.protgroup, p.subgroup", :force => true
+  create_view "protein_sub_sub_group_counts", "SELECT t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, p.protclass, p.subclass, p.protgroup, p.subgroup, p.subsubgroup, pc.released_db_id, sum(pc.no_proteins) AS n_proteins, 1 AS n_genomes_w_protein FROM ((taxons t JOIN protein_counts pc ON ((t.id = pc.taxon_id))) JOIN proteins p ON ((pc.protein_id = p.id))) GROUP BY t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, p.protclass, p.subclass, p.protgroup, p.subgroup, p.subsubgroup, pc.released_db_id ORDER BY t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, p.protclass, p.subclass, p.protgroup, p.subgroup, p.subsubgroup", :force => true
   create_table "users", :force => true do |t|
     t.string   "provider"
     t.string   "uid"

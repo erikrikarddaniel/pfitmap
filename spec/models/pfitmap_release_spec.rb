@@ -186,7 +186,7 @@ describe PfitmapRelease do
       t1.phylum.should ==  "Cyanobacteria"
       t1.taxclass.should == "Cyanobacteria, no class"
       t1.taxorder.should == "Chroococcales"
-      t1.family.should ==  "Chroococcales, no family"
+      t1.taxfamily.should ==  "Chroococcales, no taxfamily"
       t1.genus.should == "Acaryochloris"
       t1.species.should == "Acaryochloris marina"
       t1.strain.should == "Acaryochloris marina MBIC11017"
