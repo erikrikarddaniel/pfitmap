@@ -47,8 +47,8 @@ class CountMatrixController < ApplicationController
     if @cm.valid?
 
       filter_params = {released_db_id: @rd.id}
-      taxon_filter = []
-      protein_filter = []
+      taxon_filter = ["released_db_id = :released_db_id"]
+      protein_filter = ["released_db_id = :released_db_id"]
       @tax_levels.each do |t|
         if t.in?(params)
           filter_params[t.to_sym] = params[t].split("(,)")
