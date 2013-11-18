@@ -30,6 +30,11 @@ describe "ProteinCounts 3 taxa, 2 proteins" do
       page.should have_css(".heat_label", count: 6)
       page.should have_css(".protein_label", count: 2)
     end
+    it "has three taxa rows and two protein columns on circos", :js => true do
+      visit count_matrix_path(params: {view_menu: "circos"})
+      page.should have_css("svg")
+      page.should have_css(".group", count: 5)
+    end
     it "filter on TaxA and TaxB has two taxa rows and one protein column", :js => true do
       visit count_matrix_path(params: {domain: "TaxA(,)TaxB"})
       page.should have_css("tr.TaxA")

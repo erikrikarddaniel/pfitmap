@@ -336,6 +336,23 @@ aside {
 .no_genomes {
   text-align: center;
 }
+
+.group text {
+    font: 11px sans-serif;
+    font-color: black;
+    pointer-events: none;
+}
+
+.group path {
+  stroke: #000;
+}
+
+path.chord {
+  stroke-width: .75;
+  fill-opacity: .75;
+}
+
+    
 /* From http://jasalguero.com/ledld/development/web/expandable-list/ */
 
 #expList ul, li {

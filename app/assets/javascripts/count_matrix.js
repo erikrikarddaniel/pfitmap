@@ -1,20 +1,140 @@
 $(document).ready(function(){
   if (typeof gon != typeof undefined) {
-    d3_make_table();
+    gon.dataset = JSON.parse(gon.cm);
+    gon.taxons = gon.dataset.taxons;
+    params = getParameters();
+    if (!params["view_menu"] || params["view_menu"] == "matrix") {
+      d3_make_table();
+    }
+    else if (params["view_menu"] == "circos") {
+      d3_make_circos();
+    }
   }
 });
 
+function d3_make_circos() {
+  d3.select("#circos").select("svg").remove();
+  d3_prep_circos_dataset();
+  d3_circos_it(gon.circos_matrix);
+}
+
+function d3_prep_circos_dataset(){
+  gon.circos_matrix = [];
+  gon.circos_columns = gon.taxons.map(function(d) {return d[gon.dataset.taxon_level];}).concat(gon.prot_columns);
+  gon.circos_matrix_size = gon.circos_columns.length;
+  for ( var i = 0; i < gon.circos_matrix_size; i++ ) {
+    gon.circos_matrix[i] = Array.apply(null, new Array(gon.circos_matrix_size)).map(Number.prototype.valueOf,0);
+  }
+  gon.taxons.forEach(function(tax) {
+    tax_ind = gon.circos_columns.indexOf(tax[gon.dataset.taxon_level]);
+    tax.proteins.forEach(function(prot) {
+      prot_ind = gon.circos_columns.indexOf(prot[gon.dataset.protein_level]);
+      gon.circos_matrix[tax_ind][prot_ind] = +prot.no_genomes_with_proteins
+      gon.circos_matrix[prot_ind][tax_ind] = +prot.no_genomes_with_proteins
+    });
+  });
+}
+
+function d3_circos_it(matrix) {
+
+  var w = 600,
+    h = 600,
+    r1 = Math.min(w, h) / 2 - 4,
+    r0 = r1 - 20,
+    format = d3.format(",.3r");
+
+  var layout = d3.layout.chord()
+    .padding(.04)
+    .sortGroups(d3.descending)
+    .sortSubgroups(d3.descending)
+    .sortChords(d3.descending)
+    .matrix(matrix);
+
+  var range9 = ["#253523", "#33585e", "#957244", "#F26223", "#155420", "#FF0000"] 
+  var fill = d3.scale.ordinal()
+    .domain(d3.range(range9.length))
+    .range(range9);
+
+  var arc = d3.svg.arc()
+    .innerRadius(r0)
+    .outerRadius(r1);
+
+  var chord = d3.svg.chord()
+    .radius(r0);
+
+  var svg = d3.select("#circos").append("svg:svg")
+    .attr("width", w)
+    .attr("height", h)
+    .append("svg:g")
+    .attr("transform", "translate(" + w / 2 + "," + h / 2 + ")");
+
+  svg.selectAll("path.chord")
+    .data(layout.chords)
+    .enter().append("svg:path")
+    .attr("class","chord")
+    .attr("d", chord)
+    .style("fill", function(d) { return fill(d.target.index); })
+    .style("stroke", function(d) { return d3.rgb(fill(d.target.index)).darker(); })
+    .append("svg:title")
+    .text(function(d) { return "Source: " + gon.circos_columns[d.source.index]+ " Target: " + gon.circos_columns[d.target.index]})
+
+
+  var g = svg.selectAll("g.group")
+    .data(layout.groups)
+    .enter()
+    .append("svg:g")
+    .attr("class","group");
+
+  g.append("svg:path")
+    .style("fill",function(d) { return fill(d.index)})
+    .attr("id", function (d, i) { return "group" + d.index })
+    .attr("d",arc)
+    .append("svg:title")
+    .text(function(d) { console.log(gon.circos_columns[d.index]); return gon.circos_columns[d.index]; });
+
+  g.append("svg:text")
+    .attr("x",6)
+    .attr("dy",15)
+    .filter(function(d) {  return d.value > 110; } )
+    .append("svg:textPath")
+    .attr("xlink:href", function(d) {return "#group"+d.index; })
+    .text(function(d) { console.log( gon.circos_columns[d.index]);return gon.circos_columns[d.index]; });
+
+
+}
+
+function groupName(d) {
+  return [{ label: gon.circos_columns[d.index],
+	    angle: d.startAngle + ((d.endAngle -d.startAngle) / 2)}]
+}
+
+// Returns an event handler for fading a given chord group.
+function fade(opacity) {
+  return function(g, i) {
+    svg = d3.select("#circos").select("svg");
+    svg.selectAll(".chord path")
+      .filter(function(d) { return d.source.index != i && d.target.index != i; })
+      .transition()
+      .style("opacity", opacity);
+  };
+}
+
 function d3_make_table() {
   d3.select("#heat_map").select("table").remove();
-  d3_prep_dataset();
+  d3_prep_table_dataset();
   d3_table_it(gon.taxons);
 }
-function d3_prep_dataset(){
-  gon.dataset = JSON.parse(gon.cm);
-  gon.taxons = gon.dataset.taxons;
+function d3_prep_table_dataset(){
   gon.taxa_color = d3.scale.category20();
   gon.heat_color = d3.scale.linear().domain([0, 0.5, 1]).range(["white", "yellow", "red"]);
 }
+
+function d3_view_menu(view_menu) {
+  params = getParameters();
+  params["view_menu"] = encodeURI(view_menu);
+  window.location.search = $.param(params);
+}
+
 function d3_color_table(level) {
   var cells = d3.select("#heat_map").select("table").select("tbody").selectAll("tr").selectAll("td");
   cells.style("background-color",function(d) {if (d.hasOwnProperty("ratio")){return gon.heat_color(d.ratio)}  })
