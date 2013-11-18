@@ -2,6 +2,7 @@ $(document).ready(function(){
   if (typeof gon != typeof undefined) {
     gon.dataset = JSON.parse(gon.cm);
     gon.taxons = gon.dataset.taxons;
+    gon.taxa_color = d3.scale.category20();
     params = getParameters();
     if (!params["view_menu"] || params["view_menu"] == "matrix") {
       d3_make_table();
@@ -45,15 +46,14 @@ function d3_circos_it(matrix) {
 
   var layout = d3.layout.chord()
     .padding(.04)
-    .sortGroups(d3.descending)
-    .sortSubgroups(d3.descending)
-    .sortChords(d3.descending)
+//    .sortGroups(d3.descending)
+//    .sortSubgroups(d3.descending)
+//    .sortChords(d3.descending)
     .matrix(matrix);
 
-  var range9 = ["#253523", "#33585e", "#957244", "#F26223", "#155420", "#FF0000"] 
   var fill = d3.scale.ordinal()
-    .domain(d3.range(range9.length))
-    .range(range9);
+    .domain(d3.range(gon.taxa_color.range().length))
+    .range(gon.taxa_color.range());
 
   var arc = d3.svg.arc()
     .innerRadius(r0)
@@ -89,8 +89,10 @@ function d3_circos_it(matrix) {
     .style("fill",function(d) { return fill(d.index)})
     .attr("id", function (d, i) { return "group" + d.index })
     .attr("d",arc)
+    .on("mouseover", fade(.1))
+    .on("mouseout", fade(1))
     .append("svg:title")
-    .text(function(d) { console.log(gon.circos_columns[d.index]); return gon.circos_columns[d.index]; });
+    .text(function(d) { return gon.circos_columns[d.index]; });
 
   g.append("svg:text")
     .attr("x",6)
@@ -98,21 +100,16 @@ function d3_circos_it(matrix) {
     .filter(function(d) {  return d.value > 110; } )
     .append("svg:textPath")
     .attr("xlink:href", function(d) {return "#group"+d.index; })
-    .text(function(d) { console.log( gon.circos_columns[d.index]);return gon.circos_columns[d.index]; });
+    .text(function(d) { return gon.circos_columns[d.index]; });
 
 
-}
-
-function groupName(d) {
-  return [{ label: gon.circos_columns[d.index],
-	    angle: d.startAngle + ((d.endAngle -d.startAngle) / 2)}]
 }
 
 // Returns an event handler for fading a given chord group.
 function fade(opacity) {
   return function(g, i) {
     svg = d3.select("#circos").select("svg");
-    svg.selectAll(".chord path")
+    svg.selectAll(".chord")
       .filter(function(d) { return d.source.index != i && d.target.index != i; })
       .transition()
       .style("opacity", opacity);
@@ -124,8 +121,8 @@ function d3_make_table() {
   d3_prep_table_dataset();
   d3_table_it(gon.taxons);
 }
+
 function d3_prep_table_dataset(){
-  gon.taxa_color = d3.scale.category20();
   gon.heat_color = d3.scale.linear().domain([0, 0.5, 1]).range(["white", "yellow", "red"]);
 }
 
