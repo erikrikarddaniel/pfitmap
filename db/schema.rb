@@ -21,9 +21,9 @@ ActiveRecord::Schema.define(:version => 20131112212600) do
     t.datetime "updated_at",     :null => false
     t.integer  "db_sequence_id"
     t.text     "desc"
-    t.index ["db", "acc"], :name => "index_db_entries_on_db_and_acc", :order => {"db" => :asc, "acc" => :asc}
-    t.index ["db_sequence_id"], :name => "index_db_entries_on_db_sequence_id", :order => {"db_sequence_id" => :asc}
-    t.index ["gi"], :name => "index_db_entries_on_gi", :order => {"gi" => :asc}
+    t.index ["db", "acc"], :name => "index_db_entries_on_db_and_acc"
+    t.index ["db_sequence_id"], :name => "index_db_entries_on_db_sequence_id"
+    t.index ["gi"], :name => "index_db_entries_on_gi"
   end
 
   create_table "hmm_result_rows", :force => true do |t|
@@ -49,7 +49,7 @@ ActiveRecord::Schema.define(:version => 20131112212600) do
     t.integer  "hmm_result_id"
     t.integer  "domnumest_dom"
     t.integer  "db_sequence_id"
-    t.index ["db_sequence_id"], :name => "index_hmm_result_rows_on_db_sequence_id", :order => {"db_sequence_id" => :asc}
+    t.index ["db_sequence_id"], :name => "index_hmm_result_rows_on_db_sequence_id"
   end
 
   create_table "hmm_results", :force => true do |t|
@@ -58,8 +58,8 @@ ActiveRecord::Schema.define(:version => 20131112212600) do
     t.datetime "updated_at",         :null => false
     t.integer  "hmm_profile_id"
     t.integer  "sequence_source_id", :null => false
-    t.index ["hmm_profile_id"], :name => "index_hmm_results_on_hmm_profile_id", :order => {"hmm_profile_id" => :asc}
-    t.index ["sequence_source_id"], :name => "index_hmm_results_on_sequence_source_id", :order => {"sequence_source_id" => :asc}
+    t.index ["hmm_profile_id"], :name => "index_hmm_results_on_hmm_profile_id"
+    t.index ["sequence_source_id"], :name => "index_hmm_results_on_sequence_source_id"
   end
 
   create_view "db_sequence_best_profiles", "SELECT hmmrr.db_sequence_id, hmmr.hmm_profile_id, hmmr.sequence_source_id, hmmrr.id AS hmm_result_row_id, hmmrr.fullseq_score FROM (hmm_results hmmr JOIN hmm_result_rows hmmrr ON ((hmmr.id = hmmrr.hmm_result_id))) WHERE (hmmrr.fullseq_score = (SELECT max(hmmrrinner.fullseq_score) AS max FROM (hmm_result_rows hmmrrinner JOIN hmm_results hmmrinner ON ((hmmrrinner.hmm_result_id = hmmrinner.id))) WHERE ((hmmrrinner.db_sequence_id = hmmrr.db_sequence_id) AND (hmmrinner.sequence_source_id = hmmr.sequence_source_id))))", :force => true
@@ -81,7 +81,7 @@ ActiveRecord::Schema.define(:version => 20131112212600) do
     t.string   "queue"
     t.datetime "created_at",                :null => false
     t.datetime "updated_at",                :null => false
-    t.index ["priority", "run_at"], :name => "delayed_jobs_priority", :order => {"priority" => :asc, "run_at" => :asc}
+    t.index ["priority", "run_at"], :name => "delayed_jobs_priority"
   end
 
   create_table "enzyme_profiles", :force => true do |t|
@@ -89,8 +89,8 @@ ActiveRecord::Schema.define(:version => 20131112212600) do
     t.integer  "enzyme_id"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
-    t.index ["enzyme_id"], :name => "index_enzyme_profiles_on_enzyme_id", :order => {"enzyme_id" => :asc}
-    t.index ["hmm_profile_id"], :name => "index_enzyme_profiles_on_hmm_profile_id", :order => {"hmm_profile_id" => :asc}
+    t.index ["enzyme_id"], :name => "index_enzyme_profiles_on_enzyme_id"
+    t.index ["hmm_profile_id"], :name => "index_enzyme_profiles_on_hmm_profile_id"
   end
 
   create_table "enzymes", :force => true do |t|
@@ -99,7 +99,7 @@ ActiveRecord::Schema.define(:version => 20131112212600) do
     t.string   "abbreviation"
     t.integer  "parent_id"
     t.string   "name"
-    t.index ["parent_id"], :name => "fk__enzymes_parent_id", :order => {"parent_id" => :asc}
+    t.index ["parent_id"], :name => "fk__enzymes_parent_id"
     t.foreign_key ["parent_id"], "enzymes", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_enzymes_parent_id"
   end
 
@@ -120,9 +120,9 @@ ActiveRecord::Schema.define(:version => 20131112212600) do
     t.integer  "sequence_database_id"
     t.datetime "created_at",           :null => false
     t.datetime "updated_at",           :null => false
-    t.index ["sequence_database_id"], :name => "fk__load_databases_sequence_database_id", :order => {"sequence_database_id" => :asc}
-    t.index ["name"], :name => "index_load_databases_on_name", :unique => true, :order => {"name" => :asc}
-    t.index ["sequence_database_id"], :name => "index_load_databases_on_sequence_database_id", :order => {"sequence_database_id" => :asc}
+    t.index ["sequence_database_id"], :name => "fk__load_databases_sequence_database_id"
+    t.index ["name"], :name => "index_load_databases_on_name", :unique => true
+    t.index ["sequence_database_id"], :name => "index_load_databases_on_sequence_database_id"
     t.foreign_key ["sequence_database_id"], "sequence_databases", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_load_databases_sequence_database_id"
   end
 
@@ -141,7 +141,7 @@ ActiveRecord::Schema.define(:version => 20131112212600) do
     t.datetime "updated_at",         :null => false
     t.boolean  "current"
     t.integer  "sequence_source_id"
-    t.index ["sequence_source_id"], :name => "index_pfitmap_releases_on_sequence_source_id", :order => {"sequence_source_id" => :asc}
+    t.index ["sequence_source_id"], :name => "index_pfitmap_releases_on_sequence_source_id"
     t.foreign_key ["sequence_source_id"], "sequence_sources", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "pfitmap_releases_sequence_source_id_fkey"
   end
 
@@ -150,10 +150,10 @@ ActiveRecord::Schema.define(:version => 20131112212600) do
     t.integer  "load_database_id"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
-    t.index ["load_database_id"], :name => "fk__released_dbs_load_database_id", :order => {"load_database_id" => :asc}
-    t.index ["pfitmap_release_id"], :name => "fk__released_dbs_pfitmap_release_id", :order => {"pfitmap_release_id" => :asc}
-    t.index ["load_database_id"], :name => "index_released_dbs_on_load_database_id", :order => {"load_database_id" => :asc}
-    t.index ["pfitmap_release_id"], :name => "index_released_dbs_on_pfitmap_release_id", :order => {"pfitmap_release_id" => :asc}
+    t.index ["load_database_id"], :name => "fk__released_dbs_load_database_id"
+    t.index ["pfitmap_release_id"], :name => "fk__released_dbs_pfitmap_release_id"
+    t.index ["load_database_id"], :name => "index_released_dbs_on_load_database_id"
+    t.index ["pfitmap_release_id"], :name => "index_released_dbs_on_pfitmap_release_id"
     t.foreign_key ["load_database_id"], "load_databases", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_released_dbs_load_database_id"
     t.foreign_key ["pfitmap_release_id"], "pfitmap_releases", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_released_dbs_pfitmap_release_id"
   end
@@ -168,7 +168,7 @@ ActiveRecord::Schema.define(:version => 20131112212600) do
     t.string   "subsubgroup"
     t.string   "protfamily"
     t.integer  "released_db_id"
-    t.index ["released_db_id"], :name => "fk__proteins_released_db_id", :order => {"released_db_id" => :asc}
+    t.index ["released_db_id"], :name => "fk__proteins_released_db_id"
     t.foreign_key ["released_db_id"], "released_dbs", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_proteins_released_db_id"
   end
 
@@ -177,8 +177,8 @@ ActiveRecord::Schema.define(:version => 20131112212600) do
     t.integer  "protein_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-    t.index ["enzyme_id"], :name => "index_enzyme_proteins_on_enzyme_id", :order => {"enzyme_id" => :asc}
-    t.index ["protein_id"], :name => "index_enzyme_proteins_on_protein_id", :order => {"protein_id" => :asc}
+    t.index ["enzyme_id"], :name => "index_enzyme_proteins_on_enzyme_id"
+    t.index ["protein_id"], :name => "index_enzyme_proteins_on_protein_id"
     t.foreign_key ["enzyme_id"], "enzymes", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "enzyme_proteins_enzyme_id_fkey"
     t.foreign_key ["protein_id"], "proteins", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "enzyme_proteins_protein_id_fkey"
   end
@@ -203,7 +203,7 @@ ActiveRecord::Schema.define(:version => 20131112212600) do
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
     t.integer  "domain_num"
-    t.index ["hmm_result_row_id"], :name => "fk__hmm_alignments_hmm_result_row_id", :order => {"hmm_result_row_id" => :asc}
+    t.index ["hmm_result_row_id"], :name => "fk__hmm_alignments_hmm_result_row_id"
     t.foreign_key ["hmm_result_row_id"], "hmm_result_rows", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "hmm_alignments_hmm_result_row_id_fkey"
   end
 
@@ -227,9 +227,9 @@ ActiveRecord::Schema.define(:version => 20131112212600) do
     t.datetime "updated_at",         :null => false
     t.integer  "pfitmap_release_id"
     t.integer  "hmm_profile_id"
-    t.index ["db_sequence_id"], :name => "index_pfitmap_sequences_on_db_sequence_id", :order => {"db_sequence_id" => :asc}
-    t.index ["hmm_profile_id"], :name => "index_pfitmap_sequences_on_hmm_profile_id", :order => {"hmm_profile_id" => :asc}
-    t.index ["pfitmap_release_id"], :name => "index_pfitmap_sequences_on_pfitmap_release_id", :order => {"pfitmap_release_id" => :asc}
+    t.index ["db_sequence_id"], :name => "index_pfitmap_sequences_on_db_sequence_id"
+    t.index ["hmm_profile_id"], :name => "index_pfitmap_sequences_on_hmm_profile_id"
+    t.index ["pfitmap_release_id"], :name => "index_pfitmap_sequences_on_pfitmap_release_id"
     t.foreign_key ["hmm_profile_id"], "hmm_profiles", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "pfitmap_sequences_hmm_profile_id_fkey"
   end
 
@@ -239,7 +239,7 @@ ActiveRecord::Schema.define(:version => 20131112212600) do
     t.integer  "hmm_profile_id"
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
-    t.index ["hmm_profile_id"], :name => "index_hmm_score_criterions_on_hmm_profile_id", :order => {"hmm_profile_id" => :asc}
+    t.index ["hmm_profile_id"], :name => "index_hmm_score_criterions_on_hmm_profile_id"
   end
 
   create_table "taxons", :force => true do |t|
@@ -257,7 +257,7 @@ ActiveRecord::Schema.define(:version => 20131112212600) do
     t.string   "species"
     t.string   "strain"
     t.integer  "released_db_id"
-    t.index ["released_db_id"], :name => "fk__taxons_released_db_id", :order => {"released_db_id" => :asc}
+    t.index ["released_db_id"], :name => "fk__taxons_released_db_id"
     t.foreign_key ["released_db_id"], "released_dbs", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_taxons_released_db_id"
   end
 
@@ -269,9 +269,9 @@ ActiveRecord::Schema.define(:version => 20131112212600) do
     t.datetime "created_at",               :null => false
     t.datetime "updated_at",               :null => false
     t.integer  "released_db_id"
-    t.index ["released_db_id"], :name => "fk__protein_counts_released_db_id", :order => {"released_db_id" => :asc}
-    t.index ["protein_id"], :name => "index_protein_counts_on_protein_id", :order => {"protein_id" => :asc}
-    t.index ["taxon_id"], :name => "index_protein_counts_on_taxon_id", :order => {"taxon_id" => :asc}
+    t.index ["released_db_id"], :name => "fk__protein_counts_released_db_id"
+    t.index ["protein_id"], :name => "index_protein_counts_on_protein_id"
+    t.index ["taxon_id"], :name => "index_protein_counts_on_taxon_id"
     t.foreign_key ["protein_id"], "proteins", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "protein_counts_protein_id_fkey"
     t.foreign_key ["released_db_id"], "released_dbs", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_protein_counts_released_db_id"
     t.foreign_key ["taxon_id"], "taxons", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "protein_counts_taxon_id_fkey"
