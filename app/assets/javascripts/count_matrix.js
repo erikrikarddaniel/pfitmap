@@ -97,7 +97,7 @@ function d3_circos_it(matrix) {
   g.append("svg:text")
     .attr("x",6)
     .attr("dy",15)
-    .filter(function(d) {  return d.value > 110; } )
+//    .filter(function(d) {  return d.value > 110; } )
     .append("svg:textPath")
     .attr("xlink:href", function(d) {return "#group"+d.index; })
     .text(function(d) { return gon.circos_columns[d.index]; });
