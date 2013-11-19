@@ -351,7 +351,15 @@ path.chord {
   stroke-width: .75;
   fill-opacity: .75;
 }
+td.active-taxon {
+  border-top: thin solid black;
+  border-bottom: thin solid black;
 
+}
+td.active-protein {
+  border-left: thin solid black;
+  border-right: thin solid black;
+}
     
 /* From http://jasalguero.com/ledld/development/web/expandable-list/ */
 

@@ -161,6 +161,45 @@ function d3_make_table() {
   d3.select("#heat_map").select("table").remove();
   d3_prep_table_dataset();
   d3_table_it(gon.taxons);
+  //Put borders around selected rows
+  $('input[name=tax_filter]').change(function() {
+    d3_table_bordering();
+  });
+
+  $('input[name=prot_filter]').change(function() {
+    d3_table_bordering();
+  });
+
+}
+
+function d3_table_bordering() {
+  $(".active-taxon").removeClass("active-taxon")
+  $(".active-protein").removeClass("active-protein")
+  var t = $("input[name=tax_filter]:checked").closest('tr');
+  var psel = $("input[name=prot_filter]:checked").map(function(d) {return "."+this.value })
+  var p = psel.map(function(d) { return $(psel[d])} )
+  if ( t.length && p.length ) { 
+    console.log(t);
+    console.log(psel);
+    t.each(function(i) { 
+      var tt = $(t[i]);
+      psel.each(function(j) { 
+	tt.find(psel[j]).addClass("active-taxon active-protein")
+      });
+    });
+//    for (var j in t){
+//      console.log(j);
+//      var tt = $(t[j]).closest('tr')
+//      for (var i in p) {
+//	console.log(i);
+//	tt.find('td'+p[i]).addClass("active-taxon"); 
+//      }
+//    }
+  }  
+  else if (p.length) { p.each(function(i) {$(p[i]).addClass("active-protein");}) }
+  else if (t.length) { t.each(function(i) {$(t[i]).find('td').addClass("active-taxon");}) }
+  
+  //$("."+this.value).toggleClass("active-protein", this.checked);
 }
 
 function d3_prep_table_dataset(){
