@@ -75,24 +75,29 @@
       </li>
     </ul>
   </li>
+</ul>
+<ul class="nav nav-pills">
+  <li>
+    <a href="javascript:d3_toggle_zeros()">Toggle zeros</a>
+  </li>
+  <li>
+    <a href="javascript:d3_filter_table()">Filter</a>
+  </li>
   <li class="dropdown">
     <a href="#" id="dropdown-toggel" data-toggle="dropdown"> 
-      Filter
+      Clear filters
       <b class="caret" ></b>
     </a>
 
     <ul id="filter_menu" class="dropdown-menu">
       <li>
-	<a href="javascript:d3_filter_table('f_proteins_taxa')">Filter proteins and taxa</a> 
+	<a href="javascript:d3_clear_filters('clear_proteins')">Clear protein filter</a> 
       </li>
       <li>
-	<a href="javascript:d3_filter_table('clear_proteins')">Clear protein filter</a> 
+	<a href="javascript:d3_clear_filters('clear_taxa')">Clear taxa filter</a> 
       </li>
       <li>
-	<a href="javascript:d3_filter_table('clear_taxa')">Clear taxa filter</a> 
-      </li>
-      <li>
-	<a href="javascript:d3_filter_table('clear_all')">Clear filers</a> 
+	<a href="javascript:d3_clear_filters('clear_all')">Clear filers</a> 
       </li>
     </ul>
   </li>

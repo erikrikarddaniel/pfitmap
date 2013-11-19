@@ -13,6 +13,50 @@ $(document).ready(function(){
   }
 });
 
+function d3_toggle_zeros() {
+  if (!gon.zeros_proteins) {
+    gon.zeros_proteins = [];
+    for (var i in gon.prot_columns) { 
+      protein = $("."+gon.prot_columns[i].split(" ").join(".")+".heat_label");
+      var sum = 0;
+      protein.each(function() { sum += Number($(this).text()) });
+      if (sum == 0) {
+	gon.zeros_proteins.push("."+gon.prot_columns[i].split(" ").join("."));
+      }
+    }
+  }
+  if (!gon.zeros_taxons) {
+    gon.zeros_taxons = [];
+    var taxons = gon.taxons.map(function(d) {return d[gon.dataset.taxon_level]})
+    for (var i in taxons) {
+      taxon = $("."+taxons[i].split(" ").join(".")+" td.heat_label")
+      var sum = 0;
+      taxon.each(function() { sum += Number($(this).text()) });
+      if (sum == 0) {
+	gon.zeros_taxons.push("."+taxons[i].split(" ").join("."));
+      }
+    }
+  }
+
+  if ($(gon.zeros_proteins[0]).is(":visible") ) {
+    for (var i in gon.zeros_proteins) {
+      $(gon.zeros_proteins[i]).hide();
+    }
+    for (var i in gon.zeros_taxons) {
+      $(gon.zeros_taxons[i]).hide();
+    }
+  }
+  else {
+    for (var i in gon.zeros_proteins) {
+      $(gon.zeros_proteins[i]).show();
+    }
+    for (var i in gon.zeros_taxons) {
+      $(gon.zeros_taxons[i]).show();
+     }
+
+  }
+}
+
 function d3_make_circos() {
   d3.select("#circos").select("svg").remove();
   d3_prep_circos_dataset();
@@ -46,9 +90,6 @@ function d3_circos_it(matrix) {
 
   var layout = d3.layout.chord()
     .padding(.04)
-//    .sortGroups(d3.descending)
-//    .sortSubgroups(d3.descending)
-//    .sortChords(d3.descending)
     .matrix(matrix);
 
   var fill = d3.scale.ordinal()
@@ -150,6 +191,14 @@ function d3_database(db) {
 function d3_taxon_level(level) {
   // Select specific taxa level. If there is filtering on lower levels in the hierarchy we delete that filtering.
   params = getParameters();
+  var p = d3_protein_filter();
+  var t = d3_taxon_filter();
+  if (p != null) {
+    params[gon.dataset.protein_level] = p;
+  }
+  if (t != null) {
+    params[gon.dataset.taxon_level] = t;
+  }
   params["taxon_level"] = encodeURI(level);
   for (var i = gon.tl.indexOf(level) + 1; i < gon.tl.length; i++) {delete params[gon.tl[i]];}
   window.location.search = $.param(params);
@@ -158,6 +207,14 @@ function d3_taxon_level(level) {
 function d3_protein_level(level) {
   // Select specific protein level. If there is filtering on lower levels in the hierarchy we delete that filtering.
   params = getParameters();
+  var p = d3_protein_filter();
+  var t = d3_taxon_filter();
+  if (p != null) {
+    params[gon.dataset.protein_level] = p;
+  }
+  if (t != null) {
+    params[gon.dataset.taxon_level] = t;
+  }
   params["protein_level"] = encodeURI(level);
   for (var i = gon.pl.indexOf(level) + 1; i < gon.pl.length; i++) {delete params[gon.pl[i]];}
   window.location.search = $.param(params);
@@ -166,37 +223,55 @@ function d3_protein_level(level) {
 function d3_filter_table(filter) {
   // Filter on selected taxa and protein
   params = getParameters();
-  
-  if (filter == "f_proteins_taxa") {
-    var pfilter = d3.selectAll("input[name=prot_filter]:checked")[0];
-    var tfilter = d3.selectAll("input[name=tax_filter]:checked")[0];
-    var p = pfilter.map(function(d) {return d.value});
-    var t = tfilter.map(function(d) {return d.value});
-    if (p.length > 0) { 
-      params[gon.dataset.protein_level] = encodeURI(p.join("(,)"));
-    }
-    if (t.length > 0) {
-      params[gon.dataset.taxon_level] = encodeURI(t.join("(,)"));
-    }
+  var p = d3_protein_filter();
+  var t = d3_taxon_filter();
+  if (p != null) {
+    params[gon.dataset.protein_level] = p;
   }
-  else 
-  {  
-    if (filter == "clear_proteins" || filter == "clear_all")
-    {
-      gon.protein_levels.forEach(function(l) {
-        delete params[l];
-      });
-    }
-    if (filter == "clear_taxa" || filter == "clear_all")
-    {
-      gon.taxon_levels.forEach(function(l) {
-        delete params[l];
-      });
-    }
+  if (t != null) {
+    params[gon.dataset.taxon_level] = t;
   }
   window.location.search = $.param(params);
 }
 
+function d3_clear_filters(filter) {
+  params = getParameters();
+  if (filter == "clear_proteins" || filter == "clear_all")
+  {
+    gon.protein_levels.forEach(function(l) {
+      delete params[l];
+    });
+  }
+  if (filter == "clear_taxa" || filter == "clear_all")
+  {
+    gon.taxon_levels.forEach(function(l) {
+      delete params[l];
+    });
+  }
+  window.location.search = $.param(params);
+}
+
+function d3_taxon_filter() {
+  var params = getParameters();
+  var tfilter = d3.selectAll("input[name=tax_filter]:checked")[0];
+  var t = tfilter.map(function(d) {return d.value});
+  var result = null;
+  if (t.length > 0) {
+    result = encodeURI(t.join("(,)"));
+  }
+  return result
+}
+
+function d3_protein_filter() {
+  var params = getParameters();
+  var pfilter = d3.selectAll("input[name=prot_filter]:checked")[0];
+  var p = pfilter.map(function(d) {return d.value});
+  var result = null;
+  if (p.length > 0) { 
+    result = encodeURI(p.join("(,)"));
+  }
+  return result
+}
 
 function d3_table_it(dataset) {
     var table = d3.select("#heat_map")
@@ -210,7 +285,7 @@ function d3_table_it(dataset) {
         .data(gon.columns)
         .enter()
         .append("td")
-        .attr("class", function(d) { if(gon.prot_columns.indexOf(d) != -1) {return "protein_label";} else {return null;} } )
+        .attr("class", function(d) { if(gon.prot_columns.indexOf(d) != -1) {return "protein_label "+d;} else {return null;} } )
         .text(function(d) {return gon.prot_columns.indexOf(d) == -1 ? gon.column_names[d] : null} )
 
     var plabel = d3.selectAll(".protein_label")
@@ -221,7 +296,7 @@ function d3_table_it(dataset) {
         .data(dataset)
         .enter()
         .append("tr")
-        .attr("class",function(d) {return d.domain })
+        .attr("class",function(d) {return d[gon.dataset.taxon_level] })
 
     var cells = rows.selectAll("td")
         .data(function(row) { 
