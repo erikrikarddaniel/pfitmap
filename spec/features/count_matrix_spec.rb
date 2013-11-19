@@ -43,7 +43,7 @@ describe "ProteinCounts 3 taxa, 2 proteins" do
       page.should have_css(".taxon_label", count: 2)
       page.should have_css(".protein_label", count: 1)
       page.should have_css(".heat_label", count: 2)
-      page.should have_css(".protA",count: 2)
+      page.should have_css(".protA",count: 3)
       page.should_not have_css(".protB")
     end
     it "filter on TaxA and TaxC has two taxa rows and two protein columns with zeros in relative missing protein column", :js => true do
@@ -54,8 +54,8 @@ describe "ProteinCounts 3 taxa, 2 proteins" do
       page.should have_css(".taxon_label", count: 2)
       page.should have_css(".protein_label", count: 2)
       page.should have_css(".heat_label", count: 4)
-      page.should have_css(".protA",count: 2)
-      page.should have_css(".protB",count: 2)
+      page.should have_css(".protA",count: 3)
+      page.should have_css(".protB",count: 3)
     end
     it "filter on TaxA and TaxB and protA and protB has two taxa rows and two protein column", :js => true do
       visit count_matrix_path(params: {domain: "TaxA(,)TaxB", protfamily: "protA(,)protB"})
@@ -65,8 +65,8 @@ describe "ProteinCounts 3 taxa, 2 proteins" do
       page.should have_css(".taxon_label", count: 2)
       page.should have_css(".protein_label", count: 2)
       page.should have_css(".heat_label", count: 4)
-      page.should have_css(".protA",count: 2)
-      page.should have_css(".protB", count: 2)
+      page.should have_css(".protA",count: 3)
+      page.should have_css(".protB", count: 3)
     end
   end
 end
