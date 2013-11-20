@@ -23,11 +23,11 @@ function d3_toggle_zeros() {
   if (!gon.zeros_proteins) {
     gon.zeros_proteins = [];
     for (var i in gon.prot_columns) { 
-      protein = $("."+gon.prot_columns[i].split(" ").join(".")+".heat_label");
+      protein = $("."+gon.prot_columns[i].replace(".","\\.").replace("/","\\/").split(" ").join(".")+".heat_label");
       var sum = 0;
       protein.each(function() { sum += Number($(this).text()) });
       if (sum == 0) {
-	gon.zeros_proteins.push("."+gon.prot_columns[i].split(" ").join("."));
+	gon.zeros_proteins.push("."+gon.prot_columns[i].replace(".","\\.").replace("/","\\/").split(" ").join("."));
       }
     }
   }
@@ -35,16 +35,17 @@ function d3_toggle_zeros() {
     gon.zeros_taxons = [];
     var taxons = gon.taxons.map(function(d) {return d[gon.dataset.taxon_level]})
     for (var i in taxons) {
-      taxon = $("."+taxons[i].split(" ").join(".")+" td.heat_label")
+      taxon = $("."+taxons[i].replace(".","\\.").replace("/","\\/").split(" ").join(".")+" td.heat_label")
       var sum = 0;
       taxon.each(function() { sum += Number($(this).text()) });
       if (sum == 0) {
-	gon.zeros_taxons.push("."+taxons[i].split(" ").join("."));
+	gon.zeros_taxons.push("."+taxons[i].replace(".","\\.").replace("/","\\/").split(" ").join("."));
       }
     }
   }
-
-  if ($(gon.zeros_proteins[0]).is(":visible") ) {
+  console.log(gon.zeros_taxons);
+  console.log(gon.zeros_proteins);
+  if ($(gon.zeros_proteins[0]).is(":visible") || $(gon.zeros_taxons[0]).is(":visible") ) {
     for (var i in gon.zeros_proteins) {
       $(gon.zeros_proteins[i]).hide();
     }
@@ -185,22 +186,12 @@ function d3_table_bordering() {
   var psel = $("input[name=prot_filter]:checked").map(function(d) {return "."+this.value })
   var p = psel.map(function(d) { return $(psel[d])} )
   if ( t.length && p.length ) { 
-    console.log(t);
-    console.log(psel);
     t.each(function(i) { 
       var tt = $(t[i]);
       psel.each(function(j) { 
 	tt.find(psel[j]).addClass("active-taxon active-protein")
       });
     });
-//    for (var j in t){
-//      console.log(j);
-//      var tt = $(t[j]).closest('tr')
-//      for (var i in p) {
-//	console.log(i);
-//	tt.find('td'+p[i]).addClass("active-taxon"); 
-//      }
-//    }
   }  
   else if (p.length) { p.each(function(i) {$(p[i]).addClass("active-protein");}) }
   else if (t.length) { t.each(function(i) {$(t[i]).find('td').addClass("active-taxon");}) }
@@ -296,6 +287,7 @@ function d3_clear_filters(filter) {
       delete gon.params[l];
     });
   }
+  d3_reload_page()
 }
 
 function d3_taxon_filter() {
