@@ -9,8 +9,8 @@ $(document).ready(function(){
     if (!gon.params["view_menu"] || gon.params["view_menu"] == "matrix") {
       d3_make_table();
     }
-    else if (gon.params["view_menu"] == "circos") {
-      d3_make_circos();
+    else if (gon.params["view_menu"] == "ribbon") {
+      d3_make_ribbon();
     }
   }
 });
@@ -62,30 +62,30 @@ function d3_toggle_zeros() {
   }
 }
 
-function d3_make_circos() {
-  d3.select("#circos").select("svg").remove();
-  d3_prep_circos_dataset();
-  d3_circos_it(gon.circos_matrix);
+function d3_make_ribbon() {
+  d3.select("#ribbon").select("svg").remove();
+  d3_prep_ribbon_dataset();
+  d3_ribbon_it(gon.ribbon_matrix);
 }
 
-function d3_prep_circos_dataset(){
-  gon.circos_matrix = [];
-  gon.circos_columns = gon.taxons.map(function(d) {return d[gon.dataset.taxon_level];}).concat(gon.prot_columns);
-  gon.circos_matrix_size = gon.circos_columns.length;
-  for ( var i = 0; i < gon.circos_matrix_size; i++ ) {
-    gon.circos_matrix[i] = Array.apply(null, new Array(gon.circos_matrix_size)).map(Number.prototype.valueOf,0);
+function d3_prep_ribbon_dataset(){
+  gon.ribbon_matrix = [];
+  gon.ribbon_columns = gon.taxons.map(function(d) {return d[gon.dataset.taxon_level];}).concat(gon.prot_columns);
+  gon.ribbon_matrix_size = gon.ribbon_columns.length;
+  for ( var i = 0; i < gon.ribbon_matrix_size; i++ ) {
+    gon.ribbon_matrix[i] = Array.apply(null, new Array(gon.ribbon_matrix_size)).map(Number.prototype.valueOf,0);
   }
   gon.taxons.forEach(function(tax) {
-    tax_ind = gon.circos_columns.indexOf(tax[gon.dataset.taxon_level]);
+    tax_ind = gon.ribbon_columns.indexOf(tax[gon.dataset.taxon_level]);
     tax.proteins.forEach(function(prot) {
-      prot_ind = gon.circos_columns.indexOf(prot[gon.dataset.protein_level]);
-      gon.circos_matrix[tax_ind][prot_ind] = +prot.no_genomes_with_proteins
-      gon.circos_matrix[prot_ind][tax_ind] = +prot.no_genomes_with_proteins
+      prot_ind = gon.ribbon_columns.indexOf(prot[gon.dataset.protein_level]);
+      gon.ribbon_matrix[tax_ind][prot_ind] = +prot.no_genomes_with_proteins
+      gon.ribbon_matrix[prot_ind][tax_ind] = +prot.no_genomes_with_proteins
     });
   });
 }
 
-function d3_circos_it(matrix) {
+function d3_ribbon_it(matrix) {
 
   var w = 600,
     h = 600,
@@ -108,7 +108,7 @@ function d3_circos_it(matrix) {
   var chord = d3.svg.chord()
     .radius(r0);
 
-  var svg = d3.select("#circos").append("svg:svg")
+  var svg = d3.select("#ribbon").append("svg:svg")
     .attr("width", w)
     .attr("height", h)
     .append("svg:g")
@@ -122,7 +122,7 @@ function d3_circos_it(matrix) {
     .style("fill", function(d) { return fill(d.target.index); })
     .style("stroke", function(d) { return d3.rgb(fill(d.target.index)).darker(); })
     .append("svg:title")
-    .text(function(d) { return "Source: " + gon.circos_columns[d.source.index]+ " Target: " + gon.circos_columns[d.target.index]})
+    .text(function(d) { return "Source: " + gon.ribbon_columns[d.source.index]+ " Target: " + gon.ribbon_columns[d.target.index]})
 
 
   var g = svg.selectAll("g.group")
@@ -138,7 +138,7 @@ function d3_circos_it(matrix) {
     .on("mouseover", fade(.1))
     .on("mouseout", fade(1))
     .append("svg:title")
-    .text(function(d) { return gon.circos_columns[d.index]; });
+    .text(function(d) { return gon.ribbon_columns[d.index]; });
 
   g.append("svg:text")
     .attr("x",6)
@@ -146,7 +146,7 @@ function d3_circos_it(matrix) {
 //    .filter(function(d) {  return d.value > 110; } )
     .append("svg:textPath")
     .attr("xlink:href", function(d) {return "#group"+d.index; })
-    .text(function(d) { return gon.circos_columns[d.index]; });
+    .text(function(d) { return gon.ribbon_columns[d.index]; });
 
 
 }
@@ -154,7 +154,7 @@ function d3_circos_it(matrix) {
 // Returns an event handler for fading a given chord group.
 function fade(opacity) {
   return function(g, i) {
-    svg = d3.select("#circos").select("svg");
+    svg = d3.select("#ribbon").select("svg");
     svg.selectAll(".chord")
       .filter(function(d) { return d.source.index != i && d.target.index != i; })
       .transition()
