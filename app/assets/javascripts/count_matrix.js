@@ -43,8 +43,6 @@ function d3_toggle_zeros() {
       }
     }
   }
-  console.log(gon.zeros_taxons);
-  console.log(gon.zeros_proteins);
   if ($(gon.zeros_proteins[0]).is(":visible") || $(gon.zeros_taxons[0]).is(":visible") ) {
     for (var i in gon.zeros_proteins) {
       $(gon.zeros_proteins[i]).hide();
