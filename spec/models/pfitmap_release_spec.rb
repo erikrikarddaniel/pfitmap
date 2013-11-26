@@ -139,7 +139,7 @@ describe PfitmapRelease do
     end
   end
 
-  describe "calculating a release for one result (easy)" do
+  describe "calculating a release for one result" do
     before(:each) do
       @hmm_result_nrdb = FactoryGirl.create(:hmm_result_nrdb)
       @sequence_source = @hmm_result_nrdb.sequence_source
@@ -176,6 +176,20 @@ describe PfitmapRelease do
       @rd = ReleasedDb.find(:first, conditions: {load_database_id: @ld, pfitmap_release_id: @pfitmap_release})
       taxons = Taxon.where(released_db_id: @rd)
       taxons.length.should be == 10 
+    end
+
+    it "should only insert one taxon using the non-GOLD url after calling calculate" do
+      @ld.taxonset = "http://biosql.scilifelab.se/gis2taxa.json"
+      @pfitmap_release.calculate_released_dbs(@ld)
+      @rd = ReleasedDb.find(:first, conditions: {load_database_id: @ld, pfitmap_release_id: @pfitmap_release})
+      taxons = Taxon.where(released_db_id: @rd)
+      proteins = Protein.where(released_db_id: @rd)
+      protein_counts = ProteinCount.where(released_db_id: @rd)
+
+      # The below numbers are also just accepted from my first run
+      proteins.length.should be == 1
+      protein_counts.length.should be == 13
+      taxons.length.should be == 13 
     end
 
     it "should name the taxa levels correctly" do

@@ -11,8 +11,10 @@
 #  sequence_source_id :integer
 #
 
-
 class PfitmapRelease < ActiveRecord::Base
+  HTTP_TIMEOUT = 600
+  SLICE_SIZE = 5000
+
   attr_accessible :release, :release_date, :sequence_source_id
   has_many :pfitmap_sequences, :dependent => :destroy
   has_many :db_sequences, :through => :pfitmap_sequences
@@ -101,7 +103,7 @@ class PfitmapRelease < ActiveRecord::Base
       gis = Set.new(pfitmap_sequences.map {|p| p.db_entries.map {|d| d.gi}.flatten}.flatten)
 	
       calculate_logger.info "#{Time.now}: Fetched #{gis.length} gis"
-	
+
       # Fetch and load all taxa, implement as method, return hash
       calculate_logger.info "#{Time.now}: Creating taxon mapping"
       taxon_map = save_and_fetch_taxonset(load_db.taxonset, gis, released_db)
@@ -177,28 +179,40 @@ class PfitmapRelease < ActiveRecord::Base
   # and a list of gis. Returns a map from ncbi_taxon_id -> taxon.id.
   def save_and_fetch_taxonset(taxonseturl, gis, released_db)
     taxon_map = {}
-    taxon_names = []
 
     calculate_logger.info "#{Time.now}: Fetching json taxa"
-    options = {
-      headers: {
-        'Content-Type' => 'application/json',
-        'Accepts' => 'application/json' },
-      body: { gis: gis }.to_json,
-      timeout: 300
+
+    slicei = 0
+    imported = {}
+    gis.to_a.each_slice(SLICE_SIZE) do |gislice|
+      taxon_names = []
+      calculate_logger.info "#{Time.now}: Fetching slice #{slicei += 1}"
+
+      options = {
+	headers: {
+	  'Content-Type' => 'application/json',
+	  'Accepts' => 'application/json' },
+	body: { gis: gislice }.to_json,
+	timeout: HTTP_TIMEOUT
       }
-    response = HTTParty.get(taxonseturl, options)
-    json_taxa = response.parsed_response
-    calculate_logger.info "#{Time.now}: Fetched #{json_taxa.length} taxa"
-    json_taxa.each do |taxons|
-      taxon_names << generate_taxons_names(taxons, released_db)
+      response = HTTParty.get(taxonseturl, options)
+      json_taxa = response.parsed_response
+      calculate_logger.info "#{Time.now}: Fetched #{json_taxa.length} taxa"
+
+      json_taxa.each do |taxon|
+	next if imported[taxon[0]["ncbi_taxon_id"]]
+	taxon_names << generate_taxons_names(taxon, released_db)
+	imported[taxon[0]["ncbi_taxon_id"]] = true
+      end
+
+      # Bulk insert the taxons with released_db_id
+      Taxon.import taxon_names
     end
-    # Bulk insert the taxons with released_db_id
-    Taxon.import taxon_names
 
     Taxon.where(released_db_id: released_db.id).each do |taxon|
       taxon_map[taxon.ncbi_taxon_id] = taxon.id
     end
+
     calculate_logger.info "#{Time.now}: Created #{taxon_map.length} taxa"
     taxon_map
   end
@@ -247,15 +261,18 @@ class PfitmapRelease < ActiveRecord::Base
   def generate_taxons_names(taxons, released_db)
     name_hash = Hash[Taxon::RANKS.map { |r| [r, nil] }]
     name_hash['strain'] = nil
+
     # Filter on accepted ranks, re-add first and root
     accepted_taxons = taxons.select do |taxon_hash|
       taxon_hash['node_rank'].in?(Taxon::RANKS)
     end
+
     accepted_taxons.each do |at|
       rank = at['node_rank']
       name = at['scientific_name']
       name_hash[rank] = name if rank.in?(name_hash)
     end
+
     # if the lowest level in the taxon hierarchy is not used, add it as
     # strain if strain not used already
     unless taxons.first.in?(accepted_taxons)
@@ -266,6 +283,7 @@ class PfitmapRelease < ActiveRecord::Base
         name_hash['strain'] = taxons.first['scientific_name']
       end
     end
+
     # If kingdom is missing, use the taxon below superkingdom as kingdom
     # (if it has not already been used
     unless 'kingdom'.in?(accepted_taxons.map { |t| t['node_rank'] })
@@ -281,7 +299,8 @@ class PfitmapRelease < ActiveRecord::Base
         name_hash['kingdom'] = kingdom['scientific_name']
       end
     end
-    # Make missing taxas names unique: Each taxa below domain takes its parents
+
+    # Make missing taxon names unique: Each taxon below domain takes its parents
     # name plus no level. So if kingdom of Bacteria is nil we get:
     # "kingdom" => "Bacteria, no kingdom"
     Taxon::RANKS[1..-1].each_with_index do |r, i|
@@ -289,9 +308,11 @@ class PfitmapRelease < ActiveRecord::Base
         name_hash[r] = "#{name_hash[Taxon::RANKS[i]]}, no #{r}"
       end
     end
+
     # Top level should be called domain, not superkingdom
     name_hash['domain'] = name_hash['superkingdom']
     name_hash.delete 'superkingdom'
+
     # Pick out the names
     Taxon.new(
       released_db_id: released_db.id,
