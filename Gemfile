@@ -6,6 +6,7 @@ gem 'faker', '1.0.1'
 gem 'will_paginate'
 gem 'bootstrap-will_paginate'
 gem 'bio'
+gem 'composite_primary_keys'
 gem 'schema_plus'
 gem 'activerecord-import'
 #d3 javascript library to render protein statistics
