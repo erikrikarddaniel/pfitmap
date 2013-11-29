@@ -19,9 +19,23 @@ describe PfitmapRelease do
     @pfitmap_release = PfitmapRelease.new(release: "0.1", release_date: "2001-04-20", sequence_source_id: sequence_source.id)
     @pfitmap_release.current = false
   end
-  subject{ @pfitmap_release }
-  
-  it { should be_valid }
+
+  describe "class methods" do
+    subject{ PfitmapRelease }
+    it { should respond_to(:find_current_release) }
+    it { should respond_to(:find_all_after_current) }
+  end
+
+  describe "pfitmap_release objects" do
+    subject{ @pfitmap_release }
+    it { should be_valid }
+    it { should respond_to(:release) }
+    it { should respond_to(:release_date) }
+    it { should respond_to(:pfitmap_sequences) }
+    it { should respond_to(:db_sequences) }
+    it { should respond_to(:add_seq) }
+    it { should respond_to(:sequence_source) }
+  end
   
   describe "sequence source association" do
     describe "without it" do
@@ -42,19 +56,6 @@ describe PfitmapRelease do
         @pfitmap_release.should_not be_valid
       end
     end
-  end
-
-  it { should respond_to(:release) }
-  it { should respond_to(:release_date) }
-  it { should respond_to(:pfitmap_sequences) }
-  it { should respond_to(:db_sequences) }
-  it { should respond_to(:add_seq) }
-  it { should respond_to(:sequence_source) }
-
-  describe "class methods" do
-    subject{ PfitmapRelease }
-    it { should respond_to(:find_current_release) }
-    it { should respond_to(:find_all_after_current) }
   end
 
   describe "find current release" do
@@ -139,6 +140,45 @@ describe PfitmapRelease do
     end
   end
 
+  describe ".calculate_released_dbs" do
+    before(:each) do
+      @hmm_result_nrdb = FactoryGirl.create(:hmm_result_nrdb)
+      warn "#{__FILE__}:#{__LINE__}: hmm_profile: #{@hmm_result_nrdb.hmm_profile.inspect}"
+      warn "#{__FILE__}:#{__LINE__}: hmm_score_criteria:\n\t#{HmmScoreCriterion.all.map { |hsp| hsp.inspect }.join("\n\t")}"
+      @hmm_result_nrdb.hmm_profile.hmm_score_criteria.create!(min_fullseq_score: 400)
+      @sequence_source = @hmm_result_nrdb.sequence_source
+      @pfitmap_release = FactoryGirl.create(:pfitmap_release, sequence_source: @sequence_source)
+      parse_hmm_tblout(@hmm_result_nrdb, fixture_file_upload("/NrdB-20rows.tblout"))
+      @sequence_source.evaluate(@pfitmap_release, nil)
+    end
+
+    context 'given a release with 20 imported NrdB HMM result rows' do
+      subject { @pfitmap_release }
+      its(:sequence_source) { should == @sequence_source }
+      its(:pfitmap_sequences) { should have(20).items }
+
+      it 'successfully loads the ref hits given a test set of 10 GOLD genomes and a 400 bitscore criterion, and creates the expected protein_count entries' do
+	sd = SequenceDatabase.create(db: "ref")
+	ld = sd.load_databases.create(
+	  taxonset: "http://biosql.scilifelab.se/organism_group_name2full_taxon_hierarchies/GOLDWGStest10.json", 
+	  active: true
+	)
+	@pfitmap_release.calculate_released_dbs(ld)
+	rd = ReleasedDb.find(:first, conditions: { load_database_id: ld, pfitmap_release_id: @pfitmap_release })
+	taxons = Taxon.where(released_db_id: rd)
+	taxons.should have(10).items
+
+	proteins = Protein.where(released_db_id: rd)
+	warn "#{__FILE__}:#{__LINE__}: proteins:\n\t#{ proteins.map { |p| p.protclass } }"
+
+	pcs = ProteinCount.where(released_db_id: rd)
+	warn "#{__FILE__}:#{__LINE__}: pcs: #{ pcs.map { |pc| pc.protein_id } }"
+	warn "#{__FILE__}:#{__LINE__}: protein: #{ Protein.find(pcs[0].protein_id) }"
+	proteins[0].protclass.should == 'NrdB'
+      end
+    end
+  end
+
   describe "calculating a release for one result" do
     before(:each) do
       @hmm_result_nrdb = FactoryGirl.create(:hmm_result_nrdb)
@@ -147,7 +187,10 @@ describe PfitmapRelease do
       parse_hmm_tblout(@hmm_result_nrdb, fixture_file_upload("/NrdB-20rows.tblout"))
       @sequence_source.evaluate(@pfitmap_release, nil)
       @sd = SequenceDatabase.create(db: "ref")
-      @ld = @sd.load_databases.create(taxonset: "http://biosql.scilifelab.se/organism_group_name2full_taxon_hierarchies/GOLDWGStest10.json", active: true)
+      @ld = @sd.load_databases.create(
+	taxonset: "http://biosql.scilifelab.se/organism_group_name2full_taxon_hierarchies/GOLDWGStest10.json", 
+	active: true
+      )
     end
 
     it "should have a single hmm result registered" do
@@ -160,8 +203,9 @@ describe PfitmapRelease do
       @rd = ReleasedDb.find(:first, conditions: {load_database_id: @ld, pfitmap_release_id: @pfitmap_release})
       taxons = Taxon.where(released_db_id: @rd)
       proteins = Protein.where(released_db_id: @rd)
+	warn "#{__FILE__}:#{__LINE__}: proteins:\n\t#{ proteins.map { |p| p.protclass } }"
       protein_counts = ProteinCount.where(released_db_id: @rd)
-#TODO Verify thesee numbers, only put in since these are the values that came up      
+#TODO Verify these numbers, only put in since these are the values that came up      
       taxons.length.should == 10
 #      Enzyme.all.length.should == 1
       proteins.length.should == 1

@@ -95,10 +95,11 @@ class PfitmapRelease < ActiveRecord::Base
     PfitmapRelease.transaction do
       calculate_logger.info "#{Time.now}: Create released db"
       released_db = create_released_db(load_db)
-      calculate_logger.info "#{Time.now}: Fetching pfitmap_sequence objects"
 
       # Fetch all pfitmap_sequence objects for this release and its db_entries for the database selected
       # when calling pfitmap_sequences.db_entries we get only the entries with db = load_db.sequence_database.db
+      calculate_logger.info "#{Time.now}: Fetching pfitmap_sequence objects"
+
       pfitmap_sequences = PfitmapSequence.find(:all, include: [:db_entries,:hmm_profile], conditions: {pfitmap_release_id: self.id, db_entries: {db: load_db.sequence_database.db}})
       gis = Set.new(pfitmap_sequences.map {|p| p.db_entries.map {|d| d.gi}.flatten}.flatten)
 	
