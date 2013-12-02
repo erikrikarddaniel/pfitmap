@@ -83,6 +83,7 @@ class HmmProfile < ActiveRecord::Base
     end
     return bool
   end
+
   # Evaluates under the assumption that the profile is the best_profile for 
   # that db_sequence and sequence_source
   def evaluate_no_sql(db_sequence, sequence_source, inclusion_criteria, fullseq_score)

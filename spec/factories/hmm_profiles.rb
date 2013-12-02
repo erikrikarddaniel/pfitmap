@@ -8,12 +8,14 @@ FactoryGirl.define do
   factory :hmm_profile_nrdbr2lox, class: HmmProfile do
     name "RNR R2 and R2lox"
     protein_name "NrdB:R2lox"
+    rank "protfamily"
     version "20120401"
   end
                                     
   factory :hmm_profile_nrdb, class: HmmProfile do
     name "Class I RNR radical generating subunit"
     protein_name "NrdB"
+    rank "protclass"
     version "20120401"
     parent { |hmm_profile| get_hmm_profile_named(:hmm_profile_nrdbr2lox) }
     after_create do |profile|
@@ -28,6 +30,7 @@ FactoryGirl.define do
   factory :hmm_profile_nrdben, class: HmmProfile do
     name "Class I RNR radical generating subunit, eukaryotes and sister group"
     protein_name "NrdBen"
+    rank "group"
     version "20120401"
     parent { |hmm_profile| get_hmm_profile_named(:hmm_profile_nrdb) }
     after_create do |profile|
@@ -40,6 +43,7 @@ FactoryGirl.define do
   factory :hmm_profile_nrdban, class: HmmProfile do
     name "Class I RNR radical generating subunit, eukaryotes and sister group-test sorting"
     protein_name "NrdBan"
+    rank "group"
     version "20120401"
     parent { |hmm_profile| get_hmm_profile_named(:hmm_profile_nrdb) }
     after_create do |profile|
@@ -52,6 +56,7 @@ FactoryGirl.define do
   factory :hmm_profile_nrdbe, class: HmmProfile do
     name "Class I RNR radical generating subunit, eukaryotes"
     protein_name "NrdBe"
+    rank "subclass"
     version "20120401"
     parent { |hmm_profile| get_hmm_profile_named(:hmm_profile_nrdben) }
     after_create do |profile|
@@ -64,6 +69,7 @@ FactoryGirl.define do
   factory :hmm_profile_nrdbn, class: HmmProfile do
     name "Class I RNR radical generating subunit, eukaryotic sister-group"
     protein_name "NrdBn"
+    rank "subclass"
     version "20120401"
     parent { |hmm_profile| get_hmm_profile_named(:hmm_profile_nrdben) }
     after_create do |profile|

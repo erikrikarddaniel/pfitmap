@@ -143,9 +143,6 @@ describe PfitmapRelease do
   describe ".calculate_released_dbs" do
     before(:each) do
       @hmm_result_nrdb = FactoryGirl.create(:hmm_result_nrdb)
-      warn "#{__FILE__}:#{__LINE__}: hmm_profile: #{@hmm_result_nrdb.hmm_profile.inspect}"
-      warn "#{__FILE__}:#{__LINE__}: hmm_score_criteria:\n\t#{HmmScoreCriterion.all.map { |hsp| hsp.inspect }.join("\n\t")}"
-      @hmm_result_nrdb.hmm_profile.hmm_score_criteria.create!(min_fullseq_score: 400)
       @sequence_source = @hmm_result_nrdb.sequence_source
       @pfitmap_release = FactoryGirl.create(:pfitmap_release, sequence_source: @sequence_source)
       parse_hmm_tblout(@hmm_result_nrdb, fixture_file_upload("/NrdB-20rows.tblout"))
@@ -160,20 +157,18 @@ describe PfitmapRelease do
       it 'successfully loads the ref hits given a test set of 10 GOLD genomes and a 400 bitscore criterion, and creates the expected protein_count entries' do
 	sd = SequenceDatabase.create(db: "ref")
 	ld = sd.load_databases.create(
-	  taxonset: "http://biosql.scilifelab.se/organism_group_name2full_taxon_hierarchies/GOLDWGStest10.json", 
+	  taxonset: "http://biosql.scilifelab.se/gis2taxa.json",
 	  active: true
 	)
 	@pfitmap_release.calculate_released_dbs(ld)
 	rd = ReleasedDb.find(:first, conditions: { load_database_id: ld, pfitmap_release_id: @pfitmap_release })
 	taxons = Taxon.where(released_db_id: rd)
-	taxons.should have(10).items
+	taxons.should have(13).items
 
 	proteins = Protein.where(released_db_id: rd)
-	warn "#{__FILE__}:#{__LINE__}: proteins:\n\t#{ proteins.map { |p| p.protclass } }"
+	proteins.should have(1).items
 
 	pcs = ProteinCount.where(released_db_id: rd)
-	warn "#{__FILE__}:#{__LINE__}: pcs: #{ pcs.map { |pc| pc.protein_id } }"
-	warn "#{__FILE__}:#{__LINE__}: protein: #{ Protein.find(pcs[0].protein_id) }"
 	proteins[0].protclass.should == 'NrdB'
       end
     end
@@ -199,11 +194,9 @@ describe PfitmapRelease do
 
     it "should be successful to call calculate_released_db" do
       @pfitmap_release.calculate_released_dbs(@ld)
-#      # warn "#{__FILE__}:#{__LINE__}: ProteinCount.all:\n\t#{ProteinCount.all.map { |pc| "#{pc}" }.join("\n\t")}"
       @rd = ReleasedDb.find(:first, conditions: {load_database_id: @ld, pfitmap_release_id: @pfitmap_release})
       taxons = Taxon.where(released_db_id: @rd)
       proteins = Protein.where(released_db_id: @rd)
-	warn "#{__FILE__}:#{__LINE__}: proteins:\n\t#{ proteins.map { |p| p.protclass } }"
       protein_counts = ProteinCount.where(released_db_id: @rd)
 #TODO Verify these numbers, only put in since these are the values that came up      
       taxons.length.should == 10
@@ -214,7 +207,7 @@ describe PfitmapRelease do
       protein_counts.maximum("no_proteins").should == 2 
       protein_counts.maximum("no_genomes_with_proteins").should == 1
    end
-#
+
     it "should not include all taxon-levels" do
       @pfitmap_release.calculate_released_dbs(@ld)
       @rd = ReleasedDb.find(:first, conditions: {load_database_id: @ld, pfitmap_release_id: @pfitmap_release})

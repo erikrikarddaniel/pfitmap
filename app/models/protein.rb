@@ -34,7 +34,7 @@ class Protein < ActiveRecord::Base
   end
 
   def to_s
-    "#{protfamily}#{protclass}#{subclass}:#{protgroup}:#{subgroup}:#{subsubgroup}"
+    "<#{protfamily}><#{protclass}><#{subclass}><#{protgroup}><#{subgroup}><#{subsubgroup}>"
   end
 
   private

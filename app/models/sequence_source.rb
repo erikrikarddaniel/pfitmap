@@ -37,6 +37,7 @@ class SequenceSource < ActiveRecord::Base
 
   def evaluate(head_release, user)
     evaluate_logger.info "#{Time.now} Start evaluating sequence source: #{self.name}"
+
     @sequences = []
     profile_hash = {}
     HmmProfile.find(:all, :include => :hmm_score_criteria).each do |profile|
@@ -48,13 +49,13 @@ class SequenceSource < ActiveRecord::Base
         if view_row.sequence_source_id == self.id
           hmm_profile = profile_hash[view_row.hmm_profile_id]
           
-          if hmm_profile.evaluate_no_sql(seq,self, hmm_profile.hmm_score_criteria, view_row.fullseq_score)
+          if hmm_profile.evaluate_no_sql(seq, self, hmm_profile.hmm_score_criteria, view_row.fullseq_score)
             head_release.add_seq(seq, hmm_profile)
           end
         end
       end
     end
-  evaluate_logger.info "#{Time.now} Evaluation of sequence source was successful!"
+    evaluate_logger.info "#{Time.now} Evaluation of sequence source #{self.name} was successful!"
   end
 end
 
