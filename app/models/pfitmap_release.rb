@@ -188,7 +188,7 @@ class PfitmapRelease < ActiveRecord::Base
     imported = {}
     gis.to_a.each_slice(SLICE_SIZE) do |gislice|
       taxon_names = []
-      calculate_logger.info "#{Time.now}: Fetching slice #{slicei += 1}"
+      calculate_logger.info "#{Time.now}: Fetching slice #{slicei += 1} (slice size: #{SLICE_SIZE})"
 
       options = {
 	headers: {
@@ -197,8 +197,15 @@ class PfitmapRelease < ActiveRecord::Base
 	body: { gis: gislice }.to_json,
 	timeout: HTTP_TIMEOUT
       }
-      response = HTTParty.get(taxonseturl, options)
-      json_taxa = response.parsed_response
+      json_taxa = {}
+      begin
+	response = HTTParty.get(taxonseturl, options)
+	json_taxa = response.parsed_response
+      rescue
+	calculate_logger.error "#{Time.now}: Error fetching slice #{slicei}: #{$!}"
+	throw $!
+      end
+
       calculate_logger.info "#{Time.now}: Fetched #{json_taxa.length} taxa"
 
       json_taxa.each do |taxon|
@@ -292,11 +299,13 @@ class PfitmapRelease < ActiveRecord::Base
       # Pick out the index of super kingdom and go down the hierarchy by one
       kingdom =
         taxons[taxons.find_index { |t| t['node_rank'] == 'superkingdom' } - 1]
-      # If the taxon picked out already in the accepted list,don't use it again
+
+      # If the taxon picked out already in the accepted list, don't use it again
       if kingdom.in?(accepted_taxons)
         calculate_logger.error "#{Time.now} Error, kingdom was missing, and" +
-          ' the first level below superkingdom was already used:' +
-          " #{taxons.first['ncbi_taxon_id']}"
+          ' the first level below superkingdom was already used, NCBI taxon id:' +
+          " #{taxons.first['ncbi_taxon_id']}, taxa: " +
+	  "#{taxons.reverse.map { |t| "#{t['node_rank']}:#{t['scientific_name']}" }.join(", ")}"
       else
         name_hash['kingdom'] = kingdom['scientific_name']
       end
