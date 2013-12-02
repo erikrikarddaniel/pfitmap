@@ -87,7 +87,7 @@ class PfitmapRelease < ActiveRecord::Base
     #  
     # The steps of the algorithm are explained below.
 
-    calculate_logger.info "#{Time.now}: Started calculate_main."
+    calculate_logger.info "#{Time.now}: Started calculate_released_db(#{load_db})"
 
     require "matrix"
 
@@ -152,14 +152,15 @@ class PfitmapRelease < ActiveRecord::Base
         protein_counts[protein_map[gi]][tid].no_proteins += 1
       end
       ProteinCount.import protein_counts.values.map { |pc| pc.values }.flatten
-      calculate_logger.info "#{Time.now}: Created " +
-        "#{ProteinCount.where(released_db_id: released_db.id).count} " +
-        'protein counts'
+      calculate_logger.info 
+        "#{Time.now}: Created #{ProteinCount.where(released_db_id: released_db.id).count} protein counts"
     end
   rescue => e
-    calculate_logger.error "#{Time.now}: Calculate FAILED for " +
-      "#{load_db.name} with error: #{e}"
+    calculate_logger.error 
+      "#{Time.now}: Calculate FAILED for #{load_db.name} with error: #{e}"
     raise e
+
+    calculate_logger.info "#{Time.now}: Finished calculate_released_db(#{load_db})"
   end
 
   def create_released_db(load_db)

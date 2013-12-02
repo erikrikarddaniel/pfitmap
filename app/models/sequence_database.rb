@@ -15,4 +15,8 @@ class SequenceDatabase < ActiveRecord::Base
   attr_accessible :abbreviation, :accession_url, :db, :home_page
   has_many :db_entries, foreign_key: "db", primary_key: "db"
   has_many :load_databases, foreign_key: "sequence_database_id"
+
+  def to_s
+    "SequenceDatabase: #{db}"
+  end
 end
