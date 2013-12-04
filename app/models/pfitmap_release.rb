@@ -13,7 +13,7 @@
 
 class PfitmapRelease < ActiveRecord::Base
   HTTP_TIMEOUT = 600
-  SLICE_SIZE = 5000
+  SLICE_SIZE = 50000
 
   attr_accessible :release, :release_date, :sequence_source_id
   has_many :pfitmap_sequences, :dependent => :destroy
@@ -151,9 +151,12 @@ class PfitmapRelease < ActiveRecord::Base
         end
         protein_counts[protein_map[gi]][tid].no_proteins += 1
       end
+
+      calculate_logger.info "#{Time.now}: Bulk importing #{protein_counts.length} protein counts"
+
       ProteinCount.import protein_counts.values.map { |pc| pc.values }.flatten
-      calculate_logger.info 
-        "#{Time.now}: Created #{ProteinCount.where(released_db_id: released_db.id).count} protein counts"
+
+      calculate_logger.info "#{Time.now}: Created #{ProteinCount.where(released_db_id: released_db.id).count} protein counts"
     end
   rescue => e
     calculate_logger.error 
