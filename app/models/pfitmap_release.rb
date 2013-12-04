@@ -301,12 +301,7 @@ class PfitmapRelease < ActiveRecord::Base
         taxons[taxons.find_index { |t| t['node_rank'] == 'superkingdom' } - 1]
 
       # If the taxon picked out already in the accepted list, don't use it again
-      if kingdom.in?(accepted_taxons)
-        calculate_logger.error "#{Time.now} Error, kingdom was missing, and" +
-          ' the first level below superkingdom was already used, NCBI taxon id:' +
-          " #{taxons.first['ncbi_taxon_id']}, taxa: " +
-	  "#{taxons.reverse.map { |t| "#{t['node_rank']}:#{t['scientific_name']}" }.join(", ")}"
-      else
+      unless kingdom.in?(accepted_taxons)
         name_hash['kingdom'] = kingdom['scientific_name']
       end
     end
