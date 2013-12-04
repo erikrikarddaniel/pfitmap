@@ -60,18 +60,6 @@ require "delayed/recipes"
 
 set :rails_env, "production" #added for delayed job
 
-namespace :scheduler_daemon do
-  task :start, :roles => :app do
-    run "bundle exec scheduler_daemon start"
-  end
-  task :stop, :roles => :app do
-    run "bundle exec scheduler_daemon stop"
-  end
-  task :restart, :roles => :app do
-    run "bundle exec scheduler_daemon start"
-  end
-end
-
-after "deploy:stop",    "delayed_job:stop",	"scheduler_daemon:stop"
-after "deploy:start",   "delayed_job:start",	"scheduler_daemon:start"
-after "deploy:restart", "delayed_job:restart",	"scheduler_daemon:restart" 
+after "deploy:stop",    "delayed_job:stop"
+after "deploy:start",   "delayed_job:start"
+after "deploy:restart", "delayed_job:restart"
