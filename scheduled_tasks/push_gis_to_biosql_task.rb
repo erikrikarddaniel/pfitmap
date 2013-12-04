@@ -3,7 +3,6 @@ class PushGisToBiosqlTask < Scheduler::SchedulerTask
   # environments :staging, :production
   
   self.in '30s' 
-  every '2h'
   # other examples:
   # every '24h', :first_at => Chronic.parse('next midnight')
   # cron '* 4 * * *'  # cron style
