@@ -214,6 +214,8 @@ class PfitmapRelease < ActiveRecord::Base
 	imported[taxon[0]["ncbi_taxon_id"]] = true
       end
 
+      calculate_logger.info "#{Time.now}: Bulk importing #{taxon_names.length} taxa"
+
       # Bulk insert the taxons with released_db_id
       Taxon.import taxon_names
     end
