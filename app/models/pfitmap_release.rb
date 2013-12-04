@@ -12,8 +12,8 @@
 #
 
 class PfitmapRelease < ActiveRecord::Base
-  HTTP_TIMEOUT = 600
-  SLICE_SIZE = 50000
+  HTTP_TIMEOUT = 6000
+  SLICE_SIZE = 5000
 
   attr_accessible :release, :release_date, :sequence_source_id
   has_many :pfitmap_sequences, :dependent => :destroy
