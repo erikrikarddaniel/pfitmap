@@ -1,6 +1,6 @@
 class BiosqlWeb < ActiveRecord::Base  
   self.abstract_class = true
-  BASE_URL =  (ENV["RAILS_ENV"] == "production") ? 'http://biosql.scilifelab.se' : 'http://127.0.0.1:3000'
+  BASE_URL =  (Rails.env == "production" || Rails.env == "test") ? 'http://biosql.scilifelab.se' : 'http://127.0.0.1:3000'
   
 
   def self.gi2ncbi_taxon_id(gi)
