@@ -1,6 +1,7 @@
 class BiosqlWeb < ActiveRecord::Base  
   self.abstract_class = true
-  BASE_URL = 'http://biosql.scilifelab.se'
+  BASE_URL =  (ENV["RAILS_ENV"] == "production") ? 'http://biosql.scilifelab.se' : 'http://127.0.0.1:3000'
+  
 
   def self.gi2ncbi_taxon_id(gi)
     options = {:headers => { 'Content-Type' => 'application/json', 'Accepts' => 'application/json'}, :body => {:gi => gi}.to_json, timeout: 300 }
@@ -12,6 +13,12 @@ class BiosqlWeb < ActiveRecord::Base
     options = {:headers => { 'Content-Type' => 'application/json', 'Accepts' => 'application/json'}, :body => {:gis => gis}.to_json, timeout: 1200 }
     response = HTTParty.get(BASE_URL + '/gis2ncbi_taxon_ids.json', options)
     ncbi_taxons_ids = response.parsed_response
+  end
+
+  def self.gis2queue(gis)
+    options = {:headers => { 'Content-Type' => 'application/json', 'Accepts' => 'application/json'}, :body => {:gis => gis}.to_json, timeout: 1200 }
+    response = HTTParty.get(BASE_URL + '/add_gis_to_queue', options)
+    response = response.parsed_response
   end
 
   def self.organism_group2ncbi_taxon_ids(name)
