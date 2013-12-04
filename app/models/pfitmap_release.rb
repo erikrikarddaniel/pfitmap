@@ -156,7 +156,7 @@ class PfitmapRelease < ActiveRecord::Base
 
       ProteinCount.import protein_counts.values.map { |pc| pc.values }.flatten
 
-      calculate_logger.info "#{Time.now}: Created #{ProteinCount.where(released_db_id: released_db.id).count} protein counts"
+      calculate_logger.info "#{Time.now}: Created protein counts"
     end
   rescue => e
     calculate_logger.error "#{Time.now}: Calculate FAILED for #{load_db.name} with error: #{e}"
