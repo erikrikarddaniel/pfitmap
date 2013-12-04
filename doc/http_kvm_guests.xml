@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+<!--
+  <kvm hostname="virt-backup.sbc.su.se">
+     <owners>
+       <owner username="esjolund"/>
+     </owners>
+     <apache_vhosts>     
+       <apache_vhost server_name="earth.sbc.su.se">     
+          <server_alias name="planet.sbc.su.se"/>
+          <server_alias name="uplanet.sbc.su.se"/>
+       </apache_vhost>     
+     </apache_vhosts>     
+  </kvm>
+-->
+  <kvm twin-nr="2" hostname="kvm4">
+     <owners>
+       <owner username="dmessina"/>
+     </owners>
+     <apache_vhosts>     
+       <apache_vhost server_name="sfixem.cgb.ki.se" permanent_redirect="sfixem.sbc.su.se"/>
+       <apache_vhost server_name="sfinx.cgb.ki.se" permanent_redirect="sfinx.sbc.su.se"/>
+       <apache_vhost server_name="sfinx.sbc.su.se">
+       </apache_vhost>     
+       <apache_vhost server_name="sfixem.sbc.su.se">
+       </apache_vhost>     
+     </apache_vhosts>     
+  </kvm>
+
+  <kvm twin-nr="2" hostname="kvm21">
+     <owners>
+       <owner username="daniel_lundin_"/>
+     </owners>
+     <apache_vhosts>     
+       <apache_vhost server_name="rnrdb.pfitmap.org">
+          <server_alias name="*.pfitmap.org"/>
+       </apache_vhost>
+     </apache_vhosts>     
+  </kvm>
+
+  <kvm twin-nr="2" hostname="kvm21">
+     <owners>
+       <owner username="daniel_lundin_"/>
+     </owners>
+     <apache_vhosts>     
+       <apache_vhost server_name="rnrdb1.pfitmap.org">
+          <server_alias name="*.pfitmap.org"/>
+       </apache_vhost>
+     </apache_vhosts>     
+  </kvm>
+
+  <kvm twin-nr="2" hostname="kvm25">
+     <owners>
+       <owner username="sara"/>
+     </owners>
+     <apache_vhosts>     
+       <apache_vhost server_name="datisca-nodule-transcriptome.scilifelab.se">
+       </apache_vhost>
+     </apache_vhosts>     
+  </kvm>
+  <kvm twin-nr="2" hostname="kvm26">
+     <owners>
+       <owner username="thomas07"/>
+     </owners>
+     <apache_vhosts>     
+       <apache_vhost server_name="pfam.sbc.su.se">
+       </apache_vhost>     
+     </apache_vhosts>     
+  </kvm>
+  <kvm twin-nr="2"  hostname="kvm27">
+     <owners>
+       <owner username="thomas07"/>
+     </owners>
+     <apache_vhosts>     
+       <apache_vhost server_name="pfamdev.sbc.su.se">
+       </apache_vhost>
+     </apache_vhosts>     
+  </kvm>
+
+  <kvm twin-nr="2"  hostname="kvm20">
+     <owners>
+       <owner username="daniel_lundin_"/>
+     </owners>
+     <apache_vhosts>     
+       <apache_vhost server_name="biosql.scilifelab.se">
+       </apache_vhost>
+     </apache_vhosts>     
+  </kvm>
+
+  <kvm twin-nr="2"  hostname="kvm23">
+     <owners>
+       <owner username="daniel_lundin_"/>
+     </owners>
+     <apache_vhosts>     
+       <apache_vhost server_name="envcommunity.scilifelab.se">
+       </apache_vhost>
+       <apache_vhost server_name="metaannot.scilifelab.se">
+       </apache_vhost>
+
+     </apache_vhosts>     
+  </kvm>
+
+  <kvm twin-nr="1"  hostname="kvm22">
+     <owners>
+       <owner username="thomas07"/>
+     </owners>
+     <apache_vhosts>     
+       <apache_vhost server_name="funcoup.sbc.su.se"/>
+     </apache_vhosts>     
+  </kvm>
+
+  <kvm twin-nr="2"  hostname="kvm11">
+     <owners>
+       <owner username="esjolund"/>
+     </owners>
+     <apache_vhosts>     
+       <apache_vhost server_name="prime.sbc.su.se"   />
+       <apache_vhost server_name="www.compasbio.se">
+          <server_alias name="www.compasbio.net"/>
+          <server_alias name="compasbio.net"/>
+          <server_alias name="compasbio.se"/>
+       </apache_vhost>     
+       <apache_vhost server_name="archive.bioinfo.se">
+       </apache_vhost>     
+       <apache_vhost server_name="www.sbc.su.se" ssl-crt="/etc/pki/tls/certs/www.sbc.su.se.crt"  ssl-key="/etc/pki/tls/private/www.sbc.su.se.key">
+          <server_alias name="www.sbc.ki.se"/>
+       </apache_vhost>     
+       <apache_vhost server_name="www.orthoxml.org">
+          <server_alias name="orthoxml.org"/>
+          <server_alias name="seqxml.org"/>
+          <server_alias name="www.seqxml.org"/>
+       </apache_vhost>     
+       <apache_vhost server_name="socbin.org">
+          <server_alias name="www.socbin.org"/>
+       </apache_vhost>     
+       <apache_vhost server_name="sonnhammer.cgb.ki.se">
+       </apache_vhost>     
+       <apache_vhost server_name="sonnhammer.sbc.su.se">
+       </apache_vhost>     
+       <apache_vhost server_name="sonnhammer.org">
+       </apache_vhost>     
+     </apache_vhosts>     
+  </kvm>
+  <kvm twin-nr="2"  hostname="kvm12">
+     <owners>
+       <owner username="esjolund"/>
+     </owners>
+     <apache_vhosts>     
+       <apache_vhost server_name="phobius.cgb.ki.se" permanent_redirect="phobius.sbc.su.se"/>
+       <apache_vhost server_name="gpcrhmm.cgb.ki.se" permanent_redirect="gpcrhmm.sbc.su.se"/>
+       <apache_vhost server_name="humanoid.cgb.ki.se" permanent_redirect="humanoid.sbc.su.se"/>
+       <apache_vhost server_name="msa.cgb.ki.se" permanent_redirect="msa.sbc.su.se"/>
+       <apache_vhost server_name="orthodisease.cgb.ki.se" permanent_redirect="orthodisease.sbc.su.se"/>
+       <apache_vhost server_name="chromowheel.cgb.ki.se" permanent_redirect="chromowheel.sbc.su.se"/>
+       <apache_vhost server_name="orthostrapper.cgb.ki.se" permanent_redirect="orthostrapper.sbc.su.se"/>
+       <apache_vhost server_name="pfam.cgb.ki.se" permanent_redirect="pfam.sbc.su.se"/>
+       <apache_vhost server_name="funshift.cgb.ki.se" permanent_redirect="funshift.sbc.su.se"/>
+
+       <apache_vhost server_name="multiparanoid.cgb.ki.se" permanent_redirect="multiparanoid.sbc.su.se"/>
+       <apache_vhost server_name="inparanoid.cgb.ki.se" permanent_redirect="inparanoid.sbc.su.se"/>
+       <apache_vhost server_name="sirna.cgb.ki.se" permanent_redirect="sirna.sbc.su.se"/>
+       <apache_vhost server_name="sirnadb.cgb.ki.se" permanent_redirect="sirnadb.sbc.su.se"/>
+       <apache_vhost server_name="sisearch.cgb.ki.se" permanent_redirect="sisearch.sbc.su.se"/>
+       <apache_vhost server_name="chromowheel.sbc.su.se">
+       </apache_vhost>     
+       <apache_vhost server_name="dasher.sbc.su.se">
+       </apache_vhost>     
+       <apache_vhost server_name="funshift.sbc.su.se">
+       </apache_vhost>     
+       <apache_vhost server_name="gpcrhmm.sbc.su.se">
+       </apache_vhost>     
+       <apache_vhost server_name="humanoid.sbc.su.se">
+       </apache_vhost>     
+       <apache_vhost server_name="inparanoid51.sbc.su.se">
+       </apache_vhost>     
+       <apache_vhost server_name="inparanoid6.sbc.su.se">
+       </apache_vhost>     
+       <apache_vhost server_name="inparanoid-ac.sbc.su.se">
+       </apache_vhost>     
+
+<!-- erik sjolund adds inparanoid7.sbc.su.se 2013-06-27 although it's not in DNS right now -->
+       <apache_vhost server_name="jsquid.sbc.su.se">
+       </apache_vhost>     
+       <apache_vhost server_name="metatm.sbc.su.se">
+       </apache_vhost>     
+       <apache_vhost server_name="msa.sbc.su.se">
+       </apache_vhost>     
+       <apache_vhost server_name="multiparanoid.sbc.su.se">
+       </apache_vhost>     
+       <apache_vhost server_name="orthodisease.sbc.su.se">
+       </apache_vhost>     
+       <apache_vhost server_name="pfamki.sbc.su.se">
+       </apache_vhost>     
+       <apache_vhost server_name="sirna.sbc.su.se">
+       </apache_vhost>     
+     </apache_vhosts>     
+  </kvm>
+
+
+
+  <kvm twin-nr="2"  hostname="kvm13">
+     <owners>
+       <owner username="esjolund"/>
+     </owners>
+     <apache_vhosts>     
+       <apache_vhost server_name="avdist.sbc.su.se">
+       </apache_vhost>     
+       <apache_vhost server_name="msa2.sbc.su.se">
+       </apache_vhost>     
+       <apache_vhost server_name="dgpred.cbr.su.se">
+       </apache_vhost>     
+       <apache_vhost server_name="elude.sbc.su.se">
+       </apache_vhost>     
+       <apache_vhost server_name="excap.sbc.su.se">
+       </apache_vhost>     
+       <apache_vhost server_name="funcoup.sbc.su.se">
+          <server_alias name="funcoup2.sbc.su.se"/>
+       </apache_vhost>     
+       <apache_vhost server_name="inparanoid.sbc.su.se">
+          <server_alias name="inparanoid7.sbc.su.se"/>
+       </apache_vhost>     
+       <apache_vhost server_name="hieranoid.sbc.su.se">
+       </apache_vhost>     
+       <apache_vhost server_name="kalignp.cbr.su.se">
+       </apache_vhost>     
+       <apache_vhost server_name="kaell.org">
+          <server_alias name="www.kaell.org"/>
+          <server_alias name="*.kaell.org"/>
+          <server_alias name="lukask-test.cbr.su.se"/>
+       </apache_vhost>     
+       <apache_vhost server_name="maxlink.sbc.su.se">
+       </apache_vhost>     
+       <apache_vhost server_name="maxlink-beta.sbc.su.se">
+       </apache_vhost>     
+       <apache_vhost server_name="mprap.cbr.su.se">
+       </apache_vhost>     
+       <apache_vhost server_name="phobius.sbc.su.se">
+          <server_alias name="phobius.cbr.su.se"/>
+       </apache_vhost>     
+       <apache_vhost server_name="refsense.sbc.su.se">
+       </apache_vhost>     
+       <apache_vhost server_name="repeatalign.sbc.su.se">
+       </apache_vhost>     
+       <apache_vhost server_name="software.sbc.su.se"  ssl-crt="/etc/pki/tls/certs/software.sbc.su.se.crt"  ssl-key="/etc/pki/tls/private/software.sbc.su.se.key"> 
+<!--      <apache_vhost server_name="software.sbc.su.se" > -->
+       </apache_vhost>     
+       <apache_vhost server_name="zpred.cbr.su.se">
+       </apache_vhost>     
+     </apache_vhosts>     
+  </kvm>
+  <kvm twin-nr="2"  hostname="kvm14">
+     <owners>
+       <owner username="mjs"/>
+     </owners>
+     <apache_vhosts>     
+       <apache_vhost server_name="pcons.net">
+         <server_alias name="www.pcons.net"/>
+         <server_alias name="pcons.scilifelab.se"/>
+         <server_alias name="twin2-test3.orthoxml.org"/>
+       </apache_vhost>     
+       <apache_vhost server_name="bioinfo.se">
+         <server_alias name="www.bioinfo.se"/>
+       </apache_vhost>     
+
+     </apache_vhosts>     
+  </kvm>
+  <kvm twin-nr="2"  hostname="kvm16">
+     <owners>
+       <owner username="aronh"/>
+     </owners>
+     <apache_vhosts>     
+       <apache_vhost server_name="www.edict-project.eu">
+         <server_alias name="www.edict-project.org"/>
+         <server_alias name="edict-project.eu"/>
+         <server_alias name="edict-project.org"/>
+       </apache_vhost>     
+       <apache_vhost server_name="www.cbr.su.se">
+       </apache_vhost>     
+       <apache_vhost server_name="www.compprotsci.org">
+         <server_alias name="compprotsci.org"/>
+         <server_alias name="cps.dbb.su.se"/>
+         <server_alias name="cps.cbr.su.se"/>
+       </apache_vhost>     
+       <apache_vhost server_name="syrah.cbr.su.se">
+       </apache_vhost>     
+       <apache_vhost server_name="booking.cbr.su.se">
+         <server_alias name="booking.dbb.su.se"/>
+         <server_alias name="bokning.cbr.su.se"/>
+         <server_alias name="bokning.dbb.su.se"/>
+       </apache_vhost>     
+     </apache_vhosts>     
+  </kvm>
+  <kvm twin-nr="2"  hostname="kvm15">
+     <owners>
+       <owner username="aronh"/>
+     </owners>
+     <apache_vhosts>     
+       <apache_vhost server_name="topcons.net">
+         <server_alias name="topcons.cbr.su.se"/>
+         <server_alias name="www.topcons.net"/>
+       </apache_vhost>     
+       <apache_vhost server_name="single.topcons.net">
+       </apache_vhost>     
+       <apache_vhost server_name="octopus.cbr.su.se">
+       </apache_vhost>     
+       <apache_vhost server_name="scampi.cbr.su.se">
+       </apache_vhost>     
+     </apache_vhosts>     
+  </kvm>
+
+  <kvm twin-nr="2"  hostname="kvm17">
+     <owners>
+       <owner username="krifo"/>
+     </owners>
+     <apache_vhosts>     
+     </apache_vhosts>     
+  </kvm>
+
+  <kvm twin-nr="2"  hostname="kvm18">
+     <owners>
+       <owner username="krifo"/>
+     </owners>
+     <apache_vhosts>     
+
+<!--
+       <apache_vhost server_name="pfamdev2.sbc.su.se">
+         <server_alias name="testpfamdev.sbc.su.se"/>
+       </apache_vhost>     
+-->
+     </apache_vhosts>     
+  </kvm>
+
+<!-- right now wsdl.sbc.su.se is running on haddock.scilifelab.se (2011-12-30).
+see
+[root@virt-httpdproxy ~]# ls /etc/httpd/conf.d/wsdl.conf
+/etc/httpd/conf.d/wsdl.conf
+
+  <kvm twin-nr="2" hostname="130.229.49.48">
+     <owners>
+       <owner username="esjolund"/>
+     </owners>
+     <apache_vhosts>     
+       <apache_vhost server_name="wsdl.sbc.su.se" ssl-crt="/etc/pki/tls/certs/wsdl.sbc.su.se.crt"  ssl-key="/etc/pki/tls/private/wsdl.sbc.su.se.key">
+       </apache_vhost>     
+     </apache_vhosts>     
+  </kvm>
+-->
+
+  <kvm twin-nr="2" hostname="kvm5">
+     <owners>
+       <owner username="esjolund"/>
+     </owners>
+     <apache_vhosts>     
+       <apache_vhost server_name="svn.sbc.su.se" ssl-crt="/etc/pki/tls/certs/svn.sbc.su.se.crt"  ssl-key="/etc/pki/tls/private/svn.sbc.su.se.key">
+       </apache_vhost>     
+     </apache_vhosts>     
+  </kvm>
+
+  <kvm twin-nr="2"  hostname="kvm19">
+     <owners>
+       <owner username="shayat"/>
+     </owners>
+     <apache_vhosts>     
+       <apache_vhost server_name="boctopus.cbr.su.se">
+       </apache_vhost>     
+       <apache_vhost server_name="bzpred.cbr.su.se">
+       </apache_vhost>     
+       <apache_vhost server_name="tmbmodel.cbr.su.se">
+       </apache_vhost>     
+       <apache_vhost server_name="tobmodel.cbr.su.se">
+       </apache_vhost>     
+     </apache_vhosts>     
+  </kvm>
+
+
+
+  <kvm twin-nr="2"  hostname="kvm24">
+     <owners>
+       <owner username="mikael_borg_"/>
+     </owners>
+     <apache_vhosts>     
+       <apache_vhost server_name="bilstest.borg.hk">
+       </apache_vhost>     
+
+     </apache_vhosts>     
+  </kvm>
+  <kvm twin-nr="1"  hostname="kvm6">
+     <owners>
+       <owner username="gostl"/>
+     </owners>
+     <apache_vhosts>     
+       <apache_vhost server_name="inparanoid8.sbc.su.se">
+         <server_alias name="twin1-test2.orthoxml.org"/>
+       </apache_vhost>   
+     </apache_vhosts>       
+  </kvm>
+  <kvm twin-nr="1"  hostname="kvm7">
+     <owners>
+       <owner username="lukask"/>
+     </owners>
+     <apache_vhosts>     
+       <apache_vhost server_name="prib2014.scilifelab.se">
+       </apache_vhost>     
+     </apache_vhosts>     
+  </kvm>
+</root>
