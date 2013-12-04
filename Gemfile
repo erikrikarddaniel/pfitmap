@@ -30,7 +30,8 @@ gem 'json'
 # Delay time-consuming jobs
 gem 'delayed_job_active_record', '0.3.2'
 gem 'daemons'
-
+gem 'scheduler_daemon'
+gem 'rufus-scheduler', '2.0.24'
 # Debugging memory leak
 #gem 'oink'
 
