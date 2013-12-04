@@ -159,8 +159,7 @@ class PfitmapRelease < ActiveRecord::Base
       calculate_logger.info "#{Time.now}: Created #{ProteinCount.where(released_db_id: released_db.id).count} protein counts"
     end
   rescue => e
-    calculate_logger.error 
-      "#{Time.now}: Calculate FAILED for #{load_db.name} with error: #{e}"
+    calculate_logger.error "#{Time.now}: Calculate FAILED for #{load_db.name} with error: #{e}"
     raise e
 
     calculate_logger.info "#{Time.now}: Finished calculate_released_db(#{load_db})"
