@@ -4,7 +4,7 @@ require 'rvm/capistrano'
 
 # bundler bootstrap
 require 'bundler/capistrano'
-set :rvm_ruby_string, '1.9.3-p194'
+set :rvm_ruby_string, 'ruby-2.0.0-p247'
 set :rvm_type, :system
 
 # main details
