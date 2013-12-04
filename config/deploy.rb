@@ -43,17 +43,6 @@ namespace :deploy do
     run "touch #{current_path}/tmp/restart.txt"
   end
 end
-namespace :scheduler_daemon do
-  task :start, :roles => :app do
-    run "bundle exec scheduler_daemon start"
-  end
-  task :stop, :roles => :app do
-    run "bundle exec scheduler_daemon stop"
-  end
-  task :restart, :roles => :app do
-    run "bundle exec scheduler_daemon start"
-  end
-end
 #THIS links the database file which is stored locally on the application server to the current release.
 namespace :db do
   task :db_config, :except => { :no_release => true }, :role => :app do
@@ -70,6 +59,18 @@ load 'deploy/assets'
 require "delayed/recipes"
 
 set :rails_env, "production" #added for delayed job
+
+namespace :scheduler_daemon do
+  task :start, :roles => :app do
+    run "bundle exec scheduler_daemon start"
+  end
+  task :stop, :roles => :app do
+    run "bundle exec scheduler_daemon stop"
+  end
+  task :restart, :roles => :app do
+    run "bundle exec scheduler_daemon start"
+  end
+end
 
 after "deploy:stop",    "delayed_job:stop",	"scheduler_daemon:stop"
 after "deploy:start",   "delayed_job:start",	"scheduler_daemon:start"
