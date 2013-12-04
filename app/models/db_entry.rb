@@ -28,4 +28,15 @@ class DbEntry < ActiveRecord::Base
     gi_taxons = BiosqlWeb.get_taxons_by_gis(gi_list)
     
   end
+
+  def gis2qi_queue
+    gis = self.find(:all,select: "gi", 
+                         include: [:db_sequence], 
+                         conditions: ["db_sequences.sequence IS NULL"])
+              .map {|e| e.gi.to_s}
+
+    BiosqlWeb.gis2queue(gis)
+  end
+
+
 end

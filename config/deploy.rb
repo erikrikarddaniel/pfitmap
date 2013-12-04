@@ -28,6 +28,10 @@ set :repository, "git@github.com:erikrikarddaniel/pfitmap.git"
 set :branch, "stable"
 set :git_enable_submodules, 1
 
+# Cronjobs for rails
+set :whenever_command, "bundle exec whenever"
+require "whenever/capistrano"
+
 # tasks
 namespace :deploy do
   task :start, :roles => :app do
