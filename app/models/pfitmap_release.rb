@@ -300,9 +300,14 @@ class PfitmapRelease < ActiveRecord::Base
     # If kingdom is missing, use the taxon below superkingdom as kingdom
     # (if it has not already been used
     unless 'kingdom'.in?(accepted_taxons.map { |t| t['node_rank'] })
-      # Pick out the index of super kingdom and go down the hierarchy by one
-      kingdom =
-        taxons[taxons.find_index { |t| t['node_rank'] == 'superkingdom' } - 1]
+      kingdom = nil
+      begin
+	# Pick out the index of super kingdom and go down the hierarchy by one
+	kingdom = taxons[taxons.find_index { |t| t['node_rank'] == 'superkingdom' } - 1]
+      rescue
+	calculate_logger.error "Error finding superkingdom in #{taxons.map { |t| t.inspect }.join(", ")}"
+	raise $!
+      end
 
       # If the taxon picked out already in the accepted list, don't use it again
       unless kingdom.in?(accepted_taxons)
