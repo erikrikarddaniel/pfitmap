@@ -161,7 +161,8 @@ class PfitmapRelease < ActiveRecord::Base
 
     calculate_logger.info "#{Time.now}: Finished calculate_released_db(#{load_db})"
   rescue => e
-    calculate_logger.error "#{Time.now}: Calculate FAILED for #{load_db.name} with error: #{e}, backtrace:\n\t#{e.backtrace.join("\n\t")}"
+    calculate_logger.error "#{Time.now}: Calculate FAILED for #{load_db.name} " +
+      "with error: #{e}, backtrace:\n\t#{e.backtrace.join("\n\t")}"
     raise e
   end
 
@@ -205,7 +206,7 @@ class PfitmapRelease < ActiveRecord::Base
 	json_taxa = response.parsed_response
       rescue
 	calculate_logger.error "#{Time.now}: Error fetching slice #{slicei}: #{$!}"
-	throw $!
+	raise $!
       end
 
       calculate_logger.info "#{Time.now}: Fetched #{json_taxa.length} taxa"
@@ -216,7 +217,7 @@ class PfitmapRelease < ActiveRecord::Base
 	imported[taxon[0]["ncbi_taxon_id"]] = true
       end
 
-      calculate_logger.info "#{Time.now}: Bulk importing #{taxon_names.length} taxa"
+      #calculate_logger.debug "#{Time.now}: Species: #{taxon_names.map { |t| t['species'] }.join(", ") }"
 
       # Bulk insert the taxons with released_db_id
       Taxon.import taxon_names
@@ -290,7 +291,7 @@ class PfitmapRelease < ActiveRecord::Base
     # strain if strain not used already
     unless taxons.first.in?(accepted_taxons)
       if name_hash['strain']
-        calculate_logger.error "#{Time.now} Error, strain was already in" +
+        calculate_logger.error "#{Time.now} Error, strain was already in " +
           "use so the lowest taxon not added: #{taxons.first['ncbi_taxon_id']}"
       else
         name_hash['strain'] = taxons.first['scientific_name']
@@ -300,14 +301,17 @@ class PfitmapRelease < ActiveRecord::Base
     # If kingdom is missing, use the taxon below superkingdom as kingdom
     # (if it has not already been used
     unless 'kingdom'.in?(accepted_taxons.map { |t| t['node_rank'] })
-      kingdom = nil
-      begin
-	# Pick out the index of super kingdom and go down the hierarchy by one
-	kingdom = taxons[taxons.find_index { |t| t['node_rank'] == 'superkingdom' } - 1]
-      rescue
-	calculate_logger.error "Error finding superkingdom in #{taxons.map { |t| t.inspect }.join(", ")}"
-	raise $!
+      # Pick out the index of superkingdom
+      domain_index = taxons.find_index { |t| t['node_rank'] == 'superkingdom' }
+
+      # If a domain_index was not found, we use the top level below root, i.e. number 2
+      unless domain_index
+	domain_index = -2
+	name_hash['superkingdom'] = taxons[domain_index]['scientific_name']
       end
+
+      # ... and go down the hierarchy by one
+      kingdom = taxons[domain_index - 1]
 
       # If the taxon picked out already in the accepted list, don't use it again
       unless kingdom.in?(accepted_taxons)
@@ -337,7 +341,7 @@ class PfitmapRelease < ActiveRecord::Base
       phylum: name_hash['phylum'],
       taxclass: name_hash['class'],
       taxorder: name_hash['order'],
-      taxfamily: name_hash['taxfamily'],
+      taxfamily: name_hash['family'],
       genus: name_hash['genus'],
       species: name_hash['species'],
       strain: name_hash['strain']

@@ -50,7 +50,7 @@ class HmmProfile < ActiveRecord::Base
   end
 
   def to_s
-    "HmmProfile: #{protein_name} #{parent}"
+    "<HmmProfile: #{protein_name}#{ parent ? ", parent: #{parent}" : "" }>"
   end
 
   # A method to pick up all criterias independent of type
