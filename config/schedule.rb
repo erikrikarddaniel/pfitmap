@@ -22,3 +22,7 @@
 every 2.hours do
   runner "DbEntry.gis2gi_queue"
 end
+
+every :reboot do
+  runner "DbEntry.gis2gi_queue"
+end
