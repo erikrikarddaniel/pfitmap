@@ -32,6 +32,15 @@ set :git_enable_submodules, 1
 set :whenever_command, "bundle exec whenever"
 require "whenever/capistrano"
 
+
+namespace :deploy do
+  desc "Update the crontab file"
+    task :update_crontab, :roles => :db do
+      run "cd #{release_path} && whenever --update-crontab #{application}"
+    end
+  end
+
+
 # tasks
 namespace :deploy do
   task :start, :roles => :app do
@@ -67,3 +76,7 @@ set :rails_env, "production" #added for delayed job
 after "deploy:stop",    "delayed_job:stop"
 after "deploy:start",   "delayed_job:start"
 after "deploy:restart", "delayed_job:restart"
+
+
+after "deploy:symlink", "deploy:update_crontab"
+
