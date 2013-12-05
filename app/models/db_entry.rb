@@ -29,7 +29,7 @@ class DbEntry < ActiveRecord::Base
     
   end
 
-  def self.gis2qi_queue
+  def self.gis2gi_queue
     gis = self.find(:all,select: "gi", 
                          include: [:db_sequence], 
                          conditions: ["db_sequences.sequence IS NULL"])
