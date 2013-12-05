@@ -9,7 +9,7 @@ set :rvm_type, :system
 
 before 'deploy:setup', 'rvm:install_rvm'  # install/update RVM
 before 'deploy:setup', 'rvm:install_ruby' # install Ruby and create gemset, OR:
-before 'deploy:setup', 'rvm:create_gemset' # only create gemset
+#before 'deploy:setup', 'rvm:create_gemset' # only create gemset
 
 # main details
 set :application, "rnrdb"
