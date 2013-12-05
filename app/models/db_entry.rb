@@ -30,7 +30,7 @@ class DbEntry < ActiveRecord::Base
   end
 
   def self.gis2gi_queue
-    gis = self.find(:all,select: "gi", 
+    gis = DbEntry.find(:all,select: "gi", 
                          include: [:db_sequence], 
                          conditions: ["db_sequences.sequence IS NULL"])
               .map {|e| e.gi.to_s}
