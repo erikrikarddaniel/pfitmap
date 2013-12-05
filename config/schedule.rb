@@ -18,6 +18,8 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
+# adds ">> cron.log 2> error.log" to all commands
+set :output, {:error => 'log/whenever-error.log', :standard => 'log/whenever-cron.log'}
 
 every 2.hours do
   runner "DbEntry.gis2gi_queue"
