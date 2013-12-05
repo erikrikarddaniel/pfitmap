@@ -20,11 +20,12 @@
 # Learn more: http://github.com/javan/whenever
 # adds ">> cron.log 2> error.log" to all commands
 set :output, {:error => 'log/whenever-error.log', :standard => 'log/whenever-cron.log'}
+job_type :runnerbundle,  "cd :path && bundle exec rails runner -e :environment ':task' :output"
 
 every 2.hours do
-  runner "DbEntry.gis2gi_queue"
+  runnerbundle "DbEntry.gis2gi_queue"
 end
 
 every :reboot do
-  runner "DbEntry.gis2gi_queue"
+  runnerbundle "DbEntry.gis2gi_queue"
 end
