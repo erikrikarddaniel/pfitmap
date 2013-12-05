@@ -30,8 +30,10 @@ gem 'json'
 # Delay time-consuming jobs
 gem 'delayed_job_active_record', '0.3.2'
 gem 'daemons'
-gem 'whenever', :require => false
 
+# "Cron" only from rails
+gem 'scheduler_daemon', '1.1.3'
+gem 'rufus-scheduler', '2.0.24'
 # Debugging memory leak
 #gem 'oink'
 

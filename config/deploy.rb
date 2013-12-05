@@ -29,17 +29,17 @@ set :branch, "stable"
 set :git_enable_submodules, 1
 
 # Cronjobs for rails
-set :whenever_command, "bundle exec whenever"
-require "whenever/capistrano"
-
-
-namespace :deploy do
-  desc "Update the crontab file"
-    task :update_crontab, :roles => :db do
-      run "cd #{release_path} && bundle exec whenever --update-crontab #{application}"
-    end
+namespace :scheduler_daemon do
+  task :start, :roles => :app do
+    run "bundle exec scheduler_daemon start"
   end
-
+  task :stop, :roles => :app do
+    run "bundle exec scheduler_daemon stop"
+  end
+  task :restart, :roles => :app do
+    run "bundle exec scheduler_daemon restart"
+  end
+end
 
 # tasks
 namespace :deploy do
@@ -73,10 +73,9 @@ require "delayed/recipes"
 
 set :rails_env, "production" #added for delayed job
 
-after "deploy:stop",    "delayed_job:stop"
-after "deploy:start",   "delayed_job:start"
-after "deploy:restart", "delayed_job:restart"
+after "deploy:stop",    "delayed_job:stop",	"scheduler_daemon:stop"
+after "deploy:start",   "delayed_job:start",	"scheduler_daemon:start"
+after "deploy:restart", "delayed_job:restart",	"scheduler_daemon:restart"
 
 
-after "deploy:symlink", "deploy:update_crontab"
 
