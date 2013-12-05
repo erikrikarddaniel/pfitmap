@@ -5,6 +5,24 @@ FactoryGirl.define do
     sequence_source
   end
   
+  factory :hmm_result_nrda, class: HmmResult do
+    sequence(:executed) { |n| "#{n}"}
+    hmm_profile { |hmm_result| get_hmm_profile_named(:hmm_profile_nrda) }
+    sequence_source
+  end
+  
+  factory :hmm_result_nrdac, class: HmmResult do
+    sequence(:executed) { |n| "#{n}"}
+    hmm_profile { |hmm_result| get_hmm_profile_named(:hmm_profile_nrdac) }
+    sequence_source
+  end
+  
+  factory :hmm_result_nrdae, class: HmmResult do
+    sequence(:executed) { |n| "#{n}"}
+    hmm_profile { |hmm_result| get_hmm_profile_named(:hmm_profile_nrdae) }
+    sequence_source
+  end
+  
   factory :hmm_result_nrdb, class: HmmResult do
     sequence(:executed) { |n| "#{n}"}
     hmm_profile { |hmm_result| get_hmm_profile_named(:hmm_profile_nrdb) }

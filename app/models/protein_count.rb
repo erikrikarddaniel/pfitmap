@@ -56,7 +56,7 @@ class ProteinCount < ActiveRecord::Base
   end
 
   def to_s
-    "ProteinCount #{taxon} #{protein}, n. proteins: #{no_proteins}, n. genomes w. proteins: #{no_genomes_with_proteins}, obs. as genome: #{obs_as_genome}"
+    "ProteinCount #{taxon} #{protein}, n. proteins: #{no_proteins}"
   end
 
   

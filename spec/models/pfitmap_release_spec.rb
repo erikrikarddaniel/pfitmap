@@ -141,15 +141,15 @@ describe PfitmapRelease do
   end
 
   describe ".calculate_released_dbs" do
-    before(:each) do
-      @hmm_result_nrdb = FactoryGirl.create(:hmm_result_nrdb)
-      @sequence_source = @hmm_result_nrdb.sequence_source
-      @pfitmap_release = FactoryGirl.create(:pfitmap_release, sequence_source: @sequence_source)
-      parse_hmm_tblout(@hmm_result_nrdb, fixture_file_upload("/NrdB-20rows.tblout"))
-      @sequence_source.evaluate(@pfitmap_release, nil)
-    end
-
     context 'given a release with 20 imported NrdB HMM result rows' do
+      before(:each) do
+	@hmm_result_nrdb = FactoryGirl.create(:hmm_result_nrdb)
+	@sequence_source = @hmm_result_nrdb.sequence_source
+	@pfitmap_release = FactoryGirl.create(:pfitmap_release, sequence_source: @sequence_source)
+	parse_hmm_tblout(@hmm_result_nrdb, fixture_file_upload("/NrdB-20rows.tblout"))
+	@sequence_source.evaluate(@pfitmap_release, nil)
+      end
+
       subject { @pfitmap_release }
       its(:sequence_source) { should == @sequence_source }
       its(:pfitmap_sequences) { should have(20).items }
@@ -167,9 +167,82 @@ describe PfitmapRelease do
 
 	proteins = Protein.where(released_db_id: rd)
 	proteins.should have(1).items
+	proteins[0].protclass.should == 'NrdB'
 
 	pcs = ProteinCount.where(released_db_id: rd)
-	proteins[0].protclass.should == 'NrdB'
+	pcs.should have(13).items
+	pcs.sum('no_proteins').should == 14
+      end
+    end
+
+    context 'given three imported files with an unclassified organism among 100 other rows' do
+      before(:each) do
+	@hmm_result_nrda = FactoryGirl.create(:hmm_result_nrda)
+	@sequence_source = @hmm_result_nrda.sequence_source
+	@hmm_result_nrdac = FactoryGirl.create(:hmm_result_nrdac, sequence_source: @sequence_source)
+	@hmm_result_nrdae = FactoryGirl.create(:hmm_result_nrdae, sequence_source: @sequence_source)
+	@pfitmap_release = FactoryGirl.create(:pfitmap_release, sequence_source: @sequence_source)
+	parse_hmm_tblout(@hmm_result_nrda, fixture_file_upload("/NrdA_101rows_w_unclassified.tblout"))
+	parse_hmm_tblout(@hmm_result_nrdac, fixture_file_upload("/NrdAc_101rows_w_unclassified.tblout"))
+	parse_hmm_tblout(@hmm_result_nrdae, fixture_file_upload("/NrdAe_101rows_w_unclassified.tblout"))
+	@sequence_source.evaluate(@pfitmap_release, nil)
+      end
+
+      subject { @pfitmap_release }
+      its(:sequence_source) { should == @sequence_source }
+      its(:pfitmap_sequences) { should have(199).items }
+
+      it 'is sane' do
+	@hmm_result_nrdac.sequence_source.should == @hmm_result_nrda.sequence_source
+	@hmm_result_nrdae.sequence_source.should == @hmm_result_nrda.sequence_source
+	@hmm_result_nrdac.sequence_source.should == @hmm_result_nrdae.sequence_source
+	@hmm_result_nrda.hmm_result_rows.should have(101).items
+	@hmm_result_nrdac.hmm_result_rows.should have(101).items
+	@hmm_result_nrdae.hmm_result_rows.should have(101).items
+	@pfitmap_release.sequence_source.hmm_results.should have(3).items
+      end
+
+      it 'successfully loads the gb hits give a 400 bitscore criterion, and creates the expected protein_count entries' do
+	sd = SequenceDatabase.create(db: "gb")
+	ld = sd.load_databases.create(
+	  taxonset: "http://biosql.scilifelab.se/gis2taxa.json",
+	  active: true
+	)
+	@pfitmap_release.calculate_released_dbs(ld)
+	rd = ReleasedDb.find(:first, conditions: { load_database_id: ld, pfitmap_release_id: @pfitmap_release })
+	taxons = Taxon.where(released_db_id: rd)
+	taxons.should have(183).items
+
+	# Make sure unclassified sequences have that as domain and the next level as kingdom
+	taxons.find { |t| t.strain == 'Elizabethkingia anophelis Ag1' }.domain.should == 'Bacteria'
+	taxons.find { |t| t.strain == 'Elizabethkingia anophelis Ag1' }.kingdom.should == 'Bacteroidetes/Chlorobi group'
+	taxons.find { |t| t.strain == 'Elizabethkingia anophelis Ag1' }.phylum.should == 'Bacteroidetes'
+	taxons.find { |t| t.strain == 'Elizabethkingia anophelis Ag1' }.taxclass.should == 'Flavobacteriia'
+	taxons.find { |t| t.strain == 'Elizabethkingia anophelis Ag1' }.taxorder.should == 'Flavobacteriales'
+	taxons.find { |t| t.strain == 'Elizabethkingia anophelis Ag1' }.taxfamily.should == 'Flavobacteriaceae'
+	taxons.find { |t| t.strain == 'Elizabethkingia anophelis Ag1' }.genus.should == 'Elizabethkingia'
+	taxons.find { |t| t.strain == 'Elizabethkingia anophelis Ag1' }.species.should == 'Elizabethkingia anophelis'
+	taxons.find { |t| t.species == 'uncultured organism MedDCM-OCT-S09-C426' }.domain.should == 'unclassified sequences'
+	taxons.find { |t| t.species == 'uncultured organism MedDCM-OCT-S09-C426' }.kingdom.should == 'environmental samples'
+	taxons.find { |t| t.species == 'uncultured organism MedDCM-OCT-S09-C426' }.phylum.should == 'environmental samples, no phylum'
+	taxons.find { |t| t.species == 'uncultured organism MedDCM-OCT-S09-C426' }.taxclass.should == 'environmental samples, no phylum, no class'
+	taxons.find { |t| t.species == 'uncultured organism MedDCM-OCT-S09-C426' }.taxorder.should == 'environmental samples, no phylum, no class, no order'
+	taxons.find { |t| t.species == 'uncultured organism MedDCM-OCT-S09-C426' }.taxfamily.should == 'environmental samples, no phylum, no class, no order, no family'
+	taxons.find { |t| t.species == 'unidentified eubacterium SCB49' }.domain.should == 'Bacteria'
+	taxons.find { |t| t.species == 'unidentified eubacterium SCB49' }.kingdom.should == 'Bacteroidetes/Chlorobi group'
+	taxons.find { |t| t.species == 'unidentified eubacterium SCB49' }.phylum.should == 'Bacteroidetes'
+	taxons.find { |t| t.species == 'uncultured bacterium' }.domain.should == 'Bacteria'
+
+	proteins = Protein.where(released_db_id: rd)
+	proteins.should have(2).items
+	proteins[0].protclass.should == 'NrdA'
+	proteins[1].protclass.should == 'NrdA'
+	proteins.find_all { |p| p.subclass == 'NrdAc' }.should have(1).items
+	proteins.find_all { |p| p.subclass == 'NrdAe' }.should have(0).items
+
+	pcs = ProteinCount.where(released_db_id: rd)
+	pcs.should have(183).items
+	pcs.sum('no_proteins').should == 197
       end
     end
   end
@@ -237,7 +310,7 @@ describe PfitmapRelease do
       t1.phylum.should ==  "Cyanobacteria"
       t1.taxclass.should == "Cyanobacteria, no class"
       t1.taxorder.should == "Chroococcales"
-      t1.taxfamily.should ==  "Chroococcales, no taxfamily"
+      t1.taxfamily.should ==  "Chroococcales, no family"
       t1.genus.should == "Acaryochloris"
       t1.species.should == "Acaryochloris marina"
       t1.strain.should == "Acaryochloris marina MBIC11017"
