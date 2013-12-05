@@ -12,7 +12,6 @@
 #
 
 class PfitmapRelease < ActiveRecord::Base
-  HTTP_TIMEOUT = 6000
   SLICE_SIZE = 5000
 
   attr_accessible :release, :release_date, :sequence_source_id
@@ -198,7 +197,7 @@ class PfitmapRelease < ActiveRecord::Base
 	  'Content-Type' => 'application/json',
 	  'Accepts' => 'application/json' },
 	body: { gis: gislice }.to_json,
-	timeout: HTTP_TIMEOUT
+	timeout: BiosqlWeb::HTTP_TIMEOUT
       }
       json_taxa = {}
       begin
