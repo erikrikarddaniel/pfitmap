@@ -21,7 +21,7 @@ class BiosqlWeb < ActiveRecord::Base
     gi_sequences = response.parsed_response
   end
 
-  def self.gis2queue(gis)
+  def self.gis2gi_queue(gis)
     options = {:headers => { 'Content-Type' => 'application/json', 'Accepts' => 'application/json'}, :body => {:gis => gis}.to_json, timeout: 1200 }
     response = HTTParty.get(BASE_URL + '/add_gis_to_queue', options)
     response = response.parsed_response
