@@ -4,8 +4,12 @@ require 'rvm/capistrano'
 
 # bundler bootstrap
 require 'bundler/capistrano'
-set :rvm_ruby_string, 'ruby-2.0.0-p353'
+set :rvm_ruby_string, :local # use the same ruby as used locally for deployment #'ruby-2.0.0-p353' 
 set :rvm_type, :system
+
+before 'deploy:setup', 'rvm:install_rvm'  # install/update RVM
+before 'deploy:setup', 'rvm:install_ruby' # install Ruby and create gemset, OR:
+#before 'deploy:setup', 'rvm:create_gemset' # only create gemset
 
 # main details
 set :application, "rnrdb"
@@ -29,17 +33,17 @@ set :branch, "stable"
 set :git_enable_submodules, 1
 
 # Cronjobs for rails
-set :whenever_command, "bundle exec whenever"
-require "whenever/capistrano"
-
-
-namespace :deploy do
-  desc "Update the crontab file"
-    task :update_crontab, :roles => :db do
-      run "cd #{release_path} && bundle exec whenever --update-crontab #{application}"
-    end
+namespace :scheduler_daemon do
+  task :start, :roles => :app do
+    run "export RAILS_ENV=production && cd #{release_path} && bundle exec scheduler_daemon start"
   end
-
+  task :stop, :roles => :app do
+    run "export RAILS_ENV=production && cd #{release_path} && bundle exec scheduler_daemon stop"
+  end
+  task :restart, :roles => :app do
+    run "export RAILS_ENV=production && cd #{release_path} && bundle exec scheduler_daemon restart"
+  end
+end
 
 # tasks
 namespace :deploy do
@@ -73,10 +77,9 @@ require "delayed/recipes"
 
 set :rails_env, "production" #added for delayed job
 
-after "deploy:stop",    "delayed_job:stop"
-after "deploy:start",   "delayed_job:start"
-after "deploy:restart", "delayed_job:restart"
+after "deploy:stop",    "delayed_job:stop"#,	"scheduler_daemon:stop"
+after "deploy:start",   "delayed_job:start"#,	"scheduler_daemon:start"
+after "deploy:restart", "delayed_job:restart"#,	"scheduler_daemon:restart"
 
 
-after "deploy:symlink", "deploy:update_crontab"
 
