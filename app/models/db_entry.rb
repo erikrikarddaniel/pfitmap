@@ -35,7 +35,7 @@ class DbEntry < ActiveRecord::Base
                          conditions: ["db_sequences.sequence IS NULL"])
               .map {|e| e.gi.to_s}
 
-    BiosqlWeb.gis2queue(gis)
+    BiosqlWeb.gis2gi_queue(gis)
   end
 
 
