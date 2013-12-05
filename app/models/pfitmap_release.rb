@@ -12,7 +12,7 @@
 #
 
 class PfitmapRelease < ActiveRecord::Base
-  SLICE_SIZE = 5000
+  SLICE_SIZE = 50
 
   attr_accessible :release, :release_date, :sequence_source_id
   has_many :pfitmap_sequences, :dependent => :destroy
@@ -99,8 +99,11 @@ class PfitmapRelease < ActiveRecord::Base
       # when calling pfitmap_sequences.db_entries we get only the entries with db = load_db.sequence_database.db
       calculate_logger.info "#{Time.now}: Fetching pfitmap_sequence objects"
 
-      pfitmap_sequences = PfitmapSequence.find(:all, include: [:db_entries,:hmm_profile], conditions: {pfitmap_release_id: self.id, db_entries: {db: load_db.sequence_database.db}})
-      gis = Set.new(pfitmap_sequences.map {|p| p.db_entries.map {|d| d.gi}.flatten}.flatten)
+      pfitmap_sequences = PfitmapSequence.find(
+	:all, 
+	include: [:db_entries,:hmm_profile], conditions: {pfitmap_release_id: self.id, db_entries: {db: load_db.sequence_database.db}}
+      )
+      gis = Array.new(pfitmap_sequences.map {|p| p.db_entries.map {|d| d.gi}.flatten}.flatten).uniq.sort
 	
       calculate_logger.info "#{Time.now}: Fetched #{gis.length} gis"
 
@@ -118,10 +121,19 @@ class PfitmapRelease < ActiveRecord::Base
       protein_counts = {}
         
       calculate_logger.info "#{Time.now}: Getting ncbi taxon ids from gis"
-      gis2tids = BiosqlWeb.gis2ncbi_taxon_ids(gis)
+
+      slicei = 0
+      gis2tids = []
+      gis.each_slice(SLICE_SIZE) do |gislice|
+	calculate_logger.info "#{Time.now}: Fetching slice #{slicei += 1} (slice size: #{SLICE_SIZE})"
+
+        gis2tids += BiosqlWeb.gis2ncbi_taxon_ids(gislice)
+      end
+
       calculate_logger.info "#{Time.now}: Fetched #{gis2tids.length} ncbi taxon ids maps"
 
       calculate_logger.info "#{Time.now}: Generating protein counts"
+
       gis2tids.each do |gi2tid|
         gi = gi2tid["protein_gi"]
         tid = gi2tid["taxon_id"]
@@ -188,8 +200,9 @@ class PfitmapRelease < ActiveRecord::Base
 
     slicei = 0
     imported = {}
-    gis.to_a.each_slice(SLICE_SIZE) do |gislice|
+    gis.each_slice(SLICE_SIZE) do |gislice|
       taxon_names = []
+
       calculate_logger.info "#{Time.now}: Fetching slice #{slicei += 1} (slice size: #{SLICE_SIZE})"
 
       options = {
