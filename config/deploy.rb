@@ -4,8 +4,12 @@ require 'rvm/capistrano'
 
 # bundler bootstrap
 require 'bundler/capistrano'
-set :rvm_ruby_string, 'ruby-2.0.0-p353'
+set :rvm_ruby_string, :local # use the same ruby as used locally for deployment #'ruby-2.0.0-p353' 
 set :rvm_type, :system
+
+before 'deploy:setup', 'rvm:install_rvm'  # install/update RVM
+before 'deploy:setup', 'rvm:install_ruby' # install Ruby and create gemset, OR:
+before 'deploy:setup', 'rvm:create_gemset' # only create gemset
 
 # main details
 set :application, "rnrdb"
