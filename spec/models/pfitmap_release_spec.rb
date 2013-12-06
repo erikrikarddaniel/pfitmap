@@ -246,7 +246,7 @@ describe PfitmapRelease do
       end
     end
 
-    context 'given several imported files with Thermotoga NrdDs' do
+    context 'given several imported files with Thermotoga and Campylobacter concisus 13826 NrdDs' do
       before(:each) do
 	@hmm_result_nrdd = FactoryGirl.create(:hmm_result_nrdd)
 	@sequence_source = @hmm_result_nrdd.sequence_source
@@ -255,6 +255,11 @@ describe PfitmapRelease do
 	@hmm_result_nrddc = FactoryGirl.create(:hmm_result_nrddc, sequence_source: @sequence_source)
 	@hmm_result_nrddc1 = FactoryGirl.create(:hmm_result_nrddc1, sequence_source: @sequence_source)
 	@hmm_result_nrddc2 = FactoryGirl.create(:hmm_result_nrddc2, sequence_source: @sequence_source)
+	@hmm_result_nrddd = FactoryGirl.create(:hmm_result_nrddd, sequence_source: @sequence_source)
+	@hmm_result_nrddd1 = FactoryGirl.create(:hmm_result_nrddd1, sequence_source: @sequence_source)
+	@hmm_result_nrddd1a = FactoryGirl.create(:hmm_result_nrddd1a, sequence_source: @sequence_source)
+	@hmm_result_nrddd2 = FactoryGirl.create(:hmm_result_nrddd2, sequence_source: @sequence_source)
+	@hmm_result_nrddd3 = FactoryGirl.create(:hmm_result_nrddd3, sequence_source: @sequence_source)
 	@hmm_result_nrddh = FactoryGirl.create(:hmm_result_nrddh, sequence_source: @sequence_source)
 	@hmm_result_nrddh1 = FactoryGirl.create(:hmm_result_nrddh1, sequence_source: @sequence_source)
 	@hmm_result_nrddh2 = FactoryGirl.create(:hmm_result_nrddh2, sequence_source: @sequence_source)
@@ -267,6 +272,11 @@ describe PfitmapRelease do
 	parse_hmm_tblout(@hmm_result_nrddc, fixture_file_upload("/NrdDc.ncbi_nr.tmar.tblout"))
 	parse_hmm_tblout(@hmm_result_nrddc1, fixture_file_upload("/NrdDc1.ncbi_nr.tmar.tblout"))
 	parse_hmm_tblout(@hmm_result_nrddc2, fixture_file_upload("/NrdDc2.ncbi_nr.tmar.tblout"))
+	parse_hmm_tblout(@hmm_result_nrddd, fixture_file_upload("/NrdDd.ncbi_nr.tmar.tblout"))
+	parse_hmm_tblout(@hmm_result_nrddd1, fixture_file_upload("/NrdDd1.ncbi_nr.tmar.tblout"))
+	parse_hmm_tblout(@hmm_result_nrddd1a, fixture_file_upload("/NrdDd1a.ncbi_nr.tmar.tblout"))
+	parse_hmm_tblout(@hmm_result_nrddd2, fixture_file_upload("/NrdDd2.ncbi_nr.tmar.tblout"))
+	parse_hmm_tblout(@hmm_result_nrddd3, fixture_file_upload("/NrdDd3.ncbi_nr.tmar.tblout"))
 	parse_hmm_tblout(@hmm_result_nrddh, fixture_file_upload("/NrdDh.ncbi_nr.tmar.tblout"))
 	parse_hmm_tblout(@hmm_result_nrddh1, fixture_file_upload("/NrdDh1.ncbi_nr.tmar.tblout"))
 	parse_hmm_tblout(@hmm_result_nrddh2, fixture_file_upload("/NrdDh2.ncbi_nr.tmar.tblout"))
@@ -277,13 +287,13 @@ describe PfitmapRelease do
 
       subject { @pfitmap_release }
       its(:sequence_source) { should == @sequence_source }
-      its(:pfitmap_sequences) { should have(15).items }
+      its(:pfitmap_sequences) { should have(55).items }
 
       it 'is sane' do
-	@hmm_result_nrdd.hmm_result_rows.should have(36).items
-	@hmm_result_nrddh.hmm_result_rows.should have(11).items
-	@hmm_result_nrddh1.hmm_result_rows.should have(9).items
-	@pfitmap_release.sequence_source.hmm_results.should have(11).items
+	@hmm_result_nrdd.hmm_result_rows.should have(47).items
+	@hmm_result_nrddh.hmm_result_rows.should have(22).items
+	@hmm_result_nrddh1.hmm_result_rows.should have(20).items
+	@pfitmap_release.sequence_source.hmm_results.should have(16).items
       end
 
       it 'successfully loads the gb hits given a 400 bitscore criterion, and creates the expected protein_count entries' do
@@ -295,7 +305,7 @@ describe PfitmapRelease do
 	@pfitmap_release.calculate_released_dbs(ld)
 	rd = ReleasedDb.find(:first, conditions: { load_database_id: ld, pfitmap_release_id: @pfitmap_release })
 	taxons = Taxon.where(released_db_id: rd)
-	taxons.should have(15).items
+	taxons.should have(66).items
 #	warn "#{__FILE__}:#{__LINE__}: taxons:\n\t#{taxons.map { |t| t }.join("\n\t")}"
 
 	# Make sure the Thermotoga protein is correct
@@ -304,15 +314,22 @@ describe PfitmapRelease do
 	taxons.find { |t| t.species == 'Thermotoga maritima' }.protein_counts[0].protein.subclass.should == 'NrdDh'
 	taxons.find { |t| t.species == 'Thermotoga maritima' }.protein_counts[0].protein.protgroup.should == 'NrdDh1'
 
+	# And the Campylobacter concisus 13826 protein
+	taxons.find { |t| t.strain == 'Campylobacter concisus 13826' }.protein_counts.should have(1).items
+	taxons.find { |t| t.strain == 'Campylobacter concisus 13826' }.protein_counts[0].protein.protclass.should == 'NrdD'
+	taxons.find { |t| t.strain == 'Campylobacter concisus 13826' }.protein_counts[0].protein.subclass.should == 'NrdDd'
+	taxons.find { |t| t.strain == 'Campylobacter concisus 13826' }.protein_counts[0].protein.protgroup.should == 'NrdDd1'
+	taxons.find { |t| t.strain == 'Campylobacter concisus 13826' }.protein_counts[0].protein.subgroup.should == 'NrdDd1a'
+
 	proteins = Protein.where(released_db_id: rd)
-	proteins.should have(2).items
+	proteins.should have(8).items
 	proteins[0].protclass.should == 'NrdD'
 #	warn "#{__FILE__}:#{__LINE__}: NrdDh proteins:\n\t#{ proteins.find_all { |p| p.subclass == 'NrdDh' }.map { |p| p }.join("\n\t") }"
 	proteins.find_all { |p| p.subclass == 'NrdDh' }.should have(2).items
 
 	pcs = ProteinCount.where(released_db_id: rd)
-	pcs.should have(15).items
-	pcs.sum('no_proteins').should == 17
+	pcs.should have(66).items
+	pcs.sum('no_proteins').should == 69
       end
     end
   end

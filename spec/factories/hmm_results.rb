@@ -83,6 +83,36 @@ FactoryGirl.define do
     sequence_source
   end
   
+  factory :hmm_result_nrddd, class: HmmResult do
+    sequence(:executed) { |n| "#{n}"}
+    hmm_profile { |hmm_result| get_hmm_profile_named(:hmm_profile_nrddd) }
+    sequence_source
+  end
+  
+  factory :hmm_result_nrddd1, class: HmmResult do
+    sequence(:executed) { |n| "#{n}"}
+    hmm_profile { |hmm_result| get_hmm_profile_named(:hmm_profile_nrddd1) }
+    sequence_source
+  end
+  
+  factory :hmm_result_nrddd1a, class: HmmResult do
+    sequence(:executed) { |n| "#{n}"}
+    hmm_profile { |hmm_result| get_hmm_profile_named(:hmm_profile_nrddd1a) }
+    sequence_source
+  end
+  
+  factory :hmm_result_nrddd2, class: HmmResult do
+    sequence(:executed) { |n| "#{n}"}
+    hmm_profile { |hmm_result| get_hmm_profile_named(:hmm_profile_nrddd2) }
+    sequence_source
+  end
+  
+  factory :hmm_result_nrddd3, class: HmmResult do
+    sequence(:executed) { |n| "#{n}"}
+    hmm_profile { |hmm_result| get_hmm_profile_named(:hmm_profile_nrddd3) }
+    sequence_source
+  end
+  
   factory :hmm_result_nrddh, class: HmmResult do
     sequence(:executed) { |n| "#{n}"}
     hmm_profile { |hmm_result| get_hmm_profile_named(:hmm_profile_nrddh) }

@@ -176,18 +176,6 @@ FactoryGirl.define do
       FactoryGirl.create(:hmm_score_criterion, :hmm_profile => profile, :min_fullseq_score => 400.0)
     end
   end
-                                    
-  factory :hmm_profile_nrddh, class: HmmProfile do
-    name "Class IIIh RNR catalytic subunit"
-    protein_name "NrdDh"
-    rank "protclass"
-    version "20120401"
-    parent { |hmm_profile| get_hmm_profile_named(:hmm_profile_nrdd) }
-    after_create do |profile|
-      create_enzymes_for_profile(:hmm_profile_nrddh)
-      FactoryGirl.create(:hmm_score_criterion, :hmm_profile => profile, :min_fullseq_score => 400.0)
-    end
-  end
 
   factory :hmm_profile_nrddc1, class: HmmProfile do
     name "Class IIIc1 RNR catalytic subunit"
@@ -209,6 +197,79 @@ FactoryGirl.define do
     parent { |hmm_profile| get_hmm_profile_named(:hmm_profile_nrddc) }
     after_create do |profile|
       create_enzymes_for_profile(:hmm_profile_nrddc2)
+      FactoryGirl.create(:hmm_score_criterion, :hmm_profile => profile, :min_fullseq_score => 400.0)
+    end
+  end
+                                    
+                                    
+  factory :hmm_profile_nrddd, class: HmmProfile do
+    name "Class IIId RNR catalytic subunit"
+    protein_name "NrdDd"
+    rank "protclass"
+    version "20120401"
+    parent { |hmm_profile| get_hmm_profile_named(:hmm_profile_nrdd) }
+    after_create do |profile|
+      create_enzymes_for_profile(:hmm_profile_nrddd)
+      FactoryGirl.create(:hmm_score_criterion, :hmm_profile => profile, :min_fullseq_score => 400.0)
+    end
+  end
+
+  factory :hmm_profile_nrddd1, class: HmmProfile do
+    name "Class IIId1 RNR catalytic subunit"
+    protein_name "NrdDd1"
+    rank "protclass"
+    version "20120401"
+    parent { |hmm_profile| get_hmm_profile_named(:hmm_profile_nrddd) }
+    after_create do |profile|
+      create_enzymes_for_profile(:hmm_profile_nrddd1)
+      FactoryGirl.create(:hmm_score_criterion, :hmm_profile => profile, :min_fullseq_score => 400.0)
+    end
+  end
+                                    
+  factory :hmm_profile_nrddd1a, class: HmmProfile do
+    name "Class IIId1a RNR catalytic subunit"
+    protein_name "NrdDd1a"
+    rank "protclass"
+    version "20120401"
+    parent { |hmm_profile| get_hmm_profile_named(:hmm_profile_nrddd1) }
+    after_create do |profile|
+      create_enzymes_for_profile(:hmm_profile_nrddd1a)
+      FactoryGirl.create(:hmm_score_criterion, :hmm_profile => profile, :min_fullseq_score => 400.0)
+    end
+  end
+                                    
+  factory :hmm_profile_nrddd2, class: HmmProfile do
+    name "Class IIId2 RNR catalytic subunit"
+    protein_name "NrdDd2"
+    rank "protclass"
+    version "20120401"
+    parent { |hmm_profile| get_hmm_profile_named(:hmm_profile_nrddd) }
+    after_create do |profile|
+      create_enzymes_for_profile(:hmm_profile_nrddd2)
+      FactoryGirl.create(:hmm_score_criterion, :hmm_profile => profile, :min_fullseq_score => 400.0)
+    end
+  end
+                                    
+  factory :hmm_profile_nrddd3, class: HmmProfile do
+    name "Class IIId3 RNR catalytic subunit"
+    protein_name "NrdDd3"
+    rank "protclass"
+    version "20120401"
+    parent { |hmm_profile| get_hmm_profile_named(:hmm_profile_nrddd) }
+    after_create do |profile|
+      create_enzymes_for_profile(:hmm_profile_nrddd3)
+      FactoryGirl.create(:hmm_score_criterion, :hmm_profile => profile, :min_fullseq_score => 400.0)
+    end
+  end
+
+  factory :hmm_profile_nrddh, class: HmmProfile do
+    name "Class IIIh RNR catalytic subunit"
+    protein_name "NrdDh"
+    rank "protclass"
+    version "20120401"
+    parent { |hmm_profile| get_hmm_profile_named(:hmm_profile_nrdd) }
+    after_create do |profile|
+      create_enzymes_for_profile(:hmm_profile_nrddh)
       FactoryGirl.create(:hmm_score_criterion, :hmm_profile => profile, :min_fullseq_score => 400.0)
     end
   end
@@ -282,6 +343,11 @@ def get_hmm_profile_named(factory_name)
     :hmm_profile_nrddc => "Class IIIc RNR catalytic subunit",
     :hmm_profile_nrddc1 => "Class IIIc1 RNR catalytic subunit",
     :hmm_profile_nrddc2 => "Class IIIc2 RNR catalytic subunit",
+    :hmm_profile_nrddd => "Class IIId RNR catalytic subunit",
+    :hmm_profile_nrddd1 => "Class IIId1 RNR catalytic subunit",
+    :hmm_profile_nrddd1a => "Class IIId1a RNR catalytic subunit",
+    :hmm_profile_nrddd2 => "Class IIId2 RNR catalytic subunit",
+    :hmm_profile_nrddd3 => "Class IIId3 RNR catalytic subunit",
     :hmm_profile_nrddh => "Class IIIh RNR catalytic subunit",
     :hmm_profile_nrddh1 => "Class IIIh1 RNR catalytic subunit",
     :hmm_profile_nrddh2 => "Class IIIh2 RNR catalytic subunit",
