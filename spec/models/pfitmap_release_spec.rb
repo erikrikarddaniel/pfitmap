@@ -202,7 +202,7 @@ describe PfitmapRelease do
 	@pfitmap_release.sequence_source.hmm_results.should have(3).items
       end
 
-      it 'successfully loads the gb hits give a 400 bitscore criterion, and creates the expected protein_count entries' do
+      it 'successfully loads the gb hits given a 400 bitscore criterion, and creates the expected protein_count entries' do
 	sd = SequenceDatabase.create(db: "gb")
 	ld = sd.load_databases.create(
 	  taxonset: "http://biosql.scilifelab.se/gis2taxa.json",
@@ -243,6 +243,76 @@ describe PfitmapRelease do
 	pcs = ProteinCount.where(released_db_id: rd)
 	pcs.should have(183).items
 	pcs.sum('no_proteins').should == 197
+      end
+    end
+
+    context 'given several imported files with Thermotoga NrdDs' do
+      before(:each) do
+	@hmm_result_nrdd = FactoryGirl.create(:hmm_result_nrdd)
+	@sequence_source = @hmm_result_nrdd.sequence_source
+	@hmm_result_nrdda = FactoryGirl.create(:hmm_result_nrdda, sequence_source: @sequence_source)
+	@hmm_result_nrddb = FactoryGirl.create(:hmm_result_nrddb, sequence_source: @sequence_source)
+	@hmm_result_nrddc = FactoryGirl.create(:hmm_result_nrddc, sequence_source: @sequence_source)
+	@hmm_result_nrddc1 = FactoryGirl.create(:hmm_result_nrddc1, sequence_source: @sequence_source)
+	@hmm_result_nrddc2 = FactoryGirl.create(:hmm_result_nrddc2, sequence_source: @sequence_source)
+	@hmm_result_nrddh = FactoryGirl.create(:hmm_result_nrddh, sequence_source: @sequence_source)
+	@hmm_result_nrddh1 = FactoryGirl.create(:hmm_result_nrddh1, sequence_source: @sequence_source)
+	@hmm_result_nrddh2 = FactoryGirl.create(:hmm_result_nrddh2, sequence_source: @sequence_source)
+	@hmm_result_nrddh3 = FactoryGirl.create(:hmm_result_nrddh3, sequence_source: @sequence_source)
+	@hmm_result_nrddh4 = FactoryGirl.create(:hmm_result_nrddh4, sequence_source: @sequence_source)
+	@pfitmap_release = FactoryGirl.create(:pfitmap_release, sequence_source: @sequence_source)
+	parse_hmm_tblout(@hmm_result_nrdd, fixture_file_upload("/NrdD.ncbi_nr.tmar.tblout"))
+	parse_hmm_tblout(@hmm_result_nrdda, fixture_file_upload("/NrdDa.ncbi_nr.tmar.tblout"))
+	parse_hmm_tblout(@hmm_result_nrddb, fixture_file_upload("/NrdDb.ncbi_nr.tmar.tblout"))
+	parse_hmm_tblout(@hmm_result_nrddc, fixture_file_upload("/NrdDc.ncbi_nr.tmar.tblout"))
+	parse_hmm_tblout(@hmm_result_nrddc1, fixture_file_upload("/NrdDc1.ncbi_nr.tmar.tblout"))
+	parse_hmm_tblout(@hmm_result_nrddc2, fixture_file_upload("/NrdDc2.ncbi_nr.tmar.tblout"))
+	parse_hmm_tblout(@hmm_result_nrddh, fixture_file_upload("/NrdDh.ncbi_nr.tmar.tblout"))
+	parse_hmm_tblout(@hmm_result_nrddh1, fixture_file_upload("/NrdDh1.ncbi_nr.tmar.tblout"))
+	parse_hmm_tblout(@hmm_result_nrddh2, fixture_file_upload("/NrdDh2.ncbi_nr.tmar.tblout"))
+	parse_hmm_tblout(@hmm_result_nrddh3, fixture_file_upload("/NrdDh3.ncbi_nr.tmar.tblout"))
+	parse_hmm_tblout(@hmm_result_nrddh4, fixture_file_upload("/NrdDh4.ncbi_nr.tmar.tblout"))
+	@sequence_source.evaluate(@pfitmap_release, nil)
+      end
+
+      subject { @pfitmap_release }
+      its(:sequence_source) { should == @sequence_source }
+      its(:pfitmap_sequences) { should have(15).items }
+
+      it 'is sane' do
+	@hmm_result_nrdd.hmm_result_rows.should have(36).items
+	@hmm_result_nrddh.hmm_result_rows.should have(11).items
+	@hmm_result_nrddh1.hmm_result_rows.should have(9).items
+	@pfitmap_release.sequence_source.hmm_results.should have(11).items
+      end
+
+      it 'successfully loads the gb hits given a 400 bitscore criterion, and creates the expected protein_count entries' do
+	sd = SequenceDatabase.create(db: "gb")
+	ld = sd.load_databases.create(
+	  taxonset: "http://biosql.scilifelab.se/gis2taxa.json",
+	  active: true
+	)
+	@pfitmap_release.calculate_released_dbs(ld)
+	rd = ReleasedDb.find(:first, conditions: { load_database_id: ld, pfitmap_release_id: @pfitmap_release })
+	taxons = Taxon.where(released_db_id: rd)
+	taxons.should have(15).items
+#	warn "#{__FILE__}:#{__LINE__}: taxons:\n\t#{taxons.map { |t| t }.join("\n\t")}"
+
+	# Make sure the Thermotoga protein is correct
+	taxons.find { |t| t.species == 'Thermotoga maritima' }.protein_counts.should have(1).items
+	taxons.find { |t| t.species == 'Thermotoga maritima' }.protein_counts[0].protein.protclass.should == 'NrdD'
+	taxons.find { |t| t.species == 'Thermotoga maritima' }.protein_counts[0].protein.subclass.should == 'NrdDh'
+	taxons.find { |t| t.species == 'Thermotoga maritima' }.protein_counts[0].protein.protgroup.should == 'NrdDh1'
+
+	proteins = Protein.where(released_db_id: rd)
+	proteins.should have(2).items
+	proteins[0].protclass.should == 'NrdD'
+#	warn "#{__FILE__}:#{__LINE__}: NrdDh proteins:\n\t#{ proteins.find_all { |p| p.subclass == 'NrdDh' }.map { |p| p }.join("\n\t") }"
+	proteins.find_all { |p| p.subclass == 'NrdDh' }.should have(2).items
+
+	pcs = ProteinCount.where(released_db_id: rd)
+	pcs.should have(15).items
+	pcs.sum('no_proteins').should == 17
       end
     end
   end
