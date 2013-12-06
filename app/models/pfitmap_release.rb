@@ -282,8 +282,10 @@ class PfitmapRelease < ActiveRecord::Base
       hmm_profile.all_parents_with_acceptable_rank_including_self.map do |h|
         h.protein_name
       end.reverse!
+    calculate_logger.info "#{Time.now}: #{__FILE__}:#{__LINE__}: protein_names: #{protein_names.inspect}"
     protein_hash = Hash[Protein::PROT_COLUMNS.zip(protein_names)]
     protein_hash[:released_db_id] = released_db.id
+    calculate_logger.info "#{Time.now}: #{__FILE__}:#{__LINE__}: protein_hash: #{protein_hash.inspect}"
     protein_hash
   end
 
