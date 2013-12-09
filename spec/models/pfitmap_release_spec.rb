@@ -311,12 +311,17 @@ describe PfitmapRelease do
 	# Make sure the Thermotoga protein is correct
 	taxons.find { |t| t.species == 'Thermotoga maritima' }.protein_counts.should have(1).items
 	taxons.find { |t| t.species == 'Thermotoga maritima' }.protein_counts[0].no_proteins.should == 1
+	taxons.find { |t| t.species == 'Thermotoga maritima' }.protein_counts[0].selected_accessions.should == have(1).items
+	taxons.find { |t| t.species == 'Thermotoga maritima' }.protein_counts[0].all_accessions.should == have(3).items
 	taxons.find { |t| t.species == 'Thermotoga maritima' }.protein_counts[0].protein.protclass.should == 'NrdD'
 	taxons.find { |t| t.species == 'Thermotoga maritima' }.protein_counts[0].protein.subclass.should == 'NrdDh'
 	taxons.find { |t| t.species == 'Thermotoga maritima' }.protein_counts[0].protein.protgroup.should == 'NrdDh1'
 
 	# And the Campylobacter concisus 13826 protein
 	taxons.find { |t| t.strain == 'Campylobacter concisus 13826' }.protein_counts.should have(1).items
+	taxons.find { |t| t.strain == 'Campylobacter concisus 13826' }.protein_counts[0].no_proteins.should == 1
+	taxons.find { |t| t.strain == 'Campylobacter concisus 13826' }.protein_counts[0].selected_accessions.should have(1).items
+	taxons.find { |t| t.strain == 'Campylobacter concisus 13826' }.protein_counts[0].all_accessions.should have(1).items
 	taxons.find { |t| t.strain == 'Campylobacter concisus 13826' }.protein_counts[0].protein.protclass.should == 'NrdD'
 	taxons.find { |t| t.strain == 'Campylobacter concisus 13826' }.protein_counts[0].protein.subclass.should == 'NrdDd'
 	taxons.find { |t| t.strain == 'Campylobacter concisus 13826' }.protein_counts[0].protein.protgroup.should == 'NrdDd1'
