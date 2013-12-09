@@ -310,6 +310,7 @@ describe PfitmapRelease do
 
 	# Make sure the Thermotoga protein is correct
 	taxons.find { |t| t.species == 'Thermotoga maritima' }.protein_counts.should have(1).items
+	taxons.find { |t| t.species == 'Thermotoga maritima' }.protein_counts[0].no_proteins.should == 1
 	taxons.find { |t| t.species == 'Thermotoga maritima' }.protein_counts[0].protein.protclass.should == 'NrdD'
 	taxons.find { |t| t.species == 'Thermotoga maritima' }.protein_counts[0].protein.subclass.should == 'NrdDh'
 	taxons.find { |t| t.species == 'Thermotoga maritima' }.protein_counts[0].protein.protgroup.should == 'NrdDh1'
