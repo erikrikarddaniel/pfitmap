@@ -263,12 +263,12 @@ ActiveRecord::Schema.define(:version => 20131112212600) do
 
   create_table "protein_counts", :force => true do |t|
     t.integer  "no_proteins"
-    t.integer  "no_genomes_with_proteins"
     t.integer  "protein_id"
     t.integer  "taxon_id"
     t.datetime "created_at",               :null => false
     t.datetime "updated_at",               :null => false
     t.integer  "released_db_id"
+    t.integer  "no_genomes_with_proteins"
     t.index ["released_db_id"], :name => "fk__protein_counts_released_db_id"
     t.index ["protein_id"], :name => "index_protein_counts_on_protein_id"
     t.index ["taxon_id"], :name => "index_protein_counts_on_taxon_id"
