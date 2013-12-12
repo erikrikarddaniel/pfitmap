@@ -242,7 +242,7 @@ describe PfitmapRelease do
 
 	pcs = ProteinCount.where(released_db_id: rd)
 	pcs.should have(183).items
-	pcs.sum('no_proteins').should == 197
+	pcs.sum('no_proteins').should == 189
       end
     end
 
@@ -305,7 +305,7 @@ describe PfitmapRelease do
 	@pfitmap_release.calculate_released_dbs(ld)
 	rd = ReleasedDb.find(:first, conditions: { load_database_id: ld, pfitmap_release_id: @pfitmap_release })
 	taxons = Taxon.where(released_db_id: rd)
-	taxons.should have(66).items
+	taxons.should have(65).items
 #	warn "#{__FILE__}:#{__LINE__}: taxons:\n\t#{taxons.map { |t| t }.join("\n\t")}"
 
 	# Make sure the Thermotoga protein is correct

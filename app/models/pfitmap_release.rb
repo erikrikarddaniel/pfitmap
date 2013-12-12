@@ -101,9 +101,23 @@ class PfitmapRelease < ActiveRecord::Base
 
       pfitmap_sequences = PfitmapSequence.find(
 	:all, 
-	include: [:db_entries,:hmm_profile], conditions: {pfitmap_release_id: self.id, db_entries: {db: load_db.sequence_database.db}}
+	include: [ :db_entries, :hmm_profile ],
+	conditions: { 
+	  pfitmap_release_id: self.id, 
+	  db_entries: { db: load_db.sequence_database.db } 
+        }
       )
-      gis = Array.new(pfitmap_sequences.map {|p| p.db_entries.map {|d| d.gi}.flatten}.flatten).uniq.sort
+      gis = Array.new(pfitmap_sequences.map { |p| p.db_entries.map {|d| d.gi }.flatten }.flatten).uniq.sort
+
+      # We will need a map from gi to db_sequence_id and one from gi to accno
+      gi2db_sequence_id = {}
+      gi2accno = {}
+      pfitmap_sequences.each do |ps|
+	ps.db_entries.each do |dbe|
+	  gi2db_sequence_id[dbe.gi] = ps.db_sequence_id
+	  gi2accno[dbe.gi] = dbe.acc
+	end
+      end
 	
       calculate_logger.info "#{Time.now}: Fetched #{gis.length} gis"
 
@@ -134,6 +148,7 @@ class PfitmapRelease < ActiveRecord::Base
 
       calculate_logger.info "#{Time.now}: Generating protein counts"
 
+      db_sequence_id2ncbi_taxon_id = {}		# Used to avoid counting the same db_sequence for an organism twice
       gis2tids.each do |gi2tid|
         gi = gi2tid["protein_gi"]
         tid = gi2tid["taxon_id"]
@@ -144,13 +159,16 @@ class PfitmapRelease < ActiveRecord::Base
           calculate_logger.warn "#{Time.now}: Found no taxon for gi: #{gi}, tid: #{tid}"
           next
         end
+
         unless protein_map[gi]
           calculate_logger.warn "#{Time.now}: Found no protein for gi: #{gi}, tid: #{tid}"
-        next
+	  next
         end
+
         unless protein_counts[protein_map[gi]]
           protein_counts[protein_map[gi]] = {}
         end
+
         unless protein_counts[protein_map[gi]][tid]
           protein_counts[protein_map[gi]][tid] = ProteinCount.new(
             released_db_id: released_db.id,
@@ -160,7 +178,15 @@ class PfitmapRelease < ActiveRecord::Base
             no_genomes_with_proteins: 1
           )
         end
-        protein_counts[protein_map[gi]][tid].no_proteins += 1
+
+	# Only count if we haven't seen this db_sequence for this taxon before
+	db_sequence_id2ncbi_taxon_id[gi2db_sequence_id[gi]] ||= {}
+	#warn "#{__FILE__}:#{__LINE__}: gi: #{gi}, tid: #{tid}, gi2db_sequence_id[gi]: #{gi2db_sequence_id[gi]}"
+	#warn "#{__FILE__}:#{__LINE__}: db_sequence_id2ncbi_taxon_id[gi2db_sequence_id[gi]]: #{db_sequence_id2ncbi_taxon_id[gi2db_sequence_id[gi]]}"
+	unless db_sequence_id2ncbi_taxon_id[gi2db_sequence_id[gi]][tid]
+	  protein_counts[protein_map[gi]][tid].no_proteins += 1
+	  db_sequence_id2ncbi_taxon_id[gi2db_sequence_id[gi]][tid] = true
+	end
       end
 
       calculate_logger.info "#{Time.now}: Bulk importing #{protein_counts.length} protein counts"
