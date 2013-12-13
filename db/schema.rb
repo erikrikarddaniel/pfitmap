@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131112212600) do
+ActiveRecord::Schema.define(:version => 20131213090848) do
 
   create_table "db_entries", :force => true do |t|
     t.integer  "gi"
@@ -269,6 +269,8 @@ ActiveRecord::Schema.define(:version => 20131112212600) do
     t.datetime "updated_at",               :null => false
     t.integer  "released_db_id"
     t.integer  "no_genomes_with_proteins"
+    t.text     "counted_accessions"
+    t.text     "all_accessions"
     t.index ["released_db_id"], :name => "fk__protein_counts_released_db_id"
     t.index ["protein_id"], :name => "index_protein_counts_on_protein_id"
     t.index ["taxon_id"], :name => "index_protein_counts_on_taxon_id"

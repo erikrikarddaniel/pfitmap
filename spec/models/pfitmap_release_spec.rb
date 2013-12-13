@@ -311,8 +311,8 @@ describe PfitmapRelease do
 	# Make sure the Thermotoga protein is correct
 	taxons.find { |t| t.species == 'Thermotoga maritima' }.protein_counts.should have(1).items
 	taxons.find { |t| t.species == 'Thermotoga maritima' }.protein_counts[0].no_proteins.should == 1
-	taxons.find { |t| t.species == 'Thermotoga maritima' }.protein_counts[0].selected_accessions.should == have(1).items
-	taxons.find { |t| t.species == 'Thermotoga maritima' }.protein_counts[0].all_accessions.should == have(3).items
+	taxons.find { |t| t.species == 'Thermotoga maritima' }.protein_counts[0].counted_accessions.split(',').should have(1).items
+	taxons.find { |t| t.species == 'Thermotoga maritima' }.protein_counts[0].all_accessions.split(',').should have(3).items
 	taxons.find { |t| t.species == 'Thermotoga maritima' }.protein_counts[0].protein.protclass.should == 'NrdD'
 	taxons.find { |t| t.species == 'Thermotoga maritima' }.protein_counts[0].protein.subclass.should == 'NrdDh'
 	taxons.find { |t| t.species == 'Thermotoga maritima' }.protein_counts[0].protein.protgroup.should == 'NrdDh1'
@@ -320,8 +320,8 @@ describe PfitmapRelease do
 	# And the Campylobacter concisus 13826 protein
 	taxons.find { |t| t.strain == 'Campylobacter concisus 13826' }.protein_counts.should have(1).items
 	taxons.find { |t| t.strain == 'Campylobacter concisus 13826' }.protein_counts[0].no_proteins.should == 1
-	taxons.find { |t| t.strain == 'Campylobacter concisus 13826' }.protein_counts[0].selected_accessions.should have(1).items
-	taxons.find { |t| t.strain == 'Campylobacter concisus 13826' }.protein_counts[0].all_accessions.should have(1).items
+	taxons.find { |t| t.strain == 'Campylobacter concisus 13826' }.protein_counts[0].counted_accessions.split(',').should have(1).items
+	taxons.find { |t| t.strain == 'Campylobacter concisus 13826' }.protein_counts[0].all_accessions.split(',').should have(1).items
 	taxons.find { |t| t.strain == 'Campylobacter concisus 13826' }.protein_counts[0].protein.protclass.should == 'NrdD'
 	taxons.find { |t| t.strain == 'Campylobacter concisus 13826' }.protein_counts[0].protein.subclass.should == 'NrdDd'
 	taxons.find { |t| t.strain == 'Campylobacter concisus 13826' }.protein_counts[0].protein.protgroup.should == 'NrdDd1'
@@ -334,8 +334,8 @@ describe PfitmapRelease do
 	proteins.find_all { |p| p.subclass == 'NrdDh' }.should have(2).items
 
 	pcs = ProteinCount.where(released_db_id: rd)
-	pcs.should have(66).items
-	pcs.sum('no_proteins').should == 69
+	pcs.should have(65).items
+	pcs.sum('no_proteins').should == 65
       end
     end
   end
@@ -371,7 +371,6 @@ describe PfitmapRelease do
       protein_counts.length.should == 4 
       protein_counts.sum("no_proteins").should == 5 
       protein_counts.maximum("no_proteins").should == 2 
-      protein_counts.maximum("no_genomes_with_proteins").should == 1
    end
 
     it "should not include all taxon-levels" do

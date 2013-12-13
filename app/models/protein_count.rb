@@ -10,8 +10,7 @@
 #  updated_at               :datetime        not null
 #  released_db_id           :integer
 #  no_genomes_with_proteins :integer
-#
-
+#  counted_accessions       :text
 
 ## no_proteins is the number of the current type of protein in the current taxon
 
@@ -22,7 +21,7 @@
 ## as a genome together with a protein.
   
 class ProteinCount < ActiveRecord::Base
-  attr_accessible :no_proteins, :no_genomes_with_proteins, :obs_as_genome, :released_db_id, :taxon_id, :protein_id
+  attr_accessible :no_proteins, :no_genomes_with_proteins, :obs_as_genome, :released_db_id, :taxon_id, :protein_id, :counted_accessions, :all_accessions
   belongs_to :protein
   belongs_to :taxon
   belongs_to :released_db

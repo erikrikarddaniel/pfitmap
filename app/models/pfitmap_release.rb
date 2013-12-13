@@ -121,7 +121,7 @@ class PfitmapRelease < ActiveRecord::Base
 	
       calculate_logger.info "#{Time.now}: Fetched #{gis.length} gis"
 
-      # Fetch and load all taxa, implement as method, return hash
+      # Fetch and load all taxa, return hash
       calculate_logger.info "#{Time.now}: Creating taxon mapping"
       taxon_map = save_and_fetch_taxonset(load_db.taxonset, gis, released_db)
       calculate_logger.info "#{Time.now}: Created #{taxon_map.length} taxon maps"
@@ -175,22 +175,32 @@ class PfitmapRelease < ActiveRecord::Base
             taxon_id: taxon_map[tid],
             protein_id: protein_map[gi],
             no_proteins: 0,
-            no_genomes_with_proteins: 1
+	    counted_accessions: [],
+	    all_accessions: []
           )
         end
 
 	# Only count if we haven't seen this db_sequence for this taxon before
 	db_sequence_id2ncbi_taxon_id[gi2db_sequence_id[gi]] ||= {}
-	#warn "#{__FILE__}:#{__LINE__}: gi: #{gi}, tid: #{tid}, gi2db_sequence_id[gi]: #{gi2db_sequence_id[gi]}"
-	#warn "#{__FILE__}:#{__LINE__}: db_sequence_id2ncbi_taxon_id[gi2db_sequence_id[gi]]: #{db_sequence_id2ncbi_taxon_id[gi2db_sequence_id[gi]]}"
 	unless db_sequence_id2ncbi_taxon_id[gi2db_sequence_id[gi]][tid]
 	  protein_counts[protein_map[gi]][tid].no_proteins += 1
+	  protein_counts[protein_map[gi]][tid].counted_accessions << gi2accno[gi]
 	  db_sequence_id2ncbi_taxon_id[gi2db_sequence_id[gi]][tid] = true
 	end
+	protein_counts[protein_map[gi]][tid].all_accessions << gi2accno[gi]
       end
 
       calculate_logger.info "#{Time.now}: Bulk importing #{protein_counts.length} protein counts"
 
+      # Translate the accession lists to comma delimited strings
+      protein_counts.values.each do |pcs|
+	pcs.values.each do |pc|
+	  pc.all_accessions = pc.all_accessions.join(",")
+	  pc.counted_accessions = pc.counted_accessions.join(",")
+	end
+      end
+
+      # And insert
       ProteinCount.import protein_counts.values.map { |pc| pc.values }.flatten
 
       calculate_logger.info "#{Time.now}: Created protein counts"

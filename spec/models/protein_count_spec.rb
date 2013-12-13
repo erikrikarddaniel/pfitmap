@@ -10,6 +10,8 @@
 #  updated_at               :datetime        not null
 #  released_db_id           :integer
 #  no_genomes_with_proteins :integer
+#  counted_accessions       :text
+#  all_accessions           :text
 #
 
 require 'spec_helper'
