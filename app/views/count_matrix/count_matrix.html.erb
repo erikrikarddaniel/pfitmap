@@ -2,19 +2,9 @@
   <div class="pageheader1">
     <div>
       <h1>Listing Protein Counts</h1>
-      <h2>CM: <%= @cm.release %>, <%= @cm.taxon_level %>,  <%= @cm.taxon_filter %>, <%= @cm.protein_level %>,  <%= @cm.protein_filter %></h2>
     </div>
     <div>
       <%= render partial: "filter_bar" %>
-    </div>
-    <div>
-      <h3> Instructions: </h3>
-      Choose what taxon rank you wish to browse statistics for, or click a taxon name to expand a given taxon and view statistics for the corresponding children.
-    </div>
-    <div id="explanations">
-      Explanations of the numbers:
-     (<a href="#" rel="tooltip" title="The number of proteins in total for all genomes included">PRO</a>|
-      <a href="#" rel="tooltip" title="The number of genomes with at least one of the specified protein present.">GP</a>)
     </div>
   </div>
   <div id="heat_map">

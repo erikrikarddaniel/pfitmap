@@ -78,9 +78,6 @@
 </ul>
 <ul class="nav nav-pills">
   <li>
-    <a href="javascript:d3_toggle_zeros()">Toggle zeros</a>
-  </li>
-  <li>
     <a href="javascript:d3_filter_table()">Filter</a>
   </li>
   <li class="dropdown">
@@ -98,6 +95,20 @@
       </li>
       <li>
 	<a href="javascript:d3_clear_filters('clear_all')">Clear filers</a> 
+      </li>
+    </ul>
+  </li>
+  <li class="dropdown">
+    <a href="#" id="dropdown-toggle" data-toggle="dropdown">
+      Zeros
+      <b class="caret" ></b>
+    </a>
+    <ul id="zeros_menu" class="dropdown-menu">
+      <li>
+        <%= link_to "Show zeros", "javascript:d3_show_zeros(true);" %>
+      </li>
+      <li>
+        <%= link_to "Hide zeros", "javascript:d3_show_zeros(false);" %>
       </li>
     </ul>
   </li>
