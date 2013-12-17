@@ -28,7 +28,7 @@ class CountMatrixController < ApplicationController
     @load_dbs = LoadDatabase.where(id: @released_dbs.map {|rd| rd.load_database_id})
     # Filter on specific db
     unless params[:db]
-      params[:db] = @load_dbs[0].name
+      params[:db] = @load_dbs.last.name
     end
     @load_db = LoadDatabase.find(:first, conditions: {name: params[:db]})
     # Get the specific released db for the pfitmap release and the database
@@ -43,7 +43,8 @@ class CountMatrixController < ApplicationController
     @cm.release = @pfr.release
     @cm.taxon_level = @tax_levels[-1]
     @cm.protein_level = @prot_levels[-1]
-    
+    @cm.db = @load_db.name
+
     if @cm.valid?
 
       filter_params = {released_db_id: @rd.id}

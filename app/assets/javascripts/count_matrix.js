@@ -8,7 +8,7 @@ $(document).ready(function(){
     gon.taxa_color = d3.scale.category20();
     params = getParameters();
     gon.params = params;
-
+    d3_mark_selected_options();
     if (!gon.params["view_menu"] || gon.params["view_menu"] == "matrix") {
       d3_make_table();
     }
@@ -154,8 +154,8 @@ function d3_prep_ribbon_dataset(){
     tax_ind = gon.ribbon_columns.indexOf(tax[gon.dataset.taxon_level]);
     tax.proteins.forEach(function(prot) {
       prot_ind = gon.ribbon_columns.indexOf(prot[gon.dataset.protein_level]);
-      gon.ribbon_matrix[tax_ind][prot_ind] = +prot.no_genomes_with_proteins
-      gon.ribbon_matrix[prot_ind][tax_ind] = +prot.no_genomes_with_proteins }); }); }
+      gon.ribbon_matrix[tax_ind][prot_ind] = +prot.no_genomes_with_proteins;
+      gon.ribbon_matrix[prot_ind][tax_ind] = +prot.no_genomes_with_proteins; }); }); }
 
 function d3_ribbon_it(matrix) {
 
@@ -286,7 +286,11 @@ function d3_color_table(level) {
   var cells = d3.select("#heat_map").select("table").select("tbody").selectAll("tr").selectAll("td");
   cells.style("background-color",function(d) {if (d.hasOwnProperty("ratio")){return gon.heat_color(d.ratio)}  })
 
-  var tr = d3.selectAll(".taxon_label").style("background-color",function(d) {return gon.taxa_color(d[level]);} ) }
+  var tr = d3.selectAll(".taxon_label").style("background-color",function(d) {return gon.taxa_color(d[level]);} )
+  $("#color_by_menu").find("li").css("background-color","");
+  $("#color_by_menu").find("li:contains("+gon.column_names[gon.params.color ? gon.params.color : "domain"]+")").css("background-color","teal");
+}
+
 
 function d3_taxon_level(level) {
   // Select specific taxa level. If there is filtering on lower levels in the hierarchy we delete that filtering.
@@ -353,6 +357,14 @@ function d3_protein_filter() {
   return result
 }
 
+function d3_mark_selected_options() {
+  $("#taxon_levels_menu").find("li:contains("+gon.column_names[gon.dataset.taxon_level]+")").css("background-color","teal");
+  $("#protein_levels_menu").find("li").filter(function(i) { return $(this).find("a").attr("href").indexOf("'"+gon.dataset.protein_level+"'") != -1 }).css("background-color","teal")
+  $("#taxon_db_menu").find("li:contains("+gon.dataset.db+")").css("background-color","teal");
+  $("#color_by_menu").find("li:contains("+gon.column_names[gon.params.color ? gon.params.color : "domain"]+")").css("background-color","teal");
+  var view = gon.params["view_menu"] ? gon.params["view_menu"] : "matrix";
+  $("#view_menu").find("li:contains("+view.slice(1)+")").css("background-color","teal");
+}
 
 
 // Get current URL parameters
