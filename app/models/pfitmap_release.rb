@@ -190,8 +190,6 @@ class PfitmapRelease < ActiveRecord::Base
 	protein_counts[protein_map[gi]][tid].all_accessions << gi2accno[gi]
       end
 
-      calculate_logger.info "#{Time.now}: Bulk importing #{protein_counts.length} protein counts"
-
       # Translate the accession lists to comma delimited strings
       protein_counts.values.each do |pcs|
 	pcs.values.each do |pc|
@@ -200,8 +198,12 @@ class PfitmapRelease < ActiveRecord::Base
 	end
       end
 
+      pcs_to_import = protein_counts.values.map { |pc| pc.values }.flatten
+
+      calculate_logger.info "#{Time.now}: Bulk importing #{pcs_to_import.length} protein counts"
+
       # And insert
-      ProteinCount.import protein_counts.values.map { |pc| pc.values }.flatten
+      ProteinCount.import pcs_to_import
 
       calculate_logger.info "#{Time.now}: Created protein counts"
     end
