@@ -17,4 +17,8 @@ class ReleasedDb < ActiveRecord::Base
   has_many :taxons, dependent: :destroy
   has_many :proteins, dependent: :destroy
   # attr_accessible :title, :body
+
+  def to_s
+    "ReleasedDb: #{pfitmap_release} #{load_database}"
+  end
 end

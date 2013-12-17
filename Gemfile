@@ -9,6 +9,9 @@ gem 'bio'
 gem 'composite_primary_keys'
 gem 'schema_plus'
 gem 'activerecord-import'
+
+# Gem for postgres arrays in rails 3
+
 #d3 javascript library to render protein statistics
 gem 'd3_rails'
 #gon gem to simply make variables from controller available to the javascript in the views
