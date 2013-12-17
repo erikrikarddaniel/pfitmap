@@ -385,6 +385,8 @@ class PfitmapRelease < ActiveRecord::Base
     name_hash['domain'] = name_hash['superkingdom']
     name_hash.delete 'superkingdom'
 
+    name_hash['strain'] = "#{name_hash['species']}, no strain" unless name_hash['strain']
+
     # Pick out the names
     Taxon.new(
       released_db_id: released_db.id,
