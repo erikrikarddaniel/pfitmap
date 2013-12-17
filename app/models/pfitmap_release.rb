@@ -220,7 +220,16 @@ class PfitmapRelease < ActiveRecord::Base
     # (Don't forget to implement cascading delete in taxon, protein and protein_count.)
     released_db = ReleasedDb.find(:first, conditions: {pfitmap_release_id: self, load_database_id: load_db})
     calculate_logger.info "#{Time.now}: Deleting old rows for #{released_db}"
-    released_db.destroy if released_db
+
+    # Calling SQL directly on referenced tables
+    if released_db
+      [ 'taxons', 'proteins', 'protein_counts' ].each do |table|
+	sql = "DELETE FROM #{table} WHERE released_db_id = #{released_db.id}"
+	warn "#{__FILE__}:#{__LINE__}: sql: '#{sql}'"
+	ActiveRecord::Base.connection.execute(sql)
+      end
+      released_db.destroy
+    end
 
     calculate_logger.info "#{Time.now}: Inserting new ReleasedDb"
     # Insert released_db
