@@ -9,7 +9,10 @@
 #  created_at               :datetime        not null
 #  updated_at               :datetime        not null
 #  released_db_id           :integer
+#  no_genomes_with_proteins :integer
 #  counted_accessions       :text
+#  all_accessions           :text
+#
 
 ## no_proteins is the number of the current type of protein in the current taxon
 
