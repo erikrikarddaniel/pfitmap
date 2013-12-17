@@ -1,5 +1,6 @@
 class CountMatrixController < ApplicationController
   load_and_authorize_resource
+
   def get_counts
     # Initialize constants
     @tl = Taxon::TAXA		# Taxa column names
@@ -91,8 +92,9 @@ class CountMatrixController < ApplicationController
 	}[@cm.protein_level.to_sym]
 
       tax_protein_counts = 
-        prot_count.select("SUM(n_proteins) AS no_proteins, COUNT(n_genomes_w_protein) AS no_genomes_with_proteins,#{tax_levels_string},#{prot_levels_string}")
-		  .where((taxon_filter+protein_filter).join(" AND "),filter_params)
+        prot_count.select(
+	  "SUM(n_proteins) AS no_proteins, COUNT(n_genomes_w_protein) AS no_genomes_with_proteins, STRING_AGG(counted_accessions, ',') AS counted_accessions, #{tax_levels_string},#{prot_levels_string}"
+	).where((taxon_filter+protein_filter).join(" AND "),filter_params)
 		  .group("#{tax_levels_string},#{prot_levels_string}")
 		  .order(tax_levels_string)
 
@@ -106,7 +108,8 @@ class CountMatrixController < ApplicationController
       end
       @cm.taxons = @countmt.values.map{|c| c.attributes}
 
-      #Set DOM variables to use in D3 Javascript
+      # Set DOM variables to use in D3 Javascript
+      # ('gon' is client accessible)
       gon.tax_columns = [@cm.taxon_level, "no_genomes"]
       gon.prot_columns = [filter_params[@cm.protein_level.to_sym], tax_protein_counts.map{ |t| t[@cm.protein_level]}].compact.reduce([],:|).to_set.delete(nil).to_a.sort
       gon.columns = gon.tax_columns + gon.prot_columns
@@ -117,6 +120,7 @@ class CountMatrixController < ApplicationController
       gon.tl = @tl
       gon.pl = @pl
     end
+
     if @cm.valid?
       respond_to do |format|
         format.html { render 'count_matrix' }

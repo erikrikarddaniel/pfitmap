@@ -50,24 +50,4 @@ class ProteinCount < ActiveRecord::Base
   def to_s
     "ProteinCount #{taxon} #{protein}, n. proteins: #{no_proteins}"
   end
-
-  
-#  def self.add_hit(protein, taxons, pr)
-#    # Check if the genome refferred to have got a hit from before, meaning the number of genomes with proteins should be incremented. If not, then this is the first out of possibly many proteins to hit this protein_count.
-#    first_taxon = taxons.first
-#    first_protein_count = self.find(:first, :conditions => ["protein_id = ? AND taxon_id = ? AND pfitmap_release_id = ?", protein.id, first_taxon.id, pr.id])
-#    first_protein = !(first_protein_count.obs_as_genome)
-#    if first_protein
-#      first_protein_count.obs_as_genome = true
-#      first_protein_count.save
-#    end
-#
-#    taxons.each do |taxon|
-#      if first_protein
-#        ProteinCount.where("protein_id = ? AND taxon_id = ? AND pfitmap_release_id = ?", protein.id, taxon.id, pr.id).update_all("no_genomes_with_proteins = no_genomes_with_proteins + 1, no_proteins = no_proteins + 1")
-#      else
-#        ProteinCount.where("protein_id = ? AND taxon_id = ? AND pfitmap_release_id = ?", protein.id, taxon.id, pr.id).update_all("no_proteins = no_proteins + 1")
-#      end
-#    end
-#  end
 end
