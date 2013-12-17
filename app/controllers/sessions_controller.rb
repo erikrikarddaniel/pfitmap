@@ -1,9 +1,11 @@
 class SessionsController < ApplicationController
   authorize_resource :class => false
+  skip_before_filter :verify_authenticity_token, :only => :create
+  
   def create
     save_release_choice = session[:release_id]
-    reset_session # see http://guides.rubyonrails.org/security.html#session-fixation
     auth = request.env["omniauth.auth"]
+    reset_session # see http://guides.rubyonrails.org/security.html#session-fixation
     user = User.find_by_provider_and_uid(auth["provider"], auth["uid"]) || User.create_with_omniauth(auth)
     session[:user_id] = user.id
     if save_release_choice
@@ -11,6 +13,7 @@ class SessionsController < ApplicationController
     else
       session[:release_id] = nil
     end
+
     flash[:success] = "Signed in!"
     redirect_to root_path
   end

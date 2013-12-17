@@ -58,5 +58,7 @@ module Pfitmap
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+# Rails 4
+    config.i18n.enforce_available_locales = true
   end
 end

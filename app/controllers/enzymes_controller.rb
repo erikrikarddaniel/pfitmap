@@ -47,7 +47,7 @@ class EnzymesController < ApplicationController
   # POST /enzymes.json
   def create
     @enzyme = Enzyme.new(params[:enzyme])
-    @hmm_profiles = HmmProfile.find_all_by_id(params[:hmm_profile_ids])
+    @hmm_profiles = HmmProfile.where(id: params[:hmm_profile_ids])
     @parent_candidates = Enzyme.all
 
     respond_to do |format|
@@ -74,7 +74,7 @@ class EnzymesController < ApplicationController
   # PUT /enzymes/1.json
   def update
     @enzyme = Enzyme.find(params[:id])
-    @hmm_profiles = HmmProfile.find_all_by_id(params[:hmm_profile_ids])
+    @hmm_profiles = HmmProfile.where(id: params[:hmm_profile_ids])
     
     @enzyme.hmm_profiles.destroy_all
     respond_to do |format|

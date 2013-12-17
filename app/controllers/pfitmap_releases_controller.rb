@@ -3,7 +3,7 @@ class PfitmapReleasesController < ApplicationController
   # GET /pfitmap_releases
   # GET /pfitmap_releases.json
   def index
-    @pfitmap_releases = PfitmapRelease.all(order: "release DESC")
+    @pfitmap_releases = PfitmapRelease.order(release: :desc)
     @current_release = PfitmapRelease.find_current_release
 
     respond_to do |format|
@@ -18,7 +18,7 @@ class PfitmapReleasesController < ApplicationController
     @pfitmap_release = PfitmapRelease.find(params[:id])
     @sequence_source = @pfitmap_release.sequence_source
     @hmm_profiles = HmmProfile.all.sort! { |p1,p2| p1.hierarchy <=> p2.hierarchy }
-    @releases_for_same_source = PfitmapRelease.find_all_by_sequence_source_id(@sequence_source.id)
+    @releases_for_same_source = PfitmapRelease.where(sequence_source_id: @sequence_source.id)
     @hmm_profiles.each do |profile|
       profile.release_statistics = []
       @releases_for_same_source.each do |release|

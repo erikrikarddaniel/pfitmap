@@ -114,7 +114,7 @@ class HmmResultsController < ApplicationController
   # Helper method to avoid duplicated code
   def show_params(hmm_result, max_score = 1000000)
     @hmm_profile = hmm_result.hmm_profile
-    @hmm_result_rows = hmm_result.hmm_result_rows.where("fullseq_score <= ?", max_score).paginate(page: params[:page], order: "fullseq_score DESC")
+    @hmm_result_rows = hmm_result.hmm_result_rows.where("fullseq_score <= ?", max_score).paginate(page: params[:page]).order(fullseq_score: :desc)
     # Editable Hmm Score Criterion
     hmm_score_criteria = hmm_result.hmm_profile.hmm_score_criteria
     if hmm_score_criteria

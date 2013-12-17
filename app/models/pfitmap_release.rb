@@ -46,20 +46,20 @@ class PfitmapRelease < ActiveRecord::Base
   
   # Should only be called when there exists a head release
   def add_seq(db_seq, hmm_profile)
-    existing = PfitmapSequence.find(:first, conditions: ["db_sequence_id = ? AND hmm_profile_id = ? AND pfitmap_release_id = ?", db_seq.id, hmm_profile.id, self.id])
+    existing = PfitmapSequence.where(["db_sequence_id = ? AND hmm_profile_id = ? AND pfitmap_release_id = ?", db_seq.id, hmm_profile.id, self.id]).first
     if not existing
       PfitmapSequence.create(db_sequence_id: db_seq.id, pfitmap_release_id: self.id, hmm_profile_id: hmm_profile.id)
     end
   end
 
   def self.find_current_release
-    return self.find_by_current('true', limit: 1)
+    return self.where(current: 'true').first
   end
 
   def self.find_all_after_current
     current = self.find_current_release
     if current
-      self.all(conditions: ["release >?", current.release])
+      self.where(["release >?", current.release]).to_a
     else
       self.all()
     end
@@ -71,7 +71,7 @@ class PfitmapRelease < ActiveRecord::Base
   end
 
   def calculate_logger
-    @@calculate_logger ||= ActiveSupport::BufferedLogger.new(Rails.root.join('log/calculate.log'))
+    @@calculate_logger ||= ActiveSupport::Logger.new(Rails.root.join('log/calculate.log'))
   end
 
   def calculate_released_dbs(load_db)
@@ -100,7 +100,7 @@ class PfitmapRelease < ActiveRecord::Base
       # when calling pfitmap_sequences.db_entries we get only the entries with db = load_db.sequence_database.db
       calculate_logger.info "#{Time.now}: Fetching pfitmap_sequence objects"
 
-      pfitmap_sequences = PfitmapSequence.find(:all, include: [:db_entries,:hmm_profile], conditions: {pfitmap_release_id: self.id, db_entries: {db: load_db.sequence_database.db}})
+      pfitmap_sequences = PfitmapSequence.where(pfitmap_release_id: self.id, db_entries: {db: load_db.sequence_database.db}).includes([:db_entries,:hmm_profile])
       gis = Set.new(pfitmap_sequences.map {|p| p.db_entries.map {|d| d.gi}.flatten}.flatten)
 	
       calculate_logger.info "#{Time.now}: Fetched #{gis.length} gis"
@@ -169,7 +169,7 @@ class PfitmapRelease < ActiveRecord::Base
   def create_released_db(load_db)
     # Delete old taxon, protein_count and protein rows
     # (Don't forget to implement cascading delete in taxon, protein and protein_count.)
-    released_db = ReleasedDb.find(:first, conditions: {pfitmap_release_id: self, load_database_id: load_db})
+    released_db = ReleasedDb.where(pfitmap_release_id: self, load_database_id: load_db).first
     released_db.destroy if released_db
     # Insert released_db
     released_db = ReleasedDb.new
@@ -210,7 +210,7 @@ class PfitmapRelease < ActiveRecord::Base
       end
 
       calculate_logger.info "#{Time.now}: Fetched #{json_taxa.length} taxa"
-
+      
       json_taxa.each do |taxon|
 	next if imported[taxon[0]["ncbi_taxon_id"]]
 	taxon_names << generate_taxons_names(taxon, released_db)

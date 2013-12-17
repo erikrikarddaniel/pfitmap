@@ -32,7 +32,7 @@ class SequenceSource < ActiveRecord::Base
   end
 
   def evaluate_logger
-    @@evaluate_logger ||= ActiveSupport::BufferedLogger.new(Rails.root.join('log/evaluate.log'))
+    @@evaluate_logger ||= ActiveSupport::Logger.new(Rails.root.join('log/evaluate.log'))
   end
 
   def evaluate(head_release, user)
@@ -40,11 +40,11 @@ class SequenceSource < ActiveRecord::Base
 
     @sequences = []
     profile_hash = {}
-    HmmProfile.find(:all, :include => :hmm_score_criteria).each do |profile|
+    HmmProfile.includes(:hmm_score_criteria).each do |profile|
       profile_hash[profile.id] = profile
     end
 
-    DbSequence.find_each(:include => :db_sequence_best_profiles) do |seq|
+    DbSequence.includes(:db_sequence_best_profiles).find_each do |seq|
       seq.db_sequence_best_profiles.each do |view_row|
         if view_row.sequence_source_id == self.id
           hmm_profile = profile_hash[view_row.hmm_profile_id]

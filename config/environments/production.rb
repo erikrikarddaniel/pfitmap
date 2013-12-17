@@ -1,6 +1,7 @@
 Pfitmap::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
-
+  # Rails 4 config!
+  config.eager_load = true
   # Code is not reloaded between requests
   config.cache_classes = true
 

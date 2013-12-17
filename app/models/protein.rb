@@ -56,7 +56,7 @@ class Protein < ActiveRecord::Base
     #For the given protein and profile, add enzyme_protein relation if enzymes exist
     #If profile has parent profiles, add those enzymes as well
     profile.enzymes.each do |e|
-      EnzymeProtein.find_or_create_by_enzyme_id_and_protein_id(e.id, protein.id)
+      EnzymeProtein.find_or_create_by(enzyme_id: e.id, protein_id: protein.id)
     end
     if profile.parent_id
       add_enzymes_protein(protein,HmmProfile.find(profile.parent_id))
@@ -74,7 +74,7 @@ class Protein < ActiveRecord::Base
     protein.save
     if enzymes
       enzymes.each do |e|
-        EnzymeProtein.find_or_create_by_enzyme_id_and_protein_id(e.id, protein.id)
+        EnzymeProtein.find_or_create_by(enzyme_id: e.id, protein_id: protein.id)
       end
     end
   end

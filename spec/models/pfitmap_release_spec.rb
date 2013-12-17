@@ -10,8 +10,10 @@
 #  current            :boolean
 #  sequence_source_id :integer
 #
-
 require 'spec_helper'
+require 'file_parsers'
+
+include FileParsers
 
 describe PfitmapRelease do
   let!(:sequence_source) { FactoryGirl.create(:sequence_source) }
@@ -161,7 +163,7 @@ describe PfitmapRelease do
 	  active: true
 	)
 	@pfitmap_release.calculate_released_dbs(ld)
-	rd = ReleasedDb.find(:first, conditions: { load_database_id: ld, pfitmap_release_id: @pfitmap_release })
+	rd = ReleasedDb.where(load_database_id: ld, pfitmap_release_id: @pfitmap_release ).first
 	taxons = Taxon.where(released_db_id: rd)
 	taxons.should have(13).items
 
@@ -209,7 +211,7 @@ describe PfitmapRelease do
 	  active: true
 	)
 	@pfitmap_release.calculate_released_dbs(ld)
-	rd = ReleasedDb.find(:first, conditions: { load_database_id: ld, pfitmap_release_id: @pfitmap_release })
+	rd = ReleasedDb.where(load_database_id: ld, pfitmap_release_id: @pfitmap_release ).first
 	taxons = Taxon.where(released_db_id: rd)
 	taxons.should have(183).items
 
@@ -267,7 +269,7 @@ describe PfitmapRelease do
 
     it "should be successful to call calculate_released_db" do
       @pfitmap_release.calculate_released_dbs(@ld)
-      @rd = ReleasedDb.find(:first, conditions: {load_database_id: @ld, pfitmap_release_id: @pfitmap_release})
+      @rd = ReleasedDb.where(load_database_id: @ld, pfitmap_release_id: @pfitmap_release).first
       taxons = Taxon.where(released_db_id: @rd)
       proteins = Protein.where(released_db_id: @rd)
       protein_counts = ProteinCount.where(released_db_id: @rd)
@@ -283,7 +285,7 @@ describe PfitmapRelease do
 
     it "should not include all taxon-levels" do
       @pfitmap_release.calculate_released_dbs(@ld)
-      @rd = ReleasedDb.find(:first, conditions: {load_database_id: @ld, pfitmap_release_id: @pfitmap_release})
+      @rd = ReleasedDb.where(load_database_id: @ld, pfitmap_release_id: @pfitmap_release).first
       taxons = Taxon.where(released_db_id: @rd)
       taxons.length.should be == 10 
     end
@@ -291,7 +293,7 @@ describe PfitmapRelease do
     it "should only insert one taxon using the non-GOLD url after calling calculate" do
       @ld.taxonset = "http://biosql.scilifelab.se/gis2taxa.json"
       @pfitmap_release.calculate_released_dbs(@ld)
-      @rd = ReleasedDb.find(:first, conditions: {load_database_id: @ld, pfitmap_release_id: @pfitmap_release})
+      @rd = ReleasedDb.where(load_database_id: @ld, pfitmap_release_id: @pfitmap_release).first
       taxons = Taxon.where(released_db_id: @rd)
       proteins = Protein.where(released_db_id: @rd)
       protein_counts = ProteinCount.where(released_db_id: @rd)
@@ -304,7 +306,7 @@ describe PfitmapRelease do
 
     it "should name the taxa levels correctly" do
       @pfitmap_release.calculate_released_dbs(@ld)
-      t1 = Taxon.find(:first, conditions: {"strain" => "Acaryochloris marina MBIC11017"})
+      t1 = Taxon.where("strain" => "Acaryochloris marina MBIC11017").first
       t1.domain.should == "Bacteria"
       t1.kingdom.should == "Bacteria, no kingdom" 
       t1.phylum.should ==  "Cyanobacteria"
@@ -314,7 +316,7 @@ describe PfitmapRelease do
       t1.genus.should == "Acaryochloris"
       t1.species.should == "Acaryochloris marina"
       t1.strain.should == "Acaryochloris marina MBIC11017"
-      t2 = Taxon.find(:first, conditions: {"species" => "Homo sapiens"})
+      t2 = Taxon.where("species" => "Homo sapiens").first
       t2.domain.should == "Eukaryota"
       t2.species.should == "Homo sapiens"
       t2.strain.should == nil

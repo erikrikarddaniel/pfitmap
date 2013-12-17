@@ -30,9 +30,9 @@ class CountMatrixController < ApplicationController
     unless params[:db]
       params[:db] = @load_dbs[0].name
     end
-    @load_db = LoadDatabase.find(:first, conditions: {name: params[:db]})
+    @load_db = LoadDatabase.where(name: params[:db]).first
     # Get the specific released db for the pfitmap release and the database
-    @rd = ReleasedDb.find(:first, conditions: {pfitmap_release_id: @pfr.id, load_database_id: @load_db})
+    @rd = ReleasedDb.where(pfitmap_release_id: @pfr.id, load_database_id: @load_db).first
 
 
     #Selecting which taxon ranks to include in the query

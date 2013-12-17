@@ -24,11 +24,11 @@ class Enzyme < ActiveRecord::Base
   
   def self.find_standard_enzymes(enzyme_ids)
     if enzyme_ids
-      enzymes = Enzyme.find_all_by_id(enzyme_ids, :order => "parent_id, abbreviation")
+      enzymes = Enzyme.where(id: enzyme_ids, :order => "parent_id, abbreviation")
       enzyme_tree = Enzyme.build_tree_from(enzymes)
-      parent_ids = Enzyme.find_all_by_id(enzyme_ids, :order => "abbreviation", :conditions => "parent_id IS NULL").map { |e| e.id}
+      parent_ids = Enzyme.where(id: enzyme_ids, :order => "abbreviation", :conditions => "parent_id IS NULL").map { |e| e.id}
     else
-      enzymes = Enzyme.find_all_by_parent_id(nil, :order => "abbreviation")
+      enzymes = Enzyme.where( parent_id: nil, :order => "abbreviation")
       parent_ids = Enzyme.find(:all, :order => "abbreviation", :conditions => "parent_id IS NULL").map { |e| e.id}
       enzyme_tree = Enzyme.build_tree_from(enzymes)
     end

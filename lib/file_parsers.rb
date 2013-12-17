@@ -118,7 +118,7 @@ module FileParsers
 
   def gi_to_result_row_hash(result)
     h = {}
-    result.hmm_result_rows.all(:include => :db_entries).each do |rr|
+    result.hmm_result_rows.includes(:db_entries).each do |rr|
       rr.db_entries.each do |db_entry|
         h[db_entry.gi] = rr.id
       end

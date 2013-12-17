@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   end
   
   def header_releases
-    PfitmapRelease.all(:order => "release DESC", :limit => '5')
+    PfitmapRelease.order(release: :desc).limit(5)
   end
   
   def current_user

@@ -11,6 +11,9 @@
 #
 
 require 'spec_helper'
+require 'file_parsers'
+
+include FileParsers
 
 describe SequenceSource do
   before(:each) do

@@ -25,6 +25,9 @@
 #
 
 require 'spec_helper'
+require 'file_parsers'
+
+include FileParsers
 
 describe HmmAlignment do
   let(:hmm_result_row) { FactoryGirl.create(:hmm_result_row) }

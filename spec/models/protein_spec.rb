@@ -29,7 +29,7 @@ describe Protein do
       before do
 # TODO        Protein.initialize_proteins
         Protein.create(protfamily: "test",released_db_id: released_db.id)
-        @protein = Protein.find(:first)
+        @protein = Protein.first
       end
       it "should have created some proteins" do
         Protein.all.should_not == []

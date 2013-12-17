@@ -22,9 +22,9 @@ Pfitmap::Application.routes.draw do
 
   resources :enzymes
 
-  match '/auth/:provider/callback', to: 'sessions#create'
-  match '/auth/failure', to: 'sessions#failure'
-  match '/signout' => "sessions#destroy", :as => :signout
+  match '/auth/:provider/callback', to: 'sessions#create', via: [:get,:post]
+  match '/auth/failure', to: 'sessions#failure', via: :get
+  match '/signout' => "sessions#destroy", :as => :signout, via: :get
 
   resources :pfitmap_releases do
     post 'make_current', :as => :make_current

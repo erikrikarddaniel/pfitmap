@@ -75,7 +75,7 @@ describe Taxon do
       taxon.should_not respond_to(:hierarchy)
     end
     before do
-      @taxons = Taxon.find([taxon.id,taxon2.id,taxon3.id,taxon4.id], :order => ["domain","kingdom","phylum","taxclass","taxorder","taxfamily","genus","species","strain"])
+      @taxons = Taxon.where(id: [taxon.id,taxon2.id,taxon3.id,taxon4.id]).order(["domain","kingdom","phylum","taxclass","taxorder","taxfamily","genus","species","strain"])
     end
     it "sorts correctly" do
       @taxons.should == [taxon3,taxon2,taxon4, taxon]
