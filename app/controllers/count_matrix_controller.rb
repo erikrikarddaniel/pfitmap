@@ -94,7 +94,7 @@ class CountMatrixController < ApplicationController
 
       tax_protein_counts = 
         prot_count.select(
-	  "SUM(n_proteins) AS no_proteins, COUNT(n_genomes_w_protein) AS no_genomes_with_proteins, STRING_AGG(counted_accessions, ',') AS counted_accessions, #{tax_levels_string},#{prot_levels_string}"
+	  "SUM(n_proteins) AS no_proteins, COUNT(n_genomes_w_protein) AS no_genomes_with_proteins, STRING_AGG(counted_accessions, ',') AS counted_accessions, STRING_AGG(all_accessions,',') AS all_accessions, #{tax_levels_string},#{prot_levels_string}"
 	).where((taxon_filter+protein_filter).join(" AND "),filter_params)
 		  .group("#{tax_levels_string},#{prot_levels_string}")
 		  .order(tax_levels_string)
@@ -105,6 +105,8 @@ class CountMatrixController < ApplicationController
         @prot_levels.map{|p| cmtp[p] = tpc[p]}
         cmtp.no_proteins = tpc.no_proteins
         cmtp.no_genomes_with_proteins = tpc.no_genomes_with_proteins
+	cmtp.counted_accessions = tpc.counted_accessions
+	cmtp.all_accessions = tpc.all_accessions
         @countmt[taxon].proteins.append(cmtp.attributes)
       end
       @cm.taxons = @countmt.values.map{|c| c.attributes}

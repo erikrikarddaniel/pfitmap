@@ -38,7 +38,7 @@ describe "ProteinCounts 3 taxa, 2 proteins" do
     end
 
     it 'returns valid json' do
-      visit count_matrix_path(params: { format: json })
+      visit count_matrix_path(params: { format: "json" })
     end
 
     it "has three taxa rows and two protein columns", :js => true do
