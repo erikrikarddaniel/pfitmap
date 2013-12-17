@@ -288,7 +288,7 @@ function d3_color_table(level) {
 
   var tr = d3.selectAll(".taxon_label").style("background-color",function(d) {return gon.taxa_color(d[level]);} )
   $("#color_by_menu").find("li").css("background-color","");
-  $("#color_by_menu").find("li:contains("+gon.column_names[gon.params.color ? gon.params.color : "domain"]+")").css("background-color","teal");
+  $("#color_by_menu").find("li:contains("+gon.column_names[gon.params.color ? gon.params.color : "domain"]+")").css("background-color","#0088CC");
 }
 
 
@@ -358,12 +358,12 @@ function d3_protein_filter() {
 }
 
 function d3_mark_selected_options() {
-  $("#taxon_levels_menu").find("li:contains("+gon.column_names[gon.dataset.taxon_level]+")").css("background-color","teal");
-  $("#protein_levels_menu").find("li").filter(function(i) { return $(this).find("a").attr("href").indexOf("'"+gon.dataset.protein_level+"'") != -1 }).css("background-color","teal")
-  $("#taxon_db_menu").find("li:contains("+gon.dataset.db+")").css("background-color","teal");
-  $("#color_by_menu").find("li:contains("+gon.column_names[gon.params.color ? gon.params.color : "domain"]+")").css("background-color","teal");
+  $("#taxon_levels_menu").find("li:contains("+gon.column_names[gon.dataset.taxon_level]+")").css("background-color","#0088CC");
+  $("#protein_levels_menu").find("li").filter(function(i) { return $(this).find("a").attr("href").indexOf("'"+gon.dataset.protein_level+"'") != -1 }).css("background-color","#0088CC")
+  $("#taxon_db_menu").find("li:contains("+gon.dataset.db+")").css("background-color","#0088CC");
+  $("#color_by_menu").find("li:contains("+gon.column_names[gon.params.color ? gon.params.color : "domain"]+")").css("background-color","#0088CC");
   var view = gon.params["view_menu"] ? gon.params["view_menu"] : "matrix";
-  $("#view_menu").find("li:contains("+view.slice(1)+")").css("background-color","teal");
+  $("#view_menu").find("li:contains("+view.slice(1)+")").css("background-color","#0088CC");
 }
 
 
