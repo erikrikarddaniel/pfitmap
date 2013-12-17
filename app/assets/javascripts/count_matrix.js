@@ -359,7 +359,7 @@ function d3_table_it(dataset) {
         tlabel.append("input").attr("type","checkbox").attr("name","tax_filter").attr("value",function(d) {return d[gon.dataset.taxon_level]})
         tlabel.append("span").attr("class","input-group-addon").text(function(d) {return d[gon.dataset.taxon_level]})
     //taxon tooltip
-    $(".taxon_label").tooltip({"toggle":true,"title":function () {r=[];for (var i = 0; i < gon.taxon_levels.length; i++) {r.push(this.__data__[gon.taxon_levels[i]])};return r.join("<br/>")},"placement":"left"});
+    $(".taxon_label").tooltip({"toggle":true,"title":function () {r=[];for (var i = 0; i < gon.taxon_levels.length; i++) {r.push(this.__data__[gon.taxon_levels[i]])};return r.join("<br/>")},"placement":"bottom"});
     //cell tooltip
     $(".heat_label").tooltip({"toggle":true,"title":function() {return "Proteins: "+this.__data__.value+"<br/>Genomes w. proteins: "+this.__data__.no_genomes_with_proteins+"<br/>Organism: " + this.__data__.organism + "<br/>Protein: "+this.__data__.column},"placement":"bottom" })
     d3_color_table(gon.params["color"]);
