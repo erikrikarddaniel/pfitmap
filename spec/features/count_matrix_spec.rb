@@ -13,9 +13,9 @@ describe "ProteinCounts 3 taxa, 2 proteins" do
   let!(:taxC)            { FactoryGirl.create(:taxon, domain: "TaxC", released_db_id: rd.id) }
   before do
     @protein_counts = []
-    @protein_counts << FactoryGirl.create(:protein_count, no_proteins: 2, no_genomes_with_proteins: 1,  protein: protA, taxon: taxA, released_db_id: rd.id)
-    @protein_counts << FactoryGirl.create(:protein_count, no_proteins: 4, no_genomes_with_proteins: 3,  protein: protA, taxon: taxB, released_db_id: rd.id)
-    @protein_counts << FactoryGirl.create(:protein_count, no_proteins: 8, no_genomes_with_proteins: 7,  protein: protB, taxon: taxC, released_db_id: rd.id)
+    @protein_counts << FactoryGirl.create(:protein_count, no_proteins: 2, protein: protA, taxon: taxA, released_db_id: rd.id)
+    @protein_counts << FactoryGirl.create(:protein_count, no_proteins: 4, protein: protA, taxon: taxB, released_db_id: rd.id)
+    @protein_counts << FactoryGirl.create(:protein_count, no_proteins: 8, protein: protB, taxon: taxC, released_db_id: rd.id)
   end
   describe "proteins and taxa have correct columns" do
     before do
@@ -82,9 +82,9 @@ describe "ProteinCounts 2 taxa, 2 proteins" do
   let!(:taxB)            { FactoryGirl.create(:taxon, domain: "TaxB", released_db_id: rd.id) }
   before do
     @protein_counts = []
-    @protein_counts << FactoryGirl.create(:protein_count, no_proteins: 2, no_genomes_with_proteins: 1,  protein: protA, taxon: taxA, released_db: rd)
-    @protein_counts << FactoryGirl.create(:protein_count, no_proteins: 4, no_genomes_with_proteins: 3,  protein: protA, taxon: taxB, released_db: rd)
-    @protein_counts << FactoryGirl.create(:protein_count, no_proteins: 8, no_genomes_with_proteins: 7,  protein: protB, taxon: taxB, released_db: rd)
+    @protein_counts << FactoryGirl.create(:protein_count, no_proteins: 2, protein: protA, taxon: taxA, released_db: rd)
+    @protein_counts << FactoryGirl.create(:protein_count, no_proteins: 4, protein: protA, taxon: taxB, released_db: rd)
+    @protein_counts << FactoryGirl.create(:protein_count, no_proteins: 8, protein: protB, taxon: taxB, released_db: rd)
   end
   describe "proteins and taxa have correct columns" do
     before do
