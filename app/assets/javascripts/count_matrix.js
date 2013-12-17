@@ -19,46 +19,36 @@ function d3_reload_page() {
   window.location.search = $.param(gon.params);
 }
 
-function d3_toggle_zeros() {
-  if (!gon.zeros_proteins) {
-    gon.zeros_proteins = [];
-    for (var i in gon.prot_columns) { 
-      protein = $("."+gon.prot_columns[i].replace(".","\\.").replace("/","\\/").split(" ").join(".")+".heat_label");
+// Allow client to filter out / show zero sum rows.
+function d3_show_zeros(show_zeros) {
+  if ( show_zeros ) {
+    var taxa = $("input[name=tax_filter]").closest("tr");
+     taxa.each(function(d) {
+      $(this).show();
+    })
+  } else {
+    // Find selected rows and columns. i get the row object for taxa but only class for protein
+    var sel_taxa =  $("input[name=tax_filter]:checked").closest("tr");
+    var sel_prot = $.map($("input[name=prot_filter]:checked"), function(d) {return "." + d.value} );
+  
+    // If no taxa selected, use all rows
+    if ( sel_taxa.length == 0 ) {var sel_taxa = $("input[name=tax_filter]:not(:checked)").closest("tr") };
+    // If no protein selected, use all proteins
+    if ( sel_prot.length == 0 ) { var sel_prot = $.map($("input[name=prot_filter]:not(:checked)"), function(d) {return "." + d.value}) };
+    
+    // Small hack to see if to hide or show columns. If the number of selected columns has not changed, toggle the other option
+    // Start by assuming I will hide rows
+  
+    // Calculate sum for each selected taxa and each selected protein
+    sel_taxa.each(function(i) {
+      var row = $(this)
+      prot_cells = row.find(sel_prot.join(","));
       var sum = 0;
-      protein.each(function() { sum += Number($(this).text()) });
-      if (sum == 0) {
-	gon.zeros_proteins.push("."+gon.prot_columns[i].replace(".","\\.").replace("/","\\/").split(" ").join("."));
+      prot_cells.each(function() { sum += Number($(this).text()) });
+      if ( sum == 0 ) {
+        row.hide();
       }
-    }
-  }
-  if (!gon.zeros_taxons) {
-    gon.zeros_taxons = [];
-    var taxons = gon.taxons.map(function(d) {return d[gon.dataset.taxon_level]})
-    for (var i in taxons) {
-      taxon = $("."+taxons[i].replace(".","\\.").replace("/","\\/").split(" ").join(".")+" td.heat_label")
-      var sum = 0;
-      taxon.each(function() { sum += Number($(this).text()) });
-      if (sum == 0) {
-	gon.zeros_taxons.push("."+taxons[i].replace(".","\\.").replace("/","\\/").split(" ").join("."));
-      }
-    }
-  }
-  if ($(gon.zeros_proteins[0]).is(":visible") || $(gon.zeros_taxons[0]).is(":visible") ) {
-    for (var i in gon.zeros_proteins) {
-      $(gon.zeros_proteins[i]).hide();
-    }
-    for (var i in gon.zeros_taxons) {
-      $(gon.zeros_taxons[i]).hide();
-    }
-  }
-  else {
-    for (var i in gon.zeros_proteins) {
-      $(gon.zeros_proteins[i]).show();
-    }
-    for (var i in gon.zeros_taxons) {
-      $(gon.zeros_taxons[i]).show();
-     }
-
+    });
   }
 }
 
@@ -331,7 +321,7 @@ function d3_table_it(dataset) {
         .data(dataset)
         .enter()
         .append("tr")
-        .attr("class",function(d) {return d[gon.dataset.taxon_level] })
+        .attr("class",function(d) {return d[gon.dataset.taxon_level].replace(" ","_","g").replace(",","_","g") })
 
     var cells = rows.selectAll("td")
         .data(function(row) { 
