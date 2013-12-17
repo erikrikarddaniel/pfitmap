@@ -223,7 +223,7 @@ class PfitmapRelease < ActiveRecord::Base
 
     # Calling SQL directly on referenced tables
     if released_db
-      [ 'taxons', 'proteins', 'protein_counts' ].each do |table|
+      [ 'protein_counts', 'taxons', 'proteins' ].each do |table|
 	sql = "DELETE FROM #{table} WHERE released_db_id = #{released_db.id}"
 	warn "#{__FILE__}:#{__LINE__}: sql: '#{sql}'"
 	ActiveRecord::Base.connection.execute(sql)
