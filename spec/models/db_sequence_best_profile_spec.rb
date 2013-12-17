@@ -10,6 +10,7 @@
 #
 
 require 'spec_helper'
+require 'db_sequence_best_profile'
 
 describe DbSequenceBestProfile do
   # Hmm Profiles
@@ -80,44 +81,47 @@ describe DbSequenceBestProfile do
                                              hmm_result: hmm_result1, 
                                              db_sequence: db_sequence3, 
                                              fullseq_score: 50.0) }
-  
+
   it "should create some rows in the views" do
-    DbSequenceBestProfile.count.should == 6
+    expect(DbSequenceBestProfile.count).to eql(6)
   end
 
   describe "associations" do
     before do 
-      @view_row = DbSequenceBestProfile.find(:first, :conditions => {hmm_profile_id: hmm_profile1.id, sequence_source_id: sequence_source1.id, db_sequence_id: db_sequence3.id})
+      @view_row = DbSequenceBestProfile.where(hmm_profile_id: hmm_profile1.id, sequence_source_id: sequence_source1.id, db_sequence_id: db_sequence3.id).first
     end
-    subject { @view_row }
-    
-    it { should respond_to(:hmm_profile) }
-    it { should respond_to(:sequence_source) }
-    it { should respond_to(:db_sequence) }
-    it { should respond_to(:fullseq_score) }
-    it { should respond_to(:hmm_result_row) }
-    
-    its(:hmm_profile) { should == hmm_profile1 }
-    its(:sequence_source) { should == sequence_source1 }
-    its(:db_sequence) { should == db_sequence3 }
-    its(:fullseq_score) {should == hmm_result_row10.fullseq_score }
-    its(:hmm_result_row) {should == hmm_result_row10 }
-    
+
+    it "was created correctly" do
+      expect(@view_row).to respond_to(:hmm_profile)
+      expect(@view_row).to respond_to(:sequence_source)
+      expect(@view_row).to respond_to(:db_sequence)
+      expect(@view_row).to respond_to(:fullseq_score)
+      expect(@view_row).to respond_to(:hmm_result_row)
+    end
+
+    it "has correct values" do
+      expect(@view_row.hmm_profile).to eq(hmm_profile1)
+      expect(@view_row.sequence_source).to eq(sequence_source1)
+      expect(@view_row.db_sequence).to eq(db_sequence3)
+      expect(@view_row.fullseq_score).to eq(hmm_result_row10.fullseq_score)
+      expect(@view_row.hmm_result_row).to eq(hmm_result_row10)
+    end
   end
+
   describe "performs the correct query" do
     describe "for db_sequence1" do
       before do
         @view_row1 = db_sequence1.db_sequence_best_profiles.find_by_sequence_source_id(sequence_source2.id)
-        @view_row2 =  db_sequence1.db_sequence_best_profiles.find_by_sequence_source_id(sequence_source1.id)
+        @view_row2 = db_sequence1.db_sequence_best_profiles.find_by_sequence_source_id(sequence_source1.id)
       end
       it "has correct best profile" do
-        @view_row1.hmm_profile.should == hmm_profile2
-        @view_row2.hmm_profile.should == hmm_profile2
+        expect(@view_row1.hmm_profile).to eq(hmm_profile2)
+        expect(@view_row2.hmm_profile).to eq(hmm_profile2)
       end
       
       it "has correct score" do
-        @view_row1.fullseq_score.should == 35.0
-        @view_row2.fullseq_score.should == 15.0
+        expect(@view_row1.fullseq_score).to eq(35.0)
+        expect(@view_row2.fullseq_score).to eq(15.0)
       end
     end
     describe "for db_sequence2" do
@@ -127,16 +131,16 @@ describe DbSequenceBestProfile do
       end
 
       it "has correct best profile" do
-        @view_row1.hmm_profile.should == hmm_profile2
-        @view_row2.hmm_profile.should == hmm_profile2
+        expect(@view_row1.hmm_profile).to eq(hmm_profile2)
+        expect(@view_row2.hmm_profile).to eq(hmm_profile2)
       end
 
       it "has correct score" do
-        @view_row1.fullseq_score.should == 40.0
-        @view_row2.fullseq_score.should == 20.0
+        expect(@view_row1.fullseq_score).to eq(40.0)
+        expect(@view_row2.fullseq_score).to eq(20.0)
       end
     end
-    
+   
     describe "for db_sequence3" do
       before do
         @view_row1 = db_sequence3.db_sequence_best_profiles.find_by_sequence_source_id(sequence_source2.id)
@@ -144,16 +148,17 @@ describe DbSequenceBestProfile do
       end
 
       it "has correct best profile" do
-        @view_row1.hmm_profile.should == hmm_profile2
-        @view_row2.hmm_profile.should == hmm_profile1
+        expect(@view_row1.hmm_profile).to eq(hmm_profile2)
+        expect(@view_row2.hmm_profile).to eq(hmm_profile1)
       end
-      
+     
       it "has correct score" do
-        @view_row1.fullseq_score.should == 45.0
-        @view_row2.fullseq_score.should == 50.0
+        expect(@view_row1.fullseq_score).to eq(45.0)
+        expect(@view_row2.fullseq_score).to eq(50.0)
       end
     end
   end
+
   describe "the stats" do
     let!(:pfitmap_release1) { FactoryGirl.create(:pfitmap_release, sequence_source: sequence_source1) }
     let!(:pfitmap_release2) { FactoryGirl.create(:pfitmap_release, sequence_source: sequence_source2) }
@@ -162,7 +167,6 @@ describe DbSequenceBestProfile do
     let!(:pfitmap_sequence3) { FactoryGirl.create(:pfitmap_sequence, pfitmap_release: pfitmap_release2, db_sequence: db_sequence1, hmm_profile: hmm_profile2) }
     let!(:pfitmap_sequence4) { FactoryGirl.create(:pfitmap_sequence, pfitmap_release: pfitmap_release2, db_sequence: db_sequence2, hmm_profile: hmm_profile2) }
     let!(:pfitmap_sequence5) { FactoryGirl.create(:pfitmap_sequence, pfitmap_release: pfitmap_release2, db_sequence: db_sequence3, hmm_profile: hmm_profile2) }
-
 
     it "gives the correct included numbers for source1, profile1" do
       stats = DbSequenceBestProfile.included_stats(hmm_profile1, sequence_source1)
