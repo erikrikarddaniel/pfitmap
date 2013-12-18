@@ -27,13 +27,17 @@ function d3_make_table() {
   d3_table_it(gon.taxons);
   //Put borders around selected rows
   $('input[name=tax_filter]').change(function() {
-    d3_table_bordering(); } );
+    d3_table_bordering();i 
+  } );
 
   $('input[name=prot_filter]').change(function() {
-    d3_table_bordering(); } ); }
+    d3_table_bordering(); 
+  } ); 
+}
 
 function d3_prep_table_dataset(){
-  gon.heat_color = d3.scale.linear().domain([0, 0.5, 1]).range(["white", "yellow", "red"]); }
+  gon.heat_color = d3.scale.linear().domain([0, 0.5, 1]).range(["white", "yellow", "red"]); 
+}
 
 function d3_table_bordering() {
   $(".active-taxon").removeClass("active-taxon")
@@ -45,9 +49,13 @@ function d3_table_bordering() {
     t.each(function(i) { 
       var tt = $(t[i]);
       psel.each(function(j) { 
-	tt.find(psel[j]).addClass("active-taxon active-protein") }); }); }  
+	tt.find(psel[j]).addClass("active-taxon active-protein") 
+      }); 
+    }); 
+  }  
   else if (p.length) { p.each(function(i) {$(p[i]).addClass("active-protein");}) }
-  else if (t.length) { t.each(function(i) {$(t[i]).find('td').addClass("active-taxon");}) } }
+  else if (t.length) { t.each(function(i) {$(t[i]).find('td').addClass("active-taxon");}) }
+}
 
 function d3_table_it(dataset) {
     var table = d3.select("#heat_map")
@@ -62,10 +70,12 @@ function d3_table_it(dataset) {
         .enter()
         .append("td")
         .attr("class", function(d) { 
-	  if(gon.prot_columns.indexOf(d) != -1) {return "protein_label "+d;} 
-	  else {return null;} } )
+	  if(gon.prot_columns.indexOf(d) != -1) {return "protein_label "+d;}
+	  else {return null;} 
+	})
         .text(function(d) {
-	  return gon.prot_columns.indexOf(d) == -1 ? gon.column_names[d] : null } )
+	  return gon.prot_columns.indexOf(d) == -1 ? gon.column_names[d] : null 
+	})
 
     var plabel = d3.selectAll(".protein_label")
         plabel.append("input").attr("type","checkbox").attr("name","prot_filter").attr("value",function(d) {return d})
@@ -76,39 +86,51 @@ function d3_table_it(dataset) {
         .enter()
         .append("tr")
         .attr("class",function(d) {
-	  return d[gon.dataset.taxon_level].replace(" ","_","g").replace(",","_","g") })
+	  return d[gon.dataset.taxon_level].replace(" ","_","g").replace(",","_","g") 
+	})
 
     var cells = rows.selectAll("td")
         .data(function(row) { 
           //create dictionary of proteins for each row:
-          var proteins = row.proteins.reduce( function(obj,x) {
+          var proteins = row.proteins.reduce( 
+	    function(obj,x) {
 	      obj[x[gon.dataset.protein_level]] = 
 	        { no_proteins: x.no_proteins,
 	          ratio: x.no_genomes_with_proteins / row.no_genomes, 
-		  no_genomes_with_proteins: x.no_genomes_with_proteins};
-	    return obj;},
-	    {});
+		  no_genomes_with_proteins: x.no_genomes_with_proteins,
+		  all_accessions: x.all_accessions
+		  counted_accessions: x.counted_accessions
+		};
+	      return obj;
+	    },
+	    {}
+	  );
           //mapping and joining on the columns in the header
           return gon.tax_columns.map( function(column) {
             return {column: column, value: row[column]}
           })
           .concat(
-            gon.prot_columns.map(function(column) { 
-              p = proteins[column];
-              return { column: column, 
-	               value: p ? p.no_proteins : 0, 
-		       ratio: p ? p.ratio : 0, 
-		       organism: row[gon.dataset.taxon_level], 
-		       no_genomes_with_proteins: p ? p.no_genomes_with_proteins : 0 } }) ) })
+            gon.prot_columns.map(
+	      function(column) { 
+		p = proteins[column];
+		return { column: column, 
+		         value: p ? p.no_proteins : 0, 
+		         ratio: p ? p.ratio : 0, 
+			 organism: row[gon.dataset.taxon_level], 
+		         no_genomes_with_proteins: p ? p.no_genomes_with_proteins : 0 
+		      } 
+	      }
+	    ) 
+	  ) 
+	})
         .enter()
         .append("td")
         .attr("class",function(d){ 
 	  cl ="";
-	  if (d.hasOwnProperty("organism") ) {
-	    cl = "heat_label " + d.column; }
-	  else if (d.column == "no_genomes") {
-	    cl = "no_genomes"; }
-	  return cl; })
+	  if (d.hasOwnProperty("organism") ) { cl = "heat_label " + d.column; }
+	  else if (d.column == "no_genomes") { cl = "no_genomes"; }
+	  return cl; 
+	})
         .text(function(d) {if (d.column != gon.dataset.taxon_level) {return d.value} } );
 
     var tlabel = rows.select("td").attr("class","taxon_label")
@@ -120,9 +142,12 @@ function d3_table_it(dataset) {
       "title":function () {
 	r=[];
 	for (var i = 0; i < gon.taxon_levels.length; i++) {
-	  r.push(this.__data__[gon.taxon_levels[i]])};
-	return r.join("<br/>")},
-      "placement":"bottom"});
+	  r.push(this.__data__[gon.taxon_levels[i]])
+	};
+	return r.join("<br/>")
+      },
+      "placement":"bottom"
+    });
     //cell tooltip
     $(".heat_label").tooltip({
       "toggle":true,
@@ -130,9 +155,12 @@ function d3_table_it(dataset) {
 	return "Proteins: "+this.__data__.value+
 	       "<br/>Genomes w. proteins: "+this.__data__.no_genomes_with_proteins+
 	       "<br/>Organism: " + this.__data__.organism + 
-	       "<br/>Protein: "+this.__data__.column},
-      "placement":"bottom" })
-    d3_color_table(gon.params["color"]); }
+	       "<br/>Protein: "+this.__data__.column
+      },
+      "placement":"bottom" 
+    })
+    d3_color_table(gon.params["color"]); 
+}
 
 //#############################################
 // Create the Ribbon view
@@ -140,22 +168,28 @@ function d3_table_it(dataset) {
 function d3_make_ribbon() {
   d3.select("#ribbon").select("svg").remove();
   d3_prep_ribbon_dataset();
-  d3_ribbon_it(gon.ribbon_matrix); }
+  d3_ribbon_it(gon.ribbon_matrix); 
+}
 
 function d3_prep_ribbon_dataset(){
   gon.ribbon_matrix = [];
   gon.ribbon_columns = gon.taxons.map(function(d) {
-    return d[gon.dataset.taxon_level];}
-  ).concat(gon.prot_columns);
+    return d[gon.dataset.taxon_level];
+  })
+  .concat(gon.prot_columns);
   gon.ribbon_matrix_size = gon.ribbon_columns.length;
   for ( var i = 0; i < gon.ribbon_matrix_size; i++ ) {
-    gon.ribbon_matrix[i] = Array.apply(null, new Array(gon.ribbon_matrix_size)).map(Number.prototype.valueOf,0); }
+    gon.ribbon_matrix[i] = Array.apply(null, new Array(gon.ribbon_matrix_size)).map(Number.prototype.valueOf,0); 
+  }
   gon.taxons.forEach(function(tax) {
     tax_ind = gon.ribbon_columns.indexOf(tax[gon.dataset.taxon_level]);
     tax.proteins.forEach(function(prot) {
       prot_ind = gon.ribbon_columns.indexOf(prot[gon.dataset.protein_level]);
       gon.ribbon_matrix[tax_ind][prot_ind] = +prot.no_genomes_with_proteins;
-      gon.ribbon_matrix[prot_ind][tax_ind] = +prot.no_genomes_with_proteins; }); }); }
+      gon.ribbon_matrix[prot_ind][tax_ind] = +prot.no_genomes_with_proteins; 
+    }); 
+  }); 
+}
 
 function d3_ribbon_it(matrix) {
 
@@ -217,7 +251,8 @@ function d3_ribbon_it(matrix) {
     .attr("dy",15)
     .append("svg:textPath")
     .attr("xlink:href", function(d) {return "#group"+d.index; })
-    .text(function(d) { return gon.ribbon_columns[d.index]; }); }
+    .text(function(d) { return gon.ribbon_columns[d.index]; }); 
+}
 
 // Returns an event handler for fading a given chord group.
 function fade(opacity) {
@@ -226,7 +261,9 @@ function fade(opacity) {
     svg.selectAll(".chord")
       .filter(function(d) { return d.source.index != i && d.target.index != i; })
       .transition()
-      .style("opacity", opacity); }; }
+      .style("opacity", opacity); 
+  };
+}
 
 //#############################################
 // Filtering functions
@@ -234,14 +271,17 @@ function fade(opacity) {
 // Used by all functions that add / update parameter in url
 // Triggers reload of page
 function d3_reload_page() {
-  window.location.search = $.param(gon.params); }
+  window.location.search = $.param(gon.params); 
+}
 
 // Allow client to filter out / show zero sum rows.
 function d3_show_zeros(show_zeros) {
   if ( show_zeros ) {
     var taxa = $("input[name=tax_filter]").closest("tr");
     taxa.each(function(d) {
-      $(this).show(); }) } 
+      $(this).show(); 
+    }) 
+  } 
   else {
     // Find selected rows and columns. i get the row object for taxa but only class for protein
     var sel_taxa =  $("input[name=tax_filter]:checked").closest("tr");
@@ -262,24 +302,33 @@ function d3_show_zeros(show_zeros) {
       var sum = 0;
       prot_cells.each(function() { sum += Number($(this).text()) });
       if ( sum == 0 ) {
-        row.hide();  } }); } }
+        row.hide();  
+      } 
+    }); 
+  } 
+}
 
 
 function d3_view_menu(view_menu) {
   gon.params["view_menu"] = encodeURI(view_menu);
-  d3_reload_page(); }
+  d3_reload_page(); 
+}
 
 function d3_database(db) {
   // Filter on different databases. Puts parameter db in url
   gon.params["db"] = encodeURI(db);
-  d3_reload_page(); }
+  d3_reload_page(); 
+}
 
 function d3_color_table(level) {
   if (!level) {
     if (!gon.params["color"]) {
-      level = gon.tl[0]; }
+      level = gon.tl[0]; 
+    }
     else {
-      level = decodeURI(gon.params["color"]); } }
+      level = decodeURI(gon.params["color"]); 
+    } 
+  }
 
   level = gon.tl[Math.min(gon.tl.indexOf(gon.dataset.taxon_level),gon.tl.indexOf(level))];
   gon.params["color"] = encodeURI(level);
@@ -297,9 +346,11 @@ function d3_taxon_level(level) {
   var p = d3_protein_filter();
   var t = d3_taxon_filter();
   if (p != null) {
-    gon.params[gon.dataset.protein_level] = p; }
+    gon.params[gon.dataset.protein_level] = p; 
+  }
   if (t != null) {
-    gon.params[gon.dataset.taxon_level] = t; }
+    gon.params[gon.dataset.taxon_level] = t; 
+  }
   gon.params["taxon_level"] = encodeURI(level);
   for (var i = gon.tl.indexOf(level) + 1; i < gon.tl.length; i++) {delete gon.params[gon.tl[i]];}
   d3_reload_page();
@@ -310,9 +361,11 @@ function d3_protein_level(level) {
   var p = d3_protein_filter();
   var t = d3_taxon_filter();
   if (p != null) {
-    gon.params[gon.dataset.protein_level] = p; }
+    gon.params[gon.dataset.protein_level] = p; 
+  }
   if (t != null) {
-    gon.params[gon.dataset.taxon_level] = t; }
+    gon.params[gon.dataset.taxon_level] = t; 
+  }
   gon.params["protein_level"] = encodeURI(level);
   for (var i = gon.pl.indexOf(level) + 1; i < gon.pl.length; i++) {delete gon.params[gon.pl[i]];}
   d3_reload_page();
@@ -323,19 +376,25 @@ function d3_filter_table(filter) {
   var p = d3_protein_filter();
   var t = d3_taxon_filter();
   if (p != null) {
-    gon.params[gon.dataset.protein_level] = p; }
+    gon.params[gon.dataset.protein_level] = p; 
+  }
   if (t != null) {
-    gon.params[gon.dataset.taxon_level] = t; }
+    gon.params[gon.dataset.taxon_level] = t; 
+  }
   d3_reload_page();
 }
 
 function d3_clear_filters(filter) {
   if (filter == "clear_proteins" || filter == "clear_all") {
     gon.protein_levels.forEach(function(l) {
-      delete gon.params[l]; }); }
+      delete gon.params[l]; 
+    }); 
+  }
   if (filter == "clear_taxa" || filter == "clear_all") {
     gon.taxon_levels.forEach(function(l) {
-      delete gon.params[l]; }); }
+      delete gon.params[l]; 
+    });
+  }
   d3_reload_page()
 }
 
@@ -344,7 +403,8 @@ function d3_taxon_filter() {
   var t = tfilter.map(function(d) {return d.value});
   var result = null;
   if (t.length > 0) {
-    result = encodeURI(t.join("(,)")); }
+    result = encodeURI(t.join("(,)")); 
+  }
   return result
 }
 
@@ -353,7 +413,8 @@ function d3_protein_filter() {
   var p = pfilter.map(function(d) {return d.value});
   var result = null;
   if (p.length > 0) { 
-    result = encodeURI(p.join("(,)")); }
+    result = encodeURI(p.join("(,)")); 
+  }
   return result
 }
 
@@ -376,6 +437,8 @@ function getParameters() {
   if (searchString == "") return {};
   for (var i = 0; i < params.length; i++) {
     var val = params[i].split("=");
-    hash[unescape(val[0])] = unescape(val[1]); }
-  return hash; }
+    hash[unescape(val[0])] = unescape(val[1]); 
+  }
+  return hash;
+}
 
