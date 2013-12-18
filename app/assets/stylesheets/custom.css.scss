@@ -363,6 +363,10 @@ td.active-protein {
     
 /* From http://jasalguero.com/ledld/development/web/expandable-list/ */
 
+.count_matrix thead {
+  border-bottom: thin solid black;
+}
+
 #expList ul, li {
 	i { 
 	cursor: pointer;
@@ -374,4 +378,9 @@ td.active-protein {
   color: red;
   font-style: italic;
   vertical-align: sub;
+}
+
+ul.nav li.dropdown:hover > ul.dropdown-menu {
+  margin: 0;
+  display: block;    
 }

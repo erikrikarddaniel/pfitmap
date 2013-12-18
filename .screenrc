@@ -10,14 +10,16 @@ chdir spec
 screen -t spec
 chdir ..
 chdir app
+screen -t app
 chdir models
 screen -t models
 chdir ../controllers
 screen -t controllers
 chdir ../views
 screen -t views
-chdir $ROOT
-chdir config
+chdir $ROOT/lib
+screen -t lib
+chdir $ROOT/config
 screen -t config
 chdir $ROOT/app/assets/stylesheets
 screen -t stylesheets

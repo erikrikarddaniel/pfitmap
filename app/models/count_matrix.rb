@@ -6,7 +6,7 @@ class CountMatrix
   attribute :release, :default => nil, :type => Float
   attribute :taxon_level, :default => "domain"
   attribute :protein_level, :default => "protclass"
-
+  attribute :db, default: nil
   attribute :taxon_filter
   attribute :protein_filter
 

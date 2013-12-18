@@ -12,8 +12,7 @@
 #
 
 class PfitmapRelease < ActiveRecord::Base
-  HTTP_TIMEOUT = 6000
-  SLICE_SIZE = 5000
+  SLICE_SIZE = 50000
 
   attr_accessible :release, :release_date, :sequence_source_id
   has_many :pfitmap_sequences, :dependent => :destroy
@@ -79,9 +78,7 @@ class PfitmapRelease < ActiveRecord::Base
     #  There exists one row in protein_counts table for each combination of
     #  taxon, protein and pfitmap_release (if it has been "calculated").
     #  protein_counts row contains three values and one boolean:
-    #    - no_genomes
     #    - no_proteins
-    #    - no_genomes_with_proteins
     #    - obs_as_genome
     #  See app/model/protein_count.rb for further information
     #  
@@ -100,12 +97,29 @@ class PfitmapRelease < ActiveRecord::Base
       # when calling pfitmap_sequences.db_entries we get only the entries with db = load_db.sequence_database.db
       calculate_logger.info "#{Time.now}: Fetching pfitmap_sequence objects"
 
-      pfitmap_sequences = PfitmapSequence.where(pfitmap_release_id: self.id, db_entries: {db: load_db.sequence_database.db}).includes([:db_entries,:hmm_profile])
-      gis = Set.new(pfitmap_sequences.map {|p| p.db_entries.map {|d| d.gi}.flatten}.flatten)
-	
+      pfitmap_sequences = PfitmapSequence.find(
+	:all, 
+	include: [ :db_entries, :hmm_profile ],
+	conditions: { 
+	  pfitmap_release_id: self.id, 
+	  db_entries: { db: load_db.sequence_database.db } 
+        }
+      )
+      gis = Array.new(pfitmap_sequences.map { |p| p.db_entries.map {|d| d.gi }.flatten }.flatten).uniq.sort
+
+      # We will need a map from gi to db_sequence_id and one from gi to accno
+      gi2db_sequence_id = {}
+      gi2accno = {}
+      pfitmap_sequences.each do |ps|
+	ps.db_entries.each do |dbe|
+	  gi2db_sequence_id[dbe.gi] = ps.db_sequence_id
+	  gi2accno[dbe.gi] = dbe.acc
+	end
+      end
+
       calculate_logger.info "#{Time.now}: Fetched #{gis.length} gis"
 
-      # Fetch and load all taxa, implement as method, return hash
+      # Fetch and load all taxa, return hash
       calculate_logger.info "#{Time.now}: Creating taxon mapping"
       taxon_map = save_and_fetch_taxonset(load_db.taxonset, gis, released_db)
       calculate_logger.info "#{Time.now}: Created #{taxon_map.length} taxon maps"
@@ -119,10 +133,20 @@ class PfitmapRelease < ActiveRecord::Base
       protein_counts = {}
         
       calculate_logger.info "#{Time.now}: Getting ncbi taxon ids from gis"
-      gis2tids = BiosqlWeb.gis2ncbi_taxon_ids(gis)
+
+      slicei = 0
+      gis2tids = []
+      gis.each_slice(SLICE_SIZE) do |gislice|
+	calculate_logger.info "#{Time.now}: Fetching slice #{slicei += 1} (slice size: #{SLICE_SIZE})"
+
+        gis2tids += BiosqlWeb.gis2ncbi_taxon_ids(gislice)
+      end
+
       calculate_logger.info "#{Time.now}: Fetched #{gis2tids.length} ncbi taxon ids maps"
 
       calculate_logger.info "#{Time.now}: Generating protein counts"
+
+      db_sequence_id2ncbi_taxon_id = {}		# Used to avoid counting the same db_sequence for an organism twice
       gis2tids.each do |gi2tid|
         gi = gi2tid["protein_gi"]
         tid = gi2tid["taxon_id"]
@@ -133,28 +157,51 @@ class PfitmapRelease < ActiveRecord::Base
           calculate_logger.warn "#{Time.now}: Found no taxon for gi: #{gi}, tid: #{tid}"
           next
         end
+
         unless protein_map[gi]
           calculate_logger.warn "#{Time.now}: Found no protein for gi: #{gi}, tid: #{tid}"
-        next
+	  next
         end
+
         unless protein_counts[protein_map[gi]]
           protein_counts[protein_map[gi]] = {}
         end
+
         unless protein_counts[protein_map[gi]][tid]
           protein_counts[protein_map[gi]][tid] = ProteinCount.new(
             released_db_id: released_db.id,
             taxon_id: taxon_map[tid],
             protein_id: protein_map[gi],
             no_proteins: 0,
-            no_genomes_with_proteins: 1
+	    counted_accessions: [],
+	    all_accessions: []
           )
         end
-        protein_counts[protein_map[gi]][tid].no_proteins += 1
+
+	# Only count if we haven't seen this db_sequence for this taxon before
+	db_sequence_id2ncbi_taxon_id[gi2db_sequence_id[gi]] ||= {}
+	unless db_sequence_id2ncbi_taxon_id[gi2db_sequence_id[gi]][tid]
+	  protein_counts[protein_map[gi]][tid].no_proteins += 1
+	  protein_counts[protein_map[gi]][tid].counted_accessions << gi2accno[gi]
+	  db_sequence_id2ncbi_taxon_id[gi2db_sequence_id[gi]][tid] = true
+	end
+	protein_counts[protein_map[gi]][tid].all_accessions << gi2accno[gi]
       end
 
-      calculate_logger.info "#{Time.now}: Bulk importing #{protein_counts.length} protein counts"
+      # Translate the accession lists to comma delimited strings
+      protein_counts.values.each do |pcs|
+	pcs.values.each do |pc|
+	  pc.all_accessions = pc.all_accessions.join(",")
+	  pc.counted_accessions = pc.counted_accessions.join(",")
+	end
+      end
 
-      ProteinCount.import protein_counts.values.map { |pc| pc.values }.flatten
+      pcs_to_import = protein_counts.values.map { |pc| pc.values }.flatten
+
+      calculate_logger.info "#{Time.now}: Bulk importing #{pcs_to_import.length} protein counts"
+
+      # And insert
+      ProteinCount.import pcs_to_import
 
       calculate_logger.info "#{Time.now}: Created protein counts"
     end
@@ -169,8 +216,20 @@ class PfitmapRelease < ActiveRecord::Base
   def create_released_db(load_db)
     # Delete old taxon, protein_count and protein rows
     # (Don't forget to implement cascading delete in taxon, protein and protein_count.)
-    released_db = ReleasedDb.where(pfitmap_release_id: self, load_database_id: load_db).first
-    released_db.destroy if released_db
+    released_db = ReleasedDb.find(:first, conditions: {pfitmap_release_id: self, load_database_id: load_db})
+    calculate_logger.info "#{Time.now}: Deleting old rows for #{released_db}"
+
+    # Calling SQL directly on referenced tables
+    if released_db
+      [ 'protein_counts', 'taxons', 'proteins' ].each do |table|
+	sql = "DELETE FROM #{table} WHERE released_db_id = #{released_db.id}"
+	calculate_logger.debug "#{__FILE__}:#{__LINE__}: sql: '#{sql}'"
+	ActiveRecord::Base.connection.execute(sql)
+      end
+      released_db.destroy
+    end
+
+    calculate_logger.info "#{Time.now}: Inserting new ReleasedDb"
     # Insert released_db
     released_db = ReleasedDb.new
     released_db.pfitmap_release = self
@@ -178,7 +237,6 @@ class PfitmapRelease < ActiveRecord::Base
     released_db.save
     released_db
   end
-
 
   # Inserts a list of unique taxons, fetched via the url in taxonseturl
   # and a list of gis. Returns a map from ncbi_taxon_id -> taxon.id.
@@ -189,8 +247,9 @@ class PfitmapRelease < ActiveRecord::Base
 
     slicei = 0
     imported = {}
-    gis.to_a.each_slice(SLICE_SIZE) do |gislice|
+    gis.each_slice(SLICE_SIZE) do |gislice|
       taxon_names = []
+
       calculate_logger.info "#{Time.now}: Fetching slice #{slicei += 1} (slice size: #{SLICE_SIZE})"
 
       options = {
@@ -198,7 +257,7 @@ class PfitmapRelease < ActiveRecord::Base
 	  'Content-Type' => 'application/json',
 	  'Accepts' => 'application/json' },
 	body: { gis: gislice }.to_json,
-	timeout: HTTP_TIMEOUT
+	timeout: BiosqlWeb::HTTP_TIMEOUT
       }
       json_taxa = {}
       begin
@@ -331,6 +390,8 @@ class PfitmapRelease < ActiveRecord::Base
     # Top level should be called domain, not superkingdom
     name_hash['domain'] = name_hash['superkingdom']
     name_hash.delete 'superkingdom'
+
+    name_hash['strain'] = "#{name_hash['species']}, no strain" unless name_hash['strain']
 
     # Pick out the names
     Taxon.new(

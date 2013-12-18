@@ -35,13 +35,13 @@ set :git_enable_submodules, 1
 # Cronjobs for rails
 namespace :scheduler_daemon do
   task :start, :roles => :app do
-    run "export RAILS_ENV=production && cd #{release_path} && bundle exec scheduler_daemon start"
+    run "cd #{release_path} && RAILS_ENV=production bundle exec scheduler_daemon start"
   end
   task :stop, :roles => :app do
-    run "export RAILS_ENV=production && cd #{release_path} && bundle exec scheduler_daemon stop"
+    run "cd #{release_path} && RAILS_ENV=production bundle exec scheduler_daemon stop"
   end
   task :restart, :roles => :app do
-    run "export RAILS_ENV=production && cd #{release_path} && bundle exec scheduler_daemon restart"
+    run "cd #{release_path} && RAILS_ENV=production bundle exec scheduler_daemon restart"
   end
 end
 
