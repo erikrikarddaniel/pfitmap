@@ -1,4 +1,4 @@
-sessionname pfitmap
+sessionname pfitmap.r4
 setenv ROOT $PWD
 screen -t pfitmap
 screen -t server
