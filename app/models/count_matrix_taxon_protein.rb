@@ -8,5 +8,6 @@ class CountMatrixTaxonProtein
   attribute :subsubgroup
   attribute :no_proteins
   attribute :no_genomes_with_proteins
-
+  attribute :all_accessions
+  attribute :counted_accessions
 end

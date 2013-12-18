@@ -11,16 +11,34 @@ describe "ProteinCounts 3 taxa, 2 proteins" do
   let!(:taxA)            { FactoryGirl.create(:taxon, domain: "TaxA", released_db_id: rd.id) }
   let!(:taxB)            { FactoryGirl.create(:taxon, domain: "TaxB", released_db_id: rd.id) }
   let!(:taxC)            { FactoryGirl.create(:taxon, domain: "TaxC", released_db_id: rd.id) }
+
   before do
     @protein_counts = []
-    @protein_counts << FactoryGirl.create(:protein_count, no_proteins: 2, protein: protA, taxon: taxA, released_db_id: rd.id)
-    @protein_counts << FactoryGirl.create(:protein_count, no_proteins: 4, protein: protA, taxon: taxB, released_db_id: rd.id)
-    @protein_counts << FactoryGirl.create(:protein_count, no_proteins: 8, protein: protB, taxon: taxC, released_db_id: rd.id)
+    @protein_counts << FactoryGirl.create(
+      :protein_count, no_proteins: 2, protein: protA, taxon: taxA, released_db_id: rd.id, 
+      counted_accessions: ['pAtA01','pAtA02'],
+      all_accessions:     ['pBtC01','pBtC02','pBtC03','pBtC04','pBtC05','pBtC06','pBtC07','pBtC08']
+    )
+    @protein_counts << FactoryGirl.create(
+      :protein_count, no_proteins: 4, protein: protA, taxon: taxB, released_db_id: rd.id, 
+      counted_accessions: ['pAtB01','pAtB02','pAtB03','pAtB04'],
+      all_accessions:     ['pBtC01','pBtC02','pBtC03','pBtC04','pBtC05','pBtC06','pBtC07','pBtC08']
+    )
+    @protein_counts << FactoryGirl.create(
+      :protein_count, no_proteins: 8, protein: protB, taxon: taxC, released_db_id: rd.id,
+      counted_accessions: ['pBtC01','pBtC02','pBtC03','pBtC04','pBtC05','pBtC06','pBtC07','pBtC08'],
+      all_accessions:     ['pBtC01','pBtC02','pBtC03','pBtC04','pBtC05','pBtC06','pBtC07','pBtC08']
+    )
   end
+
   describe "proteins and taxa have correct columns" do
     before do
       make_mock_admin
       login_with_oauth
+    end
+
+    it 'returns valid json' do
+      visit count_matrix_path(params: { format: "json" })
     end
 
     it "has three taxa rows and two protein columns", :js => true do
@@ -30,11 +48,13 @@ describe "ProteinCounts 3 taxa, 2 proteins" do
       page.should have_css(".heat_label", count: 6)
       page.should have_css(".protein_label", count: 2)
     end
+
     it "has three taxa rows and two protein columns on ribbon", :js => true do
       visit count_matrix_path(params: {view_menu: "ribbon"})
       page.should have_css("svg")
       page.should have_css(".group", count: 5)
     end
+
     it "filter on TaxA and TaxB has two taxa rows and one protein column", :js => true do
       visit count_matrix_path(params: {domain: "TaxA(,)TaxB"})
       page.should have_css("tr.TaxA")
@@ -46,6 +66,7 @@ describe "ProteinCounts 3 taxa, 2 proteins" do
       page.should have_css(".protA",count: 3)
       page.should_not have_css(".protB")
     end
+
     it "filter on TaxA and TaxC has two taxa rows and two protein columns with zeros in relative missing protein column", :js => true do
       visit count_matrix_path(params: {domain: "TaxA(,)TaxC"})
       page.should have_css("tr.TaxA")
@@ -57,6 +78,7 @@ describe "ProteinCounts 3 taxa, 2 proteins" do
       page.should have_css(".protA",count: 3)
       page.should have_css(".protB",count: 3)
     end
+
     it "filter on TaxA and TaxB and protA and protB has two taxa rows and two protein column", :js => true do
       visit count_matrix_path(params: {domain: "TaxA(,)TaxB", protfamily: "protA(,)protB"})
       page.should have_css("tr.TaxA")
@@ -70,6 +92,7 @@ describe "ProteinCounts 3 taxa, 2 proteins" do
     end
   end
 end
+
 describe "ProteinCounts 2 taxa, 2 proteins" do
   let!(:ss)              { FactoryGirl.create(:sequence_source) }
   let!(:pr)              { FactoryGirl.create(:pfitmap_release, current: true, sequence_source: ss) }
@@ -105,6 +128,7 @@ describe "ProteinCounts 2 taxa, 2 proteins" do
     end
   end
 end
+
 describe "ProteinCounts 4 taxa, 4 proteins" do
   let!(:ss)              { FactoryGirl.create(:sequence_source) }
   let!(:pr)              { FactoryGirl.create(:pfitmap_release, current: true, sequence_source: ss) }

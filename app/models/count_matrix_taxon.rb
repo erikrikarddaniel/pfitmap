@@ -12,6 +12,8 @@ class CountMatrixTaxon
   attribute :species
   attribute :strain
   attribute :no_genomes
+  attribute :all_accessions
+  attribute :counted_accessions
 
   attribute :proteins, :default=>[]
   def hierarchy

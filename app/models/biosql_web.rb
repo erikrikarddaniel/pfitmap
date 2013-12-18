@@ -2,7 +2,7 @@ class BiosqlWeb < ActiveRecord::Base
   HTTP_TIMEOUT = 6000
 
   self.abstract_class = true
-  BASE_URL =  (Rails.env == "production" || Rails.env == "test") ? 'http://biosql.scilifelab.se' : 'http://127.0.0.1:3000'
+  BASE_URL =  'http://biosql.scilifelab.se'
 
   def self.gi2ncbi_taxon_id(gi)
     options = {:headers => { 'Content-Type' => 'application/json', 'Accepts' => 'application/json'}, :body => {:gi => gi}.to_json, timeout: HTTP_TIMEOUT }
