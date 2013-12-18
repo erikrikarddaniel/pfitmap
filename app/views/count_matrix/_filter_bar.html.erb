@@ -112,4 +112,18 @@
       </li>
     </ul>
   </li>
+  <li class="dropdown">
+    <a href="#" id="dropdown-toggle" data-toggle="dropdown">
+      Download
+      <b class="caret" ></b>
+    </a>
+    <ul id="download_menu" class="dropdown-menu">
+      <li>
+        <%= link_to "As Fasta", "javascript:d3_download_sequences('fasta');" %>
+      </li>
+      <li>
+        <%= link_to "As GenBank", "javascript:d3_download_sequences('gb');" %>
+      </li>
+    </ul>
+  </li>
 </ul>

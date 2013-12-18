@@ -27,7 +27,7 @@ function d3_make_table() {
   d3_table_it(gon.taxons);
   //Put borders around selected rows
   $('input[name=tax_filter]').change(function() {
-    d3_table_bordering();i 
+    d3_table_bordering(); 
   } );
 
   $('input[name=prot_filter]').change(function() {
@@ -93,12 +93,12 @@ function d3_table_it(dataset) {
         .data(function(row) { 
           //create dictionary of proteins for each row:
           var proteins = row.proteins.reduce( 
-	    function(obj,x) {
+	    function(obj,x) { 
 	      obj[x[gon.dataset.protein_level]] = 
 	        { no_proteins: x.no_proteins,
 	          ratio: x.no_genomes_with_proteins / row.no_genomes, 
 		  no_genomes_with_proteins: x.no_genomes_with_proteins,
-		  all_accessions: x.all_accessions
+		  all_accessions: x.all_accessions,
 		  counted_accessions: x.counted_accessions
 		};
 	      return obj;
@@ -117,7 +117,9 @@ function d3_table_it(dataset) {
 		         value: p ? p.no_proteins : 0, 
 		         ratio: p ? p.ratio : 0, 
 			 organism: row[gon.dataset.taxon_level], 
-		         no_genomes_with_proteins: p ? p.no_genomes_with_proteins : 0 
+		         no_genomes_with_proteins: p ? p.no_genomes_with_proteins : 0 ,
+			 all_accessions: p ? p.all_accessions : "",
+			 counted_accessions: p ? p.counted_accessions : ""
 		      } 
 	      }
 	    ) 
@@ -416,6 +418,16 @@ function d3_protein_filter() {
     result = encodeURI(p.join("(,)")); 
   }
   return result
+}
+function d3_download_sequences(type) {
+  var gis = "";
+  d3.selectAll(".active-protein.heat_label, .active-taxon.heat_label")
+  .each(function(d) {
+    gis += d.all_accessions;
+  })
+  console.log(gis);
+  console.log($.param({"gis" : gis.split(",")}) )
+  window.open("http://biosql.scilifelab.se/get_gis_sequences."+type+"?"+ $.param({"gis": gis.split(",")},"_bank") );
 }
 
 function d3_mark_selected_options() {
