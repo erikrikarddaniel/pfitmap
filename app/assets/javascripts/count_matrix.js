@@ -360,7 +360,7 @@ function d3_protein_filter() {
 function d3_mark_selected_options() {
   $("#taxon_levels_menu").find("li:contains("+gon.column_names[gon.dataset.taxon_level]+")").css("background-color","#0088CC");
   $("#protein_levels_menu").find("li").filter(function(i) { return $(this).find("a").attr("href").indexOf("'"+gon.dataset.protein_level+"'") != -1 }).css("background-color","#0088CC")
-  $("#taxon_db_menu").find("li:contains("+gon.dataset.db+")").css("background-color","#0088CC");
+  $("#taxon_db_menu").find("li").filter(function(i) {return $(this).find("a").attr("href").indexOf("'"+gon.dataset.db+"'") != -1}).css("background-color","#0088CC");
   $("#color_by_menu").find("li:contains("+gon.column_names[gon.params.color ? gon.params.color : "domain"]+")").css("background-color","#0088CC");
   var view = gon.params["view_menu"] ? gon.params["view_menu"] : "matrix";
   $("#view_menu").find("li:contains("+view.slice(1)+")").css("background-color","#0088CC");
