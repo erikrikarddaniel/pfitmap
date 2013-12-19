@@ -102,14 +102,15 @@ class CountMatrixController < ApplicationController
 
       tax_protein_counts.each do |tpc| 
         cmtp = CountMatrixTaxonProtein.new
-        taxon = @tl.map{|t| tpc[t] }.join(":")
-        @prot_levels.map{|p| cmtp[p] = tpc[p]}
+        taxon = @tl.map { |t| tpc[t] }.join(":")
+        @prot_levels.each { |p| cmtp[p] = tpc[p] }
         cmtp.no_proteins = tpc.no_proteins
         cmtp.no_genomes_with_proteins = tpc.no_genomes_with_proteins
 	cmtp.counted_accessions = tpc.counted_accessions
 	cmtp.all_accessions = tpc.all_accessions
         @countmt[taxon].proteins.append(cmtp.attributes)
       end
+
       @cm.taxons = @countmt.values.map{|c| c.attributes}
 
       # Set DOM variables to use in D3 Javascript
@@ -118,7 +119,7 @@ class CountMatrixController < ApplicationController
       gon.prot_columns = [
 	filter_params[@cm.protein_level.to_sym], 
 	tax_protein_counts.map { |t| t[@cm.protein_level] }
-      ].compact.reduce([],:|)
+      ].compact.reduce([],:|).to_set.delete(nil).to_a.sort
       gon.columns = gon.tax_columns + gon.prot_columns
       gon.column_names = @column_names
       gon.taxon_levels = @tax_levels
