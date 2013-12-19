@@ -206,8 +206,8 @@ function d3_ribbon_it(matrix) {
     .matrix(matrix);
 
   var fill = d3.scale.ordinal()
-    .domain(d3.range(gon.taxa_color.range().length))
-    .range(gon.taxa_color.range());
+    .domain(d3.range(d3.scale.category10().range().length))
+    .range(d3.scale.category10().range());
 
   var arc = d3.svg.arc()
     .innerRadius(r0)
