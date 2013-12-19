@@ -38,6 +38,7 @@ class CountMatrixController < ApplicationController
 
     #Selecting which taxon ranks to include in the query
     @tax_levels = params[:taxon_level].in?(@tl) ? @tl.slice(0..@tl.index(params[:taxon_level])) : [@tl[0]]
+
     #Selecting which protein ranks to inlcude in the query
     @prot_levels = params[:protein_level].in?(@pl) ? @pl.slice(0..@pl.index(params[:protein_level])) : [@pl[0]]
 
@@ -95,7 +96,7 @@ class CountMatrixController < ApplicationController
       tax_protein_counts = 
         prot_count.select(
 	  "SUM(n_proteins) AS no_proteins, COUNT(n_genomes_w_protein) AS no_genomes_with_proteins, STRING_AGG(counted_accessions, ',') AS counted_accessions, STRING_AGG(all_accessions,',') AS all_accessions, #{tax_levels_string},#{prot_levels_string}"
-	).where((taxon_filter+protein_filter).join(" AND "),filter_params)
+	).where((taxon_filter + protein_filter + [ "#{@cm.protein_level} IS NOT NULL" ]).join(" AND "),filter_params)
 		  .group("#{tax_levels_string},#{prot_levels_string}")
 		  .order(tax_levels_string)
 
