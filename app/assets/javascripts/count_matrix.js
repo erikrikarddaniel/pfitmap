@@ -338,8 +338,8 @@ function d3_color_table(level) {
   cells.style("background-color",function(d) {if (d.hasOwnProperty("ratio")){return gon.heat_color(d.ratio)}  })
 
   var tr = d3.selectAll(".taxon_label").style("background-color",function(d) {return gon.taxa_color(d[level]);} )
-  $("#color_by_menu").find("li").css("background-color","");
-  $("#color_by_menu").find("li:contains("+gon.column_names[gon.params.color ? gon.params.color : "domain"]+")").css("background-color","#0088CC");
+
+  d3_mark_selected_options();
 }
 
 
@@ -420,23 +420,36 @@ function d3_protein_filter() {
   return result
 }
 function d3_download_sequences(type) {
-  var gis = "";
+  $('#accessions_type').val(type);
+  d3_mark_selected_options();
+}
+function submitMyForm(){
+  var url = "/count_matrix/fetch_sequences."
+  var acc = [];
   d3.selectAll(".active-protein.heat_label, .active-taxon.heat_label")
-  .each(function(d) {
-    gis += d.all_accessions;
-  })
-  console.log(gis);
-  console.log($.param({"gis" : gis.split(",")}) )
-  window.open("http://biosql.scilifelab.se/get_gis_sequences."+type+"?"+ $.param({"gis": gis.split(",")},"_bank") );
+    .each(function(d) {
+      acc.push( d.all_accessions);
+    })
+  acc = acc.join(",");
+  $('#accessions').val(acc);
+  $("#fetch_sequences_form").attr("action",url + $("#accessions_type").val());
+  $('#fetch_sequences_form').submit();
 }
 
 function d3_mark_selected_options() {
+  $("#taxon_levels_menu").find("li").css("background-color","");
+  $("#protein_levels_menu").find("li").css("background-color","");
+  $("#taxon_db_menu").find("li").css("background-color","");
+  $("#color_by_menu").find("li").css("background-color","");
+  $("#view_menu").find("li").css("background-color","");
+  $("#download_menu").find("li").css("background-color","");
   $("#taxon_levels_menu").find("li:contains("+gon.column_names[gon.dataset.taxon_level]+")").css("background-color","#0088CC");
   $("#protein_levels_menu").find("li").filter(function(i) { return $(this).find("a").attr("href").indexOf("'"+gon.dataset.protein_level+"'") != -1 }).css("background-color","#0088CC")
   $("#taxon_db_menu").find("li").filter(function(i) {return $(this).find("a").attr("href").indexOf("'"+gon.dataset.db+"'") != -1}).css("background-color","#0088CC");
   $("#color_by_menu").find("li:contains("+gon.column_names[gon.params.color ? gon.params.color : "domain"]+")").css("background-color","#0088CC");
   var view = gon.params["view_menu"] ? gon.params["view_menu"] : "matrix";
   $("#view_menu").find("li:contains("+view.slice(1)+")").css("background-color","#0088CC");
+  $("#download_menu").find("li").filter(function(i) {return $(this).find("a").attr("href").indexOf("'"+$("#accessions_type").val()+"'") != -1}).css("background-color","#0088CC");
 }
 
 

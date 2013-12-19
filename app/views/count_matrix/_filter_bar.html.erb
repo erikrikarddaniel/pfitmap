@@ -114,7 +114,7 @@
   </li>
   <li class="dropdown">
     <a href="#" id="dropdown-toggle" data-toggle="dropdown">
-      Download
+      Fetch type
       <b class="caret" ></b>
     </a>
     <ul id="download_menu" class="dropdown-menu">
@@ -124,6 +124,14 @@
       <li>
         <%= link_to "As GenBank", "javascript:d3_download_sequences('gb');" %>
       </li>
+      <li>
+        <%= link_to "View links", "javascript:d3_download_sequences('html');" %>
+      </li>
     </ul>
   </li>
+  <li>
+    <button type="button" class="btn btn-primary" onclick="submitMyForm()" >Fetch sequences</button>
+
+  </li>
 </ul>
+<%= render partial: "fetch_sequences"%>

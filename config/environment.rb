@@ -6,3 +6,8 @@ end
 
 # Initialize the rails application
 Pfitmap::Application.initialize!
+
+#My MIME types
+Mime::Type.register "text/plain", :fasta
+Mime::Type.register "text/plain", :gb
+

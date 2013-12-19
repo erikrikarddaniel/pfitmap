@@ -135,4 +135,18 @@ class CountMatrixController < ApplicationController
       end
     end
   end
+
+
+  def fetch_sequences
+    accessions = params[:accessions]
+    type = params[:accessions_type]
+    sequences = BiosqlWeb.get_sequences_by_accessions(accessions,type)
+    respond_to do |format|
+#      format.html { send_data(sequences, filename: "pfitmap.fasta") }
+      format.fasta { send_data(sequences, filename: "pfitmap.fasta") }
+      format.gb { send_data(sequences, filename: "pfitmap.gb") }
+
+    end
+
+  end
 end
