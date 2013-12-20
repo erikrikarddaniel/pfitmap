@@ -77,7 +77,7 @@ FactoryGirl.define do
   factory :pfitmap_release do
     sequence(:release) { |n|  (0.0 + 0.1*n - 0.01*n).to_s }
     sequence(:release_date) { |n| (Date.new(2012,01,01) + n.days).to_s }
-    current "true"
+    current "false"
     sequence_source
   end
 
