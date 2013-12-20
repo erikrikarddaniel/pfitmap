@@ -27,7 +27,6 @@ class CountMatrixTaxon < ActiveRecord::Base
   end
   
   def proteins
-    #byebug
     @proteins.values.sort_by { |p| p.hierarchy }
   end
 end
