@@ -1,5 +1,4 @@
 FactoryGirl.define do
-
   factory :taxon do |t|
     sequence(:domain) { |n|  "example_domain_name " + n.to_s }
     sequence(:ncbi_taxon_id) { |n| n} 

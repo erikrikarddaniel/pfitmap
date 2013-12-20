@@ -37,7 +37,7 @@ describe CountMatrixController do
       end
     end
 
-    it "is a full matrix with everything ordered correctly" do
+    it "returns a full matrix with everything ordered correctly" do
       get :get_counts, { format: 'json', protein_level: 'subclass' }, valid_session
       expect(response).to be_success
       json = JSON.parse(response.body)

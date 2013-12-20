@@ -17,7 +17,8 @@ gem 'd3_rails'
 #gon gem to simply make variables from controller available to the javascript in the views
 gem 'gon'
 # Easy table less models with ActiveRecord cababilities
-gem "active_attr"
+#gem "active_attr"
+gem "activerecord-tableless", "~> 1.0"
 
 # Authentication and Authorization
 gem 'omniauth-openid'

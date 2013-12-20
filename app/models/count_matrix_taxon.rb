@@ -1,23 +1,33 @@
-class CountMatrixTaxon
-  include ActiveAttr::Model
+class CountMatrixTaxon < ActiveRecord::Base
+  has_no_table
 
-  attribute :ncbi_taxon_id
-  attribute :domain 
-  attribute :kingdom
-  attribute :phylum
-  attribute :taxclass
-  attribute :taxorder
-  attribute :taxfamily
-  attribute :genus
-  attribute :species
-  attribute :strain
-  attribute :no_genomes
-  attribute :all_accessions
-  attribute :counted_accessions
+  column :count_matrix_id,	:integer
+  column :ncbi_taxon_id,	:string
+  column :domain,		:string
+  column :kingdom,		:string
+  column :phylum,		:string
+  column :taxclass,		:string
+  column :taxorder,		:string
+  column :taxfamily,		:string
+  column :genus,		:string
+  column :species,		:string
+  column :strain,		:string
+  column :no_genomes,		:string
 
-  attribute :proteins, :default=>[]
+  attr_accessible :ncbi_taxon_id, :domain, :kingdom, :phylum, :taxclass,
+    :taxorder, :taxfamily, :genus, :species, :strain, :no_genomes
+
+  def add_protein(p)
+    @proteins ||= { }
+    @proteins[p.hierarchy] = p
+  end
+
   def hierarchy
     "#{domain}:#{kingdom}:#{phylum}:#{taxclass}:#{taxorder}:#{taxfamily}:#{genus}:#{species}:#{strain}"
   end
-
+  
+  def proteins
+    #byebug
+    @proteins.values.sort_by { |p| p.hierarchy }
+  end
 end
