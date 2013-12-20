@@ -20,18 +20,30 @@ class CountMatrixController < ApplicationController
       params[:release] = @pfr.release
     else
       @pfr = PfitmapRelease.find_current_release
+
+      unless @pfr
+	respond_to do |format|
+	  format.html { render 'count_matrix' }
+	  format.json{ render json: @cm.attributes }
+	end
+	return
+      end
+
       params[:release] = @pfr.release
     end
 
     # Get all released dbs for the current pfitmap release
     @released_dbs = ReleasedDb.where(pfitmap_release_id: @pfr.id)
+
     # Get all load databases for the relesed dbs
     @load_dbs = LoadDatabase.where(id: @released_dbs.map {|rd| rd.load_database_id})
+
     # Filter on specific db
     unless params[:db]
       params[:db] = @load_dbs.last.name
     end
     @load_db = LoadDatabase.find(:first, conditions: {name: params[:db]})
+
     # Get the specific released db for the pfitmap release and the database
     @rd = ReleasedDb.find(:first, conditions: {pfitmap_release_id: @pfr.id, load_database_id: @load_db})
 
@@ -48,7 +60,6 @@ class CountMatrixController < ApplicationController
     @cm.db = @load_db.name
 
     if @cm.valid?
-
       filter_params = {released_db_id: @rd.id}
       taxon_filter = ["released_db_id = :released_db_id"]
       protein_filter = ["released_db_id = :released_db_id"]
@@ -84,6 +95,7 @@ class CountMatrixController < ApplicationController
         cmt.no_genomes = tgc.no_genomes
         @countmt[cmt.hierarchy] = cmt
       end
+
       prot_count = 
 	{ protfamily: ProteinFamilyCount, 
 	  protclass: ProteinClassCount, 

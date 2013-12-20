@@ -77,7 +77,7 @@ FactoryGirl.define do
   factory :pfitmap_release do
     sequence(:release) { |n|  (0.0 + 0.1*n - 0.01*n).to_s }
     sequence(:release_date) { |n| (Date.new(2012,01,01) + n.days).to_s }
-    current "false"
+    current "true"
     sequence_source
   end
 
@@ -100,40 +100,5 @@ FactoryGirl.define do
   factory :enzyme do
     name "Example ENZ"
     abbreviation "ENZ"
-  end
-
-  factory :taxon do |t|
-    sequence(:domain) { |n|  "example_domain_name " + n.to_s }
-    sequence(:ncbi_taxon_id) { |n| n} 
-  end
-  factory :taxon_flat, class: Taxon do |t|
-    sequence(:ncbi_taxon_id) {|n| n}
-  end
-  factory :protein do
-    sequence(:protfamily) { |n| "ex_protein " + n.to_s }
- end
-
-  factory :protein_count do
-    no_proteins 0
-    no_genomes_with_proteins 0
-    protein
-    taxon
-    released_db
-  end
-  factory :sequence_database do
-    db "ref"
-    abbreviation "refseq"
-    home_page "home"
-    accession_url "url"
-  end
-  factory :load_database do
-    taxonset "http://demo.url/test.json"
-    name "ref + wgs"
-    description "refseq and wholegenomesequenced"
-    active true
-  end
-  factory :released_db do
-    load_database
-    pfitmap_release
   end
 end
