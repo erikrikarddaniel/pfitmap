@@ -14,6 +14,8 @@ describe CountMatrixController do
   describe "GET json, domain, protein subclass" do
     before(:each) do
       @released_db = FactoryGirl.create(:released_db)
+      @released_db.pfitmap_release.current = true
+      @released_db.pfitmap_release.save
       @pcs = [ ]
       @pcs << FactoryGirl.create(:e_coli_c227_11_nrdag_protein_count)
       @pcs << FactoryGirl.create(:e_coli_c227_11_nrde_protein_count)

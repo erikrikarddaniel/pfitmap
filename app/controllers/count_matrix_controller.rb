@@ -13,8 +13,9 @@ class CountMatrixController < ApplicationController
 
     # Initialize new CountMatrix object
     @cm = CountMatrix.new
+
     if params[:release]
-      @pfr = PfitmapRelease.find(:first, conditions: {release: params[:release]})
+      @pfr = PfitmapRelease.find(:first, conditions: { release: params[:release] })
     elsif session[:release_id]
       @pfr = PfitmapRelease.find(session[:release_id])
       params[:release] = @pfr.release
@@ -46,7 +47,6 @@ class CountMatrixController < ApplicationController
 
     # Get the specific released db for the pfitmap release and the database
     @rd = ReleasedDb.find(:first, conditions: {pfitmap_release_id: @pfr.id, load_database_id: @load_db})
-
 
     #Selecting which taxon ranks to include in the query
     @tax_levels = params[:taxon_level].in?(@tl) ? @tl.slice(0..@tl.index(params[:taxon_level])) : [@tl[0]]
@@ -123,7 +123,7 @@ class CountMatrixController < ApplicationController
         @countmt[taxon].proteins.append(cmtp.attributes)
       end
 
-      @cm.taxons = @countmt.values.map{|c| c.attributes}
+      @cm.taxons = @countmt.values.map { |c| c.attributes}
 
       # Set DOM variables to use in D3 Javascript
       # ('gon' is client accessible)
