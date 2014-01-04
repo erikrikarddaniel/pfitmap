@@ -8,6 +8,66 @@ FactoryGirl.define do
     sequence(:ncbi_taxon_id) {|n| n}
   end
 
+  factory :taxon_bacteria, class: Taxon do
+    domain	'Bacteria'
+  end
+
+  factory :taxon_proteobacteria, class: Taxon do
+    domain	'Bacteria'
+    phylum	'Proteobacteria'
+  end
+
+  factory :taxon_gammaproteobacteria, class: Taxon do
+    domain	'Bacteria'
+    phylum	'Proteobacteria'
+    taxclass	'Gammaproteobacteria'
+  end
+
+  factory :taxon_enterobacteriales, class: Taxon do
+    domain	'Bacteria'
+    phylum	'Proteobacteria'
+    taxclass	'Gammaproteobacteria'
+    taxorder	'Enterobacteriales'
+  end
+
+  factory :taxon_enterobacteriaceae, class: Taxon do
+    domain	'Bacteria'
+    phylum	'Proteobacteria'
+    taxclass	'Gammaproteobacteria'
+    taxorder	'Enterobacteriales'
+    taxfamily	'Enterobacteriaceae'
+  end
+
+  factory :taxon_escherichia, class: Taxon do
+    domain	'Bacteria'
+    phylum	'Proteobacteria'
+    taxclass	'Gammaproteobacteria'
+    taxorder	'Enterobacteriales'
+    taxfamily	'Enterobacteriaceae'
+    genus	'Escherichia'
+  end
+
+  factory :taxon_escherichia_coli, class: Taxon do
+    domain	'Bacteria'
+    phylum	'Proteobacteria'
+    taxclass	'Gammaproteobacteria'
+    taxorder	'Enterobacteriales'
+    taxfamily	'Enterobacteriaceae'
+    genus	'Escherichia'
+    species	'Escherichia coli'
+  end
+
+  factory :taxon_escherichia_coli_k12, class: Taxon do
+    domain	'Bacteria'
+    phylum	'Proteobacteria'
+    taxclass	'Gammaproteobacteria'
+    taxorder	'Enterobacteriales'
+    taxfamily	'Enterobacteriaceae'
+    genus	'Escherichia'
+    species	'Escherichia coli'
+    strain	'Escherichia coli K-12'
+  end
+
   factory :protein do
     sequence(:protfamily) { |n| "ex_protein " + n.to_s }
   end

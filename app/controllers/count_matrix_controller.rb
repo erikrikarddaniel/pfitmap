@@ -11,9 +11,7 @@ class CountMatrixController < ApplicationController
       params[k] = URI.unescape(v)
     end
 
-    # Initialize new CountMatrix object
-    @cm = CountMatrix.new
-
+    # Find the correct release
     if params[:release]
       @pfr = PfitmapRelease.find(:first, conditions: { release: params[:release] })
     elsif session[:release_id]
@@ -54,15 +52,18 @@ class CountMatrixController < ApplicationController
     #Selecting which protein ranks to inlcude in the query
     @prot_levels = params[:protein_level].in?(@pl) ? @pl.slice(0..@pl.index(params[:protein_level])) : [@pl[0]]
 
-    @cm.release = @pfr.release
-    @cm.taxon_level = @tax_levels[-1]
-    @cm.protein_level = @prot_levels[-1]
-    @cm.db = @load_db.name
+    # Initialize new CountMatrix object
+    @cm = CountMatrix.new(
+      release:		@pfr.release,
+      taxon_level:	@tax_levels[-1],
+      protein_level:	@prot_levels[-1],
+      db:		@load_db.name
+    )
 
     if @cm.valid?
-      filter_params = {released_db_id: @rd.id}
-      taxon_filter = ["released_db_id = :released_db_id"]
-      protein_filter = ["released_db_id = :released_db_id"]
+      filter_params = { released_db_id: @rd.id }
+      taxon_filter = [ "released_db_id = :released_db_id" ]
+      protein_filter = [ "released_db_id = :released_db_id" ]
       @tax_levels.each do |t|
         if t.in?(params)
           filter_params[t.to_sym] = params[t].split("(,)")
@@ -82,19 +83,25 @@ class CountMatrixController < ApplicationController
       tax_levels_string = "#{@tax_levels.map{|t| "#{t}"}.join(",")}"
       prot_levels_string = "#{@prot_levels.map{|p| "#{p}"}.join(",")}"
 
-      tax_genomes_counts = 
-        Taxon.select(tax_levels_string + ", count(*) AS no_genomes")
-	     .where(taxon_filter_string,filter_params)
-	     .group(tax_levels_string)
-	     .order(tax_levels_string)
-
-      @countmt = {}
-      tax_genomes_counts.each do |tgc|
-        cmt = CountMatrixTaxon.new
-        @tax_levels.map{|t| cmt[t] = tgc[t]}
-        cmt.no_genomes = tgc.no_genomes
-        @countmt[cmt.hierarchy] = cmt
+      #tax_genomes_counts = 
+      Taxon.select(tax_levels_string + ", count(*) AS no_genomes")
+	   .where(taxon_filter_string,filter_params)
+	   .group(tax_levels_string)
+	   .order(tax_levels_string)
+	   .each do |tgc|
+	cmt = CountMatrixTaxon.new(tgc)
+	cmt.no_genomes = tgc.no_genomes
+	@cm.add_taxon(cmt)
       end
+
+
+#      @countmt = {}
+#      tax_genomes_counts.each do |tgc|
+#        cmt = CountMatrixTaxon.new
+#        @tax_levels.map{|t| cmt[t] = tgc[t]}
+#        cmt.no_genomes = tgc.no_genomes
+#        @countmt[cmt.hierarchy] = cmt
+#      end
 
       prot_count = 
 	{ protfamily: ProteinFamilyCount, 
