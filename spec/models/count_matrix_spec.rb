@@ -5,14 +5,26 @@ describe CountMatrix do
     @pf_release = FactoryGirl.create(:pfitmap_release)
   end
 
-  it 'is possible to create an object with valid attributes' do
-    cm = CountMatrix.new(release: @pf_release.release)
-    cm.should be_valid
-  end
+  describe 'an object' do
+    it 'can be created with valid attributes' do
+      cm = CountMatrix.new(release: @pf_release.release)
+      cm.should be_valid
+    end
 
-  it 'is not valid without release' do
-    cm = CountMatrix.new
-    cm.should_not be_valid
+    it 'is not valid without release' do
+      cm = CountMatrix.new
+      cm.should_not be_valid
+    end
+
+    it 'gets properties set' do
+      cm = CountMatrix.new(
+	release: @pf_release.release,
+	taxon_level: 'Domain',
+	protein_level: 'protclass',
+	db: 'RefSeq'
+      )
+      cm.taxon_level.should == 'Domain'
+    end
   end
 
   describe 'via associated count_matrix_taxons' do
