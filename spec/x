@@ -1,0 +1,21 @@
+{
+  "release":0.9001,"taxon_level":"species","protein_level":"protclass","db":"GenBank","taxon_filter":null,"protein_filter":null,
+  "taxons":[
+    {
+      "ncbi_taxon_id":null,"domain":"Archaea","kingdom":"Archaea, no kingdom","phylum":"Euryarchaeota","taxclass":"Nanohaloarchaea","taxorder":"Nanohaloarchaea, no order","taxfamily":"Nanohaloarchaea, no order, no family","genus":"Candidatus Nanosalina","species":"Candidatus Nanosalina sp. J07AB43","strain":null,"no_genomes":"1","all_accessions":null,"counted_accessions":null,
+      "proteins":[
+        {"protfamily":"NrdB-R2lox","protclass":"NrdB","subclass":null,"protgroup":null,"subgroup":null,"subsubgroup":null,"no_proteins":"2","no_genomes_with_proteins":"1","all_accessions":"EGQ43576.1,EGQ44321.1","counted_accessions":"EGQ43576.1,EGQ44321.1"},
+	{"protfamily":"Nrd-PFL","protclass":"NrdA","subclass":null,"protgroup":null,"subgroup":null,"subsubgroup":null,"no_proteins":"2","no_genomes_with_proteins":"1","all_accessions":"EGQ43577.1,EGQ44319.1","counted_accessions":"EGQ43577.1,EGQ44319.1"},
+	{"protfamily":"Nrd-PFL","protclass":"NrdJ","subclass":null,"protgroup":null,"subgroup":null,"subsubgroup":null,"no_proteins":"1","no_genomes_with_proteins":"1","all_accessions":"EGQ42950.1","counted_accessions":"EGQ42950.1"}
+      ]
+    },
+    {
+      "ncbi_taxon_id":null,"domain":"Archaea","kingdom":"Archaea, no kingdom","phylum":"Euryarchaeota","taxclass":"Nanohaloarchaea","taxorder":"Nanohaloarchaea, no order","taxfamily":"Nanohaloarchaea, no order, no family","genus":"Nanohaloarchaea, no order, no family, no genus","species":"Candidatus Haloredivivus sp. G17","strain":null,"no_genomes":"1","all_accessions":null,"counted_accessions":null,
+      "proteins":[
+        {"protfamily":"NrdB-R2lox","protclass":"NrdB","subclass":null,"protgroup":null,"subgroup":null,"subsubgroup":null,"no_proteins":"1","no_genomes_with_proteins":"1","all_accessions":"EHK00522.1","counted_accessions":"EHK00522.1"},
+	{"protfamily":"Nrd-PFL","protclass":"NrdA","subclass":null,"protgroup":null,"subgroup":null,"subsubgroup":null,"no_proteins":"1","no_genomes_with_proteins":"1","all_accessions":"EHK00521.1","counted_accessions":"EHK00521.1"},
+	{"protfamily":"Nrd-PFL","protclass":"NrdJ","subclass":null,"protgroup":null,"subgroup":null,"subsubgroup":null,"no_proteins":"1","no_genomes_with_proteins":"1","all_accessions":"EHK01960.1","counted_accessions":"EHK01960.1"}
+      ]
+    }
+  ]
+}

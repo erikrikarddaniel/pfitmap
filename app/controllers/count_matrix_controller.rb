@@ -47,10 +47,10 @@ class CountMatrixController < ApplicationController
     @rd = ReleasedDb.find(:first, conditions: {pfitmap_release_id: @pfr.id, load_database_id: @load_db})
 
     #Selecting which taxon ranks to include in the query
-    @tax_levels = params[:taxon_level].in?(@tl) ? @tl.slice(0..@tl.index(params[:taxon_level])) : [@tl[0]]
+    @tax_levels = params[:taxon_level].in?(Taxon::TAXA) ? Taxon::TAXA.slice(0..Taxon::TAXA.index(params[:taxon_level])) : [Taxon::TAXA[0]]
 
     #Selecting which protein ranks to inlcude in the query
-    @prot_levels = params[:protein_level].in?(@pl) ? @pl.slice(0..@pl.index(params[:protein_level])) : [@pl[0]]
+    @prot_levels = params[:protein_level].in?(Protein::PROT_LEVELS) ? Protein::PROT_LEVELS.slice(0..Protein::PROT_LEVELS.index(params[:protein_level])) : [Protein::PROT_LEVELS[0]]
 
     # Initialize new CountMatrix object
     @cm = CountMatrix.new(
@@ -59,6 +59,8 @@ class CountMatrixController < ApplicationController
       protein_level:	@prot_levels[-1],
       db:		@load_db.name
     )
+    warn "#{__FILE__}:#{__LINE__}: " + "*" * 20 + "\n"
+    #warn "#{__FILE__}:#{__LINE__}: Created #{@cm}"
 
     if @cm.valid?
       filter_params = { released_db_id: @rd.id }
@@ -89,11 +91,11 @@ class CountMatrixController < ApplicationController
 	   .group(tax_levels_string)
 	   .order(tax_levels_string)
 	   .each do |tgc|
-	cmt = CountMatrixTaxon.new(tgc)
+	cmt = CountMatrixTaxon.new(tgc.serializable_hash)
 	cmt.no_genomes = tgc.no_genomes
 	@cm.add_taxon(cmt)
       end
-
+      #warn "#{__FILE__}:#{__LINE__}: Added taxa to #{@cm}"
 
 #      @countmt = {}
 #      tax_genomes_counts.each do |tgc|
@@ -103,6 +105,8 @@ class CountMatrixController < ApplicationController
 #        @countmt[cmt.hierarchy] = cmt
 #      end
 
+      # Find the correct view to query, depending on which protein_level we're
+      # asked to return
       prot_count = 
 	{ protfamily: ProteinFamilyCount, 
 	  protclass: ProteinClassCount, 
@@ -121,16 +125,19 @@ class CountMatrixController < ApplicationController
 
       tax_protein_counts.each do |tpc| 
         cmtp = CountMatrixTaxonProtein.new
-        taxon = @tl.map { |t| tpc[t] }.join(":")
+        taxhierarchy = Taxon::TAXA.map { |t| tpc[t] }.join(":")
         @prot_levels.each { |p| cmtp[p] = tpc[p] }
         cmtp.no_proteins = tpc.no_proteins
         cmtp.no_genomes_with_proteins = tpc.no_genomes_with_proteins
 	cmtp.counted_accessions = tpc.counted_accessions
 	cmtp.all_accessions = tpc.all_accessions
-        @countmt[taxon].proteins.append(cmtp.attributes)
+	#byebug
+	@cm.taxon(taxhierarchy).add_protein(cmtp)
+        #@countmt[taxon].proteins.append(cmtp.attributes)
       end
+      warn "#{__FILE__}:#{__LINE__}: Added proteins to #{@cm}"
 
-      @cm.taxons = @countmt.values.map { |c| c.attributes}
+      #@cm.taxons = @countmt.values.map { |c| c.attributes}
 
       # Set DOM variables to use in D3 Javascript
       # ('gon' is client accessible)
@@ -143,9 +150,10 @@ class CountMatrixController < ApplicationController
       gon.column_names = @column_names
       gon.taxon_levels = @tax_levels
       gon.protein_levels = @prot_levels
-      gon.cm = @cm.attributes.to_json
-      gon.tl = @tl
-      gon.pl = @pl
+      gon.cm = @cm.to_json
+      gon.tl = Taxon::TAXA
+      gon.pl = Protein::PROT_LEVELS
+      byebug
     end
 
     if @cm.valid?

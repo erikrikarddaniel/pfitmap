@@ -23,6 +23,8 @@ class CountMatrix < ActiveRecord::Base
   end
 
   def taxon(t)
+    return nil unless @taxons
+    return @taxons[t] if t.class == String
     @taxons[t.hierarchy]
   end
 
@@ -33,5 +35,25 @@ class CountMatrix < ActiveRecord::Base
 
   def release_exists
     errors.add(:release, "does not exist") unless !PfitmapRelease.where("release='#{release}'").empty?
+  end
+
+  def to_json
+    <<-JSON
+{
+  "release":#{release},
+  "db":#{db},
+  "taxon_level":#{taxon_level},
+  "protein_level":#{protein_level},
+  "taxon_filter":#{taxon_filter},
+  "protein_filter":#{protein_filter},
+  "taxons":[
+#{taxons.map { |t| t.to_json("  ", 2) }.join(",\n")}
+  ]
+}
+    JSON
+  end
+
+  def to_s
+    "CountMatrix, taxa: (#{@taxons ? @taxons.values.join("),(") : ''})"
   end
 end

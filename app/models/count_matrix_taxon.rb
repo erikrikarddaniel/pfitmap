@@ -27,6 +27,16 @@ class CountMatrixTaxon < ActiveRecord::Base
   end
   
   def proteins
-    @proteins.values.sort_by { |p| p.hierarchy }
+    @proteins ? @proteins.values.sort_by { |p| p.hierarchy } : []
+  end
+
+  def to_json(indent = "", indlevel = 0)
+    <<-JSON
+#{ indent * indlevel }{"ncbi_taxon_id":#{ncbi_taxon_id},"domain":"#{domain}","kingdom":"#{kingdom}","phylum":"#{phylum}","taxclass":"#{taxclass}","taxorder":"#{taxorder}","taxfamily":"#{taxfamily}","genus":"#{genus}","species":"#{species}","strain":"#{strain}","proteins":[ ]}
+    JSON
+  end
+
+  def to_s
+    "CountMatrixTaxon #{hierarchy}, no_genomes: #{no_genomes}, proteins: (#{@proteins ? @proteins.values.join("),(") : ''})"
   end
 end

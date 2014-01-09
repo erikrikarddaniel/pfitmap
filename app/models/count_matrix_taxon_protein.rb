@@ -19,4 +19,8 @@ class CountMatrixTaxonProtein < ActiveRecord::Base
   def hierarchy
     "#{protfamily}:#{protclass}:#{subclass}:#{protgroup}:#{subgroup}:#{subsubgroup}"
   end
+
+  def to_s
+    "<CountMatrixTaxonProtein #{hierarchy} #{no_genomes_with_proteins} #{no_proteins}>"
+  end
 end
