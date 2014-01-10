@@ -2,8 +2,16 @@ require 'file_parsers'
 include FileParsers
 
 namespace :db do
+  # Checks and ensures task is not run in production.
+  task :ensure_development_environment => :environment do
+    if Rails.env.production?
+      raise "\nI'm sorry, I can't do that.\n(You're asking me to drop your production database.)"
+    end
+  end
+
   desc "Fill database with sample data"
   task populate: :environment do
+    Rake::Task['db:ensure_development_environment'].invoke
     Rake::Task['db:truncate'].invoke
     @dbsequences = {}	# Object hash indexed by acc number
     @db_entries = {} 	# Object hash indexed by acc number
@@ -13,7 +21,197 @@ namespace :db do
     make_enzymes
     make_release
     make_hmm_score_criteria
-    make_hmm_results
+    #make_hmm_results
+    make_protein_counts
+  end
+
+  def make_protein_counts
+    make_released_db unless @released_db
+    make_proteins unless @proteins
+
+    accno = 1
+    # Enteros
+    [ 'Escherichia coli K-12',
+       'Escherichia coli, no strain',
+       'Escherichia coli B str. REL606',
+       'Yersinia pestis biovar Medievalis str. Harbin 35',
+       'Yersinia enterocolitica subsp. enterocolitica 8081',
+       'Yersinia enterocolitica subsp. palearctica Y11',
+       'Yersinia pseudotuberculosis PB1/+',
+       'Yersinia intermedia ATCC 29909'
+    ].each_with_index do |strain, i|
+      t = Taxon.create(
+	    domain:		'Bacteria',
+	    kingdom:		'Bacteria, no kingdom',
+	    phylum:		'Proteobacteria',
+	    taxclass:		'Gammaproteobacteria',
+	    taxorder:		'Enterobacteriales',
+	    taxfamily:		'Enterobacteriaceae',
+	    genus:		strain.sub(/(^\w+).*/, '\1'),
+	    species:		strain.sub(/(^\w+ \w+).*/, '\1'),
+	    strain:		strain,
+	    released_db_id:	@released_db.id
+	  )
+
+      [ 'NrdAg', 'NrdE', 'NrdDc', 'NrdBg', 'NrdF' ].each do |subclass|
+	ProteinCount.create(
+	  taxon_id: t.id, 
+	  protein_id: @proteins[subclass].id,
+	  no_proteins: 1,
+	  all_accessions: "ACC_1#{subclass}_#{accno},ACC_2#{subclass}_#{accno},ACC_3#{subclass}_#{accno}",
+	  all_accessions: "ACC_1#{subclass}_#{accno}"
+	)
+	accno += 1
+      end
+    end
+
+    # Pseudomonas
+    [
+      'Pseudomonas aeruginosa PAO1',
+      'Pseudomonas putida F1',
+      'Pseudomonas stutzeri DSM 4166'
+    ].each_with_index do |strain, i|
+      t = Taxon.create(
+	    domain:		'Bacteria',
+	    kingdom:		'Bacteria, no kingdom',
+	    phylum:		'Proteobacteria',
+	    taxclass:		'Gammaproteobacteria',
+	    taxorder:		'Pseudomonadales',
+	    taxfamily:		'Pseudomonadaceae',
+	    genus:		strain.sub(/(^\w+).*/, '\1'),
+	    species:		strain.sub(/(^\w+ \w+).*/, '\1'),
+	    strain:		strain,
+	    released_db_id:	@released_db.id
+	  )
+
+      [ 'NrdAc', 'NrdDd', 'NrdBc', 'NrdJf' ].each do |subclass|
+	ProteinCount.create(
+	  taxon_id: t.id, 
+	  protein_id: @proteins[subclass].id,
+	  no_proteins: 1,
+	  all_accessions: "ACC_1#{subclass}_#{accno},ACC_2#{subclass}_#{accno}",
+	  all_accessions: "ACC_1#{subclass}_#{accno}"
+	)
+	accno += 1
+      end
+    end
+
+    # Homo and siblings
+    [
+      'Homo sapiens, no strain',
+      'Pan troglodytes verus',
+      'Pan troglodytes, no strain',
+      'Pongo abelii, no strain'
+    ].each_with_index do |strain, i|
+      t = Taxon.create(
+	    domain:		'Eukaryota',
+	    kingdom:		'Metazoa',
+	    phylum:		'Chordata',
+	    taxclass:		'Mammalia',
+	    taxorder:		'Primates',
+	    taxfamily:		'Hominidae',
+	    genus:		strain.sub(/(^\w+).*/, '\1'),
+	    species:		strain.sub(/(^\w+ \w+).*/, '\1'),
+	    strain:		strain,
+	    released_db_id:	@released_db.id
+	  )
+
+      [ 'NrdAe', 'NrdBe' ].each do |subclass|
+	ProteinCount.create(
+	  taxon_id: t.id, 
+	  protein_id: @proteins[subclass].id,
+	  no_proteins: ( subclass == 'NrdAe' ? 1 : 2 ),
+	  all_accessions: "ACC_1#{subclass}_#{accno},ACC_2#{subclass}_#{accno}",
+	  all_accessions: "ACC_1#{subclass}_#{accno}"
+	)
+	accno += 1
+      end
+    end
+
+    # Muridae
+    [
+      'Mus musculus, no strain',
+      'Rattus norvegicus, no strain'
+    ].each_with_index do |strain, i|
+      t = Taxon.create(
+	    domain:		'Eukaryota',
+	    kingdom:		'Metazoa',
+	    phylum:		'Chordata',
+	    taxclass:		'Mammalia',
+	    taxorder:		'Rodentia',
+	    taxfamily:		'Muridae',
+	    genus:		strain.sub(/(^\w+).*/, '\1'),
+	    species:		strain.sub(/(^\w+ \w+).*/, '\1'),
+	    strain:		strain,
+	    released_db_id:	@released_db.id
+	  )
+
+      [ 'NrdAe', 'NrdBe' ].each do |subclass|
+	ProteinCount.create(
+	  taxon_id: t.id, 
+	  protein_id: @proteins[subclass].id,
+	  no_proteins: ( subclass == 'NrdAe' ? 1 : 2 ),
+	  all_accessions: "ACC_1#{subclass}_#{accno},ACC_2#{subclass}_#{accno}",
+	  all_accessions: "ACC_1#{subclass}_#{accno}"
+	)
+	accno += 1
+      end
+    end
+  end
+
+  def make_proteins
+    @proteins = {}
+    [ 'NrdAc', 'NrdAg', 'NrdAe', 'NrdJf', 'NrdJm', 'NrdDc', 'NrdDd' ].each do |subclass|
+      @proteins[subclass] = Protein.create(
+	protfamily:		'Nrd-PFL',
+	protclass:		subclass[0..-2],
+	subclass:		subclass
+      )
+    end
+    [ 'NrdBc', 'NrdBg', 'NrdBe' ].each do |subclass|
+      @proteins[subclass] = Protein.create(
+	protfamily:		'NrdB-R2lox',
+	protclass:		subclass[0..-2],
+	subclass:		subclass
+      )
+    end
+    @proteins['NrdE'] = Protein.create(
+      protfamily: 'Nrd-PFL', 
+      protclass: 'NrdA', 
+      subclass:  'NrdE'
+    )
+    @proteins['NrdF'] = Protein.create(
+      protfamily: 'NrdB-R2lox',
+      protclass: 'NrdB', 
+      subclass:  'NrdF'
+    )
+  end
+
+  def make_released_db
+    make_release unless @pfitmap_release
+    make_load_database unless @load_database
+
+    @released_db = ReleasedDb.create(
+      pfitmap_release_id: @pfitmap_release.id,
+      load_database_id: @load_database.id
+    )
+  end
+
+  def make_load_database
+    make_sequence_database unless @sequence_database
+
+    @load_database = LoadDatabase.create(
+      name:			'Test load db',
+      taxonset:			'Test taxonset',
+      active:			true,
+      sequence_database_id:	@sequence_database.id
+    )
+  end
+
+  def make_sequence_database
+    @sequence_database = SequenceDatabase.where(db: 'gb').first
+
+    @sequence_database ||= SequenceDatabase.create(db: 'gb')
   end
 
   def make_users
@@ -253,14 +451,14 @@ SQL
   end
 
   def make_release 
-     pr = PfitmapRelease.new(
-	  sequence_source_id: @sequence_source_nr_june.id,
-	  release: "0.1",
-	  release_date: "2012-06-13"
-	)
+     @pfitmap_release = PfitmapRelease.create(
+	    sequence_source_id: @sequence_source_nr_june.id,
+	    release: "0.1",
+	    release_date: "2012-06-13"
+	  )
 	
-     pr.current = false
-     pr.save
+     @pfitmap_release.current = false
+     @pfitmap_release.save
   end
 
 private
