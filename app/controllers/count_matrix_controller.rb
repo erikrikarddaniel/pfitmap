@@ -153,7 +153,6 @@ class CountMatrixController < ApplicationController
       gon.cm = @cm.to_json
       gon.tl = Taxon::TAXA
       gon.pl = Protein::PROT_LEVELS
-      byebug
     end
 
     if @cm.valid?
