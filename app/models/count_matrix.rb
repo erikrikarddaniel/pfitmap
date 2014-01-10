@@ -39,15 +39,8 @@ class CountMatrix < ActiveRecord::Base
 
   def to_json
     <<-JSON
-{
-  "release":#{release},
-  "db":#{db},
-  "taxon_level":#{taxon_level},
-  "protein_level":#{protein_level},
-  "taxon_filter":#{taxon_filter},
-  "protein_filter":#{protein_filter},
-  "taxons":[
-#{taxons.map { |t| t.to_json("  ", 2) }.join(",\n")}
+{"release":"#{release}","db":"#{db}","taxon_level":"#{taxon_level}","protein_level":"#{protein_level}","taxon_filter":"#{taxon_filter}","protein_filter":"#{protein_filter}","taxons":[
+#{taxons.map { |t| t.to_json("  ", 2) }.join("    ,\n")}
   ]
 }
     JSON
