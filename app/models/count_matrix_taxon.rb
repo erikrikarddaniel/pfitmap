@@ -12,7 +12,7 @@ class CountMatrixTaxon < ActiveRecord::Base
   column :genus,		:string
   column :species,		:string
   column :strain,		:string
-  column :no_genomes,		:string
+  column :no_genomes,		:integer
 
   attr_accessible :ncbi_taxon_id, :domain, :kingdom, :phylum, :taxclass,
     :taxorder, :taxfamily, :genus, :species, :strain, :no_genomes
@@ -32,7 +32,7 @@ class CountMatrixTaxon < ActiveRecord::Base
 
   def to_json(indent = "", indlevel = 0)
     <<-JSON
-#{ indent * indlevel }{"ncbi_taxon_id":"#{ncbi_taxon_id}","domain":"#{domain}","kingdom":"#{kingdom}","phylum":"#{phylum}","taxclass":"#{taxclass}","taxorder":"#{taxorder}","taxfamily":"#{taxfamily}","genus":"#{genus}","species":"#{species}","strain":"#{strain}",
+#{ indent * indlevel }{"ncbi_taxon_id":"#{ncbi_taxon_id}","domain":"#{domain}","kingdom":"#{kingdom}","phylum":"#{phylum}","taxclass":"#{taxclass}","taxorder":"#{taxorder}","taxfamily":"#{taxfamily}","genus":"#{genus}","species":"#{species}","strain":"#{strain}","no_genomes":#{no_genomes},
 #{ indent * indlevel }  "proteins":[
 #{ proteins.map { |p| p.to_json(indent, indlevel + 2) }.join("#{indent * indlevel},\n") }
 #{ indent * ( indlevel + 1 ) }]

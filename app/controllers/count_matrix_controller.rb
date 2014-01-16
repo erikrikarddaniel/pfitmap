@@ -91,11 +91,13 @@ class CountMatrixController < ApplicationController
 	   .group(tax_levels_string)
 	   .order(tax_levels_string)
 	   .each do |tgc|
+	#logger.debug "#{__FILE__}:#{__LINE__}: tgc: #{tgc.inspect}"
+	warn "#{__FILE__}:#{__LINE__}: tgc: #{tgc.inspect}"
 	cmt = CountMatrixTaxon.new(tgc.serializable_hash)
 	cmt.no_genomes = tgc.no_genomes
 	@cm.add_taxon(cmt)
       end
-      #warn "#{__FILE__}:#{__LINE__}: Added taxa to #{@cm}"
+      warn "#{__FILE__}:#{__LINE__}: Added taxa to #{@cm}"
 
 #      @countmt = {}
 #      tax_genomes_counts.each do |tgc|

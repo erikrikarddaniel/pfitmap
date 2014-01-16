@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131217195840) do
+ActiveRecord::Schema.define(:version => 20140116153043) do
 
   create_table "db_entries", :force => true do |t|
     t.integer  "gi"
@@ -257,6 +257,7 @@ ActiveRecord::Schema.define(:version => 20131217195840) do
     t.string   "species"
     t.string   "strain"
     t.integer  "released_db_id"
+    t.integer  "no_genomes"
     t.index ["released_db_id"], :name => "fk__taxons_released_db_id"
     t.foreign_key ["released_db_id"], "released_dbs", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_taxons_released_db_id"
   end
