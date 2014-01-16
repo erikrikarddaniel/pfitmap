@@ -59,7 +59,8 @@ namespace :db do
 	  protein_id: @proteins[subclass].id,
 	  no_proteins: 1,
 	  all_accessions: "ACC_1#{subclass}_#{accno},ACC_2#{subclass}_#{accno},ACC_3#{subclass}_#{accno}",
-	  all_accessions: "ACC_1#{subclass}_#{accno}"
+	  all_accessions: "ACC_1#{subclass}_#{accno}",
+	  released_db_id:	@released_db.id
 	)
 	accno += 1
       end
@@ -90,7 +91,8 @@ namespace :db do
 	  protein_id: @proteins[subclass].id,
 	  no_proteins: 1,
 	  all_accessions: "ACC_1#{subclass}_#{accno},ACC_2#{subclass}_#{accno}",
-	  all_accessions: "ACC_1#{subclass}_#{accno}"
+	  all_accessions: "ACC_1#{subclass}_#{accno}",
+	  released_db_id:	@released_db.id
 	)
 	accno += 1
       end
@@ -122,7 +124,8 @@ namespace :db do
 	  protein_id: @proteins[subclass].id,
 	  no_proteins: ( subclass == 'NrdAe' ? 1 : 2 ),
 	  all_accessions: "ACC_1#{subclass}_#{accno},ACC_2#{subclass}_#{accno}",
-	  all_accessions: "ACC_1#{subclass}_#{accno}"
+	  all_accessions: "ACC_1#{subclass}_#{accno}",
+	  released_db_id:	@released_db.id
 	)
 	accno += 1
       end
@@ -152,7 +155,8 @@ namespace :db do
 	  protein_id: @proteins[subclass].id,
 	  no_proteins: ( subclass == 'NrdAe' ? 1 : 2 ),
 	  all_accessions: "ACC_1#{subclass}_#{accno},ACC_2#{subclass}_#{accno}",
-	  all_accessions: "ACC_1#{subclass}_#{accno}"
+	  all_accessions: "ACC_1#{subclass}_#{accno}",
+	  released_db_id:	@released_db.id
 	)
 	accno += 1
       end
@@ -165,25 +169,29 @@ namespace :db do
       @proteins[subclass] = Protein.create(
 	protfamily:		'Nrd-PFL',
 	protclass:		subclass[0..-2],
-	subclass:		subclass
+	subclass:		subclass,
+	released_db_id:	@released_db.id
       )
     end
     [ 'NrdBc', 'NrdBg', 'NrdBe' ].each do |subclass|
       @proteins[subclass] = Protein.create(
 	protfamily:		'NrdB-R2lox',
 	protclass:		subclass[0..-2],
-	subclass:		subclass
+	subclass:		subclass,
+	released_db_id:	@released_db.id
       )
     end
     @proteins['NrdE'] = Protein.create(
       protfamily: 'Nrd-PFL', 
       protclass: 'NrdA', 
-      subclass:  'NrdE'
+      subclass:  'NrdE',
+      released_db_id:	@released_db.id
     )
     @proteins['NrdF'] = Protein.create(
       protfamily: 'NrdB-R2lox',
       protclass: 'NrdB', 
-      subclass:  'NrdF'
+      subclass:  'NrdF',
+      released_db_id:	@released_db.id
     )
   end
 
