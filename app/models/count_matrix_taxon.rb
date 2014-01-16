@@ -31,7 +31,6 @@ class CountMatrixTaxon < ActiveRecord::Base
   end
 
   def to_json(indent = "", indlevel = 0)
-    logger.debug "Printing #{proteins.length} proteins"
     <<-JSON
 #{ indent * indlevel }{"ncbi_taxon_id":"#{ncbi_taxon_id}","domain":"#{domain}","kingdom":"#{kingdom}","phylum":"#{phylum}","taxclass":"#{taxclass}","taxorder":"#{taxorder}","taxfamily":"#{taxfamily}","genus":"#{genus}","species":"#{species}","strain":"#{strain}",
 #{ indent * indlevel }  "proteins":[
