@@ -1,10 +1,10 @@
 class CountMatrix < ActiveRecord::Base
   has_no_table
 
-  column :release, :string, :default => nil
-  column :taxon_level, :string, :default => "domain"
-  column :protein_level, :string, :default => "protclass"
-  column :db, :string, default: nil
+  column :release, :string
+  column :taxon_level, :string
+  column :protein_level, :string
+  column :db, :string
   column :taxon_filter, :string
   column :protein_filter, :string
 
