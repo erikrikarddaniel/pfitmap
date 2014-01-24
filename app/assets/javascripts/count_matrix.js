@@ -1,10 +1,15 @@
 //#############################################
 // Count matrix
 //#############################################
+
+// Run after document is loaded in browser, will call d3_make_table or
+// d3_make_ribbon depending on content in 'view_menu'
 $(document).ready(
   function(){
+    // Only do this if we have a gon element containing our data
     if (typeof gon != typeof undefined) {
       try {
+	// Parse the JSON data in gon.cm
 	gon.dataset = JSON.parse(gon.cm);
 	gon.taxons = gon.dataset.taxons;
 	gon.taxa_color = d3.scale.category20();
