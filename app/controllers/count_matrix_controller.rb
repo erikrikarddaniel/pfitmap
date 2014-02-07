@@ -160,9 +160,10 @@ class CountMatrixController < ApplicationController
     if @cm.valid?
       respond_to do |format|
         format.html { render 'count_matrix' }
-        format.json{ render json: @cm.attributes }
+        format.json { @cm.to_json }
       end
     else
+      # This is a bit strange, same response if @cm is not valid...?
       respond_to do |format|
         format.html { render 'count_matrix' }
       end

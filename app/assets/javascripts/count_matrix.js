@@ -1,27 +1,34 @@
 //#############################################
 // Count matrix
 //#############################################
-$(document).ready(function(){
-  if (typeof gon != typeof undefined) {
-    try {
-      gon.dataset = JSON.parse(gon.cm);
-      gon.taxons = gon.dataset.taxons;
-      gon.taxa_color = d3.scale.category20();
-      params = getParameters();
-      gon.params = params;
-      d3_mark_selected_options();
-      if (!gon.params["view_menu"] || gon.params["view_menu"] == "matrix") {
-	d3_make_table();
+
+// Run after document is loaded in browser, will call d3_make_table or
+// d3_make_ribbon depending on content in 'view_menu'
+$(document).ready(
+  function(){
+    // Only do this if we have a gon element containing our data
+    if (typeof gon != typeof undefined) {
+      try {
+	// Parse the JSON data in gon.cm
+	gon.dataset = JSON.parse(gon.cm);
+	gon.taxons = gon.dataset.taxons;
+	gon.taxa_color = d3.scale.category20();
+	params = getParameters();
+	gon.params = params;
+	d3_mark_selected_options();
+	if (!gon.params["view_menu"] || gon.params["view_menu"] == "matrix") {
+	  d3_make_table();
+	}
+	else if (gon.params["view_menu"] == "ribbon") {
+	  d3_make_ribbon();
+	}
       }
-      else if (gon.params["view_menu"] == "ribbon") {
-	d3_make_ribbon();
+      catch(e) {
+	alert('Error in document ready function: ' + e.message);
       }
-    }
-    catch(e) {
-      alert('Error in document ready function: ' + e.message);
-    }
-  }
-});
+    }
+  }
+);
 
 //#############################################
 // Create the table view
