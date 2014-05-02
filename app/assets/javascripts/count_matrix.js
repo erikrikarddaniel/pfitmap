@@ -37,6 +37,7 @@ function d3_make_table() {
   d3.select("#heat_map").select("table").remove();
   d3_prep_table_dataset();
   d3_table_it(gon.taxons);
+
   //Put borders around selected rows
   $('input[name=tax_filter]').change(function() {
     d3_table_bordering(); 
@@ -77,13 +78,14 @@ function d3_table_it(dataset) {
     var thead = table.append("thead");
     var tbody = table.append("tbody");
     
+    // Add protein names as class attributes to td elements(?)
     var head = thead.append("tr").selectAll("td")
         .data(gon.columns)
         .enter()
         .append("td")
         .attr("class", function(d) { 
-	  if(gon.prot_columns.indexOf(d) != -1) {return "protein_label "+d;}
-	  else {return null;} 
+	  if ( gon.prot_columns.indexOf(d) != -1 ) { return "protein_label "+d; }
+	  else { return null; }
 	})
         .text(function(d) {
 	  return gon.prot_columns.indexOf(d) == -1 ? gon.column_names[d] : null 
@@ -117,6 +119,7 @@ function d3_table_it(dataset) {
 	    },
 	    {}
 	  );
+
           //mapping and joining on the columns in the header
           return gon.tax_columns.map( function(column) {
             return {column: column, value: row[column]}
@@ -145,12 +148,19 @@ function d3_table_it(dataset) {
 	  else if (d.column == "no_genomes") { cl = "no_genomes"; }
 	  return cl; 
 	})
-        .text(function(d) {if (d.column != gon.dataset.taxon_level) {return d.value} } );
+        .text(function(d) { if (d.column != gon.dataset.taxon_level) { return d.value } } );
 
     var tlabel = rows.select("td").attr("class","taxon_label")
-        tlabel.append("input").attr("type","checkbox").attr("name","tax_filter").attr("value",function(d) {return d[gon.dataset.taxon_level]})
-        tlabel.append("span").attr("class","input-group-addon").text(function(d) {return d[gon.dataset.taxon_level]})
-    //taxon tooltip
+        tlabel.append("input")
+	  .attr("type","checkbox")
+	  .attr("name","tax_filter")
+	  .attr("value",function(d) { return d[gon.dataset.taxon_level] })
+
+        tlabel.append("span")
+	  .attr("class","input-group-addon")
+	  .text(function(d) { return d[gon.dataset.taxon_level] })
+
+    // taxon tooltip
     $(".taxon_label").tooltip({
       "toggle":true,
       "title":function () {
@@ -162,7 +172,8 @@ function d3_table_it(dataset) {
       },
       "placement":"bottom"
     });
-    //cell tooltip
+
+    // cell tooltip
     $(".heat_label").tooltip({
       "toggle":true,
       "title":function() {
@@ -448,6 +459,7 @@ function submitMyForm(){
   $('#fetch_sequences_form').submit();
 }
 
+// CSS to mark what's selected in drop downs
 function d3_mark_selected_options() {
   $("#taxon_levels_menu").find("li").css("background-color","");
   $("#protein_levels_menu").find("li").css("background-color","");
