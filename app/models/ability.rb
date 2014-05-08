@@ -8,6 +8,7 @@ class Ability
     else
       can :read, :all
       cannot :read, User
+      cannot :read, ConfigurableParam
       # Static pages
       can [:home, :help, :contact, :error_404, :sign_in], :static_page
       can [:create, :failure, :destroy, :change_release], :session

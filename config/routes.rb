@@ -1,5 +1,8 @@
 Pfitmap::Application.routes.draw do
 
+  resources :configurable_params
+
+
   resources :released_dbs
 
   resources :sequence_databases do
