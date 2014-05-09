@@ -8,11 +8,12 @@ class Ability
     else
       can :read, :all
       cannot :read, User
+      cannot :read, ConfigurableParam
       # Static pages
       can [:home, :help, :contact, :error_404, :sign_in], :static_page
       can [:create, :failure, :destroy, :change_release], :session
       can [:by_rank, :by_hierarchy, :with_enzymes, :add_row, :collapse_rows], ProteinCount
-      can [:get_counts], CountMatrix
+      can [:get_counts, :fetch_sequences], CountMatrix
     end
   end
 end

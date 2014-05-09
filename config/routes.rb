@@ -1,11 +1,15 @@
 Pfitmap::Application.routes.draw do
 
+  resources :configurable_params
+
+
   resources :released_dbs
 
   resources :sequence_databases do
     resources :load_databases
   end
 
+  match 'count_matrix/fetch_sequences', to: 'count_matrix#fetch_sequences', via: [:post,:get], as: :fetch_sequences
   get 'count_matrix', to: 'count_matrix#get_counts'
 
   get 'protein_counts_with_enzymes', to: 'protein_counts#with_enzymes'

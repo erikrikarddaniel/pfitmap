@@ -30,12 +30,15 @@ class DbEntry < ActiveRecord::Base
   end
 
   def self.gis2gi_queue
+    logger.info "Fetching all gis that are missing sequences"
     gis = DbEntry.find(:all,select: "gi", 
                          include: [:db_sequence], 
                          conditions: ["db_sequences.sequence IS NULL"])
               .map {|e| e.gi.to_s}
 
+    logger.info "will send #{gis.length} nr of gis to Biosql queue"
     BiosqlWeb.gis2gi_queue(gis)
+    logger.info "done sending gis to biosql queue"
   end
 
 

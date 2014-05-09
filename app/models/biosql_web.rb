@@ -2,7 +2,7 @@ class BiosqlWeb < ActiveRecord::Base
   HTTP_TIMEOUT = 6000
 
   self.abstract_class = true
-  BASE_URL =  (Rails.env == "production" || Rails.env == "test") ? 'http://biosql.scilifelab.se' : 'http://127.0.0.1:3000'
+  BASE_URL =  'http://biosql.scilifelab.se'
 
   def self.gi2ncbi_taxon_id(gi)
     options = {:headers => { 'Content-Type' => 'application/json', 'Accepts' => 'application/json'}, :body => {:gi => gi}.to_json, timeout: HTTP_TIMEOUT }
@@ -16,10 +16,11 @@ class BiosqlWeb < ActiveRecord::Base
     ncbi_taxons_ids = response.parsed_response
   end
 
-  def self.get_gis_sequences(gis)
-    options = {:headers => { 'Content-Type' => 'application/json', 'Accepts' => 'application/json'}, :body => {:gis => gis}.to_json, timeout: HTTP_TIMEOUT }
-    response = HTTParty.get(BASE_URL + '/get_gis_sequences', options)
-    gi_sequences = response.parsed_response
+  def self.get_sequences_by_accessions(accessions,type)
+    options = {:headers => { 'Content-Type' => 'application/json', 'Accepts' => 'application/json'}, :body => {:accessions => accessions}.to_json, timeout: HTTP_TIMEOUT }
+    response = HTTParty.get(BASE_URL + "/get_gis_sequences.#{type}", options)
+    sequences = response.parsed_response
+    sequences
   end
 
   def self.gis2gi_queue(gis)

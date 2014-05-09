@@ -17,6 +17,7 @@
 #  species        :string(255)
 #  strain         :string(255)
 #  released_db_id :integer
+#  no_genomes     :integer
 #
 
 class Taxon < ActiveRecord::Base

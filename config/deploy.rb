@@ -32,18 +32,18 @@ set :repository, "git@github.com:erikrikarddaniel/pfitmap.git"
 set :branch, "stable"
 set :git_enable_submodules, 1
 
-# Cronjobs for rails
-namespace :scheduler_daemon do
-  task :start, :roles => :app do
-    run "cd #{release_path} && RAILS_ENV=production bundle exec scheduler_daemon start"
-  end
-  task :stop, :roles => :app do
-    run "cd #{release_path} && RAILS_ENV=production bundle exec scheduler_daemon stop"
-  end
-  task :restart, :roles => :app do
-    run "cd #{release_path} && RAILS_ENV=production bundle exec scheduler_daemon restart"
-  end
-end
+## Cronjobs for rails
+#namespace :scheduler_daemon do
+#  task :start, :roles => :app do
+#    run "cd #{release_path} && RAILS_ENV=production bundle exec scheduler_daemon start"
+#  end
+#  task :stop, :roles => :app do
+#    run "cd #{release_path} && RAILS_ENV=production bundle exec scheduler_daemon stop"
+#  end
+#  task :restart, :roles => :app do
+#    run "cd #{release_path} && RAILS_ENV=production bundle exec scheduler_daemon restart"
+#  end
+#end
 
 # tasks
 namespace :deploy do
@@ -79,7 +79,7 @@ set :rails_env, "production" #added for delayed job
 
 after "deploy:stop",    "delayed_job:stop"#,	"scheduler_daemon:stop"
 after "deploy:start",   "delayed_job:start"#,	"scheduler_daemon:start"
-after "deploy:restart", "delayed_job:restart"#,	"scheduler_daemon:restart"
+after "deploy:restart", "delayed_job:restart",	"scheduler_daemon:restart"
 
 
 

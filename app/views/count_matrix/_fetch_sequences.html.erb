@@ -1,0 +1,5 @@
+<%= form_tag "/count_matrix/fetch_sequences", id: "fetch_sequences_form"  do  %>
+  <%= hidden_field_tag 'accessions' %>
+  <%= hidden_field_tag 'accessions_type', "fasta" %>
+
+<% end %>

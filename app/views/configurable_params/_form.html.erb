@@ -1,0 +1,25 @@
+<%= form_for(@configurable_param) do |f| %>
+  <% if @configurable_param.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@configurable_param.errors.count, "error") %> prohibited this configurable_param from being saved:</h2>
+
+      <ul>
+      <% @configurable_param.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :param %><br />
+    <%= f.text_field :param %>
+  </div>
+  <div class="field">
+    <%= f.label :value %><br />
+    <%= f.text_field :value %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,5 +1,10 @@
 FactoryGirl.define do
 
+  factory :configurable_param do
+    param "FETCH_SIZE"
+    value "50000"
+  end
+
   factory :hmm_score_criterion do
     hmm_profile
     min_fullseq_score 15.0

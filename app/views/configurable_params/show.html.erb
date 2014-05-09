@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Param:</b>
+  <%= @configurable_param.param %>
+</p>
+
+<p>
+  <b>Value:</b>
+  <%= @configurable_param.value %>
+</p>
+
+
+<%= link_to 'Edit', edit_configurable_param_path(@configurable_param) %> |
+<%= link_to 'Back', configurable_params_path %>
