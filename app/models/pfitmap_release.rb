@@ -12,6 +12,7 @@
 #
 
 class PfitmapRelease < ActiveRecord::Base
+
   SLICE_SIZE = 50000
 
   attr_accessible :release, :release_date, :sequence_source_id
