@@ -12,7 +12,7 @@
 #
 
 class PfitmapRelease < ActiveRecord::Base
-  SLICE_SIZE = 50000
+  GIS_SLICE_SIZE = 50000	# Default number of protein gis to fetch per turnover, overriden by ConfigurableParam.where('GIS_SLICE_SIZE').first.to_i
 
   attr_accessible :release, :release_date, :sequence_source_id
   has_many :pfitmap_sequences, :dependent => :destroy
@@ -136,8 +136,8 @@ class PfitmapRelease < ActiveRecord::Base
 
       slicei = 0
       gis2tids = []
-      gis.each_slice(SLICE_SIZE) do |gislice|
-	calculate_logger.info "#{Time.now}: Fetching slice #{slicei += 1} (slice size: #{SLICE_SIZE})"
+      gis.each_slice(GIS_SLICE_SIZE) do |gislice|
+	calculate_logger.info "#{Time.now}: Fetching slice #{slicei += 1} (slice size: #{GIS_SLICE_SIZE})"
 
         gis2tids += BiosqlWeb.gis2ncbi_taxon_ids(gislice)
       end
@@ -248,10 +248,10 @@ class PfitmapRelease < ActiveRecord::Base
 
     slicei = 0
     imported = {}
-    gis.each_slice(SLICE_SIZE) do |gislice|
+    gis.each_slice(GIS_SLICE_SIZE) do |gislice|
       taxon_names = []
 
-      calculate_logger.info "#{Time.now}: Fetching slice #{slicei += 1} (slice size: #{SLICE_SIZE})"
+      calculate_logger.info "#{Time.now}: Fetching slice #{slicei += 1} (slice size: #{GIS_SLICE_SIZE})"
 
       options = {
 	headers: {
