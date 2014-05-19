@@ -11,7 +11,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131213090848) do
+ActiveRecord::Schema.define(:version => 20140519113218) do
+
+  create_table "configurable_params", :force => true do |t|
+    t.string   "param"
+    t.string   "value"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "db_sequences", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.text     "sequence"
+  end
 
   create_table "db_entries", :force => true do |t|
     t.integer  "gi"
@@ -19,11 +32,13 @@ ActiveRecord::Schema.define(:version => 20131213090848) do
     t.string   "acc"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
-    t.integer  "db_sequence_id"
+    t.integer  "db_sequence_id", :null => false
     t.text     "desc"
+    t.index ["db_sequence_id"], :name => "fk__db_entries_db_sequence_id"
     t.index ["db", "acc"], :name => "index_db_entries_on_db_and_acc"
     t.index ["db_sequence_id"], :name => "index_db_entries_on_db_sequence_id"
     t.index ["gi"], :name => "index_db_entries_on_gi"
+    t.foreign_key ["db_sequence_id"], "db_sequences", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_db_entries_db_sequence_id"
   end
 
   create_table "hmm_result_rows", :force => true do |t|
@@ -63,12 +78,6 @@ ActiveRecord::Schema.define(:version => 20131213090848) do
   end
 
   create_view "db_sequence_best_profiles", "SELECT hmmrr.db_sequence_id, hmmr.hmm_profile_id, hmmr.sequence_source_id, hmmrr.id AS hmm_result_row_id, hmmrr.fullseq_score FROM (hmm_results hmmr JOIN hmm_result_rows hmmrr ON ((hmmr.id = hmmrr.hmm_result_id))) WHERE (hmmrr.fullseq_score = (SELECT max(hmmrrinner.fullseq_score) AS max FROM (hmm_result_rows hmmrrinner JOIN hmm_results hmmrinner ON ((hmmrrinner.hmm_result_id = hmmrinner.id))) WHERE ((hmmrrinner.db_sequence_id = hmmrr.db_sequence_id) AND (hmmrinner.sequence_source_id = hmmr.sequence_source_id))))", :force => true
-  create_table "db_sequences", :force => true do |t|
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-    t.text     "sequence"
-  end
-
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
     t.integer  "attempts",   :default => 0
@@ -279,12 +288,12 @@ ActiveRecord::Schema.define(:version => 20131213090848) do
     t.foreign_key ["taxon_id"], "taxons", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "protein_counts_taxon_id_fkey"
   end
 
-  create_view "protein_class_counts", "SELECT t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, p.protclass, pc.released_db_id, sum(pc.no_proteins) AS n_proteins, 1 AS n_genomes_w_protein FROM ((taxons t JOIN protein_counts pc ON ((t.id = pc.taxon_id))) JOIN proteins p ON ((pc.protein_id = p.id))) GROUP BY t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, p.protclass, pc.released_db_id ORDER BY t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, p.protclass", :force => true
-  create_view "protein_family_counts", "SELECT t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, pc.released_db_id, sum(pc.no_proteins) AS n_proteins, 1 AS n_genomes_w_protein FROM ((taxons t JOIN protein_counts pc ON ((t.id = pc.taxon_id))) JOIN proteins p ON ((pc.protein_id = p.id))) GROUP BY t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, pc.released_db_id ORDER BY t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily", :force => true
-  create_view "protein_group_counts", "SELECT t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, p.protclass, p.subclass, p.protgroup, pc.released_db_id, sum(pc.no_proteins) AS n_proteins, 1 AS n_genomes_w_protein FROM ((taxons t JOIN protein_counts pc ON ((t.id = pc.taxon_id))) JOIN proteins p ON ((pc.protein_id = p.id))) GROUP BY t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, p.protclass, p.subclass, p.protgroup, pc.released_db_id ORDER BY t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, p.protclass, p.subclass, p.protgroup", :force => true
-  create_view "protein_sub_class_counts", "SELECT t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, p.protclass, p.subclass, pc.released_db_id, sum(pc.no_proteins) AS n_proteins, 1 AS n_genomes_w_protein FROM ((taxons t JOIN protein_counts pc ON ((t.id = pc.taxon_id))) JOIN proteins p ON ((pc.protein_id = p.id))) GROUP BY t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, p.protclass, p.subclass, pc.released_db_id ORDER BY t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, p.protclass, p.subclass", :force => true
-  create_view "protein_sub_group_counts", "SELECT t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, p.protclass, p.subclass, p.protgroup, p.subgroup, pc.released_db_id, sum(pc.no_proteins) AS n_proteins, 1 AS n_genomes_w_protein FROM ((taxons t JOIN protein_counts pc ON ((t.id = pc.taxon_id))) JOIN proteins p ON ((pc.protein_id = p.id))) GROUP BY t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, p.protclass, p.subclass, p.protgroup, p.subgroup, pc.released_db_id ORDER BY t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, p.protclass, p.subclass, p.protgroup, p.subgroup", :force => true
-  create_view "protein_sub_sub_group_counts", "SELECT t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, p.protclass, p.subclass, p.protgroup, p.subgroup, p.subsubgroup, pc.released_db_id, sum(pc.no_proteins) AS n_proteins, 1 AS n_genomes_w_protein FROM ((taxons t JOIN protein_counts pc ON ((t.id = pc.taxon_id))) JOIN proteins p ON ((pc.protein_id = p.id))) GROUP BY t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, p.protclass, p.subclass, p.protgroup, p.subgroup, p.subsubgroup, pc.released_db_id ORDER BY t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, p.protclass, p.subclass, p.protgroup, p.subgroup, p.subsubgroup", :force => true
+  create_view "protein_class_counts", "SELECT t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, p.protclass, pc.released_db_id, string_agg(pc.all_accessions, ','::text) AS all_accessions, string_agg(pc.counted_accessions, ','::text) AS counted_accessions, sum(pc.no_proteins) AS n_proteins, 1 AS n_genomes_w_protein FROM ((taxons t JOIN protein_counts pc ON ((t.id = pc.taxon_id))) JOIN proteins p ON ((pc.protein_id = p.id))) GROUP BY t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, p.protclass, pc.released_db_id ORDER BY t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, p.protclass", :force => true
+  create_view "protein_family_counts", "SELECT t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, pc.released_db_id, string_agg(pc.all_accessions, ','::text) AS all_accessions, string_agg(pc.counted_accessions, ','::text) AS counted_accessions, sum(pc.no_proteins) AS n_proteins, 1 AS n_genomes_w_protein FROM ((taxons t JOIN protein_counts pc ON ((t.id = pc.taxon_id))) JOIN proteins p ON ((pc.protein_id = p.id))) GROUP BY t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, pc.released_db_id ORDER BY t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily", :force => true
+  create_view "protein_group_counts", "SELECT t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, p.protclass, p.subclass, p.protgroup, pc.released_db_id, string_agg(pc.all_accessions, ','::text) AS all_accessions, string_agg(pc.counted_accessions, ','::text) AS counted_accessions, sum(pc.no_proteins) AS n_proteins, 1 AS n_genomes_w_protein FROM ((taxons t JOIN protein_counts pc ON ((t.id = pc.taxon_id))) JOIN proteins p ON ((pc.protein_id = p.id))) GROUP BY t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, p.protclass, p.subclass, p.protgroup, pc.released_db_id ORDER BY t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, p.protclass, p.subclass, p.protgroup", :force => true
+  create_view "protein_sub_class_counts", "SELECT t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, p.protclass, p.subclass, pc.released_db_id, string_agg(pc.all_accessions, ','::text) AS all_accessions, string_agg(pc.counted_accessions, ','::text) AS counted_accessions, sum(pc.no_proteins) AS n_proteins, 1 AS n_genomes_w_protein FROM ((taxons t JOIN protein_counts pc ON ((t.id = pc.taxon_id))) JOIN proteins p ON ((pc.protein_id = p.id))) GROUP BY t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, p.protclass, p.subclass, pc.released_db_id ORDER BY t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, p.protclass, p.subclass", :force => true
+  create_view "protein_sub_group_counts", "SELECT t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, p.protclass, p.subclass, p.protgroup, p.subgroup, pc.released_db_id, string_agg(pc.all_accessions, ','::text) AS all_accessions, string_agg(pc.counted_accessions, ','::text) AS counted_accessions, sum(pc.no_proteins) AS n_proteins, 1 AS n_genomes_w_protein FROM ((taxons t JOIN protein_counts pc ON ((t.id = pc.taxon_id))) JOIN proteins p ON ((pc.protein_id = p.id))) GROUP BY t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, p.protclass, p.subclass, p.protgroup, p.subgroup, pc.released_db_id ORDER BY t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, p.protclass, p.subclass, p.protgroup, p.subgroup", :force => true
+  create_view "protein_sub_sub_group_counts", "SELECT t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, p.protclass, p.subclass, p.protgroup, p.subgroup, p.subsubgroup, pc.released_db_id, string_agg(pc.all_accessions, ','::text) AS all_accessions, string_agg(pc.counted_accessions, ','::text) AS counted_accessions, sum(pc.no_proteins) AS n_proteins, 1 AS n_genomes_w_protein FROM ((taxons t JOIN protein_counts pc ON ((t.id = pc.taxon_id))) JOIN proteins p ON ((pc.protein_id = p.id))) GROUP BY t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, p.protclass, p.subclass, p.protgroup, p.subgroup, p.subsubgroup, pc.released_db_id ORDER BY t.domain, t.kingdom, t.phylum, t.taxclass, t.taxorder, t.taxfamily, t.genus, t.species, t.strain, p.protfamily, p.protclass, p.subclass, p.protgroup, p.subgroup, p.subsubgroup", :force => true
   create_table "users", :force => true do |t|
     t.string   "provider"
     t.string   "uid"

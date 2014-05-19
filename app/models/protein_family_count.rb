@@ -13,6 +13,8 @@
 #  strain              :string(255)
 #  protfamily          :string(255)
 #  released_db_id      :integer
+#  all_accessions      :text
+#  counted_accessions  :text
 #  n_proteins          :integer(8)
 #  n_genomes_w_protein :integer
 #

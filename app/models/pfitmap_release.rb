@@ -12,6 +12,7 @@
 #
 
 class PfitmapRelease < ActiveRecord::Base
+
   SLICE_SIZE = 50000
 
   attr_accessible :release, :release_date, :sequence_source_id
@@ -78,9 +79,7 @@ class PfitmapRelease < ActiveRecord::Base
     #  There exists one row in protein_counts table for each combination of
     #  taxon, protein and pfitmap_release (if it has been "calculated").
     #  protein_counts row contains three values and one boolean:
-    #    - no_genomes
     #    - no_proteins
-    #    - no_genomes_with_proteins
     #    - obs_as_genome
     #  See app/model/protein_count.rb for further information
     #  
@@ -225,7 +224,7 @@ class PfitmapRelease < ActiveRecord::Base
     if released_db
       [ 'protein_counts', 'taxons', 'proteins' ].each do |table|
 	sql = "DELETE FROM #{table} WHERE released_db_id = #{released_db.id}"
-	warn "#{__FILE__}:#{__LINE__}: sql: '#{sql}'"
+	calculate_logger.debug "#{__FILE__}:#{__LINE__}: sql: '#{sql}'"
 	ActiveRecord::Base.connection.execute(sql)
       end
       released_db.destroy

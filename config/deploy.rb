@@ -21,7 +21,8 @@ role :db, "rnrdb.pfitmap.org", :primary => true
 default_run_options[:pty] = true
 ssh_options[:forward_agent] = true
 set :deploy_to, "/scratch/webapps/rnrdb.pfitmap.org"
-#set :deploy_via, :remote_cache
+set :deploy_via, :remote_cache
+set :copy_exclude, [ '.git' ]
 set :user, "passenger"
 set :use_sudo, false
 set :port, 50021
@@ -32,18 +33,18 @@ set :repository, "git@github.com:erikrikarddaniel/pfitmap.git"
 set :branch, "stable"
 set :git_enable_submodules, 1
 
-# Cronjobs for rails
-namespace :scheduler_daemon do
-  task :start, :roles => :app do
-    run "cd #{release_path} && RAILS_ENV=production bundle exec scheduler_daemon start"
-  end
-  task :stop, :roles => :app do
-    run "cd #{release_path} && RAILS_ENV=production bundle exec scheduler_daemon stop"
-  end
-  task :restart, :roles => :app do
-    run "cd #{release_path} && RAILS_ENV=production bundle exec scheduler_daemon restart"
-  end
-end
+## Cronjobs for rails
+#namespace :scheduler_daemon do
+#  task :start, :roles => :app do
+#    run "cd #{release_path} && RAILS_ENV=production bundle exec scheduler_daemon start"
+#  end
+#  task :stop, :roles => :app do
+#    run "cd #{release_path} && RAILS_ENV=production bundle exec scheduler_daemon stop"
+#  end
+#  task :restart, :roles => :app do
+#    run "cd #{release_path} && RAILS_ENV=production bundle exec scheduler_daemon restart"
+#  end
+#end
 
 # tasks
 namespace :deploy do

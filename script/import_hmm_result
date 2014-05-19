@@ -1,0 +1,231 @@
+#!/usr/bin/env ruby
+#
+# = NAME
+#
+# import_hmm_result
+#
+# = SYNOPSIS
+#
+# See below, in opt parser block.
+#
+# = USAGE
+#
+# See below, in opt parser block.
+#
+# = AUTHOR
+#
+# daniel.lundin@scilifelab.se
+
+$VERBOSE = true
+
+require 'optparse'
+
+SEQUENCE_SOURCES = {
+  'ncbi_nr' => {
+    source: 'NCBI',
+    name:   'NR'
+  }
+}
+ROWS_PER_DOT = 100
+
+MAX_DB_ENTRIES = 20
+
+@options = {
+  dbuser: '',
+  dryrun: false
+}
+opt_parser = OptionParser.new do |opts|
+  opts.banner = <<BANNER
+import_hmm_result: Reads a HMM result in table format (.tblout) and inserts
+  rows into hmm_results and hmm_result_rows.
+    import_hmm_result [options] protein_name.tblout
+BANNER
+
+  opts.on "--db=STRING", "Database to connect to (default as UNIX user, but see --dbuser)" do |v|
+    @options[:db] = v
+  end
+
+  opts.on "--dbuser=STRING", "Database user to connect as" do |v|
+    @options[:dbuser] = "-U #{v}"
+  end
+
+  opts.on "--[no-]dryrun", "Just do a dry run, echoing commands sent to psql, default #{@options[:dryrun]}" do |v|
+    @options[:dryrun] = v
+  end
+
+  opts.on "-h", "--help", "This info"  do
+    puts opts
+    exit 0
+  end
+
+  opts.on "--ssversion=STRING", "Sequence source version (usually a date string)" do |v|
+    @options[:ssversion] = v
+  end
+
+  opts.on "-v", "--verbose", "Be verbose"  do |v| 
+    @options[:verbose] = v 
+  end
+end
+
+begin
+  opt_parser.parse!
+  mandatory = [ :db, :ssversion ]
+  missing = mandatory.select { |param| @options[param].nil? }
+  unless missing.empty?
+    warn "Missing options: #{missing.map { |m| "--#{m}" }.join(", ")}"
+    warn opt_parser
+    exit 1
+  end
+rescue OptionParser::InvalidOption, OptionParser::MissingArgument
+  warn "#{$!}"
+  warn opt_parser
+  exit 1
+end
+
+# Parse the file name
+@infile = ARGV.shift
+
+unless @infile and File.exists?(@infile) then
+  warn "You must provide an existing infile"
+  exit 2
+end
+
+( @options[:protein_name], @options[:sequence_source] ) = File.basename(@infile).split('.')
+ 
+def _call_psql(sql, pipe = nil)
+  psqlcall = pipe ? "#{pipe} | " : ""
+  psqlcall = "psql #{@options[:dbuser]} -d #{@options[:db]} -c \"#{sql}\""
+  if @options[:dryrun]
+    puts "DRY RUN: psql call: #{psqlcall}"
+  else
+    unless system(psqlcall)
+      warn "Failed to call #{psqlcall}"
+      exit 2
+    end
+  end
+end
+
+def _select_psql(sql)
+  psqlcall = "psql #{@options[:dbuser]} -d #{@options[:db]} --tuples-only -c \"#{sql}\" | sed 's/^ *//' |grep -v '^$' | sed 's/ *| */\t/g'"
+  #warn "#{__LINE__}: sql: '#{sql}'"
+  if @options[:dryrun]
+    puts "DRY RUN: psql call: #{psqlcall}"
+    []
+  else
+    r = `#{psqlcall}`
+    r.split(/\t/)
+  end
+end
+
+# 1. Delete any old hmm_result
+warn "Deleting any hmm_result for #{@options[:protein_name]}, #{@options[:sequence_source]}-#{@options[:ssversion]}" if @options[:verbose]
+_call_psql(<<-SQL)
+  DELETE FROM hmm_results
+  WHERE 
+    hmm_profile_id = ( SELECT id FROM hmm_profiles WHERE protein_name = '#{@options[:protein_name]}' ) AND
+    sequence_source_id = ( 
+      SELECT ID FROM sequence_sources 
+      WHERE 
+	source = '#{SEQUENCE_SOURCES[@options[:sequence_source]][:source]}' AND
+	name = '#{SEQUENCE_SOURCES[@options[:sequence_source]][:name]}' AND
+	version = '#{@options[:ssversion]}'
+    )
+SQL
+warn "Done." if @options[:verbose]
+
+# 2. Insert a new hmm_result
+warn "Inserting new hmm_result for #{@options[:protein_name]}, #{@options[:sequence_source]}-#{@options[:ssversion]}" if @options[:verbose]
+_call_psql(<<-SQL)
+  INSERT INTO hmm_results(hmm_profile_id, sequence_source_id, executed, created_at, updated_at)
+  SELECT hp.id,ss.id,now(),now(),now() 
+  FROM hmm_profiles hp, sequence_sources ss
+  WHERE 
+    hp.protein_name = '#{@options[:protein_name]}' AND
+    ss.source = '#{SEQUENCE_SOURCES[@options[:sequence_source]][:source]}' AND
+    ss.name = '#{SEQUENCE_SOURCES[@options[:sequence_source]][:name]}' AND
+    ss.version = '#{@options[:ssversion]}'
+SQL
+@hmm_result_id = _select_psql(<<-SQL)[0]
+  SELECT id FROM hmm_results hr
+  WHERE 
+    hr.hmm_profile_id = ( SELECT id FROM hmm_profiles hp WHERE hp.protein_name = '#{@options[:protein_name]}' ) AND
+    hr.sequence_source_id = (
+      SELECT id
+      FROM sequence_sources ss
+      WHERE
+	ss.source = '#{SEQUENCE_SOURCES[@options[:sequence_source]][:source]}' AND
+	ss.name = '#{SEQUENCE_SOURCES[@options[:sequence_source]][:name]}' AND
+	ss.version = '#{@options[:ssversion]}'
+    )
+SQL
+warn "Done." if @options[:verbose]
+
+# 3. Insert rows
+STDERR.print "Inserting result rows from #{@infile}" if @options[:verbose]
+
+begin
+  File.new(@infile).each_with_index do |line, linenum|
+    STDERR.print "." if linenum % ROWS_PER_DOT == 0 and @options[:verbose]
+
+    next if line =~ /^#/
+
+    fields = line.split(/\s+/)
+    tfields = fields[0].split(/\s+/)
+    lastfield = ( fields[0] + fields[18..-1].join(" ") ).gsub("'", "''").gsub("{", "(").gsub("}", ")")
+
+    gis    = [ ]
+    dbs    = [ ]
+    accnos = [ ]
+    descs  = [ ]
+    #warn "#{__LINE__}: fields: '#{fields.join("', '")}'"
+    #warn "#{__LINE__}: tfields: '#{tfields.join("', '")}'"
+    #warn "#{__LINE__}: lastfield: '#{lastfield}'"
+
+    lastfield.split(/\001/).each do |db_entry|
+      dbefields = db_entry.split('|')
+      #warn "#{__LINE__}: dbefields: '#{dbefields.join("', '")}'"
+      gis    << dbefields[1]
+      dbs    << dbefields[2]
+      accnos << dbefields[3]
+      descs  << dbefields[4]
+    end
+
+    hmm_result_row_id = _select_psql(<<-SQL)[0]
+      SELECT insert_hmm_result_row(
+        #{@hmm_result_id},
+        '#{fields[0]}', '#{fields[1]}',
+        '#{fields[2]}', '#{fields[3]}',
+        #{fields[4]}, #{fields[5]}, #{fields[6]},
+        #{fields[7]}, #{fields[8]}, #{fields[9]},
+        #{fields[10]}, #{fields[11]}, #{fields[12]},
+        #{fields[13]}, #{fields[14]}, #{fields[15]},
+        #{fields[16]}, #{fields[17]},
+	'{#{gis[0..MAX_DB_ENTRIES].join(", ")}}',
+	'{''#{dbs[0..MAX_DB_ENTRIES].join("'', ''")}''}',
+	'{''#{accnos[0..MAX_DB_ENTRIES].join("'', ''")}''}',
+	'{''#{descs[0..MAX_DB_ENTRIES].join("'', ''")}''}'
+      );
+    SQL
+    if gis.length > MAX_DB_ENTRIES
+      db_sequence_id = _select_psql(<<-SQL)[0]
+        SELECT db_sequence_id FROM hmm_result_rows WHERE id = #{hmm_result_row_id}
+      SQL
+      (MAX_DB_ENTRIES + 1..gis.length - 1).each do |i|
+	_select_psql(<<-SQL)[0]
+	  SELECT insert_db_entry(
+	    #{db_sequence_id},
+	    #{gis[i]},
+	    '#{dbs[i]}',
+	    '#{accnos[i]}',
+	    '#{descs[i]}'
+	  );
+	SQL
+      end
+    end
+  end
+rescue
+  warn "Failed to read #{@infile}: #{$!}, backtrace:\n\t#{$!.backtrace.join("\n\t")}"
+  exit 2
+end
+warn "Done." if @options[:verbose]
+exit 1
