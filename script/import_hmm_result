@@ -28,6 +28,8 @@ SEQUENCE_SOURCES = {
 }
 ROWS_PER_DOT = 100
 
+MAX_DB_ENTRIES = 20
+
 @options = {
   dbuser: '',
   dryrun: false
@@ -105,13 +107,12 @@ end
 
 def _select_psql(sql)
   psqlcall = "psql #{@options[:dbuser]} -d #{@options[:db]} --tuples-only -c \"#{sql}\" | sed 's/^ *//' |grep -v '^$' | sed 's/ *| */\t/g'"
-  #warn "#{__FILE__}:#{__LINE__}: Calling psql with select: '#{sql}'" if @options[:verbose]
+  #warn "#{__LINE__}: sql: '#{sql}'"
   if @options[:dryrun]
     puts "DRY RUN: psql call: #{psqlcall}"
     []
   else
     r = `#{psqlcall}`
-    #warn "#{__FILE__}:#{__LINE__}: Return messages: '#{r}'" if @options[:verbose]
     r.split(/\t/)
   end
 end
@@ -189,7 +190,7 @@ begin
       descs  << dbefields[4]
     end
 
-    _select_psql(<<-SQL)
+    hmm_result_row_id = _select_psql(<<-SQL)[0]
       SELECT insert_hmm_result_row(
         #{@hmm_result_id},
         '#{fields[0]}', '#{fields[1]}',
@@ -199,12 +200,28 @@ begin
         #{fields[10]}, #{fields[11]}, #{fields[12]},
         #{fields[13]}, #{fields[14]}, #{fields[15]},
         #{fields[16]}, #{fields[17]},
-	'{#{gis.join(", ")}}',
-	'{''#{dbs.join("'', ''")}''}',
-	'{''#{accnos.join("'', ''")}''}',
-	'{''#{descs.join("'', ''")}''}'
+	'{#{gis[0..MAX_DB_ENTRIES].join(", ")}}',
+	'{''#{dbs[0..MAX_DB_ENTRIES].join("'', ''")}''}',
+	'{''#{accnos[0..MAX_DB_ENTRIES].join("'', ''")}''}',
+	'{''#{descs[0..MAX_DB_ENTRIES].join("'', ''")}''}'
       );
     SQL
+    if gis.length > MAX_DB_ENTRIES
+      db_sequence_id = _select_psql(<<-SQL)[0]
+        SELECT db_sequence_id FROM hmm_result_rows WHERE id = #{hmm_result_row_id}
+      SQL
+      (MAX_DB_ENTRIES + 1..gis.length - 1).each do |i|
+	_select_psql(<<-SQL)[0]
+	  SELECT insert_db_entry(
+	    #{db_sequence_id},
+	    #{gis[i]},
+	    '#{dbs[i]}',
+	    '#{accnos[i]}',
+	    '#{descs[i]}'
+	  );
+	SQL
+      end
+    end
   end
 rescue
   warn "Failed to read #{@infile}: #{$!}, backtrace:\n\t#{$!.backtrace.join("\n\t")}"
