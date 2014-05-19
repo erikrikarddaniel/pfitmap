@@ -9,7 +9,7 @@ CREATE OR REPLACE FUNCTION insert_db_entry(db_sequence_id integer, igi integer, 
     IF NOT FOUND THEN
       INSERT INTO db_entries(db_sequence_id, gi, db, acc, "desc", created_at, updated_at)
       SELECT db_sequence_id, igi, idb, iacc, idesc, now(), now();
-      SELECT currval('db_entries_id_seq') INTO db_entry_id;
+      SELECT MAX(id) INTO db_entry_id FROM db_entries;
     END IF;
 
     RETURN db_entry_id;

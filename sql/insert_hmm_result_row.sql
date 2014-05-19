@@ -34,6 +34,6 @@ CREATE OR REPLACE FUNCTION insert_hmm_result_row(
       now(), now()
     ;
 
-    RETURN currval('hmm_result_rows_id_seq');
+    RETURN MAX(id) FROM hmm_result_rows;
   END;
 $$  LANGUAGE plpgsql;

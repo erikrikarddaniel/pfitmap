@@ -8,7 +8,7 @@ CREATE OR REPLACE FUNCTION insert_db_sequence(gis integer[], dbs varchar(255)[],
     ;
     IF NOT FOUND THEN
       INSERT INTO db_sequences(created_at, updated_at) SELECT now(), now();
-      SELECT currval('db_sequences_id_seq') INTO db_sequence_id;
+      SELECT MAX(id) INTO db_sequence_id FROM db_sequences;
     END IF;
 
     FOR i IN 1..array_length(gis, 1) LOOP
