@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION insert_db_sequence(gis integer[], dbs varchar(255)[], accnos varchar(255)[]) RETURNS INTEGER AS $$
+CREATE OR REPLACE FUNCTION insert_db_sequence(gis integer[], dbs varchar(255)[], accs varchar(255)[], descs varchar(255)[]) RETURNS INTEGER AS $$
   DECLARE
     db_sequence_id integer;
     tmpi	   integer;
@@ -12,7 +12,7 @@ CREATE OR REPLACE FUNCTION insert_db_sequence(gis integer[], dbs varchar(255)[],
     END IF;
 
     FOR i IN 1..array_length(gis, 1) LOOP
-      SELECT insert_db_entry(gis[i], dbs[i], accnos[i]) INTO tmpi;
+      SELECT insert_db_entry(db_sequence_id, gis[i], dbs[i], accs[i], descs[i]) INTO tmpi;
     END LOOP;
 
     RETURN db_sequence_id;

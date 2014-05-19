@@ -26,6 +26,8 @@ SEQUENCE_SOURCES = {
     name:   'NR'
   }
 }
+ROWS_PER_DOT = 100
+
 @options = {
   dbuser: '',
   dryrun: false
@@ -103,11 +105,14 @@ end
 
 def _select_psql(sql)
   psqlcall = "psql #{@options[:dbuser]} -d #{@options[:db]} --tuples-only -c \"#{sql}\" | sed 's/^ *//' |grep -v '^$' | sed 's/ *| */\t/g'"
+  #warn "#{__FILE__}:#{__LINE__}: Calling psql with select: '#{sql}'" if @options[:verbose]
   if @options[:dryrun]
     puts "DRY RUN: psql call: #{psqlcall}"
     []
   else
-    `#{psqlcall}`.split(/\t/)
+    r = `#{psqlcall}`
+    #warn "#{__FILE__}:#{__LINE__}: Return messages: '#{r}'" if @options[:verbose]
+    r.split(/\t/)
   end
 end
 
@@ -139,7 +144,7 @@ _call_psql(<<-SQL)
     ss.name = '#{SEQUENCE_SOURCES[@options[:sequence_source]][:name]}' AND
     ss.version = '#{@options[:ssversion]}'
 SQL
-@hmm_profile_id = _select_psql(<<-SQL)
+@hmm_result_id = _select_psql(<<-SQL)[0]
   SELECT id FROM hmm_results hr
   WHERE 
     hr.hmm_profile_id = ( SELECT id FROM hmm_profiles hp WHERE hp.protein_name = '#{@options[:protein_name]}' ) AND
@@ -155,37 +160,51 @@ SQL
 warn "Done." if @options[:verbose]
 
 # 3. Insert rows
-warn "Inserting result rows from #{@infile}" if @options[:verbose]
+STDERR.print "Inserting result rows from #{@infile}" if @options[:verbose]
 
 begin
-  File.new(@infile).each do |line|
+  File.new(@infile).each_with_index do |line, linenum|
+    STDERR.print "." if linenum % ROWS_PER_DOT == 0 and @options[:verbose]
+
     next if line =~ /^#/
+
     fields = line.split(/\s+/)
+    tfields = fields[0].split(/\s+/)
+    lastfield = ( fields[0] + fields[18..-1].join(" ") ).gsub("'", "''")
 
-    # Check if this sequence is already registered as a db_sequence
-    tfields = fields[0].split('|')
-    @db_sequence_id = _select_psql("SELECT id FROM db_entries WHERE gi = #{tfields[1]}")[0]
-    unless @db_sequence_id
-      @db_sequence_id = _select_psql(<<-SQL)[0]
-        INSERT INTO db_sequences(created_at,updated_at) SELECT now(), now();
-	SELECT max(id) FROM db_sequences;
-      SQL
+    gis    = [ ]
+    dbs    = [ ]
+    accnos = [ ]
+    descs  = [ ]
+    #warn "#{__LINE__}: fields: '#{fields.join("', '")}'"
+    #warn "#{__LINE__}: tfields: '#{tfields.join("', '")}'"
+    #warn "#{__LINE__}: lastfield: '#{lastfield}'"
+
+    lastfield.split(/\001/).each do |db_entry|
+      dbefields = db_entry.split('|')
+      #warn "#{__LINE__}: dbefields: '#{dbefields.join("', '")}'"
+      gis    << dbefields[1]
+      dbs    << dbefields[2]
+      accnos << dbefields[3]
+      descs  << dbefields[4]
     end
 
-    # Insert all db_entries (will generate errors for gis that are already present)
-    _call_psql(<<-SQL)
-      INSERT INTO db_entries(db_sequence_id, gi, db, acc, created_at, updated_at)
-      VALUES(#{@db_sequence_id}, #{tfields[1]}, '#{tfields[2]}', '#{tfields[3]}', now(), now())
+    _select_psql(<<-SQL)
+      SELECT insert_hmm_result_row(
+        #{@hmm_result_id},
+        '#{fields[0]}', '#{fields[1]}',
+        '#{fields[2]}', '#{fields[3]}',
+        #{fields[4]}, #{fields[5]}, #{fields[6]},
+        #{fields[7]}, #{fields[8]}, #{fields[9]},
+        #{fields[10]}, #{fields[11]}, #{fields[12]},
+        #{fields[13]}, #{fields[14]}, #{fields[15]},
+        #{fields[16]}, #{fields[17]},
+	'{#{gis.join(", ")}}',
+	'{''#{dbs.join("'', ''")}''}',
+	'{''#{accnos.join("'', ''")}''}',
+	'{''#{descs.join("'', ''")}''}'
+      );
     SQL
-    fields[-1].split(/\001/).each do |db_entry|
-    end
-#    _call_psql(<<-SQL)
-#      INSERT INTO hmm_result_rows(
-#	target_name, target_acc, query_name, query_acc, fullseq_evalue, fullseq_score, fullseq_bias, bestdom_evalue, bestdom_score, bestdom_bias, domnumest_exp, domnumest_reg, domnumest_clu, domnumest_ov, domnumest_env, domnumest_rep, domnumest_inc, domnumest_dom, created_at, updated_at, hmm_result_id
-#      )
-#      VALUES(
-#      )
-#    SQL
   end
 rescue
   warn "Failed to read #{@infile}: #{$!}, backtrace:\n\t#{$!.backtrace.join("\n\t")}"

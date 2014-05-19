@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140516130455) do
+ActiveRecord::Schema.define(:version => 20140519113218) do
 
   create_table "configurable_params", :force => true do |t|
     t.string   "param"
@@ -20,17 +20,25 @@ ActiveRecord::Schema.define(:version => 20140516130455) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "db_sequences", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.text     "sequence"
+  end
+
   create_table "db_entries", :force => true do |t|
     t.integer  "gi"
     t.string   "db"
     t.string   "acc"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
-    t.integer  "db_sequence_id"
+    t.integer  "db_sequence_id", :null => false
     t.text     "desc"
+    t.index ["db_sequence_id"], :name => "fk__db_entries_db_sequence_id"
     t.index ["db", "acc"], :name => "index_db_entries_on_db_and_acc"
     t.index ["db_sequence_id"], :name => "index_db_entries_on_db_sequence_id"
-    t.index ["gi"], :name => "index_db_entries_on_gi", :unique => true
+    t.index ["gi"], :name => "index_db_entries_on_gi"
+    t.foreign_key ["db_sequence_id"], "db_sequences", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_db_entries_db_sequence_id"
   end
 
   create_table "hmm_result_rows", :force => true do |t|
@@ -70,12 +78,6 @@ ActiveRecord::Schema.define(:version => 20140516130455) do
   end
 
   create_view "db_sequence_best_profiles", "SELECT hmmrr.db_sequence_id, hmmr.hmm_profile_id, hmmr.sequence_source_id, hmmrr.id AS hmm_result_row_id, hmmrr.fullseq_score FROM (hmm_results hmmr JOIN hmm_result_rows hmmrr ON ((hmmr.id = hmmrr.hmm_result_id))) WHERE (hmmrr.fullseq_score = (SELECT max(hmmrrinner.fullseq_score) AS max FROM (hmm_result_rows hmmrrinner JOIN hmm_results hmmrinner ON ((hmmrrinner.hmm_result_id = hmmrinner.id))) WHERE ((hmmrrinner.db_sequence_id = hmmrr.db_sequence_id) AND (hmmrinner.sequence_source_id = hmmr.sequence_source_id))))", :force => true
-  create_table "db_sequences", :force => true do |t|
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-    t.text     "sequence"
-  end
-
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
     t.integer  "attempts",   :default => 0
@@ -264,7 +266,6 @@ ActiveRecord::Schema.define(:version => 20140516130455) do
     t.string   "species"
     t.string   "strain"
     t.integer  "released_db_id"
-    t.integer  "no_genomes"
     t.index ["released_db_id"], :name => "fk__taxons_released_db_id"
     t.foreign_key ["released_db_id"], "released_dbs", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_taxons_released_db_id"
   end
