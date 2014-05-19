@@ -1,1 +1,0 @@
-script/import_hmm_result --dbuser=dl --db=pfitmap_development --ssversion=2012-06-24 NrdAp.ncbi_nr.tblout > out.sql
