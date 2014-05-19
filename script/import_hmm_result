@@ -171,7 +171,7 @@ begin
 
     fields = line.split(/\s+/)
     tfields = fields[0].split(/\s+/)
-    lastfield = ( fields[0] + fields[18..-1].join(" ") ).gsub("'", "''")
+    lastfield = ( fields[0] + fields[18..-1].join(" ") ).gsub("'", "''").gsub("{", "(").gsub("}", ")")
 
     gis    = [ ]
     dbs    = [ ]
