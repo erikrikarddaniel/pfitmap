@@ -12,8 +12,7 @@
 #
 
 class PfitmapRelease < ActiveRecord::Base
-
-  SLICE_SIZE = 50000
+  SLICE_SIZE = 10000
 
   attr_accessible :release, :release_date, :sequence_source_id
   has_many :pfitmap_sequences, :dependent => :destroy
