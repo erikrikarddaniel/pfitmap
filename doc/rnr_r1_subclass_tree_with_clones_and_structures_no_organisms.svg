@@ -21,7 +21,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="rnr_r1_subclass_tree_with_clones_and_structures.svg"
+   sodipodi:docname="rnr_r1_subclass_tree_with_clones_and_structures_no_organisms.svg"
    style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;font-family:Dialog"
    inkscape:export-filename="/home/dl/dev/pfitmap/doc/rnr_r1_subclass_tree_with_clones_and_structures.png"
    inkscape:export-xdpi="180"
@@ -34,7 +34,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -47,8 +47,8 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1920"
-     inkscape:window-height="1151"
+     inkscape:window-width="1280"
+     inkscape:window-height="726"
      id="namedview213"
      showgrid="false"
      fit-margin-top="0"
@@ -164,7 +164,7 @@
      sodipodi:cy="73.25312"
      sodipodi:cx="-110.28469"
      id="path3487"
-     style="fill:#00ff00;fill-opacity:1;stroke:#000000"
+     style="fill:#ff0000;fill-opacity:1;stroke:#000000"
      sodipodi:type="arc" />
   <path
      sodipodi:type="arc"
@@ -212,7 +212,7 @@
      sodipodi:type="star" />
   <path
      sodipodi:type="arc"
-     style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-opacity:1"
+     style="fill:#00ff00;fill-opacity:1;stroke:#000000;stroke-opacity:1"
      id="path3932"
      sodipodi:cx="-110.28469"
      sodipodi:cy="73.25312"
